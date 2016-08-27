@@ -1,12 +1,14 @@
 package com.awscherb.cardkeeper.ui.adapter;
 
 import android.content.Context;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.awscherb.cardkeeper.R;
 import com.awscherb.cardkeeper.data.CoreData;
@@ -41,6 +43,8 @@ public class ScannedCodeAdapter extends BaseAdapter<ScannedCode, ScannedCodeAdap
     @Override
     public void onBindViewHolder(ViewHolder holder, ScannedCode code) {
 
+        holder.title.setText(code.getText());
+
         try {
             holder.imageView.setImageBitmap(
                     encoder.encodeBitmap(code.getText(), code.getFormat(), 200, 200));
@@ -49,7 +53,15 @@ public class ScannedCodeAdapter extends BaseAdapter<ScannedCode, ScannedCodeAdap
         }
 
         holder.itemView.setOnLongClickListener(v -> {
-            CoreData.getScannedCodeService().deleteScannedCode(code).subscribe();
+
+            new AlertDialog.Builder(context)
+                    .setTitle(R.string.adapter_scanned_code_delete_message)
+                    .setPositiveButton(R.string.action_delete,
+                            (dialog, which) ->
+                            CoreData.getScannedCodeService().deleteScannedCode(code).subscribe())
+                    .setNegativeButton(R.string.action_cancel, null)
+                    .show();
+
             return true;
         });
 
@@ -61,12 +73,14 @@ public class ScannedCodeAdapter extends BaseAdapter<ScannedCode, ScannedCodeAdap
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        ImageView imageView;
         CardView cardView;
+        TextView title;
+        ImageView imageView;
 
         public ViewHolder(View itemView) {
             super(itemView);
             cardView = (CardView) itemView.findViewById(R.id.card_view);
+            title = (TextView) itemView.findViewById(R.id.adapter_code_title);
             imageView = (ImageView) itemView.findViewById(R.id.adapter_code_image);
         }
     }

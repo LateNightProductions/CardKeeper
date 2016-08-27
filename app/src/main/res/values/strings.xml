@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">CardKeeper</string>
+
+    <!--Actions-->
+    <string name="action_cancel">Cancel</string>
+    <string name="action_delete">Delete</string>
+
+    <!-- Scanned Code Adapter-->
+    <string name="adapter_scanned_code_delete_message">Delete code?</string>
+
 </resources>
