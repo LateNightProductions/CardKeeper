@@ -1,0 +1,22 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:2.1.2'
+        classpath 'me.tatarka:gradle-retrolambda:3.2.3'
+        classpath 'com.trello:victor:0.1.4'
+        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.7'
+        classpath "io.realm:realm-gradle-plugin:1.0.0"
+    }
+}
+
+allprojects {
+    repositories {
+        jcenter()
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
