@@ -40,13 +40,10 @@ public class ScannedCodeAdapter extends BaseAdapter<ScannedCode, ScannedCodeAdap
 
     @Override
     public void onBindViewHolder(ViewHolder holder, ScannedCode code) {
+
         try {
-            holder.imageView.setImageBitmap(encoder.encodeBitmap(
-                    code.getText(),
-                    code.getFormat(),
-                    holder.cardView.getMeasuredWidth(),
-                    200
-            ));
+            holder.imageView.setImageBitmap(
+                    encoder.encodeBitmap(code.getText(), code.getFormat(), 200, 200));
         } catch (WriterException e) {
             e.printStackTrace();
         }
