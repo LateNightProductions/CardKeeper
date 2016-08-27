@@ -43,8 +43,21 @@ public class ScannedCodeAdapter extends BaseAdapter<ScannedCode, ScannedCodeAdap
     @Override
     public void onBindViewHolder(ViewHolder holder, ScannedCode code) {
 
-        holder.title.setText(code.getText());
+        // Set title
+        holder.title.setText(code.getTitle());
 
+        // Set image scaleType according to barcode type
+        switch (code.getFormat()) {
+            // Keep QR code scare
+            case QR_CODE:
+                holder.imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                break;
+            // Scale everything else
+            default:
+                holder.imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+        }
+
+        // Load image
         try {
             holder.imageView.setImageBitmap(
                     encoder.encodeBitmap(code.getText(), code.getFormat(), 200, 200));
@@ -52,8 +65,8 @@ public class ScannedCodeAdapter extends BaseAdapter<ScannedCode, ScannedCodeAdap
             e.printStackTrace();
         }
 
+        // Setup delete
         holder.itemView.setOnLongClickListener(v -> {
-
             new AlertDialog.Builder(context)
                     .setTitle(R.string.adapter_scanned_code_delete_message)
                     .setPositiveButton(R.string.action_delete,
@@ -79,7 +92,7 @@ public class ScannedCodeAdapter extends BaseAdapter<ScannedCode, ScannedCodeAdap
 
         public ViewHolder(View itemView) {
             super(itemView);
-            cardView = (CardView) itemView.findViewById(R.id.card_view);
+            cardView = (CardView) itemView.findViewById(R.id.adapter_code_card_view);
             title = (TextView) itemView.findViewById(R.id.adapter_code_title);
             imageView = (ImageView) itemView.findViewById(R.id.adapter_code_image);
         }

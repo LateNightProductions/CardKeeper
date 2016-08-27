@@ -2,10 +2,18 @@
     <string name="app_name">CardKeeper</string>
 
     <!--Actions-->
+    <string name="action_add">Add</string>
     <string name="action_cancel">Cancel</string>
     <string name="action_delete">Delete</string>
 
     <!-- Scanned Code Adapter-->
     <string name="adapter_scanned_code_delete_message">Delete code?</string>
+
+    <!-- Card Name Dialog -->
+    <string name="dialog_card_name_hint">Enter a name</string>
+
+    <!-- Main Activity -->
+    <string name="activity_main_card_add_success">Bardcode added!</string>
+    <string name="activity_main_card_add_failure">Failed to add barcode!</string>
 
 </resources>

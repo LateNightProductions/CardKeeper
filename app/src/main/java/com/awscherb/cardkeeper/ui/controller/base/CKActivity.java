@@ -2,10 +2,9 @@ package com.awscherb.cardkeeper.ui.controller.base;
 
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 
-public class CKActivity extends RxAppCompatActivity {
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
 
-//    public final <T> Observable.Transformer<T, T> bindToActivity() {
-//        return source -> source.compose()
-//    }
+public class CKActivity extends RxAppCompatActivity {
 
 }

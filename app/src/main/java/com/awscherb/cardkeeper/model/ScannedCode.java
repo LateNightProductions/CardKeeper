@@ -10,32 +10,50 @@ public class ScannedCode extends RealmObject implements BaseModel {
     @PrimaryKey
     private long id;
 
-    private String text;
-
     private String format;
 
-    public String getText() {
-        return text;
-    }
+    private String text;
 
-    public void setText(String text) {
-        this.text = text;
-    }
+    private String title;
 
-    public BarcodeFormat getFormat() {
-        return BarcodeFormat.valueOf(format);
-    }
-
-    public void setFormat(BarcodeFormat format) {
-        this.format = format.toString();
-    }
+    //================================================================================
+    // Getters
+    //================================================================================
 
     @Override
     public long getId() {
         return id;
     }
 
+    public BarcodeFormat getFormat() {
+        return BarcodeFormat.valueOf(format);
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    //================================================================================
+    // Setters
+    //================================================================================
+
     public void setId(long id) {
         this.id = id;
+    }
+
+    public void setFormat(BarcodeFormat format) {
+        this.format = format.toString();
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 }

@@ -6,20 +6,18 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.PermissionChecker;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.KeyEvent;
 
 import com.awscherb.cardkeeper.R;
+import com.awscherb.cardkeeper.ui.controller.base.CKActivity;
 import com.google.zxing.ResultPoint;
 import com.journeyapps.barcodescanner.BarcodeCallback;
 import com.journeyapps.barcodescanner.BarcodeResult;
 import com.journeyapps.barcodescanner.CompoundBarcodeView;
 
-import java.util.Arrays;
 import java.util.List;
 
-public class ScanActivity extends AppCompatActivity {
+public class ScanActivity extends CKActivity {
 
     private static final String TAG = ScanActivity.class.getName();
 
@@ -79,18 +77,13 @@ public class ScanActivity extends AppCompatActivity {
     // Helper methods
     // ========================================================================
 
-    /**
-     * Setup the callback for continuous decoding
-     */
     private void setCallback() {
         callback = new BarcodeCallback() {
             @Override
             public void barcodeResult(BarcodeResult result) {
 
-                Log.d("ScanActivityResult", Arrays.toString(result.getRawBytes()));
                 String text = "";
                 if (result.getText() != null) {
-                    Log.d("ScanActivityResult ",result.getText());
                     text = result.getText();
                 }
 

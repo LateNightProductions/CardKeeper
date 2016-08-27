@@ -3,10 +3,13 @@ package com.awscherb.cardkeeper.ui.controller.main;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
+import android.text.InputType;
+import android.widget.EditText;
 
 import com.awscherb.cardkeeper.R;
 import com.awscherb.cardkeeper.data.CoreData;
@@ -52,6 +55,7 @@ public class MainActivity extends CKActivity {
         fab.setOnClickListener(v -> startActivityForResult(
                 new Intent(this, ScanActivity.class), REQUEST_GET_CODE));
 
+        // List all codes
         CoreData.getScannedCodeService().listAllScannedCodes()
                 .compose(bindToLifecycle())
                 .subscribe(adapter::swapObjects);
@@ -62,9 +66,27 @@ public class MainActivity extends CKActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == REQUEST_GET_CODE && resultCode == RESULT_OK) {
-            String text = data.getStringExtra(ScanActivity.EXTRA_BARCODE_TEXT);
-            BarcodeFormat format = (BarcodeFormat) data.getSerializableExtra(ScanActivity.EXTRA_BARCODE_FORMAT);
-            addCode(text, format);
+            ScannedCode scannedCode = new ScannedCode();
+            scannedCode.setId(System.currentTimeMillis());
+            scannedCode.setText(data.getStringExtra(ScanActivity.EXTRA_BARCODE_TEXT));
+            scannedCode.setFormat((BarcodeFormat) data.getSerializableExtra(ScanActivity.EXTRA_BARCODE_FORMAT));
+
+            EditText input = new EditText(this);
+            input.setHint(R.string.dialog_card_name_hint);
+            input.setInputType(InputType.TYPE_TEXT_FLAG_CAP_WORDS);
+
+            new AlertDialog.Builder(this)
+                    .setTitle(R.string.app_name)
+                    .setView(input)
+                    .setPositiveButton(R.string.action_add,
+                            (dialog, which) -> {
+                                scannedCode.setTitle(input.getText().toString());
+                                addCode(scannedCode);
+                            })
+                    .setNegativeButton(R.string.action_cancel,
+                            (dialog, which) -> dialog.dismiss())
+                    .show();
+
         }
     }
 
@@ -72,16 +94,21 @@ public class MainActivity extends CKActivity {
     // Helper methods
     // ========================================================================
 
-    private void addCode(String text, BarcodeFormat format) {
-        ScannedCode code = new ScannedCode();
-        code.setId(System.currentTimeMillis());
-        code.setText(text);
-        code.setFormat(format);
-
+    /**
+     * Add the ScannedCode to the database
+     * @param code the ScannedCode
+     */
+    private void addCode(ScannedCode code) {
         CoreData.getScannedCodeService().addScannedCode(code)
                 .compose(bindToLifecycle())
-                .subscribe(addedCode -> Log.i("MainActivity", "Code added"),
-                        Throwable::printStackTrace);
+                .subscribe(addedCode -> Snackbar.make(
+                        getCurrentFocus(),
+                        R.string.activity_main_card_add_success,
+                        Snackbar.LENGTH_SHORT).show(),
+                        e -> Snackbar.make(
+                                getCurrentFocus(),
+                                R.string.activity_main_card_add_failure,
+                                Snackbar.LENGTH_SHORT).show());
 
     }
 }
