@@ -22,8 +22,7 @@ public abstract class BaseRealmHandler<T extends RealmObject & BaseModel> extend
     public abstract Class<T> getModelClass();
 
     public Observable<T> doAsync(T object, Action1<T> action1) {
-        return Observable.fromAsync(e ->
-                {
+        return Observable.fromAsync(e -> {
                     realm.beginTransaction();
                     try {
                         action1.call(object);
