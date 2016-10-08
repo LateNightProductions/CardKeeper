@@ -1,19 +1,19 @@
 package com.awscherb.cardkeeper.data.handler;
 
-import com.awscherb.cardkeeper.model.BaseModel;
+import com.awscherb.cardkeeper.data.model.BaseModel;
 
 import java.util.List;
 
 import rx.Observable;
 
 
-public abstract class BaseHandler<T extends BaseModel> {
+abstract class BaseHandler<T extends BaseModel> {
 
     //================================================================================
     // Get
     //================================================================================
 
-    abstract Observable<T> getObject(String id);
+    abstract Observable<T> getObject(long id);
 
     abstract Observable<List<T>> listObjects();
 

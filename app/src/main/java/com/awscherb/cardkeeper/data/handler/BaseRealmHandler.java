@@ -1,6 +1,6 @@
 package com.awscherb.cardkeeper.data.handler;
 
-import com.awscherb.cardkeeper.model.BaseModel;
+import com.awscherb.cardkeeper.data.model.BaseModel;
 
 import java.util.List;
 
@@ -11,17 +11,17 @@ import rx.AsyncEmitter;
 import rx.Observable;
 import rx.functions.Action1;
 
-public abstract class BaseRealmHandler<T extends RealmObject & BaseModel> extends BaseHandler<T> {
+abstract class BaseRealmHandler<T extends RealmObject & BaseModel> extends BaseHandler<T> {
 
     private final Realm realm;
 
-    public BaseRealmHandler(Realm realm) {
+    BaseRealmHandler(Realm realm) {
         this.realm = realm;
     }
 
     public abstract Class<T> getModelClass();
 
-    public Observable<T> doAsync(T object, Action1<T> action1) {
+    private Observable<T> doAsync(T object, Action1<T> action1) {
         return Observable.fromAsync(e -> {
                     realm.beginTransaction();
                     try {
@@ -47,7 +47,7 @@ public abstract class BaseRealmHandler<T extends RealmObject & BaseModel> extend
     //================================================================================
 
     @Override
-    public Observable<T> getObject(String id) {
+    public Observable<T> getObject(long id) {
         return realm.where(getModelClass()).equalTo("id", id).findAll().first().asObservable();
     }
 

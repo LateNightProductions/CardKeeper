@@ -1,7 +1,7 @@
 package com.awscherb.cardkeeper.data.handler;
 
 import com.awscherb.cardkeeper.data.service.ScannedCodeService;
-import com.awscherb.cardkeeper.model.ScannedCode;
+import com.awscherb.cardkeeper.data.model.ScannedCode;
 
 import java.util.List;
 
@@ -23,7 +23,7 @@ public class RealmScannedCodeHandler extends BaseRealmHandler<ScannedCode> imple
 
 
     @Override
-    public Observable<ScannedCode> getScannedCode(String codeId) {
+    public Observable<ScannedCode> getScannedCode(long codeId) {
         return getObject(codeId);
     }
 

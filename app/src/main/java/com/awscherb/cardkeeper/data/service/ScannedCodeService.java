@@ -1,6 +1,7 @@
 package com.awscherb.cardkeeper.data.service;
 
-import com.awscherb.cardkeeper.model.ScannedCode;
+
+import com.awscherb.cardkeeper.data.model.ScannedCode;
 
 import java.util.List;
 
@@ -8,7 +9,7 @@ import rx.Observable;
 
 public interface ScannedCodeService {
 
-    Observable<ScannedCode> getScannedCode(String codeId);
+    Observable<ScannedCode> getScannedCode(long codeId);
     Observable<List<ScannedCode>> listAllScannedCodes();
 
     Observable<ScannedCode> addScannedCode(ScannedCode scannedCode);
