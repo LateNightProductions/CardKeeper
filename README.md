@@ -7,5 +7,5 @@ This app makes use of:
 - Dagger
 - Realm
 - RetroLambda
-- RxAndroid
+- RxJava
 - Zxing
