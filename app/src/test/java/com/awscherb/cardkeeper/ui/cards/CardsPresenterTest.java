@@ -20,7 +20,7 @@ public class CardsPresenterTest {
 
     @Mock private ScannedCodeService scannedCodeService;
     @Mock private CardsContract.View view;
-    private CardsPresenter presenter;
+    private CardsContract.Presenter presenter;
 
     @Before
     public void setup() {
@@ -54,7 +54,7 @@ public class CardsPresenterTest {
 
         when(scannedCodeService.deleteScannedCode(any(ScannedCode.class))).thenReturn(Observable.just(null));
 
-        presenter.deleteCard(sc);
+        presenter.deleteCard(any(ScannedCode.class));
 
         verify(view).onCardDeleted();
     }
