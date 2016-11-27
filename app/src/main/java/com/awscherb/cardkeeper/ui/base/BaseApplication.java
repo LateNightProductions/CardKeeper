@@ -25,4 +25,9 @@ public class BaseApplication extends Application {
     public ServicesComponent getServicesComponent() {
         return servicesComponent;
     }
+
+    @Override
+    public void onTerminate() {
+        super.onTerminate();
+    }
 }

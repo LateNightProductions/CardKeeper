@@ -12,6 +12,10 @@ public interface CardsContract {
 
         void showCards(List<ScannedCode> codes);
 
+        void onCardAdded(ScannedCode code);
+
+        void onCardDeleted();
+
     }
 
     interface Presenter extends BasePresenter {

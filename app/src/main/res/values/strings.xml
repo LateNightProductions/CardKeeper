@@ -16,4 +16,8 @@
     <string name="activity_main_card_add_success">Bardcode added!</string>
     <string name="activity_main_card_add_failure">Failed to add barcode!</string>
 
+    <!-- Cards Fragment -->
+    <string name="fragment_cards_added_card">Added card %1$s</string>
+    <string name="fragment_cards_deleted_card">Card deleted</string>
+
 </resources>

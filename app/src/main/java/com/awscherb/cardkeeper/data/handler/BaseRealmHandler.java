@@ -7,7 +7,7 @@ import java.util.List;
 import io.realm.Realm;
 import io.realm.RealmObject;
 import io.realm.exceptions.RealmException;
-import rx.AsyncEmitter;
+import rx.Emitter;
 import rx.Observable;
 import rx.functions.Action1;
 
@@ -22,7 +22,7 @@ abstract class BaseRealmHandler<T extends RealmObject & BaseModel> extends BaseH
     public abstract Class<T> getModelClass();
 
     private Observable<T> doAsync(T object, Action1<T> action1) {
-        return Observable.fromAsync(e -> {
+        return Observable.fromEmitter(e -> {
                     realm.beginTransaction();
                     try {
                         action1.call(object);
@@ -39,7 +39,7 @@ abstract class BaseRealmHandler<T extends RealmObject & BaseModel> extends BaseH
                     e.onNext(object);
                     e.onCompleted();
                 },
-                AsyncEmitter.BackpressureMode.BUFFER);
+                Emitter.BackpressureMode.BUFFER);
     }
 
     //================================================================================

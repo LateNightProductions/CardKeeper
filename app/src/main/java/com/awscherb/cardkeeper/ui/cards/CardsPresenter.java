@@ -33,13 +33,15 @@ public class CardsPresenter implements CardsContract.Presenter {
         unsubscribe(addCodeSubscription);
 
         addCodeSubscription = scannedCodeService.addScannedCode(code)
-                .subscribe(s -> { },
+                .subscribe(view::onCardAdded,
                         Throwable::printStackTrace);
     }
 
     @Override
     public void deleteCard(ScannedCode code) {
-        scannedCodeService.deleteScannedCode(code).subscribe();
+        scannedCodeService.deleteScannedCode(code)
+                .subscribe(deleted -> view.onCardDeleted(),
+                        Throwable::printStackTrace);
     }
 
     private void unsubscribe(Subscription s) {

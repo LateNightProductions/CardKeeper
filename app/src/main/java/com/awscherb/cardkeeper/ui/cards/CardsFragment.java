@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -128,4 +129,13 @@ public class CardsFragment extends BaseFragment implements CardsContract.View {
         scannedCodeAdapter.swapObjects(codes);
     }
 
+    @Override
+    public void onCardAdded(ScannedCode code) {
+        Snackbar.make(getView(), getString(R.string.fragment_cards_added_card, code.getTitle()), Snackbar.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onCardDeleted() {
+        Snackbar.make(getView(), R.string.fragment_cards_deleted_card, Snackbar.LENGTH_SHORT).show();
+    }
 }
