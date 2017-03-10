@@ -44,6 +44,12 @@ public class CardsPresenter implements CardsContract.Presenter {
                         Throwable::printStackTrace);
     }
 
+    @Override
+    public void onViewDestroyed() {
+        unsubscribe(listCodesSubscription);
+        unsubscribe(addCodeSubscription);
+    }
+
     private void unsubscribe(Subscription s) {
         if (s != null) {
             s.unsubscribe();

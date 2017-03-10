@@ -19,6 +19,9 @@ import com.journeyapps.barcodescanner.CompoundBarcodeView;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 import static android.app.Activity.RESULT_OK;
 
 public class ScanFragment extends BaseFragment {
@@ -30,7 +33,7 @@ public class ScanFragment extends BaseFragment {
 
     private static final int REQUEST_CAMERA = 16;
 
-    private CompoundBarcodeView barcodeView;
+    @BindView(R.id.fragment_scan_scanner) CompoundBarcodeView barcodeView;
 
     //================================================================================
     // Lifecycle methods
@@ -40,11 +43,7 @@ public class ScanFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_scan, container, false);
-        if (v == null) {
-            return null;
-        }
-
-        barcodeView = (CompoundBarcodeView) v.findViewById(R.id.fragment_scan_scanner);
+        ButterKnife.bind(this, v);
 
         // Check permissions
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {

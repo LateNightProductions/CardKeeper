@@ -28,18 +28,22 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 import static android.app.Activity.RESULT_OK;
 
 public class CardsFragment extends BaseFragment implements CardsContract.View {
 
     public static final int REQUEST_GET_CODE = 3;
 
-    @Inject
-    CardsContract.Presenter presenter;
-    RecyclerView recyclerView;
+    @Inject CardsContract.Presenter presenter;
+
+    @BindView(R.id.fragment_cards_recycler) RecyclerView recyclerView;
+    @BindView(R.id.fragment_cards_fab) FloatingActionButton fab;
+
     LinearLayoutManager layoutManager;
     CardsAdapter scannedCodeAdapter;
-    FloatingActionButton fab;
 
     //================================================================================
     // New Instance
@@ -68,12 +72,7 @@ public class CardsFragment extends BaseFragment implements CardsContract.View {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_cards, container, false);
-        if (v == null) {
-            return null;
-        }
-
-        recyclerView = (RecyclerView) v.findViewById(R.id.fragment_cards_recycler);
-        fab = (FloatingActionButton) v.findViewById(R.id.fragment_cards_fab);
+        ButterKnife.bind(this, v);
 
         layoutManager = new LinearLayoutManager(getActivity());
         scannedCodeAdapter = new CardsAdapter(getActivity(), presenter);
@@ -90,6 +89,12 @@ public class CardsFragment extends BaseFragment implements CardsContract.View {
     public void onResume() {
         super.onResume();
         presenter.loadCards();
+    }
+
+    @Override
+    public void onPause() {
+        presenter.onViewDestroyed();
+        super.onPause();
     }
 
     @Override
