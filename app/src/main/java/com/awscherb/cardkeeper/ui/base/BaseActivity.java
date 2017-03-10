@@ -31,8 +31,15 @@ public class BaseActivity extends RxAppCompatActivity {
     // Helper methods
     //================================================================================
 
-    public void setToolbar(Toolbar toolbar) {
-        this.toolbar = toolbar;
+    public void setUpToolbar() {
+        Toolbar t = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = t;
+
+        setSupportActionBar(toolbar);
+
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
     }
 
     public void setTitle(String title) {

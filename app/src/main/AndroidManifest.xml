@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.awscherb.cardkeeper">
+    package="com.awscherb.cardkeeper">
 
     <uses-feature
         android:name="android.hardware.camera"
-        android:required="false"/>
+        android:required="false" />
     <uses-feature
         android:name="android.hardware.camera.autofocus"
-        android:required="false"/>
+        android:required="false" />
     <uses-feature
         android:name="android.hardware.camera.flash"
-        android:required="false"/>
+        android:required="false" />
 
     <application
         android:name=".ui.base.BaseApplication"
@@ -20,18 +20,25 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
 
-        <activity android:name=".ui.cards.CardsActivity">
+        <activity
+            android:name=".ui.cards.CardsActivity"
+            android:label="@string/title_activity_cards">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
         <activity
+            android:name=".ui.card_detail.CardDetailActivity"
+            android:parentActivityName=".ui.cards.CardsActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name=".ui.scan.ScanActivity"
             android:parentActivityName=".ui.cards.CardsActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
     </application>
 

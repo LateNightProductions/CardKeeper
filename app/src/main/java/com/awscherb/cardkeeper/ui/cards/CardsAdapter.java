@@ -18,6 +18,9 @@ import com.journeyapps.barcodescanner.BarcodeEncoder;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 
 public class CardsAdapter extends BaseAdapter<ScannedCode, CardsAdapter.ViewHolder> {
 
@@ -52,6 +55,8 @@ public class CardsAdapter extends BaseAdapter<ScannedCode, CardsAdapter.ViewHold
         switch (code.getFormat()) {
             // Keep QR code scare
             case QR_CODE:
+            case AZTEC:
+            case DATA_MATRIX:
                 holder.imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
                 break;
             // Scale everything else
@@ -87,15 +92,13 @@ public class CardsAdapter extends BaseAdapter<ScannedCode, CardsAdapter.ViewHold
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        CardView cardView;
-        TextView title;
-        ImageView imageView;
+        @BindView(R.id.adapter_code_card_view) CardView cardView;
+        @BindView(R.id.adapter_code_title) TextView title;
+        @BindView(R.id.adapter_code_image) ImageView imageView;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            cardView = (CardView) itemView.findViewById(R.id.adapter_code_card_view);
-            title = (TextView) itemView.findViewById(R.id.adapter_code_title);
-            imageView = (ImageView) itemView.findViewById(R.id.adapter_code_image);
+            ButterKnife.bind(this, itemView);
         }
     }
 }

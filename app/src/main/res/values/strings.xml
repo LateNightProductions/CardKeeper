@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">CardKeeper</string>
 
+    <!-- Titles -->
+    <string name="title_activity_cards">CardKeeper</string>
+
     <!--Actions-->
     <string name="action_add">Add</string>
     <string name="action_cancel">Cancel</string>
@@ -11,10 +14,6 @@
 
     <!-- Card Name Dialog -->
     <string name="dialog_card_name_hint">Enter a name</string>
-
-    <!-- Main Activity -->
-    <string name="activity_main_card_add_success">Bardcode added!</string>
-    <string name="activity_main_card_add_failure">Failed to add barcode!</string>
 
     <!-- Cards Fragment -->
     <string name="fragment_cards_added_card">Added card %1$s</string>

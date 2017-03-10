@@ -20,6 +20,8 @@ import com.awscherb.cardkeeper.dagger.module.CardsPresenterModule;
 import com.awscherb.cardkeeper.data.model.ScannedCode;
 import com.awscherb.cardkeeper.ui.base.BaseApplication;
 import com.awscherb.cardkeeper.ui.base.BaseFragment;
+import com.awscherb.cardkeeper.ui.card_detail.CardDetailActivity;
+import com.awscherb.cardkeeper.ui.listener.RecyclerItemClickListener;
 import com.awscherb.cardkeeper.ui.scan.ScanActivity;
 import com.awscherb.cardkeeper.ui.scan.ScanFragment;
 import com.google.zxing.BarcodeFormat;
@@ -79,8 +81,7 @@ public class CardsFragment extends BaseFragment implements CardsContract.View {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(scannedCodeAdapter);
 
-        fab.setOnClickListener(v1 -> startActivityForResult(
-                new Intent(getActivity(), ScanActivity.class), REQUEST_GET_CODE));
+        setupListeners();
 
         return v;
     }
@@ -142,5 +143,24 @@ public class CardsFragment extends BaseFragment implements CardsContract.View {
     @Override
     public void onCardDeleted() {
         Snackbar.make(getView(), R.string.fragment_cards_deleted_card, Snackbar.LENGTH_SHORT).show();
+    }
+
+    //================================================================================
+    // Helper methods
+    //================================================================================
+
+    private void setupListeners() {
+        fab.setOnClickListener(v1 -> startActivityForResult(
+                new Intent(getActivity(), ScanActivity.class), REQUEST_GET_CODE));
+
+        recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(), new RecyclerItemClickListener.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Intent i = new Intent(getActivity(), CardDetailActivity.class);
+                i.putExtra(CardDetailActivity.EXTRA_CARD_ID,
+                        scannedCodeAdapter.getItem(position).getId());
+                startActivity(i);
+            }
+        }));
     }
 }
