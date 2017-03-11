@@ -5,7 +5,8 @@ import android.app.Application;
 import com.awscherb.cardkeeper.dagger.component.DaggerServicesComponent;
 import com.awscherb.cardkeeper.dagger.component.ServicesComponent;
 import com.awscherb.cardkeeper.dagger.module.HandlersModule;
-import com.awscherb.cardkeeper.dagger.module.RealmModule;
+
+import io.realm.Realm;
 
 public class BaseApplication extends Application {
 
@@ -15,9 +16,10 @@ public class BaseApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
+        Realm.init(this);
+
         servicesComponent = DaggerServicesComponent.builder()
                 .handlersModule(new HandlersModule())
-                .realmModule(new RealmModule(this))
                 .build();
 
     }

@@ -32,8 +32,7 @@
 
         <activity
             android:name=".ui.card_detail.CardDetailActivity"
-            android:parentActivityName=".ui.cards.CardsActivity"
-            android:screenOrientation="portrait" />
+            android:parentActivityName=".ui.cards.CardsActivity" />
 
         <activity
             android:name=".ui.scan.ScanActivity"

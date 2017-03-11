@@ -13,15 +13,9 @@ import rx.functions.Action1;
 
 abstract class BaseRealmHandler<T extends RealmObject & BaseModel> extends BaseHandler<T> {
 
-    private final Realm realm;
-
-    BaseRealmHandler(Realm realm) {
-        this.realm = realm;
-    }
-
     public abstract Class<T> getModelClass();
 
-    private Observable<T> doAsync(T object, Action1<T> action1) {
+    private Observable<T> doAsync(T object, Realm realm, Action1<T> action1) {
         return Observable.fromEmitter(e -> {
                     realm.beginTransaction();
                     try {
@@ -35,6 +29,8 @@ abstract class BaseRealmHandler<T extends RealmObject & BaseModel> extends BaseH
                         realm.cancelTransaction();
                         e.onError(error);
                         return;
+                    } finally {
+                        realm.close();
                     }
                     e.onNext(object);
                     e.onCompleted();
@@ -48,13 +44,21 @@ abstract class BaseRealmHandler<T extends RealmObject & BaseModel> extends BaseH
 
     @Override
     public Observable<T> getObject(long id) {
-        return realm.where(getModelClass()).equalTo("id", id).findAll().first().asObservable();
+        Realm realm = Realm.getDefaultInstance();
+        return realm.where(getModelClass()).equalTo("id", id).findAll()
+                .asObservable()
+                .flatMapIterable(object -> object)
+                .map(realm::copyFromRealm)
+                .doOnUnsubscribe(realm::close);
     }
 
     @Override
     public Observable<List<T>> listObjects() {
-        return realm.where(getModelClass()).findAll().asObservable().map(realm::copyFromRealm);
-
+        Realm realm = Realm.getDefaultInstance();
+        return realm.where(getModelClass()).findAll()
+                .asObservable()
+                .map(realm::copyFromRealm)
+                .doOnUnsubscribe(realm::close);
     }
 
     //================================================================================
@@ -63,7 +67,8 @@ abstract class BaseRealmHandler<T extends RealmObject & BaseModel> extends BaseH
 
     @Override
     public Observable<T> createObject(T object) {
-        return doAsync(object, realm::copyToRealmOrUpdate);
+        Realm realm = Realm.getDefaultInstance();
+        return doAsync(object, realm, realm::copyToRealmOrUpdate);
     }
 
     //================================================================================
@@ -72,7 +77,8 @@ abstract class BaseRealmHandler<T extends RealmObject & BaseModel> extends BaseH
 
     @Override
     public Observable<T> updateObject(T object) {
-        return doAsync(object, realm::copyToRealmOrUpdate);
+        Realm realm = Realm.getDefaultInstance();
+        return doAsync(object, realm,  realm::copyToRealmOrUpdate);
     }
 
     //================================================================================
@@ -81,7 +87,8 @@ abstract class BaseRealmHandler<T extends RealmObject & BaseModel> extends BaseH
 
     @Override
     public Observable<Void> deleteObject(T object) {
-        return doAsync(object, o ->
+        Realm realm = Realm.getDefaultInstance();
+        return doAsync(object, realm, o ->
                 realm.where(getModelClass())
                         .equalTo("id", o.getId())
                         .findAll()

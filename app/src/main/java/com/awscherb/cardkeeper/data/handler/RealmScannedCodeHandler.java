@@ -1,20 +1,14 @@
 package com.awscherb.cardkeeper.data.handler;
 
-import com.awscherb.cardkeeper.data.service.ScannedCodeService;
 import com.awscherb.cardkeeper.data.model.ScannedCode;
+import com.awscherb.cardkeeper.data.service.ScannedCodeService;
 
 import java.util.List;
 
-import io.realm.Realm;
 import rx.Observable;
 
 
 public class RealmScannedCodeHandler extends BaseRealmHandler<ScannedCode> implements ScannedCodeService {
-
-
-    public RealmScannedCodeHandler(Realm realm) {
-        super(realm);
-    }
 
     @Override
     public Class<ScannedCode> getModelClass() {
