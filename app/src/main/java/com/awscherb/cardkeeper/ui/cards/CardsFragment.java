@@ -153,14 +153,12 @@ public class CardsFragment extends BaseFragment implements CardsContract.View {
         fab.setOnClickListener(v1 -> startActivityForResult(
                 new Intent(getActivity(), ScanActivity.class), REQUEST_GET_CODE));
 
-        recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(), new RecyclerItemClickListener.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                Intent i = new Intent(getActivity(), CardDetailActivity.class);
-                i.putExtra(CardDetailActivity.EXTRA_CARD_ID,
-                        scannedCodeAdapter.getItem(position).getId());
-                startActivity(i);
-            }
-        }));
+        recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(),
+                (view, position) -> {
+                    Intent i = new Intent(getActivity(), CardDetailActivity.class);
+                    i.putExtra(CardDetailActivity.EXTRA_CARD_ID,
+                            scannedCodeAdapter.getItem(position).getId());
+                    startActivity(i);
+                }));
     }
 }

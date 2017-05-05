@@ -24,11 +24,9 @@ abstract class BaseRealmHandler<T extends RealmObject & BaseModel> extends BaseH
                     } catch (RuntimeException exception) {
                         realm.cancelTransaction();
                         e.onError(new RealmException("Error during transaction.", exception));
-                        return;
                     } catch (Error error) {
                         realm.cancelTransaction();
                         e.onError(error);
-                        return;
                     } finally {
                         realm.close();
                     }
