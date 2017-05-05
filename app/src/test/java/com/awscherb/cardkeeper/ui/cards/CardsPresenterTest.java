@@ -49,9 +49,6 @@ public class CardsPresenterTest {
 
     @Test
     public void test_deleteCode() {
-        ScannedCode sc = new ScannedCode();
-        sc.setId(7890L);
-
         when(scannedCodeService.deleteScannedCode(any(ScannedCode.class))).thenReturn(Observable.just(null));
 
         presenter.deleteCard(any(ScannedCode.class));
