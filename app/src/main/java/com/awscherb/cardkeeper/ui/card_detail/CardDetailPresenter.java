@@ -2,7 +2,7 @@ package com.awscherb.cardkeeper.ui.card_detail;
 
 import com.awscherb.cardkeeper.data.service.ScannedCodeService;
 
-import rx.Subscription;
+import io.reactivex.disposables.Disposable;
 
 
 public class CardDetailPresenter implements CardDetailContract.Presenter {
@@ -10,7 +10,7 @@ public class CardDetailPresenter implements CardDetailContract.Presenter {
     private CardDetailContract.View view;
 
     private ScannedCodeService service;
-    private Subscription loadSubscription;
+    private Disposable loadSubscription;
 
     //================================================================================
     // Constructor
@@ -39,9 +39,9 @@ public class CardDetailPresenter implements CardDetailContract.Presenter {
         unsubscribe(loadSubscription);
     }
 
-    private void unsubscribe(Subscription s) {
+    private void unsubscribe(Disposable s) {
         if (s != null) {
-            s.unsubscribe();
+            s.dispose();
         }
     }
 

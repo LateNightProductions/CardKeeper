@@ -5,17 +5,20 @@ import com.awscherb.cardkeeper.data.model.ScannedCode;
 
 import java.util.List;
 
-import rx.Observable;
+import io.reactivex.Completable;
+import io.reactivex.Observable;
+import io.reactivex.Single;
+
 
 public interface ScannedCodeService {
 
-    Observable<ScannedCode> getScannedCode(long codeId);
+    Single<ScannedCode> getScannedCode(long codeId);
     Observable<List<ScannedCode>> listAllScannedCodes();
 
-    Observable<ScannedCode> addScannedCode(ScannedCode scannedCode);
+    Single<ScannedCode> addScannedCode(ScannedCode scannedCode);
 
-    Observable<ScannedCode> updateScannedCode(ScannedCode scannedCode);
+    Single<ScannedCode> updateScannedCode(ScannedCode scannedCode);
 
-    Observable<Void> deleteScannedCode(ScannedCode scannedCode);
+    Completable deleteScannedCode(ScannedCode scannedCode);
 
 }

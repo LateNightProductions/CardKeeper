@@ -5,7 +5,9 @@ import com.awscherb.cardkeeper.data.service.ScannedCodeService;
 
 import java.util.List;
 
-import rx.Observable;
+import io.reactivex.Completable;
+import io.reactivex.Observable;
+import io.reactivex.Single;
 
 
 public class RealmScannedCodeHandler extends BaseRealmHandler<ScannedCode> implements ScannedCodeService {
@@ -17,7 +19,7 @@ public class RealmScannedCodeHandler extends BaseRealmHandler<ScannedCode> imple
 
 
     @Override
-    public Observable<ScannedCode> getScannedCode(long codeId) {
+    public Single<ScannedCode> getScannedCode(long codeId) {
         return getObject(codeId);
     }
 
@@ -27,17 +29,17 @@ public class RealmScannedCodeHandler extends BaseRealmHandler<ScannedCode> imple
     }
 
     @Override
-    public Observable<ScannedCode> addScannedCode(ScannedCode scannedCode) {
+    public Single<ScannedCode> addScannedCode(ScannedCode scannedCode) {
         return createObject(scannedCode);
     }
 
     @Override
-    public Observable<ScannedCode> updateScannedCode(ScannedCode scannedCode) {
+    public Single<ScannedCode> updateScannedCode(ScannedCode scannedCode) {
         return updateObject(scannedCode);
     }
 
     @Override
-    public Observable<Void> deleteScannedCode(ScannedCode scannedCode) {
+    public Completable deleteScannedCode(ScannedCode scannedCode) {
         return deleteObject(scannedCode);
     }
 }

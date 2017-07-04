@@ -40,18 +40,19 @@ dependencies {
     compile "com.android.support:appcompat-v7:$rootProject.supportLibraryVersion"
     compile "com.android.support:cardview-v7:$rootProject.supportLibraryVersion"
     compile "com.android.support:recyclerview-v7:$rootProject.supportLibraryVersion"
+    compile "com.android.support:design:$rootProject.supportLibraryVersion"
 
     // Rx
-    compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
-    compile 'io.reactivex.rxjava2:rxjava:2.0.1'
+    compile "io.reactivex.rxjava2:rxjava:$rootProject.rxJavaVersion"
+    compile "io.reactivex.rxjava2:rxandroid:$rootProject.rxAndroidVersion"
 
-    compile "com.jakewharton.rxbinding:rxbinding:$rootProject.rxBindingVersion"
-    compile "com.jakewharton.rxbinding:rxbinding-support-v4:$rootProject.rxBindingVersion"
-    compile "com.jakewharton.rxbinding:rxbinding-appcompat-v7:$rootProject.rxBindingVersion"
-    compile "com.jakewharton.rxbinding:rxbinding-design:$rootProject.rxBindingVersion"
+    compile "com.jakewharton.rxbinding2:rxbinding:$rootProject.rxBindingVersion"
+    compile "com.jakewharton.rxbinding2:rxbinding-support-v4:$rootProject.rxBindingVersion"
+    compile "com.jakewharton.rxbinding2:rxbinding-appcompat-v7:$rootProject.rxBindingVersion"
+    compile "com.jakewharton.rxbinding2:rxbinding-design:$rootProject.rxBindingVersion"
 
-    compile "com.trello:rxlifecycle:$rootProject.rxLifecycleVersion"
-    compile "com.trello:rxlifecycle-components:$rootProject.rxLifecycleVersion"
+    compile "com.trello.rxlifecycle2:rxlifecycle:$rootProject.rxLifecycleVersion"
+    compile "com.trello.rxlifecycle2:rxlifecycle-components:$rootProject.rxLifecycleVersion"
 
     // Scanning
     compile 'com.google.zxing:core:3.3.0'
@@ -71,4 +72,3 @@ dependencies {
     testCompile "org.hamcrest:hamcrest-all:$rootProject.ext.hamcrestVersion"
 
 }
-
