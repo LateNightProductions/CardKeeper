@@ -11,6 +11,8 @@ import io.reactivex.Single;
 
 abstract class BaseHandler<T extends BaseModel> {
 
+    protected static final String FIELD_ID = "id";
+
     //================================================================================
     // Get
     //================================================================================

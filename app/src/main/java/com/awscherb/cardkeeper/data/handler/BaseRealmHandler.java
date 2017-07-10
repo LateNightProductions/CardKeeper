@@ -27,7 +27,7 @@ abstract class BaseRealmHandler<T extends RealmObject & BaseModel> extends BaseH
     public Single<T> getObject(long id) {
         final Realm realm = Realm.getDefaultInstance();
         return singleReam(realm)
-                .map(r -> r.where(getModelClass()).equalTo("id", id).findAll())
+                .map(r -> r.where(getModelClass()).equalTo(FIELD_ID, id).findAll())
                 .map(realm::copyFromRealm)
                 .map(list -> list.get(0))
                 .doOnDispose(realm::close);
@@ -49,7 +49,7 @@ abstract class BaseRealmHandler<T extends RealmObject & BaseModel> extends BaseH
     @Override
     public Single<T> createObject(T object) {
         Realm realm = Realm.getDefaultInstance();
-        return doAsync(object, realm, realm::copyToRealmOrUpdate);
+        return consume(object, realm, realm::copyToRealmOrUpdate);
     }
 
     //================================================================================
@@ -59,7 +59,7 @@ abstract class BaseRealmHandler<T extends RealmObject & BaseModel> extends BaseH
     @Override
     public Single<T> updateObject(T object) {
         Realm realm = Realm.getDefaultInstance();
-        return doAsync(object, realm,  realm::copyToRealmOrUpdate);
+        return consume(object, realm, realm::copyToRealmOrUpdate);
     }
 
     //================================================================================
@@ -69,24 +69,27 @@ abstract class BaseRealmHandler<T extends RealmObject & BaseModel> extends BaseH
     @Override
     public Completable deleteObject(T object) {
         Realm realm = Realm.getDefaultInstance();
-        return doAsync(object, realm, o ->
+        return consume(object, realm, o ->
                 realm.where(getModelClass())
-                        .equalTo("id", o.getId())
+                        .equalTo(FIELD_ID, o.getId())
                         .findAll()
                         .first()
-                        .deleteFromRealm()).toCompletable();
+                        .deleteFromRealm())
+                .toCompletable()
+                .doOnDispose(realm::close);
     }
 
     //================================================================================
     // Helper
     //================================================================================
 
-    private Single<T> doAsync(T object, Realm realm, Consumer<T> consumer) {
+    private Single<T> consume(T object, Realm realm, Consumer<T> consumer) {
         return Single.create(e -> {
             realm.beginTransaction();
             try {
                 consumer.accept(object);
                 realm.commitTransaction();
+                e.onSuccess(object);
             } catch (RuntimeException exception) {
                 realm.cancelTransaction();
                 e.onError(new RealmException("Error during transaction.", exception));
@@ -96,7 +99,7 @@ abstract class BaseRealmHandler<T extends RealmObject & BaseModel> extends BaseH
             } finally {
                 realm.close();
             }
-            e.onSuccess(object);
+
         });
     }
 
