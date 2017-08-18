@@ -4,16 +4,20 @@ import com.awscherb.cardkeeper.data.model.BaseModel;
 
 import java.util.List;
 
-import rx.Observable;
+import io.reactivex.Completable;
+import io.reactivex.Observable;
+import io.reactivex.Single;
 
 
 abstract class BaseHandler<T extends BaseModel> {
+
+    protected static final String FIELD_ID = "id";
 
     //================================================================================
     // Get
     //================================================================================
 
-    abstract Observable<T> getObject(long id);
+    abstract Single<T> getObject(long id);
 
     abstract Observable<List<T>> listObjects();
 
@@ -21,18 +25,18 @@ abstract class BaseHandler<T extends BaseModel> {
     // Create
     //================================================================================
 
-    abstract Observable<T> createObject(T object);
+    abstract Single<T> createObject(T object);
 
     //================================================================================
     // Update
     //================================================================================
 
-    abstract Observable<T> updateObject(T object);
+    abstract Single<T> updateObject(T object);
 
     //================================================================================
     // Delete
     //================================================================================
 
-    abstract Observable<Void> deleteObject(T object);
+    abstract Completable deleteObject(T object);
 
 }

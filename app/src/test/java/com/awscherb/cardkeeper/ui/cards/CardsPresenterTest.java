@@ -10,7 +10,7 @@ import org.mockito.MockitoAnnotations;
 
 import java.util.ArrayList;
 
-import rx.Observable;
+import io.reactivex.Observable;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.verify;

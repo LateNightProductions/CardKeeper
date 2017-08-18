@@ -4,59 +4,42 @@ import com.awscherb.cardkeeper.data.model.BaseModel;
 
 import java.util.List;
 
+import io.reactivex.Completable;
+import io.reactivex.Observable;
+import io.reactivex.Single;
+import io.reactivex.disposables.Disposables;
+import io.reactivex.functions.Consumer;
 import io.realm.Realm;
+import io.realm.RealmChangeListener;
+import io.realm.RealmConfiguration;
 import io.realm.RealmObject;
 import io.realm.exceptions.RealmException;
-import rx.Emitter;
-import rx.Observable;
-import rx.functions.Action1;
 
 abstract class BaseRealmHandler<T extends RealmObject & BaseModel> extends BaseHandler<T> {
 
     public abstract Class<T> getModelClass();
-
-    private Observable<T> doAsync(T object, Realm realm, Action1<T> action1) {
-        return Observable.fromEmitter(e -> {
-                    realm.beginTransaction();
-                    try {
-                        action1.call(object);
-                        realm.commitTransaction();
-                    } catch (RuntimeException exception) {
-                        realm.cancelTransaction();
-                        e.onError(new RealmException("Error during transaction.", exception));
-                    } catch (Error error) {
-                        realm.cancelTransaction();
-                        e.onError(error);
-                    } finally {
-                        realm.close();
-                    }
-                    e.onNext(object);
-                    e.onCompleted();
-                },
-                Emitter.BackpressureMode.BUFFER);
-    }
 
     //================================================================================
     // Get
     //================================================================================
 
     @Override
-    public Observable<T> getObject(long id) {
-        Realm realm = Realm.getDefaultInstance();
-        return realm.where(getModelClass()).equalTo("id", id).findAll()
-                .asObservable()
-                .flatMapIterable(object -> object)
+    public Single<T> getObject(long id) {
+        final Realm realm = Realm.getDefaultInstance();
+        return singleReam(realm)
+                .map(r -> r.where(getModelClass()).equalTo(FIELD_ID, id).findAll())
                 .map(realm::copyFromRealm)
-                .doOnUnsubscribe(realm::close);
+                .map(list -> list.get(0))
+                .doOnDispose(realm::close);
     }
 
     @Override
     public Observable<List<T>> listObjects() {
-        Realm realm = Realm.getDefaultInstance();
-        return realm.where(getModelClass()).findAll()
-                .asObservable()
+        final Realm realm = Realm.getDefaultInstance();
+        return observableRealm(realm)
+                .map(r -> r.where(getModelClass()).findAll())
                 .map(realm::copyFromRealm)
-                .doOnUnsubscribe(realm::close);
+                .doOnDispose(realm::close);
     }
 
     //================================================================================
@@ -64,9 +47,9 @@ abstract class BaseRealmHandler<T extends RealmObject & BaseModel> extends BaseH
     //================================================================================
 
     @Override
-    public Observable<T> createObject(T object) {
+    public Single<T> createObject(T object) {
         Realm realm = Realm.getDefaultInstance();
-        return doAsync(object, realm, realm::copyToRealmOrUpdate);
+        return consume(object, realm, realm::copyToRealmOrUpdate);
     }
 
     //================================================================================
@@ -74,9 +57,9 @@ abstract class BaseRealmHandler<T extends RealmObject & BaseModel> extends BaseH
     //================================================================================
 
     @Override
-    public Observable<T> updateObject(T object) {
+    public Single<T> updateObject(T object) {
         Realm realm = Realm.getDefaultInstance();
-        return doAsync(object, realm,  realm::copyToRealmOrUpdate);
+        return consume(object, realm, realm::copyToRealmOrUpdate);
     }
 
     //================================================================================
@@ -84,16 +67,70 @@ abstract class BaseRealmHandler<T extends RealmObject & BaseModel> extends BaseH
     //================================================================================
 
     @Override
-    public Observable<Void> deleteObject(T object) {
+    public Completable deleteObject(T object) {
         Realm realm = Realm.getDefaultInstance();
-        return doAsync(object, realm, o ->
+        return consume(object, realm, o ->
                 realm.where(getModelClass())
-                        .equalTo("id", o.getId())
+                        .equalTo(FIELD_ID, o.getId())
                         .findAll()
                         .first()
                         .deleteFromRealm())
-                .map(delete -> null);
+                .toCompletable()
+                .doOnDispose(realm::close);
+    }
 
+    //================================================================================
+    // Helper
+    //================================================================================
+
+    private Single<T> consume(T object, Realm realm, Consumer<T> consumer) {
+        return Single.create(e -> {
+            realm.beginTransaction();
+            try {
+                consumer.accept(object);
+                realm.commitTransaction();
+                e.onSuccess(object);
+            } catch (RuntimeException exception) {
+                realm.cancelTransaction();
+                e.onError(new RealmException("Error during transaction.", exception));
+            } catch (Error error) {
+                realm.cancelTransaction();
+                e.onError(error);
+            } finally {
+                realm.close();
+            }
+
+        });
+    }
+
+    private Observable<Realm> observableRealm(Realm realm) {
+        return Observable.create(emitter -> {
+            RealmConfiguration realmConfiguration = realm.getConfiguration();
+            Realm observableRealm = Realm.getInstance(realmConfiguration);
+
+            final RealmChangeListener<Realm> listener = emitter::onNext;
+            emitter.setDisposable(Disposables.fromRunnable(() -> {
+                observableRealm.removeChangeListener(listener);
+                observableRealm.close();
+            }));
+            observableRealm.addChangeListener(listener);
+            emitter.onNext(observableRealm);
+        });
+    }
+
+    private Single<Realm> singleReam(Realm realm) {
+        return Single.create(emitter -> {
+            RealmConfiguration realmConfiguration = realm.getConfiguration();
+            Realm observableRealm = Realm.getInstance(realmConfiguration);
+
+            final RealmChangeListener<Realm> listener = emitter::onSuccess;
+            emitter.setDisposable(Disposables.fromRunnable(() -> {
+                observableRealm.removeChangeListener(listener);
+                observableRealm.close();
+            }));
+            observableRealm.addChangeListener(listener);
+            emitter.onSuccess(observableRealm);
+        });
     }
 
 }

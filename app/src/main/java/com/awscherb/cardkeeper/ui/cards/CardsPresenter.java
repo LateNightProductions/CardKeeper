@@ -3,15 +3,16 @@ package com.awscherb.cardkeeper.ui.cards;
 import com.awscherb.cardkeeper.data.model.ScannedCode;
 import com.awscherb.cardkeeper.data.service.ScannedCodeService;
 
-import rx.Subscription;
+import io.reactivex.disposables.Disposable;
+
 
 public class CardsPresenter implements CardsContract.Presenter {
 
     private CardsContract.View view;
     private ScannedCodeService scannedCodeService;
 
-    private Subscription listCodesSubscription;
-    private Subscription addCodeSubscription;
+    private Disposable listCodesSubscription;
+    private Disposable addCodeSubscription;
 
     public CardsPresenter(CardsContract.View view, ScannedCodeService scannedCodeService) {
         this.view = view;
@@ -40,7 +41,7 @@ public class CardsPresenter implements CardsContract.Presenter {
     @Override
     public void deleteCard(ScannedCode code) {
         scannedCodeService.deleteScannedCode(code)
-                .subscribe(deleted -> view.onCardDeleted(),
+                .subscribe(() -> view.onCardDeleted(),
                         Throwable::printStackTrace);
     }
 
@@ -50,9 +51,9 @@ public class CardsPresenter implements CardsContract.Presenter {
         unsubscribe(addCodeSubscription);
     }
 
-    private void unsubscribe(Subscription s) {
+    private void unsubscribe(Disposable s) {
         if (s != null) {
-            s.unsubscribe();
+            s.dispose();
         }
     }
 
