@@ -2,6 +2,9 @@ package com.awscherb.cardkeeper.ui.card_detail;
 
 import com.awscherb.cardkeeper.data.service.ScannedCodeService;
 
+import javax.inject.Inject;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 
 
@@ -9,27 +12,35 @@ public class CardDetailPresenter implements CardDetailContract.Presenter {
 
     private CardDetailContract.View view;
 
-    private ScannedCodeService service;
+    @Inject ScannedCodeService service;
     private Disposable loadSubscription;
 
     //================================================================================
     // Constructor
     //================================================================================
 
-    public CardDetailPresenter(CardDetailContract.View view, ScannedCodeService service) {
-        this.view = view;
-        this.service = service;
+    @Inject
+    public CardDetailPresenter() {
+
+
     }
 
     //================================================================================
     // Presenter methods
     //================================================================================
 
+
     @Override
-    public void loadCard(long id) {
+    public void attachView(CardDetailContract.View view) {
+        this.view = view;
+    }
+
+    @Override
+    public void loadCard(int id) {
         unsubscribe(loadSubscription);
 
         loadSubscription = service.getScannedCode(id)
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(view::showCard,
                         Throwable::printStackTrace);
     }

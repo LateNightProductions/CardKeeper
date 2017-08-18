@@ -15,10 +15,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 import com.awscherb.cardkeeper.R;
-import com.awscherb.cardkeeper.dagger.component.DaggerCardsComponent;
-import com.awscherb.cardkeeper.dagger.module.CardsPresenterModule;
 import com.awscherb.cardkeeper.data.model.ScannedCode;
-import com.awscherb.cardkeeper.ui.base.BaseApplication;
 import com.awscherb.cardkeeper.ui.base.BaseFragment;
 import com.awscherb.cardkeeper.ui.card_detail.CardDetailActivity;
 import com.awscherb.cardkeeper.ui.listener.RecyclerItemClickListener;
@@ -63,10 +60,7 @@ public class CardsFragment extends BaseFragment implements CardsContract.View {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        DaggerCardsComponent.builder()
-                .cardsPresenterModule(new CardsPresenterModule(this))
-                .servicesComponent(((BaseApplication) getActivity().getApplication()).getServicesComponent())
-                .build().inject(this);
+        getBaseActivity().viewComponent().inject(this);
 
     }
 
@@ -82,6 +76,8 @@ public class CardsFragment extends BaseFragment implements CardsContract.View {
         recyclerView.setAdapter(scannedCodeAdapter);
 
         setupListeners();
+
+        presenter.attachView(this);
 
         return v;
     }
@@ -104,7 +100,6 @@ public class CardsFragment extends BaseFragment implements CardsContract.View {
 
         if (requestCode == REQUEST_GET_CODE && resultCode == RESULT_OK) {
             ScannedCode scannedCode = new ScannedCode();
-            scannedCode.setId(System.currentTimeMillis());
             scannedCode.setText(data.getStringExtra(ScanFragment.EXTRA_BARCODE_TEXT));
             scannedCode.setFormat((BarcodeFormat) data.getSerializableExtra(ScanFragment.EXTRA_BARCODE_FORMAT));
 

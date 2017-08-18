@@ -10,7 +10,9 @@ import org.mockito.MockitoAnnotations;
 
 import java.util.ArrayList;
 
-import io.reactivex.Observable;
+import io.reactivex.Completable;
+import io.reactivex.Flowable;
+import io.reactivex.Single;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.verify;
@@ -26,12 +28,12 @@ public class CardsPresenterTest {
     public void setup() {
         MockitoAnnotations.initMocks(this);
 
-        presenter = new CardsPresenter(view, scannedCodeService);
+        presenter = new CardsPresenter();
     }
 
     @Test
     public void test_loadCodes() {
-        when(scannedCodeService.listAllScannedCodes()).thenReturn(Observable.just(new ArrayList<>()));
+        when(scannedCodeService.listAllScannedCodes()).thenReturn(Flowable.just(new ArrayList<>()));
 
         presenter.loadCards();
 
@@ -40,7 +42,7 @@ public class CardsPresenterTest {
 
     @Test
     public void test_addCode() {
-        when(scannedCodeService.addScannedCode(any(ScannedCode.class))).thenReturn(Observable.just(new ScannedCode()));
+        when(scannedCodeService.addScannedCode(any(ScannedCode.class))).thenReturn(Single.just(new ScannedCode()));
 
         presenter.addNewCard(any(ScannedCode.class));
 
@@ -49,7 +51,7 @@ public class CardsPresenterTest {
 
     @Test
     public void test_deleteCode() {
-        when(scannedCodeService.deleteScannedCode(any(ScannedCode.class))).thenReturn(Observable.just(null));
+        when(scannedCodeService.deleteScannedCode(any(ScannedCode.class))).thenReturn(Completable.complete());
 
         presenter.deleteCard(any(ScannedCode.class));
 

@@ -2,31 +2,30 @@ package com.awscherb.cardkeeper.ui.base;
 
 import android.app.Application;
 
-import com.awscherb.cardkeeper.dagger.component.DaggerServicesComponent;
-import com.awscherb.cardkeeper.dagger.component.ServicesComponent;
-import com.awscherb.cardkeeper.dagger.module.HandlersModule;
-
-import io.realm.Realm;
+import com.awscherb.cardkeeper.di.component.DaggerViewComponent;
+import com.awscherb.cardkeeper.di.component.ViewComponent;
+import com.awscherb.cardkeeper.di.module.AppModule;
+import com.awscherb.cardkeeper.di.module.DaoModule;
 
 public class BaseApplication extends Application {
 
-    private ServicesComponent servicesComponent;
+    private ViewComponent viewComponent;
 
     @Override
     public void onCreate() {
         super.onCreate();
 
-        Realm.init(this);
-
-        servicesComponent = DaggerServicesComponent.builder()
-                .handlersModule(new HandlersModule())
+        viewComponent = DaggerViewComponent.builder()
+                .appModule(new AppModule(this))
+                .daoModule(new DaoModule())
                 .build();
 
     }
 
-    public ServicesComponent getServicesComponent() {
-        return servicesComponent;
+    public ViewComponent getViewComponent() {
+        return viewComponent;
     }
+
 
     @Override
     public void onTerminate() {

@@ -3,21 +3,27 @@ package com.awscherb.cardkeeper.ui.cards;
 import com.awscherb.cardkeeper.data.model.ScannedCode;
 import com.awscherb.cardkeeper.data.service.ScannedCodeService;
 
+import javax.inject.Inject;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 
 
 public class CardsPresenter implements CardsContract.Presenter {
 
     private CardsContract.View view;
-    private ScannedCodeService scannedCodeService;
+    @Inject ScannedCodeService scannedCodeService;
 
     private Disposable listCodesSubscription;
     private Disposable addCodeSubscription;
 
-    public CardsPresenter(CardsContract.View view, ScannedCodeService scannedCodeService) {
-        this.view = view;
-        this.scannedCodeService = scannedCodeService;
+    @Inject public CardsPresenter() {
 
+    }
+
+    @Override
+    public void attachView(CardsContract.View view) {
+        this.view = view;
     }
 
     @Override
@@ -25,6 +31,7 @@ public class CardsPresenter implements CardsContract.Presenter {
         unsubscribe(listCodesSubscription);
 
         listCodesSubscription = scannedCodeService.listAllScannedCodes()
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(view::showCards,
                         Throwable::printStackTrace);
     }
@@ -34,6 +41,7 @@ public class CardsPresenter implements CardsContract.Presenter {
         unsubscribe(addCodeSubscription);
 
         addCodeSubscription = scannedCodeService.addScannedCode(code)
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(view::onCardAdded,
                         Throwable::printStackTrace);
     }
@@ -41,6 +49,7 @@ public class CardsPresenter implements CardsContract.Presenter {
     @Override
     public void deleteCard(ScannedCode code) {
         scannedCodeService.deleteScannedCode(code)
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(() -> view.onCardDeleted(),
                         Throwable::printStackTrace);
     }

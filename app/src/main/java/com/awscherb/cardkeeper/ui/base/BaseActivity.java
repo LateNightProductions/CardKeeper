@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.Toolbar;
 
 import com.awscherb.cardkeeper.R;
+import com.awscherb.cardkeeper.di.component.ViewComponent;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 
 public class BaseActivity extends RxAppCompatActivity {
@@ -44,6 +45,10 @@ public class BaseActivity extends RxAppCompatActivity {
 
     public void setTitle(String title) {
         toolbar.setTitle(title);
+    }
+
+    public ViewComponent viewComponent() {
+        return ((BaseApplication) getApplication()).getViewComponent();
     }
 
 }
