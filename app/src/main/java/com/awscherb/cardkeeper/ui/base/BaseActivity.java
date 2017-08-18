@@ -37,10 +37,11 @@ public class BaseActivity extends RxAppCompatActivity {
         toolbar = t;
 
         setSupportActionBar(toolbar);
+    }
 
+    public void setupToolbarBack() {
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
     }
 
     public void setTitle(String title) {

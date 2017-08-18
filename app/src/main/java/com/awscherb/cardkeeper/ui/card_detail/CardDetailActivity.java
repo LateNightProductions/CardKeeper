@@ -22,6 +22,7 @@ public class CardDetailActivity extends BaseActivity {
         setContentView(R.layout.activity_fragment);
 
         setUpToolbar();
+        setupToolbarBack();
 
         insertFragment(CardDetailFragment.newInstance(getIntent().getIntExtra(EXTRA_CARD_ID, 0)));
 
