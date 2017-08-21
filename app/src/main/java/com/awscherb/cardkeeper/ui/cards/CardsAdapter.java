@@ -21,6 +21,10 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.google.zxing.BarcodeFormat.AZTEC;
+import static com.google.zxing.BarcodeFormat.DATA_MATRIX;
+import static com.google.zxing.BarcodeFormat.QR_CODE;
+
 
 public class CardsAdapter extends BaseAdapter<ScannedCode, CardsAdapter.ViewHolder> {
 

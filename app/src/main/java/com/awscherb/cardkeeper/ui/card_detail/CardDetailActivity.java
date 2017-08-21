@@ -2,7 +2,6 @@ package com.awscherb.cardkeeper.ui.card_detail;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.Toolbar;
 
 import com.awscherb.cardkeeper.R;
 import com.awscherb.cardkeeper.ui.base.BaseActivity;
@@ -23,8 +22,9 @@ public class CardDetailActivity extends BaseActivity {
         setContentView(R.layout.activity_fragment);
 
         setUpToolbar();
+        setupToolbarBack();
 
-        insertFragment(CardDetailFragment.newInstance(getIntent().getLongExtra(EXTRA_CARD_ID, 0)));
+        insertFragment(CardDetailFragment.newInstance(getIntent().getIntExtra(EXTRA_CARD_ID, 0)));
 
     }
 

@@ -10,10 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.awscherb.cardkeeper.R;
-import com.awscherb.cardkeeper.dagger.component.DaggerCardDetailComponent;
-import com.awscherb.cardkeeper.dagger.module.CardDetailPresenterModule;
 import com.awscherb.cardkeeper.data.model.ScannedCode;
-import com.awscherb.cardkeeper.ui.base.BaseApplication;
 import com.awscherb.cardkeeper.ui.base.BaseFragment;
 import com.google.zxing.WriterException;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
@@ -41,11 +38,11 @@ public class CardDetailFragment extends BaseFragment implements CardDetailContra
     // New instance
     //================================================================================
 
-    public static BaseFragment newInstance(long cardId) {
+    public static BaseFragment newInstance(int cardId) {
         BaseFragment fragment = new CardDetailFragment();
         Bundle b = new Bundle();
 
-        b.putLong(EXTRA_CARD_ID, cardId);
+        b.putInt(EXTRA_CARD_ID, cardId);
 
         fragment.setArguments(b);
         return fragment;
@@ -60,10 +57,7 @@ public class CardDetailFragment extends BaseFragment implements CardDetailContra
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        DaggerCardDetailComponent.builder()
-                .cardDetailPresenterModule(new CardDetailPresenterModule(this))
-                .servicesComponent(((BaseApplication) getActivity().getApplication()).getServicesComponent())
-                .build().inject(this);
+        getBaseActivity().viewComponent().inject(this);
 
         encoder = new BarcodeEncoder();
     }
@@ -74,13 +68,15 @@ public class CardDetailFragment extends BaseFragment implements CardDetailContra
         View v = inflater.inflate(R.layout.fragment_card_detail, container, false);
         ButterKnife.bind(this, v);
 
+        presenter.attachView(this);
+
         return v;
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        presenter.loadCard(getArguments().getLong(EXTRA_CARD_ID));
+        presenter.loadCard(getArguments().getInt(EXTRA_CARD_ID));
     }
 
     @Override

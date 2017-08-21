@@ -18,7 +18,7 @@ public interface CardsContract {
 
     }
 
-    interface Presenter extends BasePresenter {
+    interface Presenter extends BasePresenter<CardsContract.View> {
 
         void loadCards();
 

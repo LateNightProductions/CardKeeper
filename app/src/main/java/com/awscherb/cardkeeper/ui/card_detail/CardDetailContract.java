@@ -12,9 +12,9 @@ public interface CardDetailContract {
 
     }
 
-    interface Presenter extends BasePresenter {
+    interface Presenter extends BasePresenter<CardDetailContract.View> {
 
-        void loadCard(long id);
+        void loadCard(int id);
 
     }
 
