@@ -28,6 +28,7 @@ import butterknife.BindView
 import butterknife.ButterKnife
 
 import android.app.Activity.RESULT_OK
+import android.support.v4.app.FragmentActivity
 
 class CardsFragment : BaseFragment(), CardsContract.View {
 
@@ -136,12 +137,16 @@ class CardsFragment : BaseFragment(), CardsContract.View {
                     Intent(activity, ScanActivity::class.java), REQUEST_GET_CODE)
         }
 
-        recyclerView.addOnItemTouchListener(RecyclerItemClickListener(activity) { _, position ->
-            val i = Intent(activity, CardDetailActivity::class.java)
-            i.putExtra(CardDetailActivity.EXTRA_CARD_ID,
-                    scannedCodeAdapter.getItem(position).id)
-            startActivity(i)
-        })
+        recyclerView.addOnItemTouchListener(RecyclerItemClickListener(activity,
+                object : RecyclerItemClickListener.OnItemClickListener {
+                    override fun onItemClick(view: View, position: Int) {
+                        val i = Intent(activity, CardDetailActivity::class.java)
+                        i.putExtra(CardDetailActivity.EXTRA_CARD_ID,
+                                scannedCodeAdapter.getItem(position).id)
+                        startActivity(i)
+                    }
+
+                }))
     }
 
 }
