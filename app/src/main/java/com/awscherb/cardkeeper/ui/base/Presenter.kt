@@ -10,6 +10,7 @@ abstract class Presenter<V : BaseView> : BasePresenter<V> {
 
     private val disposable = CompositeDisposable()
 
+    @CallSuper
     override fun attachView(view: V) {
         this.view = view
     }
@@ -17,7 +18,6 @@ abstract class Presenter<V : BaseView> : BasePresenter<V> {
     @CallSuper
     override fun onViewDestroyed() {
         disposable.clear()
-        view = null
     }
 
     protected fun addDisposable(d: Disposable) {
