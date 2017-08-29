@@ -1,6 +1,7 @@
 package com.awscherb.cardkeeper.ui.card_detail;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
@@ -115,5 +116,10 @@ public class CardDetailFragment extends BaseFragment implements CardDetailContra
             e.printStackTrace();
         }
 
+    }
+
+    @Override
+    public void onError(@NonNull Throwable e) {
+        e.printStackTrace();
     }
 }

@@ -2,6 +2,7 @@ package com.awscherb.cardkeeper.ui.cards;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -138,6 +139,11 @@ public class CardsFragment extends BaseFragment implements CardsContract.View {
     @Override
     public void onCardDeleted() {
         Snackbar.make(getView(), R.string.fragment_cards_deleted_card, Snackbar.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onError(@NonNull Throwable e) {
+        e.printStackTrace();
     }
 
     //================================================================================
