@@ -9,6 +9,6 @@ import dagger.Module
 
 @Module
 abstract class PresenterModule {
-    @Binds abstract fun bindCardsPresnter(p: CardsPresenter): CardsContract.Presenter
+    @Binds abstract fun bindCardsPresenter(p: CardsPresenter): CardsContract.Presenter
     @Binds abstract fun bindCardDetailPresenter(p: CardDetailPresenter): CardDetailContract.Presenter
 }
