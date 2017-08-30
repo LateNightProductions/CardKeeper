@@ -3,38 +3,34 @@ package com.awscherb.cardkeeper.ui.cards
 import com.awscherb.cardkeeper.data.model.ScannedCode
 import com.awscherb.cardkeeper.data.service.ScannedCodeService
 import com.awscherb.cardkeeper.ui.base.Presenter
-import com.awscherb.cardkeeper.ui.card_detail.CardDetailContract
-import com.awscherb.cardkeeper.util.extensions.toMainThread
+import io.reactivex.Scheduler
 
 import javax.inject.Inject
+import javax.inject.Named
 
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
-
-
-class CardsPresenter @Inject constructor()
-    : Presenter<CardsContract.View>(), CardsContract.Presenter {
-
-    @Inject internal lateinit var scannedCodeService: ScannedCodeService
+class CardsPresenter @Inject constructor(
+        @[JvmField Inject]  var uiScheduler: Scheduler,
+        @[JvmField Inject] var scannedCodeService: ScannedCodeService)
+    : Presenter<CardsContract.View>(uiScheduler), CardsContract.Presenter {
 
     override fun loadCards() {
         addDisposable(scannedCodeService.listAllScannedCodes()
-                .toMainThread()
+                .compose(scheduleFlowable())
                 .subscribe({ view?.showCards(it) },
-                        { it.printStackTrace() }))
+                        { view?.onError(it) }))
     }
 
     override fun addNewCard(code: ScannedCode) {
         addDisposable(scannedCodeService.addScannedCode(code)
-                .toMainThread()
+                .compose(scheduleSingle())
                 .subscribe({ view?.onCardAdded(it) },
-                        { it.printStackTrace() }))
+                        { view?.onError(it) }))
     }
 
     override fun deleteCard(code: ScannedCode) {
         addDisposable(scannedCodeService.deleteScannedCode(code)
-                .toMainThread()
+                .compose(scheduleCompletable())
                 .subscribe({ view?.onCardDeleted() },
-                        { it.printStackTrace() }))
+                        { view?.onError(it) }))
     }
 }

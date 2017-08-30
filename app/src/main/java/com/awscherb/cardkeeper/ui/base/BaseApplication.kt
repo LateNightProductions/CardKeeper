@@ -6,6 +6,7 @@ import com.awscherb.cardkeeper.di.component.DaggerViewComponent
 import com.awscherb.cardkeeper.di.component.ViewComponent
 import com.awscherb.cardkeeper.di.module.AppModule
 import com.awscherb.cardkeeper.di.module.DaoModule
+import com.awscherb.cardkeeper.di.module.SchedulerModule
 
 class BaseApplication : Application() {
 
@@ -18,6 +19,7 @@ class BaseApplication : Application() {
         viewComponent = DaggerViewComponent.builder()
                 .appModule(AppModule(this))
                 .daoModule(DaoModule())
+                .schedulerModule(SchedulerModule())
                 .build()
 
     }

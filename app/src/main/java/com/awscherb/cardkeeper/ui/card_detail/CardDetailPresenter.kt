@@ -2,18 +2,16 @@ package com.awscherb.cardkeeper.ui.card_detail
 
 import com.awscherb.cardkeeper.data.service.ScannedCodeService
 import com.awscherb.cardkeeper.ui.base.Presenter
-import com.awscherb.cardkeeper.util.extensions.toMainThread
+import io.reactivex.Scheduler
 
 import javax.inject.Inject
-
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
+import javax.inject.Named
 
 
-class CardDetailPresenter @Inject constructor()
-    : Presenter<CardDetailContract.View>(), CardDetailContract.Presenter {
-
-    @Inject internal lateinit var service: ScannedCodeService
+class CardDetailPresenter @Inject constructor(
+        @[JvmField Inject]  var uiScheduler: Scheduler,
+        @[JvmField Inject] var service: ScannedCodeService)
+    : Presenter<CardDetailContract.View>(uiScheduler), CardDetailContract.Presenter {
 
     //================================================================================
     // Presenter methods
@@ -21,8 +19,8 @@ class CardDetailPresenter @Inject constructor()
 
     override fun loadCard(id: Int) {
         addDisposable(service.getScannedCode(id)
-                .toMainThread()
-                .subscribe({ view!!.showCard(it) },
-                        { it.printStackTrace() }))
+                .compose(scheduleSingle())
+                .subscribe({ view?.showCard(it) },
+                        { view?.onError(it) }))
     }
 }

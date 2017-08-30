@@ -9,16 +9,14 @@ import io.reactivex.Single
 import javax.inject.Inject
 
 class ScannedCodeHandler @Inject constructor(
-        @Inject @JvmField var scannedCodeDao: ScannedCodeDao)
+        @[JvmField Inject] var scannedCodeDao: ScannedCodeDao)
     : BaseHandler(), ScannedCodeService {
 
-    override fun getScannedCode(codeId: Int): Single<ScannedCode> {
-        return scannedCodeDao.getScannedCode(codeId).compose(scheduleSingle())
-    }
+    override fun getScannedCode(codeId: Int): Single<ScannedCode> =
+            scannedCodeDao.getScannedCode(codeId).compose(scheduleSingle())
 
-    override fun listAllScannedCodes(): Flowable<List<ScannedCode>> {
-        return scannedCodeDao.listScannedCodes().compose(scheduleFlowable())
-    }
+    override fun listAllScannedCodes(): Flowable<List<ScannedCode>> =
+            scannedCodeDao.listScannedCodes().compose(scheduleFlowable())
 
     override fun addScannedCode(scannedCode: ScannedCode): Single<ScannedCode> {
         return Single.fromCallable {
