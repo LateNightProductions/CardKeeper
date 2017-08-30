@@ -34,15 +34,12 @@ class CardsFragment : BaseFragment(), CardsContract.View {
 
     companion object {
 
-        const val REQUEST_GET_CODE = 3
-
         fun newInstance() = CardsFragment()
     }
 
     @Inject internal lateinit var presenter: CardsContract.Presenter
 
     @BindView(R.id.fragment_cards_recycler) internal lateinit var recyclerView: RecyclerView
-    @BindView(R.id.fragment_cards_fab) internal lateinit var fab: FloatingActionButton
 
     internal lateinit var layoutManager: LinearLayoutManager
     internal lateinit var scannedCodeAdapter: CardsAdapter
@@ -86,7 +83,7 @@ class CardsFragment : BaseFragment(), CardsContract.View {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (requestCode == REQUEST_GET_CODE && resultCode == RESULT_OK) {
+        if (requestCode == CardsActivity.REQUEST_GET_CODE && resultCode == RESULT_OK) {
             val scannedCode = ScannedCode()
             scannedCode.text = data!!.getStringExtra(ScanFragment.EXTRA_BARCODE_TEXT)
             scannedCode.format = data.getSerializableExtra(ScanFragment.EXTRA_BARCODE_FORMAT) as BarcodeFormat
@@ -132,11 +129,6 @@ class CardsFragment : BaseFragment(), CardsContract.View {
     //================================================================================
 
     private fun setupListeners() {
-        fab.setOnClickListener {
-            startActivityForResult(
-                    Intent(activity, ScanActivity::class.java), REQUEST_GET_CODE)
-        }
-
         recyclerView.addOnItemTouchListener(RecyclerItemClickListener(activity,
                 object : RecyclerItemClickListener.OnItemClickListener {
                     override fun onItemClick(view: View, position: Int) {

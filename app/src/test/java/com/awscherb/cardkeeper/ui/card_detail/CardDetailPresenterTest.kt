@@ -10,7 +10,7 @@ import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 import org.junit.Test
 import org.mockito.Mock
-import org.mockito.Mockito
+import org.mockito.Mockito.`when` as whn
 
 class CardDetailPresenterTest : BasePresenterTest<CardDetailContract.View, CardDetailPresenter>() {
 
@@ -20,8 +20,8 @@ class CardDetailPresenterTest : BasePresenterTest<CardDetailContract.View, CardD
     override fun createPresenter() = CardDetailPresenter(Schedulers.trampoline(), service)
 
     @Test
-    fun `Load cards success`() {
-        Mockito.`when`(service.getScannedCode(1))
+    fun `Load card success`() {
+        whn(service.getScannedCode(1))
                 .thenReturn(Single.just(ScannedCode()))
 
         presenter.loadCard(1)
@@ -30,8 +30,8 @@ class CardDetailPresenterTest : BasePresenterTest<CardDetailContract.View, CardD
     }
 
     @Test
-    fun `Load cards failure`() {
-        Mockito.`when`(service.getScannedCode(1))
+    fun `Load card failure`() {
+        whn(service.getScannedCode(1))
                 .thenReturn(Single.error(Throwable()))
 
         presenter.loadCard(1)
