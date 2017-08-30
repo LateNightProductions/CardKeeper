@@ -5,11 +5,9 @@ import com.awscherb.cardkeeper.ui.base.Presenter
 import io.reactivex.Scheduler
 
 import javax.inject.Inject
-import javax.inject.Named
-
 
 class CardDetailPresenter @Inject constructor(
-        @[JvmField Inject]  var uiScheduler: Scheduler,
+        @[JvmField Inject] var uiScheduler: Scheduler,
         @[JvmField Inject] var service: ScannedCodeService)
     : Presenter<CardDetailContract.View>(uiScheduler), CardDetailContract.Presenter {
 
