@@ -43,6 +43,7 @@ class CardDetailFragment : BaseFragment(), CardDetailContract.View {
 
     @BindView(R.id.fragment_card_detail_title) internal lateinit var title: TextView
     @BindView(R.id.fragment_card_detail_image) internal lateinit var imageView: ImageView
+    @BindView(R.id.fragment_card_detail_text) internal lateinit var text: TextView
 
     private val encoder: BarcodeEncoder = BarcodeEncoder()
 
@@ -82,6 +83,7 @@ class CardDetailFragment : BaseFragment(), CardDetailContract.View {
     override fun showCard(code: ScannedCode) {
         // Set title
         title.text = code.title
+        text.text = code.text
 
         // Set image scaleType according to barcode type
         val scaleType = when (code.format) {

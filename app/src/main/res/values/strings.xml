@@ -19,4 +19,7 @@
     <string name="fragment_cards_added_card">Added card %1$s</string>
     <string name="fragment_cards_deleted_card">Card deleted</string>
 
+    <!-- Card Detail Fragment -->
+    <string name="fragment_card_detail_text_header">Barcode text:</string>
+
 </resources>
