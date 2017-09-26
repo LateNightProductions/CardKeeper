@@ -32,7 +32,7 @@ class CardsActivity : BaseActivity() {
         setTitle("CardKeeper")
 
         fab.setOnClickListener {
-            startActivityForResult(
+            supportFragmentManager.findFragmentById(R.id.container)?.startActivityForResult(
                     Intent(this, ScanActivity::class.java), REQUEST_GET_CODE)
         }
 
