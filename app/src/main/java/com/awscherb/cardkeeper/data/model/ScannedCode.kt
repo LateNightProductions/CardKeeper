@@ -11,4 +11,5 @@ class ScannedCode: BaseModel() {
     lateinit var format: BarcodeFormat
     lateinit var text: String
     lateinit var title: String
+    var created: Long = 0
 }

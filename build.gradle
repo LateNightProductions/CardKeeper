@@ -5,7 +5,7 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:2.3.3'
         classpath 'me.tatarka:gradle-retrolambda:3.7.0'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.1.3"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.1.50"
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
     }
 }
@@ -30,19 +30,19 @@ ext {
     targetSdkVersion = 26
     compileSdkVersion = 26
     buildToolsVersion = '26.0.1'
-    archLifecycleVersion = "1.0.0-alpha9"
-    archRoomVersion = "1.0.0-alpha9"
+    archLifecycleVersion = "1.0.0-beta1"
+    archRoomVersion = "1.0.0-beta1"
 
     // Kotlin
     kotlinVersion = '1.1.4'
 
     // RX
-    rxJavaVersion = '2.1.1'
+    rxJavaVersion = '2.1.4'
     rxAndroidVersion = '2.0.1'
     rxBindingVersion = '2.0.0'
 
     // App dependencies
-    supportLibraryVersion = '26.0.1'
+    supportLibraryVersion = '26.1.0'
     daggerVersion = '2.11'
     butterKnifeVersion = '8.8.1'
     guavaVersion = '21.0'
@@ -51,5 +51,5 @@ ext {
     hamcrestVersion = '1.3'
 
     rxBindingVersion = '2.0.0'
-    rxLifecycleVersion = '2.1.0'
+    rxLifecycleVersion = '2.2.0'
 }
