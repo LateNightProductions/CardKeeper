@@ -32,6 +32,7 @@
 
         <activity
             android:name=".ui.card_detail.CardDetailActivity"
+            android:windowSoftInputMode="adjustResize"
             android:parentActivityName=".ui.cards.CardsActivity" />
 
         <activity

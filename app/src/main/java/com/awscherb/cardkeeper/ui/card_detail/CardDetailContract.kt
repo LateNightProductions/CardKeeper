@@ -8,10 +8,14 @@ interface CardDetailContract {
 
     interface View : BaseView {
         fun showCard(code: ScannedCode)
+        fun setSaveVisible(visible: Boolean)
+        fun onCardSaved()
     }
 
     interface Presenter : BasePresenter<CardDetailContract.View> {
         fun loadCard(id: Int)
+        fun setTitle(title: String)
+        fun saveCard()
     }
 
 }

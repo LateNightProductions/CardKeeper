@@ -4,6 +4,7 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.3.3'
+        classpath 'com.trello:victor:1.0.0'
         classpath 'me.tatarka:gradle-retrolambda:3.7.0'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.1.50"
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
@@ -32,6 +33,7 @@ ext {
     buildToolsVersion = '26.0.1'
     archLifecycleVersion = "1.0.0-beta1"
     archRoomVersion = "1.0.0-beta1"
+    constraintLayoutVersion = '1.0.2'
 
     // Kotlin
     kotlinVersion = '1.1.4'

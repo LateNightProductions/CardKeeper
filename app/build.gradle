@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'com.trello.victor'
 apply plugin: 'me.tatarka.retrolambda'
 
 android {
@@ -30,6 +31,12 @@ android {
         exclude 'META-INF/rxjava.properties'
     }
 
+    sourceSets {
+        main {
+            svg.srcDir 'src/main/svg'
+        }
+    }
+
 }
 
 dependencies {
@@ -41,6 +48,7 @@ dependencies {
     compile "com.android.support:cardview-v7:$rootProject.supportLibraryVersion"
     compile "com.android.support:recyclerview-v7:$rootProject.supportLibraryVersion"
     compile "com.android.support:design:$rootProject.supportLibraryVersion"
+    compile "com.android.support.constraint:constraint-layout:$rootProject.constraintLayoutVersion"
 
     // Room
     compile "android.arch.persistence.room:runtime:$rootProject.archRoomVersion"

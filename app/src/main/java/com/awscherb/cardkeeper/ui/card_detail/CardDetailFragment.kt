@@ -1,6 +1,7 @@
 package com.awscherb.cardkeeper.ui.card_detail
 
 import android.os.Bundle
+import android.support.design.widget.FloatingActionButton
 import android.support.v7.widget.CardView
 import android.view.LayoutInflater
 import android.view.View
@@ -20,6 +21,7 @@ import butterknife.BindView
 import butterknife.ButterKnife
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.BarcodeFormat.*
+import com.jakewharton.rxbinding2.widget.RxTextView
 
 class CardDetailFragment : BaseFragment(), CardDetailContract.View {
 
@@ -44,6 +46,7 @@ class CardDetailFragment : BaseFragment(), CardDetailContract.View {
     @BindView(R.id.fragment_card_detail_title) internal lateinit var title: TextView
     @BindView(R.id.fragment_card_detail_image) internal lateinit var imageView: ImageView
     @BindView(R.id.fragment_card_detail_text) internal lateinit var text: TextView
+    @BindView(R.id.fragment_card_detail_save_fab) internal lateinit var fab: FloatingActionButton
 
     private val encoder: BarcodeEncoder = BarcodeEncoder()
 
@@ -62,6 +65,8 @@ class CardDetailFragment : BaseFragment(), CardDetailContract.View {
         ButterKnife.bind(this, v)
 
         presenter.attachView(this)
+
+        fab.setOnClickListener { presenter.saveCard() }
 
         return v
     }
@@ -100,6 +105,20 @@ class CardDetailFragment : BaseFragment(), CardDetailContract.View {
             e.printStackTrace()
         }
 
+        RxTextView.textChanges(title)
+                .map { it.toString() }
+                .compose(bindToLifecycle())
+                .subscribe({ presenter.setTitle(it) },
+                        { onError(it) })
+
+    }
+
+    override fun setSaveVisible(visible: Boolean) {
+        fab.visibility = if (visible) View.VISIBLE else View.GONE
+    }
+
+    override fun onCardSaved() {
+        activity.finish()
     }
 
     override fun onError(e: Throwable) {
