@@ -29,6 +29,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
+                android:inputType="textCapWords|textAutoCorrect"
                 android:padding="16dp"
                 android:textColor="@color/colorPrimary"
                 app:layout_constraintTop_toTopOf="parent"

@@ -90,6 +90,8 @@ class CardDetailFragment : BaseFragment(), CardDetailContract.View {
         title.text = code.title
         text.text = code.text
 
+        activity.title = code.title
+
         // Set image scaleType according to barcode type
         val scaleType = when (code.format) {
             QR_CODE, AZTEC, DATA_MATRIX -> ImageView.ScaleType.FIT_CENTER
