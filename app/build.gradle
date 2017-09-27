@@ -3,6 +3,8 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'com.trello.victor'
 apply plugin: 'me.tatarka.retrolambda'
+apply plugin: 'io.fabric'
+
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -13,9 +15,21 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
-        versionCode 1
+        versionCode 51
         versionName "1.0"
     }
+
+    productFlavors {
+        dev {
+            applicationId "com.awscherb.cardkeeper.dev"
+            buildConfigField "Boolean", "PRODUCTION", "false"
+        }
+        prod {
+            applicationId "com.awscherb.cardkeeper.prod"
+            buildConfigField "Boolean", "PRODUCTION", "true"
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -82,6 +96,11 @@ dependencies {
     // Dependency Injection
     compile "com.google.dagger:dagger:$rootProject.daggerVersion"
     kapt "com.google.dagger:dagger-compiler:$rootProject.daggerVersion"
+
+    // Fabric
+    compile('com.crashlytics.sdk.android:crashlytics:2.6.8@aar') {
+        transitive = true;
+    }
 
     // Dependencies for local unit tests
     testCompile "junit:junit:$rootProject.ext.junitVersion"

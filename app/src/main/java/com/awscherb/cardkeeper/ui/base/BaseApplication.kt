@@ -7,6 +7,10 @@ import com.awscherb.cardkeeper.di.component.ViewComponent
 import com.awscherb.cardkeeper.di.module.AppModule
 import com.awscherb.cardkeeper.di.module.DaoModule
 import com.awscherb.cardkeeper.di.module.SchedulerModule
+import com.crashlytics.android.Crashlytics
+import io.fabric.sdk.android.Fabric
+
+
 
 class BaseApplication : Application() {
 
@@ -15,6 +19,8 @@ class BaseApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
+
+        Fabric.with(this, Crashlytics())
 
         viewComponent = DaggerViewComponent.builder()
                 .appModule(AppModule(this))
