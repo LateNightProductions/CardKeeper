@@ -35,9 +35,9 @@ class CardDetailPresenter @Inject constructor(
     }
 
     override fun saveCard() {
-            addDisposable(service.updateScannedCode(card)
-                    .compose(scheduleSingle())
-                    .subscribe({ view?.onCardSaved() },
-                            { view?.onError(it) }))
+        addDisposable(service.updateScannedCode(card)
+                .compose(scheduleSingle())
+                .subscribe({ view?.onCardSaved() },
+                        { view?.onError(it) }))
     }
 }
