@@ -15,7 +15,7 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
-        versionCode 51
+        versionCode 56
         versionName "1.0"
     }
 
@@ -25,7 +25,7 @@ android {
             buildConfigField "Boolean", "PRODUCTION", "false"
         }
         prod {
-            applicationId "com.awscherb.cardkeeper.prod"
+            applicationId "com.awscherb.cardkeeper"
             buildConfigField "Boolean", "PRODUCTION", "true"
         }
     }
