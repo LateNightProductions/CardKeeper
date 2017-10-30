@@ -4,10 +4,10 @@ buildscript {
         maven { url 'https://maven.fabric.io/public' }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.3.3'
+        classpath 'com.android.tools.build:gradle:3.0.0'
         classpath 'com.trello:victor:1.0.0'
         classpath 'me.tatarka:gradle-retrolambda:3.7.0'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.1.50"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.1.51"
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
         classpath 'io.fabric.tools:gradle:1.+'
     }
@@ -36,11 +36,11 @@ ext {
     compileSdkVersion = 26
     buildToolsVersion = '26.0.1'
     archLifecycleVersion = "1.0.0-beta1"
-    archRoomVersion = "1.0.0-beta1"
+    archRoomVersion = "1.0.0-rc1"
     constraintLayoutVersion = '1.0.2'
 
     // Kotlin
-    kotlinVersion = '1.1.4'
+    kotlinVersion = '1.1.51'
 
     // RX
     rxJavaVersion = '2.1.4'
@@ -48,7 +48,7 @@ ext {
     rxBindingVersion = '2.0.0'
 
     // App dependencies
-    supportLibraryVersion = '26.1.0'
+    supportLibraryVersion = '27.0.0'
     daggerVersion = '2.11'
     butterKnifeVersion = '8.8.1'
     guavaVersion = '21.0'

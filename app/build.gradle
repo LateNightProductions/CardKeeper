@@ -2,7 +2,6 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'com.trello.victor'
-apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'io.fabric'
 
 
@@ -19,12 +18,16 @@ android {
         versionName "1.0"
     }
 
+    flavorDimensions "env"
+
     productFlavors {
         dev {
+            dimension "env"
             applicationId "com.awscherb.cardkeeper.dev"
             buildConfigField "Boolean", "PRODUCTION", "false"
         }
         prod {
+            dimension "env"
             applicationId "com.awscherb.cardkeeper"
             buildConfigField "Boolean", "PRODUCTION", "true"
         }
@@ -51,6 +54,7 @@ android {
         }
     }
 
+    buildToolsVersion '26.0.2'
 }
 
 dependencies {

@@ -54,12 +54,12 @@ class CardsFragment : BaseFragment(), CardsContract.View {
         baseActivity.viewComponent().inject(this)
     }
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val v = inflater!!.inflate(R.layout.fragment_cards, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        val v = inflater.inflate(R.layout.fragment_cards, container, false)
         ButterKnife.bind(this, v)
 
         layoutManager = LinearLayoutManager(activity)
-        scannedCodeAdapter = CardsAdapter(activity, presenter)
+        scannedCodeAdapter = CardsAdapter(activity!!, presenter)
         recyclerView.layoutManager = layoutManager
         recyclerView.adapter = scannedCodeAdapter
 
@@ -92,7 +92,7 @@ class CardsFragment : BaseFragment(), CardsContract.View {
             input.setHint(R.string.dialog_card_name_hint)
             input.inputType = InputType.TYPE_TEXT_FLAG_CAP_WORDS
 
-            AlertDialog.Builder(activity)
+            AlertDialog.Builder(activity!!)
                     .setTitle(R.string.app_name)
                     .setView(input)
                     .setPositiveButton(R.string.action_add) { _, _ ->
@@ -129,7 +129,7 @@ class CardsFragment : BaseFragment(), CardsContract.View {
     //================================================================================
 
     private fun setupListeners() {
-        recyclerView.addOnItemTouchListener(RecyclerItemClickListener(activity,
+        recyclerView.addOnItemTouchListener(RecyclerItemClickListener(activity!!,
                 object : RecyclerItemClickListener.OnItemClickListener {
                     override fun onItemClick(view: View, position: Int) {
                         val i = Intent(activity, CardDetailActivity::class.java)

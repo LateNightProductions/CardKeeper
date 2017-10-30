@@ -37,13 +37,13 @@ class ScanFragment : BaseFragment() {
     // Lifecycle methods
     //================================================================================
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val v = inflater!!.inflate(R.layout.fragment_scan, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        val v = inflater.inflate(R.layout.fragment_scan, container, false)
         ButterKnife.bind(this, v)
 
         // Check permissions
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (activity.checkSelfPermission(Manifest.permission.CAMERA) == PermissionChecker.PERMISSION_GRANTED) {
+            if (activity!!.checkSelfPermission(Manifest.permission.CAMERA) == PermissionChecker.PERMISSION_GRANTED) {
                 barcodeView.resume()
             } else {
                 requestPermissions(arrayOf(Manifest.permission.CAMERA),
@@ -79,7 +79,7 @@ class ScanFragment : BaseFragment() {
                     putExtra(EXTRA_BARCODE_TEXT, result.text ?: "")
                 }
 
-                with(activity) {
+                with(activity!!) {
                     setResult(RESULT_OK, data)
                     finish()
                 }

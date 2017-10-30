@@ -60,8 +60,8 @@ class CardDetailFragment : BaseFragment(), CardDetailContract.View {
         baseActivity.viewComponent().inject(this)
     }
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val v = inflater!!.inflate(R.layout.fragment_card_detail, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        val v = inflater.inflate(R.layout.fragment_card_detail, container, false)
         ButterKnife.bind(this, v)
 
         presenter.attachView(this)
@@ -73,7 +73,7 @@ class CardDetailFragment : BaseFragment(), CardDetailContract.View {
 
     override fun onResume() {
         super.onResume()
-        presenter.loadCard(arguments.getInt(EXTRA_CARD_ID))
+        presenter.loadCard(arguments!!.getInt(EXTRA_CARD_ID))
     }
 
     override fun onDestroy() {
@@ -90,7 +90,7 @@ class CardDetailFragment : BaseFragment(), CardDetailContract.View {
         title.text = code.title
         text.text = code.text
 
-        activity.title = code.title
+        activity!!.title = code.title
 
         // Set image scaleType according to barcode type
         val scaleType = when (code.format) {
@@ -120,7 +120,7 @@ class CardDetailFragment : BaseFragment(), CardDetailContract.View {
     }
 
     override fun onCardSaved() {
-        activity.finish()
+        activity!!.finish()
     }
 
     override fun onError(e: Throwable) {
