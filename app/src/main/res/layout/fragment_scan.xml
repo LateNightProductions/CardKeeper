@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:weightSum="1"
     android:orientation="vertical"
     >
-
     <com.journeyapps.barcodescanner.CompoundBarcodeView
         android:id="@+id/fragment_scan_scanner"
         android:layout_width="match_parent"
@@ -15,7 +13,5 @@
         >
 
     </com.journeyapps.barcodescanner.CompoundBarcodeView>
-
-
 
 </LinearLayout>

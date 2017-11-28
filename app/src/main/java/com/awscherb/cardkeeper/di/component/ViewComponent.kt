@@ -6,12 +6,12 @@ import com.awscherb.cardkeeper.ui.cards.CardsFragment
 import dagger.Component
 import javax.inject.Singleton
 
-@Component(modules = arrayOf(
-        AppModule::class,
-        DaoModule::class,
-        ServiceModule::class,
-        SchedulerModule::class,
-        PresenterModule::class))
+@Component(
+        modules = [(AppModule::class),
+        (DaoModule::class),
+        (ServiceModule::class),
+        (SchedulerModule::class),
+        (PresenterModule::class)])
 @Singleton
 interface ViewComponent {
     fun inject(view: CardDetailFragment)

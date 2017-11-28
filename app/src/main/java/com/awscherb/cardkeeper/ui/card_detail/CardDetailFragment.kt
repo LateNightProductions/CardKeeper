@@ -2,7 +2,6 @@ package com.awscherb.cardkeeper.ui.card_detail
 
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
-import android.support.v7.widget.CardView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,7 +18,6 @@ import javax.inject.Inject
 
 import butterknife.BindView
 import butterknife.ButterKnife
-import com.google.zxing.BarcodeFormat
 import com.google.zxing.BarcodeFormat.*
 import com.jakewharton.rxbinding2.widget.RxTextView
 
