@@ -21,6 +21,12 @@ android {
     flavorDimensions "env"
 
     productFlavors {
+        mock {
+            dimension "env"
+            applicationId "com.awscherb.cardkeeper.mock"
+            buildConfigField "Boolean", "PRODUCTION", "false"
+        }
+
         dev {
             dimension "env"
             applicationId "com.awscherb.cardkeeper.dev"
@@ -32,6 +38,15 @@ android {
             buildConfigField "Boolean", "PRODUCTION", "true"
         }
     }
+
+    // Remove mockRelease as it's not needed.
+    android.variantFilter { variant ->
+        if(variant.buildType.name == 'release'
+                && variant.getFlavors().get(0).name == 'mock') {
+            variant.setIgnore(true);
+        }
+    }
+
 
     buildTypes {
         release {
@@ -52,6 +67,11 @@ android {
         main {
             svg.srcDir 'src/main/svg'
         }
+
+        dev {
+            java.srcDirs = ['src/main/java', 'src/prod/java']
+        }
+
     }
 
     buildToolsVersion '26.0.2'
@@ -111,6 +131,10 @@ dependencies {
     testCompile "org.mockito:mockito-all:$rootProject.ext.mockitoVersion"
     testCompile "org.hamcrest:hamcrest-all:$rootProject.ext.hamcrestVersion"
     testCompile "com.nhaarman:mockito-kotlin:1.5.0"
+
+    // Android test dependencies `
+    androidTestImplementation 'com.android.support.test:runner:1.0.1'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
 
 }
 
