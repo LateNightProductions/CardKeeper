@@ -74,7 +74,6 @@ android {
 
     }
 
-    buildToolsVersion '26.0.2'
 }
 
 dependencies {
@@ -110,7 +109,7 @@ dependencies {
     compile "com.trello.rxlifecycle2:rxlifecycle-components:$rootProject.rxLifecycleVersion"
 
     // Scanning
-    compile 'com.google.zxing:core:3.3.1'
+    compile 'com.google.zxing:core:3.3.2'
     compile 'com.journeyapps:zxing-android-embedded:3.5.0@aar'
 
     // Butterknife
