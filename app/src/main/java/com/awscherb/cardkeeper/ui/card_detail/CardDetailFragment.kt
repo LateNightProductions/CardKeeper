@@ -28,7 +28,7 @@ class CardDetailFragment : BaseFragment(), CardDetailContract.View {
         private const val TAG = "CardDetailFragment"
         private const val EXTRA_CARD_ID = "$TAG.extra_card_id"
 
-        fun newInstance(cardId: Int): BaseFragment {
+        fun newInstance(cardId: Int): CardDetailFragment {
             val fragment = CardDetailFragment()
             val b = Bundle()
 
