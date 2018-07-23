@@ -54,63 +54,62 @@ android {
         }
     }
 
-    buildToolsVersion '26.0.2'
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    testCompile "junit:junit:$rootProject.junitVersion"
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    testImplementation "junit:junit:$rootProject.junitVersion"
 
     // Support libs
-    compile "com.android.support:appcompat-v7:$rootProject.supportLibraryVersion"
-    compile "com.android.support:cardview-v7:$rootProject.supportLibraryVersion"
-    compile "com.android.support:recyclerview-v7:$rootProject.supportLibraryVersion"
-    compile "com.android.support:design:$rootProject.supportLibraryVersion"
-    compile "com.android.support.constraint:constraint-layout:$rootProject.constraintLayoutVersion"
+    implementation "com.android.support:appcompat-v7:$rootProject.supportLibraryVersion"
+    implementation "com.android.support:cardview-v7:$rootProject.supportLibraryVersion"
+    implementation "com.android.support:recyclerview-v7:$rootProject.supportLibraryVersion"
+    implementation "com.android.support:design:$rootProject.supportLibraryVersion"
+    implementation "com.android.support.constraint:constraint-layout:$rootProject.constraintLayoutVersion"
 
     // Room
-    compile "android.arch.persistence.room:runtime:$rootProject.archRoomVersion"
-    compile "android.arch.persistence.room:rxjava2:$rootProject.archRoomVersion"
+    implementation "android.arch.persistence.room:runtime:$rootProject.archRoomVersion"
+    implementation "android.arch.persistence.room:rxjava2:$rootProject.archRoomVersion"
     kapt "android.arch.lifecycle:compiler:$rootProject.archLifecycleVersion"
     kapt "android.arch.persistence.room:compiler:$rootProject.archRoomVersion"
 
     // Kotlin
-    compile "org.jetbrains.kotlin:kotlin-stdlib:$rootProject.kotlinVersion"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$rootProject.kotlinVersion"
 
     // Rx
-    compile "io.reactivex.rxjava2:rxjava:$rootProject.rxJavaVersion"
-    compile "io.reactivex.rxjava2:rxandroid:$rootProject.rxAndroidVersion"
+    implementation "io.reactivex.rxjava2:rxjava:$rootProject.rxJavaVersion"
+    implementation "io.reactivex.rxjava2:rxandroid:$rootProject.rxAndroidVersion"
 
-    compile "com.jakewharton.rxbinding2:rxbinding:$rootProject.rxBindingVersion"
-    compile "com.jakewharton.rxbinding2:rxbinding-support-v4:$rootProject.rxBindingVersion"
-    compile "com.jakewharton.rxbinding2:rxbinding-appcompat-v7:$rootProject.rxBindingVersion"
-    compile "com.jakewharton.rxbinding2:rxbinding-design:$rootProject.rxBindingVersion"
+    implementation "com.jakewharton.rxbinding2:rxbinding:$rootProject.rxBindingVersion"
+    implementation "com.jakewharton.rxbinding2:rxbinding-support-v4:$rootProject.rxBindingVersion"
+    implementation "com.jakewharton.rxbinding2:rxbinding-appcompat-v7:$rootProject.rxBindingVersion"
+    implementation "com.jakewharton.rxbinding2:rxbinding-design:$rootProject.rxBindingVersion"
 
-    compile "com.trello.rxlifecycle2:rxlifecycle:$rootProject.rxLifecycleVersion"
-    compile "com.trello.rxlifecycle2:rxlifecycle-components:$rootProject.rxLifecycleVersion"
+    implementation "com.trello.rxlifecycle2:rxlifecycle:$rootProject.rxLifecycleVersion"
+    implementation "com.trello.rxlifecycle2:rxlifecycle-components:$rootProject.rxLifecycleVersion"
 
     // Scanning
-    compile 'com.google.zxing:core:3.3.1'
-    compile 'com.journeyapps:zxing-android-embedded:3.5.0@aar'
+    implementation 'com.google.zxing:core:3.3.3'
+    implementation 'com.journeyapps:zxing-android-embedded:3.6.0@aar'
 
     // Butterknife
-    compile "com.jakewharton:butterknife:$rootProject.butterKnifeVersion"
+    implementation "com.jakewharton:butterknife:$rootProject.butterKnifeVersion"
     kapt "com.jakewharton:butterknife-compiler:$rootProject.butterKnifeVersion"
 
     // Dependency Injection
-    compile "com.google.dagger:dagger:$rootProject.daggerVersion"
+    implementation"com.google.dagger:dagger:$rootProject.daggerVersion"
     kapt "com.google.dagger:dagger-compiler:$rootProject.daggerVersion"
 
     // Fabric
-    compile('com.crashlytics.sdk.android:crashlytics:2.7.1@aar') {
+    implementation('com.crashlytics.sdk.android:crashlytics:2.7.1@aar') {
         transitive = true;
     }
 
     // Dependencies for local unit tests
-    testCompile "junit:junit:$rootProject.ext.junitVersion"
-    testCompile "org.mockito:mockito-all:$rootProject.ext.mockitoVersion"
-    testCompile "org.hamcrest:hamcrest-all:$rootProject.ext.hamcrestVersion"
-    testCompile "com.nhaarman:mockito-kotlin:1.5.0"
+    testImplementation "junit:junit:$rootProject.ext.junitVersion"
+    testImplementation "org.mockito:mockito-all:$rootProject.ext.mockitoVersion"
+    testImplementation "org.hamcrest:hamcrest-all:$rootProject.ext.hamcrestVersion"
+    testImplementation "com.nhaarman:mockito-kotlin:1.5.0"
 
 }
 
