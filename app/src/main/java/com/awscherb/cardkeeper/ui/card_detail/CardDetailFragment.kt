@@ -1,25 +1,20 @@
 package com.awscherb.cardkeeper.ui.card_detail
 
 import android.os.Bundle
-import android.support.design.widget.FloatingActionButton
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.TextView
-
 import com.awscherb.cardkeeper.R
 import com.awscherb.cardkeeper.data.model.ScannedCode
 import com.awscherb.cardkeeper.ui.base.BaseFragment
-import com.google.zxing.WriterException
-import com.journeyapps.barcodescanner.BarcodeEncoder
-
-import javax.inject.Inject
-
-import butterknife.BindView
-import butterknife.ButterKnife
 import com.google.zxing.BarcodeFormat.*
-import com.jakewharton.rxbinding2.widget.RxTextView
+import com.google.zxing.WriterException
+import com.jakewharton.rxbinding3.widget.afterTextChangeEvents
+import com.jakewharton.rxbinding3.widget.textChanges
+import com.journeyapps.barcodescanner.BarcodeEncoder
+import kotlinx.android.synthetic.main.fragment_card_detail.*
+import javax.inject.Inject
 
 class CardDetailFragment : BaseFragment(), CardDetailContract.View {
 
@@ -39,12 +34,8 @@ class CardDetailFragment : BaseFragment(), CardDetailContract.View {
         }
     }
 
-    @Inject internal lateinit var presenter: CardDetailContract.Presenter
-
-    @BindView(R.id.fragment_card_detail_title) internal lateinit var title: TextView
-    @BindView(R.id.fragment_card_detail_image) internal lateinit var imageView: ImageView
-    @BindView(R.id.fragment_card_detail_text) internal lateinit var text: TextView
-    @BindView(R.id.fragment_card_detail_save_fab) internal lateinit var fab: FloatingActionButton
+    @Inject
+    internal lateinit var presenter: CardDetailContract.Presenter
 
     private val encoder: BarcodeEncoder = BarcodeEncoder()
 
@@ -58,15 +49,18 @@ class CardDetailFragment : BaseFragment(), CardDetailContract.View {
         baseActivity.viewComponent().inject(this)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val v = inflater.inflate(R.layout.fragment_card_detail, container, false)
-        ButterKnife.bind(this, v)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ) = inflater.inflate(R.layout.fragment_card_detail, container, false)
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         presenter.attachView(this)
 
-        fab.setOnClickListener { presenter.saveCard() }
+        cardDetailSave.setOnClickListener { presenter.saveCard() }
 
-        return v
     }
 
     override fun onResume() {
@@ -85,8 +79,8 @@ class CardDetailFragment : BaseFragment(), CardDetailContract.View {
 
     override fun showCard(code: ScannedCode) {
         // Set title
-        title.text = code.title
-        text.text = code.text
+        cardDetailTitle.setText(code.title)
+        cardDetailText.text = code.text
 
         activity!!.title = code.title
 
@@ -95,26 +89,29 @@ class CardDetailFragment : BaseFragment(), CardDetailContract.View {
             QR_CODE, AZTEC, DATA_MATRIX -> ImageView.ScaleType.FIT_CENTER
             else -> ImageView.ScaleType.FIT_XY
         }
-        imageView.scaleType = scaleType
+        cardDetailImage.scaleType = scaleType
 
         // Load image
         try {
-            imageView.setImageBitmap(
-                    encoder.encodeBitmap(code.text, code.format, 200, 200))
+            cardDetailImage.setImageBitmap(
+                encoder.encodeBitmap(code.text, code.format, 200, 200)
+            )
         } catch (e: WriterException) {
             e.printStackTrace()
         }
 
-        RxTextView.textChanges(title)
+        addDisposable(
+            cardDetailTitle.textChanges()
                 .map { it.toString() }
                 .compose(bindToLifecycle())
                 .subscribe({ presenter.setTitle(it) },
-                        { onError(it) })
+                    { onError(it) })
+        )
 
     }
 
     override fun setSaveVisible(visible: Boolean) {
-        fab.visibility = if (visible) View.VISIBLE else View.GONE
+        cardDetailSave.visibility = if (visible) View.VISIBLE else View.GONE
     }
 
     override fun onCardSaved() {

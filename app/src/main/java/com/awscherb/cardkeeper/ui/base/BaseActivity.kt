@@ -1,15 +1,12 @@
 package com.awscherb.cardkeeper.ui.base
 
 
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
-import android.support.v7.widget.Toolbar
-
+import androidx.appcompat.widget.Toolbar
 import com.awscherb.cardkeeper.R
 import com.awscherb.cardkeeper.di.component.ViewComponent
-import com.trello.rxlifecycle2.components.support.RxAppCompatActivity
+import com.trello.rxlifecycle3.components.support.RxAppCompatActivity
 
-open class BaseActivity : RxAppCompatActivity() {
+abstract class BaseActivity : RxAppCompatActivity() {
 
     private var toolbar: Toolbar? = null
 

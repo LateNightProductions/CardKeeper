@@ -1,6 +1,6 @@
 package com.awscherb.cardkeeper.ui.base
 
-import android.support.annotation.CallSuper
+import androidx.annotation.CallSuper
 import io.reactivex.*
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable

@@ -1,6 +1,6 @@
 package com.awscherb.cardkeeper.data.dao
 
-import android.arch.persistence.room.*
+import androidx.room.*
 import com.awscherb.cardkeeper.data.model.ScannedCode
 import io.reactivex.Flowable
 import io.reactivex.Single

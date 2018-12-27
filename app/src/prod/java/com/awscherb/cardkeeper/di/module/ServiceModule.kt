@@ -7,5 +7,6 @@ import dagger.Module
 
 @Module
 abstract class ServiceModule {
-    @Binds abstract fun bindScannedCodeService(handler: ScannedCodeHandler): ScannedCodeService
+    @Binds
+    abstract fun bindScannedCodeService(handler: ScannedCodeHandler): ScannedCodeService
 }

@@ -2,13 +2,10 @@ package com.awscherb.cardkeeper.ui.cards
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.FloatingActionButton
-import butterknife.BindView
-import butterknife.ButterKnife
-
 import com.awscherb.cardkeeper.R
 import com.awscherb.cardkeeper.ui.base.BaseActivity
 import com.awscherb.cardkeeper.ui.scan.ScanActivity
+import kotlinx.android.synthetic.main.activity_cards.*
 
 class CardsActivity : BaseActivity() {
 
@@ -17,8 +14,6 @@ class CardsActivity : BaseActivity() {
 
     }
 
-    @BindView(R.id.fragment_cards_fab) internal lateinit var fab: FloatingActionButton
-
     //================================================================================
     // Lifecycle methods
     //================================================================================
@@ -26,18 +21,16 @@ class CardsActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cards)
-        ButterKnife.bind(this)
 
         setUpToolbar()
         setTitle("CardKeeper")
 
-        fab.setOnClickListener {
+        cardsFab.setOnClickListener {
             supportFragmentManager.findFragmentById(R.id.container)?.startActivityForResult(
                     Intent(this, ScanActivity::class.java), REQUEST_GET_CODE)
         }
 
         insertFragment(CardsFragment.newInstance())
-
 
     }
 

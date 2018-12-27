@@ -1,25 +1,20 @@
 package com.awscherb.cardkeeper.ui.scan
 
 import android.Manifest
+import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.support.v4.content.PermissionChecker
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
+import androidx.core.content.PermissionChecker
 import com.awscherb.cardkeeper.R
 import com.awscherb.cardkeeper.ui.base.BaseFragment
 import com.google.zxing.ResultPoint
 import com.journeyapps.barcodescanner.BarcodeCallback
 import com.journeyapps.barcodescanner.BarcodeResult
-import com.journeyapps.barcodescanner.CompoundBarcodeView
-
-import butterknife.BindView
-import butterknife.ButterKnife
-
-import android.app.Activity.RESULT_OK
+import kotlinx.android.synthetic.main.fragment_scan.*
 
 class ScanFragment : BaseFragment() {
 
@@ -31,40 +26,43 @@ class ScanFragment : BaseFragment() {
         private const val REQUEST_CAMERA = 16
     }
 
-    @BindView(R.id.fragment_scan_scanner) internal lateinit var barcodeView: CompoundBarcodeView
-
     //================================================================================
     // Lifecycle methods
     //================================================================================
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val v = inflater.inflate(R.layout.fragment_scan, container, false)
-        ButterKnife.bind(this, v)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ) = inflater.inflate(R.layout.fragment_scan, container, false)
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         // Check permissions
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (activity!!.checkSelfPermission(Manifest.permission.CAMERA) == PermissionChecker.PERMISSION_GRANTED) {
-                barcodeView.resume()
+                scanScanner.resume()
             } else {
-                requestPermissions(arrayOf(Manifest.permission.CAMERA),
-                        REQUEST_CAMERA)
+                requestPermissions(
+                    arrayOf(Manifest.permission.CAMERA),
+                    REQUEST_CAMERA
+                )
             }
         }
 
         // Setup scanner
         setCallback()
-
-        return v
     }
 
     override fun onResume() {
         super.onResume()
-        barcodeView.resume()
+        scanScanner.resume()
     }
 
     override fun onPause() {
         super.onPause()
-        barcodeView.pause()
+        scanScanner.pause()
     }
 
     // ========================================================================
@@ -88,7 +86,7 @@ class ScanFragment : BaseFragment() {
             override fun possibleResultPoints(resultPoints: List<ResultPoint>) {}
         }
 
-        barcodeView.decodeContinuous(callback)
+        scanScanner.decodeContinuous(callback)
     }
 
 

@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'com.trello.victor'
 apply plugin: 'io.fabric'
@@ -7,13 +8,13 @@ apply plugin: 'io.fabric'
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
-    buildToolsVersion rootProject.ext.buildToolsVersion
+    buildToolsVersion '28.0.3'
 
     defaultConfig {
         applicationId "com.awscherb.cardkeeper"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
+        testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
         versionCode 56
         versionName "1.0"
     }
@@ -52,6 +53,9 @@ android {
         main {
             svg.srcDir 'src/main/svg'
         }
+        dev {
+            java.srcDirs += 'src/prod'
+        }
     }
 
 }
@@ -61,17 +65,17 @@ dependencies {
     testImplementation "junit:junit:$rootProject.junitVersion"
 
     // Support libs
-    implementation "com.android.support:appcompat-v7:$rootProject.supportLibraryVersion"
-    implementation "com.android.support:cardview-v7:$rootProject.supportLibraryVersion"
-    implementation "com.android.support:recyclerview-v7:$rootProject.supportLibraryVersion"
-    implementation "com.android.support:design:$rootProject.supportLibraryVersion"
-    implementation "com.android.support.constraint:constraint-layout:$rootProject.constraintLayoutVersion"
+    implementation 'androidx.appcompat:appcompat:1.1.0-alpha01'
+    implementation 'androidx.cardview:cardview:1.0.0'
+    implementation 'androidx.recyclerview:recyclerview:1.1.0-alpha01'
+    implementation 'com.google.android.material:material:1.1.0-alpha02'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-alpha3'
 
     // Room
-    implementation "android.arch.persistence.room:runtime:$rootProject.archRoomVersion"
-    implementation "android.arch.persistence.room:rxjava2:$rootProject.archRoomVersion"
-    kapt "android.arch.lifecycle:compiler:$rootProject.archLifecycleVersion"
-    kapt "android.arch.persistence.room:compiler:$rootProject.archRoomVersion"
+    implementation 'androidx.room:room-runtime:2.1.0-alpha03'
+    implementation 'androidx.room:room-rxjava2:2.1.0-alpha03'
+    kapt 'androidx.lifecycle:lifecycle-compiler:2.1.0-alpha01'
+    kapt 'androidx.room:room-compiler:2.1.0-alpha03'
 
     // Kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$rootProject.kotlinVersion"
@@ -80,21 +84,17 @@ dependencies {
     implementation "io.reactivex.rxjava2:rxjava:$rootProject.rxJavaVersion"
     implementation "io.reactivex.rxjava2:rxandroid:$rootProject.rxAndroidVersion"
 
-    implementation "com.jakewharton.rxbinding2:rxbinding:$rootProject.rxBindingVersion"
-    implementation "com.jakewharton.rxbinding2:rxbinding-support-v4:$rootProject.rxBindingVersion"
-    implementation "com.jakewharton.rxbinding2:rxbinding-appcompat-v7:$rootProject.rxBindingVersion"
-    implementation "com.jakewharton.rxbinding2:rxbinding-design:$rootProject.rxBindingVersion"
+    implementation "com.jakewharton.rxbinding3:rxbinding:$rootProject.rxBindingVersion"
+    implementation "com.jakewharton.rxbinding3:rxbinding-core:$rootProject.rxBindingVersion"
+    implementation "com.jakewharton.rxbinding3:rxbinding-appcompat:$rootProject.rxBindingVersion"
+    implementation "com.jakewharton.rxbinding3:rxbinding-material:$rootProject.rxBindingVersion"
 
-    implementation "com.trello.rxlifecycle2:rxlifecycle:$rootProject.rxLifecycleVersion"
-    implementation "com.trello.rxlifecycle2:rxlifecycle-components:$rootProject.rxLifecycleVersion"
+    implementation "com.trello.rxlifecycle3:rxlifecycle:$rootProject.rxLifecycleVersion"
+    implementation "com.trello.rxlifecycle3:rxlifecycle-components:$rootProject.rxLifecycleVersion"
 
     // Scanning
     implementation 'com.google.zxing:core:3.3.3'
     implementation 'com.journeyapps:zxing-android-embedded:3.6.0@aar'
-
-    // Butterknife
-    implementation "com.jakewharton:butterknife:$rootProject.butterKnifeVersion"
-    kapt "com.jakewharton:butterknife-compiler:$rootProject.butterKnifeVersion"
 
     // Dependency Injection
     implementation"com.google.dagger:dagger:$rootProject.daggerVersion"

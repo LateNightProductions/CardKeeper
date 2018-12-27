@@ -1,6 +1,6 @@
 package com.awscherb.cardkeeper.util.db
 
-import android.arch.persistence.room.TypeConverter
+import androidx.room.TypeConverter
 import com.google.zxing.BarcodeFormat
 
 object BarcodeConverters {
