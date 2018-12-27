@@ -10,7 +10,6 @@ import com.awscherb.cardkeeper.data.model.ScannedCode
 import com.awscherb.cardkeeper.ui.base.BaseFragment
 import com.google.zxing.BarcodeFormat.*
 import com.google.zxing.WriterException
-import com.jakewharton.rxbinding3.widget.afterTextChangeEvents
 import com.jakewharton.rxbinding3.widget.textChanges
 import com.journeyapps.barcodescanner.BarcodeEncoder
 import kotlinx.android.synthetic.main.fragment_card_detail.*
@@ -37,14 +36,13 @@ class CardDetailFragment : BaseFragment(), CardDetailContract.View {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ) = inflater.inflate(R.layout.fragment_card_detail, container, false)
+    ): View = inflater.inflate(R.layout.fragment_card_detail, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         presenter.attachView(this)
 
         cardDetailSave.setOnClickListener { presenter.saveCard() }
-
     }
 
     override fun onResume() {
@@ -106,20 +104,15 @@ class CardDetailFragment : BaseFragment(), CardDetailContract.View {
         e.printStackTrace()
     }
 
-
     companion object {
 
         private const val TAG = "CardDetailFragment"
         private const val EXTRA_CARD_ID = "$TAG.extra_card_id"
 
-        fun newInstance(cardId: Int): CardDetailFragment {
-            val fragment = CardDetailFragment()
-            val b = Bundle()
-
-            b.putInt(EXTRA_CARD_ID, cardId)
-
-            fragment.arguments = b
-            return fragment
+        fun newInstance(cardId: Int) = CardDetailFragment().apply {
+            arguments = Bundle().apply {
+                putInt(EXTRA_CARD_ID, cardId)
+            }
         }
     }
 

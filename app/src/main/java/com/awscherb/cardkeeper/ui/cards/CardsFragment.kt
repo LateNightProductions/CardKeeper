@@ -15,23 +15,17 @@ import com.awscherb.cardkeeper.ui.base.BaseFragment
 import com.awscherb.cardkeeper.ui.card_detail.CardDetailActivity
 import com.awscherb.cardkeeper.ui.listener.RecyclerItemClickListener
 import com.awscherb.cardkeeper.ui.scan.ScanFragment
-import com.google.android.material.snackbar.Snackbar
 import com.google.zxing.BarcodeFormat
 import kotlinx.android.synthetic.main.fragment_cards.*
 import javax.inject.Inject
 
 class CardsFragment : BaseFragment(), CardsContract.View {
 
-    companion object {
-
-        fun newInstance() = CardsFragment()
-    }
-
     @Inject
     internal lateinit var presenter: CardsContract.Presenter
 
-    internal lateinit var layoutManager: androidx.recyclerview.widget.LinearLayoutManager
-    internal lateinit var scannedCodeAdapter: CardsAdapter
+    private lateinit var layoutManager: androidx.recyclerview.widget.LinearLayoutManager
+    private lateinit var scannedCodeAdapter: CardsAdapter
 
     //================================================================================
     // Lifecycle methods
@@ -52,11 +46,7 @@ class CardsFragment : BaseFragment(), CardsContract.View {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        layoutManager = androidx.recyclerview.widget.LinearLayoutManager(activity)
-        scannedCodeAdapter = CardsAdapter(activity!!, presenter)
-        cardsRecycler.layoutManager = layoutManager
-        cardsRecycler.adapter = scannedCodeAdapter
-
+        setupRecycler()
         setupListeners()
 
         presenter.attachView(this)
@@ -107,15 +97,11 @@ class CardsFragment : BaseFragment(), CardsContract.View {
     }
 
     override fun onCardAdded(code: ScannedCode) {
-        Snackbar.make(
-            view!!,
-            getString(R.string.fragment_cards_added_card, code.title),
-            Snackbar.LENGTH_SHORT
-        ).show()
+        showSnackbar(getString(R.string.fragment_cards_added_card, code.title))
     }
 
     override fun onCardDeleted() {
-        Snackbar.make(view!!, R.string.fragment_cards_deleted_card, Snackbar.LENGTH_SHORT).show()
+        showSnackbar(R.string.fragment_cards_deleted_card)
     }
 
     override fun onError(e: Throwable) {
@@ -126,21 +112,43 @@ class CardsFragment : BaseFragment(), CardsContract.View {
     // Helper methods
     //================================================================================
 
+    private fun setupRecycler() {
+        layoutManager = androidx.recyclerview.widget.LinearLayoutManager(activity)
+        scannedCodeAdapter = CardsAdapter(activity!!) { code ->
+            AlertDialog.Builder(requireContext())
+                .setTitle(R.string.adapter_scanned_code_delete_message)
+                .setPositiveButton(R.string.action_delete) { _, _ ->
+                    presenter.deleteCard(code)
+                }
+                .setNegativeButton(R.string.action_cancel, null)
+                .show()
+        }
+        cardsRecycler.layoutManager = layoutManager
+        cardsRecycler.adapter = scannedCodeAdapter
+    }
+
     private fun setupListeners() {
         cardsRecycler.addOnItemTouchListener(
             RecyclerItemClickListener(activity!!,
                 object : RecyclerItemClickListener.OnItemClickListener {
                     override fun onItemClick(view: View, position: Int) {
-                        val i = Intent(activity, CardDetailActivity::class.java)
-                        i.putExtra(
-                            CardDetailActivity.EXTRA_CARD_ID,
-                            scannedCodeAdapter.getItem(position).id
+                        startActivity(
+                            Intent(activity, CardDetailActivity::class.java)
+                                .apply {
+                                    putExtra(
+                                        CardDetailActivity.EXTRA_CARD_ID,
+                                        scannedCodeAdapter[position].id
+                                    )
+                                }
                         )
-                        startActivity(i)
                     }
 
-                })
+                }
+            )
         )
     }
 
+    companion object {
+        fun newInstance() = CardsFragment()
+    }
 }

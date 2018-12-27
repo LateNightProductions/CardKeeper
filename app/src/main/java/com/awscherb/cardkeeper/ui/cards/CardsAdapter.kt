@@ -2,10 +2,9 @@ package com.awscherb.cardkeeper.ui.cards
 
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import androidx.appcompat.app.AlertDialog
+import androidx.recyclerview.widget.RecyclerView
 import com.awscherb.cardkeeper.R
 import com.awscherb.cardkeeper.data.model.ScannedCode
 import com.awscherb.cardkeeper.ui.base.BaseAdapter
@@ -13,13 +12,12 @@ import com.google.zxing.BarcodeFormat.*
 import com.google.zxing.WriterException
 import com.journeyapps.barcodescanner.BarcodeEncoder
 import kotlinx.android.synthetic.main.adapter_code.view.*
-import java.util.*
 
 
 class CardsAdapter constructor(
     private val context: Context,
-    private val presenter: CardsContract.Presenter
-) : BaseAdapter<ScannedCode, CardsAdapter.ViewHolder>(ArrayList()) {
+    private val deleteListener: (ScannedCode) -> Unit
+) : BaseAdapter<ScannedCode>() {
 
     private val encoder: BarcodeEncoder = BarcodeEncoder()
 
@@ -27,12 +25,17 @@ class CardsAdapter constructor(
     // Adapter methods
     //================================================================================
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val v = LayoutInflater.from(context).inflate(R.layout.adapter_code, parent, false)
-        return ViewHolder(v)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        return object : RecyclerView.ViewHolder(
+            LayoutInflater.from(context).inflate(
+                R.layout.adapter_code,
+                parent,
+                false
+            )
+        ) {}
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, item: ScannedCode) {
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, item: ScannedCode) {
         holder.itemView.apply {
 
             // Set title
@@ -55,14 +58,7 @@ class CardsAdapter constructor(
 
             // Setup delete
             setOnLongClickListener {
-                AlertDialog.Builder(context)
-                    .setTitle(R.string.adapter_scanned_code_delete_message)
-                    .setPositiveButton(R.string.action_delete) { _, _ ->
-                        presenter.deleteCard(item)
-                    }
-                    .setNegativeButton(R.string.action_cancel, null)
-                    .show()
-
+                deleteListener(item)
                 true
             }
         }
@@ -70,7 +66,5 @@ class CardsAdapter constructor(
 
     }
 
-    class ViewHolder(itemView: View) :
-        androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView)
 
 }

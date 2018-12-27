@@ -5,12 +5,10 @@ import com.google.zxing.BarcodeFormat
 
 object BarcodeConverters {
 
-    @TypeConverter
-    @JvmStatic
+    @[TypeConverter JvmStatic]
     fun fromString(string: String): BarcodeFormat = BarcodeFormat.valueOf(string)
 
-    @TypeConverter
-    @JvmStatic
+    @[TypeConverter JvmStatic]
     fun toString(format: BarcodeFormat): String = format.toString()
 
 }

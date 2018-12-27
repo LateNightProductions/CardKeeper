@@ -33,7 +33,7 @@ class ScanFragment : BaseFragment() {
 
         // Check permissions
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (activity!!.checkSelfPermission(Manifest.permission.CAMERA) == PermissionChecker.PERMISSION_GRANTED) {
+            if (activity?.checkSelfPermission(Manifest.permission.CAMERA) == PermissionChecker.PERMISSION_GRANTED) {
                 scanScanner.resume()
             } else {
                 requestPermissions(

@@ -4,17 +4,17 @@ import androidx.recyclerview.widget.RecyclerView
 
 import com.awscherb.cardkeeper.data.model.BaseModel
 
-abstract class BaseAdapter<T, VH> constructor(
+abstract class BaseAdapter<T> constructor(
     private var objects: List<T> = ArrayList()
-) : RecyclerView.Adapter<VH>() where T : BaseModel, VH : RecyclerView.ViewHolder {
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() where T : BaseModel {
 
-    override fun onBindViewHolder(holder: VH, position: Int) {
-        onBindViewHolder(holder, getItem(position))
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        onBindViewHolder(holder, this[position])
     }
 
-    abstract fun onBindViewHolder(holder: VH, item: T)
+    abstract fun onBindViewHolder(holder: RecyclerView.ViewHolder, item: T)
 
-    fun getItem(position: Int): T = objects[position]
+    operator fun get(position: Int): T = objects[position]
 
     override fun getItemCount(): Int = objects.size
 
