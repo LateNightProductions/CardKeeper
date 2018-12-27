@@ -18,14 +18,6 @@ import kotlinx.android.synthetic.main.fragment_scan.*
 
 class ScanFragment : BaseFragment() {
 
-    companion object {
-        private const val TAG = "ScanFragment"
-        const val EXTRA_BARCODE_FORMAT = TAG + ".extra_barcode_format"
-        const val EXTRA_BARCODE_TEXT = TAG + ".extra_barcode_text"
-
-        private const val REQUEST_CAMERA = 16
-    }
-
     //================================================================================
     // Lifecycle methods
     //================================================================================
@@ -34,7 +26,7 @@ class ScanFragment : BaseFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ) = inflater.inflate(R.layout.fragment_scan, container, false)
+    ): View = inflater.inflate(R.layout.fragment_scan, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -77,7 +69,7 @@ class ScanFragment : BaseFragment() {
                     putExtra(EXTRA_BARCODE_TEXT, result.text ?: "")
                 }
 
-                with(activity!!) {
+                activity?.run {
                     setResult(RESULT_OK, data)
                     finish()
                 }
@@ -89,5 +81,13 @@ class ScanFragment : BaseFragment() {
         scanScanner.decodeContinuous(callback)
     }
 
+
+    companion object {
+        private const val TAG = "ScanFragment"
+        const val EXTRA_BARCODE_FORMAT = "$TAG.extra_barcode_format"
+        const val EXTRA_BARCODE_TEXT = "$TAG.extra_barcode_text"
+
+        private const val REQUEST_CAMERA = 16
+    }
 
 }

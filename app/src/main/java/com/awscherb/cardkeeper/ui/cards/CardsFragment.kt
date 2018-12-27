@@ -47,7 +47,7 @@ class CardsFragment : BaseFragment(), CardsContract.View {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ) = inflater.inflate(R.layout.fragment_cards, container, false)
+    ): View = inflater.inflate(R.layout.fragment_cards, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

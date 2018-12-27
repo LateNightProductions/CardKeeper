@@ -7,11 +7,6 @@ import com.awscherb.cardkeeper.ui.base.BaseActivity
 
 class CardDetailActivity : BaseActivity() {
 
-    companion object {
-        private const val TAG = "CardDetailActivity"
-        const val EXTRA_CARD_ID = "$TAG.extra_card_id"
-    }
-
     //================================================================================
     // Lifecycle methods
     //================================================================================
@@ -27,5 +22,9 @@ class CardDetailActivity : BaseActivity() {
 
     }
 
+    companion object {
+        private const val TAG = "CardDetailActivity"
+        const val EXTRA_CARD_ID = "$TAG.extra_card_id"
+    }
 
 }

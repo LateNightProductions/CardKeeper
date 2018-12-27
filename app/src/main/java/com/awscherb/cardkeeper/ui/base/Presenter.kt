@@ -4,12 +4,10 @@ import androidx.annotation.CallSuper
 import io.reactivex.*
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
-import javax.inject.Inject
-import javax.inject.Named
 
 abstract class Presenter<V : BaseView> constructor(
-        private var uiScheduler: Scheduler)
-    : BasePresenter<V> {
+    private var uiScheduler: Scheduler
+) : BasePresenter<V> {
 
     var view: V? = null
 

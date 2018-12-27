@@ -18,22 +18,6 @@ import javax.inject.Inject
 
 class CardDetailFragment : BaseFragment(), CardDetailContract.View {
 
-    companion object {
-
-        private const val TAG = "CardDetailFragment"
-        private const val EXTRA_CARD_ID = "$TAG.extra_card_id"
-
-        fun newInstance(cardId: Int): CardDetailFragment {
-            val fragment = CardDetailFragment()
-            val b = Bundle()
-
-            b.putInt(EXTRA_CARD_ID, cardId)
-
-            fragment.arguments = b
-            return fragment
-        }
-    }
-
     @Inject
     internal lateinit var presenter: CardDetailContract.Presenter
 
@@ -121,5 +105,23 @@ class CardDetailFragment : BaseFragment(), CardDetailContract.View {
     override fun onError(e: Throwable) {
         e.printStackTrace()
     }
+
+
+    companion object {
+
+        private const val TAG = "CardDetailFragment"
+        private const val EXTRA_CARD_ID = "$TAG.extra_card_id"
+
+        fun newInstance(cardId: Int): CardDetailFragment {
+            val fragment = CardDetailFragment()
+            val b = Bundle()
+
+            b.putInt(EXTRA_CARD_ID, cardId)
+
+            fragment.arguments = b
+            return fragment
+        }
+    }
+
 
 }

@@ -9,11 +9,6 @@ import kotlinx.android.synthetic.main.activity_cards.*
 
 class CardsActivity : BaseActivity() {
 
-    companion object {
-        const val REQUEST_GET_CODE = 3
-
-    }
-
     //================================================================================
     // Lifecycle methods
     //================================================================================
@@ -27,10 +22,16 @@ class CardsActivity : BaseActivity() {
 
         cardsFab.setOnClickListener {
             supportFragmentManager.findFragmentById(R.id.container)?.startActivityForResult(
-                    Intent(this, ScanActivity::class.java), REQUEST_GET_CODE)
+                Intent(this, ScanActivity::class.java), REQUEST_GET_CODE
+            )
         }
 
         insertFragment(CardsFragment.newInstance())
+
+    }
+
+    companion object {
+        const val REQUEST_GET_CODE = 3
 
     }
 

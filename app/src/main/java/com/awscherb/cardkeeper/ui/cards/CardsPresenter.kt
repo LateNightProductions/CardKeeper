@@ -9,28 +9,34 @@ import javax.inject.Inject
 import javax.inject.Named
 
 class CardsPresenter @Inject constructor(
-        @[JvmField Inject]  var uiScheduler: Scheduler,
-        @[JvmField Inject] var scannedCodeService: ScannedCodeService)
-    : Presenter<CardsContract.View>(uiScheduler), CardsContract.Presenter {
+    uiScheduler: Scheduler,
+    private val scannedCodeService: ScannedCodeService
+) : Presenter<CardsContract.View>(uiScheduler), CardsContract.Presenter {
 
     override fun loadCards() {
-        addDisposable(scannedCodeService.listAllScannedCodes()
+        addDisposable(
+            scannedCodeService.listAllScannedCodes()
                 .compose(scheduleFlowable())
                 .subscribe({ view?.showCards(it) },
-                        { view?.onError(it) }))
+                    { view?.onError(it) })
+        )
     }
 
     override fun addNewCard(code: ScannedCode) {
-        addDisposable(scannedCodeService.addScannedCode(code)
+        addDisposable(
+            scannedCodeService.addScannedCode(code)
                 .compose(scheduleSingle())
                 .subscribe({ view?.onCardAdded(it) },
-                        { view?.onError(it) }))
+                    { view?.onError(it) })
+        )
     }
 
     override fun deleteCard(code: ScannedCode) {
-        addDisposable(scannedCodeService.deleteScannedCode(code)
+        addDisposable(
+            scannedCodeService.deleteScannedCode(code)
                 .compose(scheduleCompletable())
                 .subscribe({ view?.onCardDeleted() },
-                        { view?.onError(it) }))
+                    { view?.onError(it) })
+        )
     }
 }

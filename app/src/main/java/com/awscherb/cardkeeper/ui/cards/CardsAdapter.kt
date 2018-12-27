@@ -32,14 +32,14 @@ class CardsAdapter constructor(
         return ViewHolder(v)
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, code: ScannedCode) {
+    override fun onBindViewHolder(holder: ViewHolder, item: ScannedCode) {
         holder.itemView.apply {
 
             // Set title
-            codeTitle.text = code.title
+            codeTitle.text = item.title
 
             // Set image scaleType according to barcode type
-            when (code.format) {
+            when (item.format) {
                 QR_CODE, AZTEC, DATA_MATRIX -> codeImage.scaleType = ImageView.ScaleType.FIT_CENTER
                 else -> codeImage.scaleType = ImageView.ScaleType.FIT_XY
             }
@@ -47,7 +47,7 @@ class CardsAdapter constructor(
             // Load image
             try {
                 codeImage.setImageBitmap(
-                    encoder.encodeBitmap(code.text, code.format, 200, 200)
+                    encoder.encodeBitmap(item.text, item.format, 200, 200)
                 )
             } catch (e: WriterException) {
                 e.printStackTrace()
@@ -58,7 +58,7 @@ class CardsAdapter constructor(
                 AlertDialog.Builder(context)
                     .setTitle(R.string.adapter_scanned_code_delete_message)
                     .setPositiveButton(R.string.action_delete) { _, _ ->
-                        presenter.deleteCard(code)
+                        presenter.deleteCard(item)
                     }
                     .setNegativeButton(R.string.action_cancel, null)
                     .show()

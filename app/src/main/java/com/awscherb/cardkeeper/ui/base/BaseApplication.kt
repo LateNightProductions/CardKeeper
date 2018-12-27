@@ -12,7 +12,6 @@ import com.crashlytics.android.answers.Answers
 import io.fabric.sdk.android.Fabric
 
 
-
 class BaseApplication : Application() {
 
     lateinit var viewComponent: ViewComponent
@@ -24,10 +23,10 @@ class BaseApplication : Application() {
         Fabric.with(this, Crashlytics(), Answers())
 
         viewComponent = DaggerViewComponent.builder()
-                .appModule(AppModule(this))
-                .daoModule(DaoModule())
-                .schedulerModule(SchedulerModule())
-                .build()
+            .appModule(AppModule(this))
+            .daoModule(DaoModule())
+            .schedulerModule(SchedulerModule())
+            .build()
 
     }
 }

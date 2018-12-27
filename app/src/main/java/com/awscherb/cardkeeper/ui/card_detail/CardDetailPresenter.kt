@@ -8,9 +8,9 @@ import io.reactivex.Scheduler
 import javax.inject.Inject
 
 class CardDetailPresenter @Inject constructor(
-        @[JvmField Inject] var uiScheduler: Scheduler,
-        @[JvmField Inject] var service: ScannedCodeService)
-    : Presenter<CardDetailContract.View>(uiScheduler), CardDetailContract.Presenter {
+    uiScheduler: Scheduler,
+    private val service: ScannedCodeService
+) : Presenter<CardDetailContract.View>(uiScheduler), CardDetailContract.Presenter {
 
     private lateinit var originalTitle: String
     private lateinit var card: ScannedCode
@@ -20,13 +20,15 @@ class CardDetailPresenter @Inject constructor(
     //================================================================================
 
     override fun loadCard(id: Int) {
-        addDisposable(service.getScannedCode(id)
+        addDisposable(
+            service.getScannedCode(id)
                 .compose(scheduleSingle())
                 .subscribe({
                     card = it
                     originalTitle = it.title
                     view?.showCard(it)
-                }, { view?.onError(it) }))
+                }, { view?.onError(it) })
+        )
     }
 
     override fun setTitle(title: String) {
@@ -35,9 +37,11 @@ class CardDetailPresenter @Inject constructor(
     }
 
     override fun saveCard() {
-        addDisposable(service.updateScannedCode(card)
+        addDisposable(
+            service.updateScannedCode(card)
                 .compose(scheduleSingle())
                 .subscribe({ view?.onCardSaved() },
-                        { view?.onError(it) }))
+                    { view?.onError(it) })
+        )
     }
 }

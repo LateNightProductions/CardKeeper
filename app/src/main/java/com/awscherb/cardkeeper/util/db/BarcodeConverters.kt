@@ -7,14 +7,10 @@ object BarcodeConverters {
 
     @TypeConverter
     @JvmStatic
-    fun fromString(string: String): BarcodeFormat {
-        return BarcodeFormat.valueOf(string)
-    }
+    fun fromString(string: String): BarcodeFormat = BarcodeFormat.valueOf(string)
 
     @TypeConverter
     @JvmStatic
-    fun toString(format: BarcodeFormat): String {
-        return format.toString()
-    }
+    fun toString(format: BarcodeFormat): String = format.toString()
 
 }

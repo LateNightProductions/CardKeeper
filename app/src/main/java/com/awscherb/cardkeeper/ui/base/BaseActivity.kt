@@ -20,8 +20,8 @@ abstract class BaseActivity : RxAppCompatActivity() {
 
         if (fragmentContainer == null) {
             fragmentManager.beginTransaction()
-                    .add(R.id.container, fragment)
-                    .commit()
+                .add(R.id.container, fragment)
+                .commit()
         }
     }
 

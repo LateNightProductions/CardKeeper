@@ -5,8 +5,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.awscherb.cardkeeper.data.model.BaseModel
 
 abstract class BaseAdapter<T, VH> constructor(
-        private var objects: List<T> = ArrayList())
-    : androidx.recyclerview.widget.RecyclerView.Adapter<VH>() where T : BaseModel, VH : androidx.recyclerview.widget.RecyclerView.ViewHolder {
+    private var objects: List<T> = ArrayList()
+) : RecyclerView.Adapter<VH>() where T : BaseModel, VH : RecyclerView.ViewHolder {
 
     override fun onBindViewHolder(holder: VH, position: Int) {
         onBindViewHolder(holder, getItem(position))
