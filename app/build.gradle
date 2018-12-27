@@ -2,7 +2,6 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
-apply plugin: 'com.trello.victor'
 apply plugin: 'io.fabric'
 
 
@@ -50,9 +49,6 @@ android {
     }
 
     sourceSets {
-        main {
-            svg.srcDir 'src/main/svg'
-        }
         dev {
             java.srcDirs += 'src/prod'
         }

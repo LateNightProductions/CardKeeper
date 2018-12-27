@@ -6,7 +6,6 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.2.1'
-        classpath 'com.trello:victor:1.0.0'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.2.71"
         classpath 'io.fabric.tools:gradle:1.+'
     }
