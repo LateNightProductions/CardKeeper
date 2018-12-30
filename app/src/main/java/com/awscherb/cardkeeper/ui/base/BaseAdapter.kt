@@ -16,7 +16,7 @@ abstract class BaseAdapter<T> constructor(
 
     operator fun get(position: Int): T = objects[position]
 
-    override fun getItemCount(): Int = objects.size
+    override fun getItemCount() = objects.size
 
     fun swapObjects(newObjects: List<T>) {
         objects = newObjects

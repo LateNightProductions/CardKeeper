@@ -64,13 +64,11 @@ class ScanFragment : BaseFragment() {
     private fun setCallback() {
         val callback = object : BarcodeCallback {
             override fun barcodeResult(result: BarcodeResult) {
-                val data = Intent().apply {
-                    putExtra(EXTRA_BARCODE_FORMAT, result.barcodeFormat)
-                    putExtra(EXTRA_BARCODE_TEXT, result.text ?: "")
-                }
-
                 activity?.run {
-                    setResult(RESULT_OK, data)
+                    setResult(RESULT_OK, Intent().apply {
+                        putExtra(EXTRA_BARCODE_FORMAT, result.barcodeFormat)
+                        putExtra(EXTRA_BARCODE_TEXT, result.text ?: "")
+                    })
                     finish()
                 }
             }

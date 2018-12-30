@@ -72,9 +72,10 @@ class CardsFragment : BaseFragment(), CardsContract.View {
             scannedCode.format =
                     data.getSerializableExtra(ScanFragment.EXTRA_BARCODE_FORMAT) as BarcodeFormat
 
-            val input = EditText(activity)
-            input.setHint(R.string.dialog_card_name_hint)
-            input.inputType = InputType.TYPE_TEXT_FLAG_CAP_WORDS
+            val input = EditText(activity).apply {
+                setHint(R.string.dialog_card_name_hint)
+                inputType = InputType.TYPE_TEXT_FLAG_CAP_WORDS
+            }
 
             AlertDialog.Builder(activity!!)
                 .setTitle(R.string.app_name)
