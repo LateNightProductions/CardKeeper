@@ -12,7 +12,7 @@ import com.crashlytics.android.answers.Answers
 import io.fabric.sdk.android.Fabric
 
 
-class BaseApplication : Application() {
+class CardKeeperApplication : Application() {
 
     lateinit var viewComponent: ViewComponent
         private set

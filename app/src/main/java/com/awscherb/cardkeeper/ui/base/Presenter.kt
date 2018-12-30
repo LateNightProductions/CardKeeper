@@ -27,8 +27,8 @@ abstract class Presenter<V : BaseView> constructor(
         disposable.add(d)
     }
 
-    fun <T> scheduleFlowable() = FlowableTransformer<T, T> { f -> f.observeOn(uiScheduler) }
-    fun <T> scheduleObservable() = ObservableTransformer<T, T> { f -> f.observeOn(uiScheduler) }
-    fun <T> scheduleSingle() = SingleTransformer<T, T> { f -> f.observeOn(uiScheduler) }
-    fun scheduleCompletable() = CompletableTransformer { f -> f.observeOn(uiScheduler) }
+    fun <T> scheduleFlowable() = FlowableTransformer<T, T> { it.observeOn(uiScheduler) }
+    fun <T> scheduleObservable() = ObservableTransformer<T, T> { it.observeOn(uiScheduler) }
+    fun <T> scheduleSingle() = SingleTransformer<T, T> { it.observeOn(uiScheduler) }
+    fun scheduleCompletable() = CompletableTransformer { it.observeOn(uiScheduler) }
 }

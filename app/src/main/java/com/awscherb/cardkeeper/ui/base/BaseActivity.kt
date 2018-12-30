@@ -3,7 +3,6 @@ package com.awscherb.cardkeeper.ui.base
 
 import androidx.appcompat.widget.Toolbar
 import com.awscherb.cardkeeper.R
-import com.awscherb.cardkeeper.di.component.ViewComponent
 import com.trello.rxlifecycle3.components.support.RxAppCompatActivity
 
 abstract class BaseActivity : RxAppCompatActivity() {
@@ -37,14 +36,16 @@ abstract class BaseActivity : RxAppCompatActivity() {
     }
 
     fun setupToolbarBack() {
-        supportActionBar!!.setHomeButtonEnabled(true)
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.apply {
+            setHomeButtonEnabled(true)
+            setDisplayHomeAsUpEnabled(true)
+        }
     }
 
     fun setTitle(title: String) {
-        toolbar!!.title = title
+        toolbar?.title = title
     }
 
-    fun viewComponent(): ViewComponent = (application as BaseApplication).viewComponent
+    fun viewComponent() = (application as CardKeeperApplication).viewComponent
 
 }
