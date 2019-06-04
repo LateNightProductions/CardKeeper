@@ -5,8 +5,8 @@ buildscript {
         google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.2.1'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.2.71"
+        classpath 'com.android.tools.build:gradle:3.4.1'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.3.30"
         classpath 'io.fabric.tools:gradle:1.+'
     }
 }
@@ -29,30 +29,8 @@ task clean(type: Delete) {
     delete rootProject.buildDir
 }
 ext {
-    // Sdk and tools
+    kotlinVersion = '1.3.30'
     minSdkVersion = 19
     targetSdkVersion = 28
     compileSdkVersion = 28
-    archLifecycleVersion = "1.1.1"
-    archRoomVersion = "1.1.1"
-    constraintLayoutVersion = '2.0.0-alpha3'
-
-    // Kotlin
-    kotlinVersion = '1.2.71'
-
-    // RX
-    rxJavaVersion = '2.2.4'
-    rxAndroidVersion = '2.1.0'
-    rxBindingVersion = '3.0.0-alpha2'
-    rxLifecycleVersion = '3.0.0'
-
-    // App dependencies
-    supportLibraryVersion = '28.0.0'
-    daggerVersion = '2.16'
-    butterKnifeVersion = '8.8.1'
-    guavaVersion = '21.0'
-    junitVersion = '4.12'
-    mockitoVersion = '1.10.19'
-    hamcrestVersion = '1.3'
-
 }
