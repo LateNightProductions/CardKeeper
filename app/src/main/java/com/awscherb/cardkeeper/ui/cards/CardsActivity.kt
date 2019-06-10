@@ -20,12 +20,6 @@ class CardsActivity : BaseActivity() {
         setUpToolbar()
         setTitle("CardKeeper")
 
-        cardsFab.setOnClickListener {
-            supportFragmentManager.findFragmentById(R.id.container)?.startActivityForResult(
-                Intent(this, ScanActivity::class.java), REQUEST_GET_CODE
-            )
-        }
-
         insertFragment(CardsFragment.newInstance())
 
     }

@@ -7,8 +7,8 @@ import com.awscherb.cardkeeper.data.dao.ScannedCodeDao
 import com.awscherb.cardkeeper.data.model.ScannedCode
 import com.awscherb.cardkeeper.util.db.BarcodeConverters
 
-@Database(entities = [(ScannedCode::class)], version = 11)
+@Database(entities = [(ScannedCode::class)], version = 11, exportSchema = false)
 @TypeConverters(BarcodeConverters::class)
-abstract class CardKeeperDatabase: RoomDatabase() {
+abstract class CardKeeperDatabase : RoomDatabase() {
     abstract fun scannedCodeDao(): ScannedCodeDao
 }

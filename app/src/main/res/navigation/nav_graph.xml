@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph.xml"
+    app:startDestination="@id/cardsFragment">
+
+    <fragment
+        android:id="@+id/cardsFragment"
+        android:name="com.awscherb.cardkeeper.ui.cards.CardsFragment"
+        android:label="CardsFragment">
+        <action
+            android:id="@+id/action_cardsFragment_to_cardDetailFragment"
+            app:destination="@id/cardDetailFragment" />
+        <action
+            android:id="@+id/action_cardsFragment_to_scanFragment"
+            app:destination="@id/scanFragment" />
+        <argument
+            android:name="barcodeFormat"
+            app:argType="com.google.zxing.BarcodeFormat"
+            app:nullable="true" />
+        <argument
+            android:name="barcodeText"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/cardDetailFragment"
+        android:name="com.awscherb.cardkeeper.ui.card_detail.CardDetailFragment"
+        android:label="CardDetailFragment">
+        <argument
+            android:name="cardId"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_cardDetailFragment_to_cardsFragment"
+            app:destination="@id/cardsFragment"
+            app:popUpTo="@+id/cardsFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/scanFragment"
+        android:name="com.awscherb.cardkeeper.ui.scan.ScanFragment"
+        android:label="ScanFragment" />
+</navigation>

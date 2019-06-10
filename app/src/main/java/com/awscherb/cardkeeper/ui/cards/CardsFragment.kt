@@ -9,11 +9,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
+import androidx.navigation.fragment.findNavController
 import com.awscherb.cardkeeper.R
 import com.awscherb.cardkeeper.data.model.ScannedCode
 import com.awscherb.cardkeeper.ui.base.BaseFragment
-import com.awscherb.cardkeeper.ui.card_detail.CardDetailActivity
-import com.awscherb.cardkeeper.ui.listener.RecyclerItemClickListener
 import com.awscherb.cardkeeper.ui.scan.ScanFragment
 import com.google.zxing.BarcodeFormat
 import kotlinx.android.synthetic.main.fragment_cards.*
@@ -47,7 +46,12 @@ class CardsFragment : BaseFragment(), CardsContract.View {
         super.onViewCreated(view, savedInstanceState)
 
         setupRecycler()
-        setupListeners()
+
+        cardsFab.setOnClickListener {
+            findNavController().navigate(
+                CardsFragmentDirections.actionCardsFragmentToScanFragment()
+            )
+        }
 
         presenter.attachView(this)
 
@@ -70,7 +74,7 @@ class CardsFragment : BaseFragment(), CardsContract.View {
             val scannedCode = ScannedCode()
             scannedCode.text = data!!.getStringExtra(ScanFragment.EXTRA_BARCODE_TEXT)
             scannedCode.format =
-                    data.getSerializableExtra(ScanFragment.EXTRA_BARCODE_FORMAT) as BarcodeFormat
+                data.getSerializableExtra(ScanFragment.EXTRA_BARCODE_FORMAT) as BarcodeFormat
 
             val input = EditText(activity).apply {
                 setHint(R.string.dialog_card_name_hint)
@@ -115,7 +119,11 @@ class CardsFragment : BaseFragment(), CardsContract.View {
 
     private fun setupRecycler() {
         layoutManager = androidx.recyclerview.widget.LinearLayoutManager(activity)
-        scannedCodeAdapter = CardsAdapter(activity!!) { code ->
+        scannedCodeAdapter = CardsAdapter(activity!!, {
+            findNavController().navigate(
+                CardsFragmentDirections.actionCardsFragmentToCardDetailFragment(it.id)
+            )
+        }) { code ->
             AlertDialog.Builder(requireContext())
                 .setTitle(R.string.adapter_scanned_code_delete_message)
                 .setPositiveButton(R.string.action_delete) { _, _ ->
@@ -126,27 +134,6 @@ class CardsFragment : BaseFragment(), CardsContract.View {
         }
         cardsRecycler.layoutManager = layoutManager
         cardsRecycler.adapter = scannedCodeAdapter
-    }
-
-    private fun setupListeners() {
-        cardsRecycler.addOnItemTouchListener(
-            RecyclerItemClickListener(activity!!,
-                object : RecyclerItemClickListener.OnItemClickListener {
-                    override fun onItemClick(view: View, position: Int) {
-                        startActivity(
-                            Intent(activity, CardDetailActivity::class.java)
-                                .apply {
-                                    putExtra(
-                                        CardDetailActivity.EXTRA_CARD_ID,
-                                        scannedCodeAdapter[position].id
-                                    )
-                                }
-                        )
-                    }
-
-                }
-            )
-        )
     }
 
     companion object {
