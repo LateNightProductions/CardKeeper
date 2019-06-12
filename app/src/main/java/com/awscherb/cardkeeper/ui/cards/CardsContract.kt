@@ -13,7 +13,6 @@ interface CardsContract {
         fun onCardAdded(code: ScannedCode)
 
         fun onCardDeleted()
-
     }
 
     interface Presenter : BasePresenter<CardsContract.View> {
@@ -23,8 +22,5 @@ interface CardsContract {
         fun addNewCard(code: ScannedCode)
 
         fun deleteCard(code: ScannedCode)
-
     }
-
-
 }

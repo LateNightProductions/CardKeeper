@@ -10,18 +10,10 @@
         android:label="CardsFragment">
         <action
             android:id="@+id/action_cardsFragment_to_cardDetailFragment"
-            app:destination="@id/cardDetailFragment" />
+            app:destination="@id/cardDetailFragment"/>
         <action
             android:id="@+id/action_cardsFragment_to_scanFragment"
-            app:destination="@id/scanFragment" />
-        <argument
-            android:name="barcodeFormat"
-            app:argType="com.google.zxing.BarcodeFormat"
-            app:nullable="true" />
-        <argument
-            android:name="barcodeText"
-            app:argType="string"
-            app:nullable="true" />
+            app:destination="@id/scanFragment"/>
     </fragment>
     <fragment
         android:id="@+id/cardDetailFragment"
@@ -29,15 +21,16 @@
         android:label="CardDetailFragment">
         <argument
             android:name="cardId"
-            app:argType="integer" />
-        <action
-            android:id="@+id/action_cardDetailFragment_to_cardsFragment"
-            app:destination="@id/cardsFragment"
-            app:popUpTo="@+id/cardsFragment"
-            app:popUpToInclusive="true" />
+            app:argType="integer"/>
     </fragment>
     <fragment
         android:id="@+id/scanFragment"
         android:name="com.awscherb.cardkeeper.ui.scan.ScanFragment"
-        android:label="ScanFragment" />
+        android:label="ScanFragment">
+        <action
+            android:id="@+id/action_scanFragment_to_cardsFragment"
+            app:popUpTo="@+id/cardsFragment"
+            app:popUpToInclusive="true"
+            app:destination="@id/cardsFragment"/>
+    </fragment>
 </navigation>
