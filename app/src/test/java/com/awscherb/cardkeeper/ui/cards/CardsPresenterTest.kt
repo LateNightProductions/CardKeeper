@@ -3,7 +3,6 @@ package com.awscherb.cardkeeper.ui.cards
 import com.awscherb.cardkeeper.data.model.ScannedCode
 import com.awscherb.cardkeeper.data.service.ScannedCodeService
 import com.awscherb.cardkeeper.ui.base.BasePresenterTest
-import com.google.zxing.client.android.Intents
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.times
 import com.nhaarman.mockito_kotlin.verify
@@ -11,7 +10,6 @@ import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
-import net.bytebuddy.implementation.bytecode.Throw
 import org.junit.Test
 import org.mockito.Mock
 import org.mockito.Mockito.`when` as whn

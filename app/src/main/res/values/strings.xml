@@ -21,5 +21,6 @@
 
     <!-- Card Detail Fragment -->
     <string name="fragment_card_detail_text_header">Barcode text:</string>
+    <string name="fragment_card_detail_saved">Saved!</string>
 
 </resources>

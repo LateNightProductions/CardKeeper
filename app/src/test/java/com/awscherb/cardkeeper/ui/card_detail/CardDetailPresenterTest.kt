@@ -5,12 +5,10 @@ import com.awscherb.cardkeeper.data.service.ScannedCodeService
 import com.awscherb.cardkeeper.ui.base.BasePresenterTest
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.times
-import junit.framework.Assert.assertEquals
 import com.nhaarman.mockito_kotlin.verify
-import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
-import net.bytebuddy.implementation.bytecode.Throw
+import junit.framework.Assert.assertEquals
 import org.junit.Test
 import org.mockito.Mock
 import org.mockito.Mockito.`when` as whn

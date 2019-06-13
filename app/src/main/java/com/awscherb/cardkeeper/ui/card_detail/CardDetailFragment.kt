@@ -8,7 +8,9 @@ import android.widget.ImageView
 import com.awscherb.cardkeeper.R
 import com.awscherb.cardkeeper.data.model.ScannedCode
 import com.awscherb.cardkeeper.ui.base.BaseFragment
-import com.google.zxing.BarcodeFormat.*
+import com.google.zxing.BarcodeFormat.AZTEC
+import com.google.zxing.BarcodeFormat.DATA_MATRIX
+import com.google.zxing.BarcodeFormat.QR_CODE
 import com.google.zxing.WriterException
 import com.jakewharton.rxbinding3.widget.textChanges
 import com.journeyapps.barcodescanner.BarcodeEncoder
@@ -26,12 +28,6 @@ class CardDetailFragment : BaseFragment(), CardDetailContract.View {
     // Lifecycle methods
     //================================================================================
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        baseActivity.viewComponent().inject(this)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -40,6 +36,8 @@ class CardDetailFragment : BaseFragment(), CardDetailContract.View {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewComponent.inject(this)
+
         presenter.attachView(this)
 
         cardDetailSave.setOnClickListener { presenter.saveCard() }
@@ -62,7 +60,7 @@ class CardDetailFragment : BaseFragment(), CardDetailContract.View {
         cardDetailTitle.setText(code.title)
         cardDetailText.text = code.text
 
-        activity!!.title = code.title
+        toolbar.title = code.title
 
         // Set image scaleType according to barcode type
         val scaleType = when (code.format) {
@@ -94,10 +92,8 @@ class CardDetailFragment : BaseFragment(), CardDetailContract.View {
     }
 
     override fun onCardSaved() {
+        showSnackbar(R.string.fragment_card_detail_saved)
         activity?.onBackPressed()
     }
 
-    override fun onError(e: Throwable) {
-        e.printStackTrace()
-    }
 }

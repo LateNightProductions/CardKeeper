@@ -1,23 +1,19 @@
 package com.awscherb.cardkeeper.ui.scan
 
 import android.Manifest
-import android.app.Activity.RESULT_OK
-import android.content.Intent
-import android.database.sqlite.SQLiteCantOpenDatabaseException
 import android.os.Build
 import android.os.Bundle
 import android.text.InputType
-import androidx.navigation.fragment.findNavController
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.PermissionChecker
+import androidx.navigation.fragment.findNavController
 import com.awscherb.cardkeeper.R
 import com.awscherb.cardkeeper.data.model.ScannedCode
 import com.awscherb.cardkeeper.ui.base.BaseFragment
-import com.google.zxing.BarcodeFormat
 import com.google.zxing.ResultPoint
 import com.journeyapps.barcodescanner.BarcodeCallback
 import com.journeyapps.barcodescanner.BarcodeResult
@@ -45,7 +41,7 @@ class ScanFragment : BaseFragment(), ScanContract.View {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        baseActivity.viewComponent().inject(this)
+        viewComponent.inject(this)
         presenter.attachView(this)
 
         // Check permissions
@@ -87,10 +83,6 @@ class ScanFragment : BaseFragment(), ScanContract.View {
         findNavController().navigate(
             ScanFragmentDirections.actionScanFragmentToCardsFragment()
         )
-    }
-
-    override fun onError(e: Throwable) {
-        e.printStackTrace()
     }
 
     // ========================================================================

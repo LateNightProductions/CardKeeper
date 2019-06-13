@@ -25,12 +25,6 @@ class CardsFragment : BaseFragment(), CardsContract.View {
     // Lifecycle methods
     //================================================================================
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        baseActivity.viewComponent().inject(this)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -39,6 +33,8 @@ class CardsFragment : BaseFragment(), CardsContract.View {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        viewComponent.inject(this)
 
         setupRecycler()
 
@@ -75,10 +71,6 @@ class CardsFragment : BaseFragment(), CardsContract.View {
 
     override fun onCardDeleted() {
         showSnackbar(R.string.fragment_cards_deleted_card)
-    }
-
-    override fun onError(e: Throwable) {
-        e.printStackTrace()
     }
 
     //================================================================================
