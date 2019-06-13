@@ -16,6 +16,7 @@ import kotlinx.android.synthetic.main.adapter_code.view.*
 
 class CardsAdapter constructor(
     private val context: Context,
+    private val onClickListener: (ScannedCode) -> Unit,
     private val deleteListener: (ScannedCode) -> Unit
 ) : BaseAdapter<ScannedCode>() {
 
@@ -55,6 +56,8 @@ class CardsAdapter constructor(
             } catch (e: WriterException) {
                 e.printStackTrace()
             }
+
+            setOnClickListener { onClickListener(item) }
 
             // Setup delete
             setOnLongClickListener {

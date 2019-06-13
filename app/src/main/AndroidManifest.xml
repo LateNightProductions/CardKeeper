@@ -26,7 +26,7 @@
         tools:ignore="GoogleAppIndexingWarning">
 
         <activity
-            android:name=".ui.cards.CardsActivity"
+            android:name=".ui.base.CardKeeperActivity"
             android:label="@string/title_activity_cards">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -34,16 +34,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity
-            android:name=".ui.card_detail.CardDetailActivity"
-            android:parentActivityName=".ui.cards.CardsActivity"
-            android:windowSoftInputMode="adjustResize|stateHidden" />
-
-        <activity
-            android:name=".ui.scan.ScanActivity"
-            android:parentActivityName=".ui.cards.CardsActivity"
-            android:screenOrientation="portrait" />
 
     </application>
 

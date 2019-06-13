@@ -3,20 +3,34 @@ package com.awscherb.cardkeeper.ui.scan
 import android.Manifest
 import android.app.Activity.RESULT_OK
 import android.content.Intent
+import android.database.sqlite.SQLiteCantOpenDatabaseException
 import android.os.Build
 import android.os.Bundle
+import android.text.InputType
+import androidx.navigation.fragment.findNavController
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.PermissionChecker
 import com.awscherb.cardkeeper.R
+import com.awscherb.cardkeeper.data.model.ScannedCode
 import com.awscherb.cardkeeper.ui.base.BaseFragment
+import com.google.zxing.BarcodeFormat
 import com.google.zxing.ResultPoint
 import com.journeyapps.barcodescanner.BarcodeCallback
 import com.journeyapps.barcodescanner.BarcodeResult
 import kotlinx.android.synthetic.main.fragment_scan.*
+import java.util.concurrent.atomic.AtomicBoolean
+import javax.inject.Inject
 
-class ScanFragment : BaseFragment() {
+class ScanFragment : BaseFragment(), ScanContract.View {
+
+    @Inject
+    lateinit var presenter: ScanContract.Presenter
+
+    private val found = AtomicBoolean(false)
 
     //================================================================================
     // Lifecycle methods
@@ -30,6 +44,9 @@ class ScanFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        baseActivity.viewComponent().inject(this)
+        presenter.attachView(this)
 
         // Check permissions
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -57,6 +74,25 @@ class ScanFragment : BaseFragment() {
         scanScanner.pause()
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        presenter.onViewDestroyed()
+    }
+
+    // ========================================================================
+    // View methods
+    // ========================================================================
+
+    override fun onCodeAdded() {
+        findNavController().navigate(
+            ScanFragmentDirections.actionScanFragmentToCardsFragment()
+        )
+    }
+
+    override fun onError(e: Throwable) {
+        e.printStackTrace()
+    }
+
     // ========================================================================
     // Helper methods
     // ========================================================================
@@ -64,12 +100,25 @@ class ScanFragment : BaseFragment() {
     private fun setCallback() {
         val callback = object : BarcodeCallback {
             override fun barcodeResult(result: BarcodeResult) {
-                activity?.run {
-                    setResult(RESULT_OK, Intent().apply {
-                        putExtra(EXTRA_BARCODE_FORMAT, result.barcodeFormat)
-                        putExtra(EXTRA_BARCODE_TEXT, result.text ?: "")
-                    })
-                    finish()
+                if (found.compareAndSet(false, true)) {
+                    val scannedCode = ScannedCode()
+                    scannedCode.text = result.text
+                    scannedCode.format = result.barcodeFormat
+
+                    val input = EditText(activity).apply {
+                        setHint(R.string.dialog_card_name_hint)
+                        inputType = InputType.TYPE_TEXT_FLAG_CAP_WORDS
+                    }
+
+                    AlertDialog.Builder(activity!!)
+                        .setTitle(R.string.app_name)
+                        .setView(input)
+                        .setOnDismissListener { found.set(false) }
+                        .setPositiveButton(R.string.action_add) { _, _ ->
+                            presenter.addNewCode(result.barcodeFormat, result.text, input.text.toString())
+                        }
+                        .setNegativeButton(R.string.action_cancel) { dialog, _ -> dialog.dismiss() }
+                        .show()
                 }
             }
 
@@ -79,13 +128,7 @@ class ScanFragment : BaseFragment() {
         scanScanner.decodeContinuous(callback)
     }
 
-
     companion object {
-        private const val TAG = "ScanFragment"
-        const val EXTRA_BARCODE_FORMAT = "$TAG.extra_barcode_format"
-        const val EXTRA_BARCODE_TEXT = "$TAG.extra_barcode_text"
-
         private const val REQUEST_CAMERA = 16
     }
-
 }

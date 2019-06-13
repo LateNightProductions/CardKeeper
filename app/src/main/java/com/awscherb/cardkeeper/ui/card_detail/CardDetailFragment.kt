@@ -43,11 +43,9 @@ class CardDetailFragment : BaseFragment(), CardDetailContract.View {
         presenter.attachView(this)
 
         cardDetailSave.setOnClickListener { presenter.saveCard() }
-    }
 
-    override fun onResume() {
-        super.onResume()
-        presenter.loadCard(arguments!!.getInt(EXTRA_CARD_ID))
+        val args = CardDetailFragmentArgs.fromBundle(arguments!!)
+        presenter.loadCard(args.cardId)
     }
 
     override fun onDestroy() {
@@ -89,7 +87,6 @@ class CardDetailFragment : BaseFragment(), CardDetailContract.View {
                 .subscribe({ presenter.setTitle(it) },
                     { onError(it) })
         )
-
     }
 
     override fun setSaveVisible(visible: Boolean) {
@@ -103,18 +100,4 @@ class CardDetailFragment : BaseFragment(), CardDetailContract.View {
     override fun onError(e: Throwable) {
         e.printStackTrace()
     }
-
-    companion object {
-
-        private const val TAG = "CardDetailFragment"
-        private const val EXTRA_CARD_ID = "$TAG.extra_card_id"
-
-        fun newInstance(cardId: Int) = CardDetailFragment().apply {
-            arguments = Bundle().apply {
-                putInt(EXTRA_CARD_ID, cardId)
-            }
-        }
-    }
-
-
 }
