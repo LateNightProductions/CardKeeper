@@ -94,7 +94,7 @@ class CardDetailFragment : BaseFragment(), CardDetailContract.View {
     }
 
     override fun onCardSaved() {
-        activity!!.finish()
+        activity?.onBackPressed()
     }
 
     override fun onError(e: Throwable) {
