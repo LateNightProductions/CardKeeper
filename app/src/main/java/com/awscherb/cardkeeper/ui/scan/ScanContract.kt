@@ -1,6 +1,5 @@
 package com.awscherb.cardkeeper.ui.scan
 
-import com.awscherb.cardkeeper.data.model.ScannedCode
 import com.awscherb.cardkeeper.ui.base.BasePresenter
 import com.awscherb.cardkeeper.ui.base.BaseView
 import com.google.zxing.BarcodeFormat

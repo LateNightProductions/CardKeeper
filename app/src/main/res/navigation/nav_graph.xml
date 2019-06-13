@@ -10,10 +10,18 @@
         android:label="CardsFragment">
         <action
             android:id="@+id/action_cardsFragment_to_cardDetailFragment"
-            app:destination="@id/cardDetailFragment"/>
+            app:destination="@id/cardDetailFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
         <action
             android:id="@+id/action_cardsFragment_to_scanFragment"
-            app:destination="@id/scanFragment"/>
+            app:destination="@id/scanFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
     </fragment>
     <fragment
         android:id="@+id/cardDetailFragment"
@@ -31,6 +39,10 @@
             android:id="@+id/action_scanFragment_to_cardsFragment"
             app:popUpTo="@+id/cardsFragment"
             app:popUpToInclusive="true"
-            app:destination="@id/cardsFragment"/>
+            app:destination="@id/cardsFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
     </fragment>
 </navigation>
