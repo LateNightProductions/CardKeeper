@@ -3,27 +3,30 @@ package com.awscherb.cardkeeper.ui.card_detail
 import com.awscherb.cardkeeper.data.model.ScannedCode
 import com.awscherb.cardkeeper.data.service.ScannedCodeService
 import com.awscherb.cardkeeper.ui.base.BasePresenterTest
-import com.nhaarman.mockito_kotlin.any
-import com.nhaarman.mockito_kotlin.times
-import com.nhaarman.mockito_kotlin.verify
-import io.reactivex.Single
-import io.reactivex.schedulers.Schedulers
+import com.nhaarman.mockitokotlin2.any
+import com.nhaarman.mockitokotlin2.times
+import com.nhaarman.mockitokotlin2.verify
+import com.nhaarman.mockitokotlin2.whenever
 import junit.framework.Assert.assertEquals
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
 import org.junit.Test
 import org.mockito.Mock
-import org.mockito.Mockito.`when` as whn
 
 class CardDetailPresenterTest : BasePresenterTest<CardDetailContract.View, CardDetailPresenter>() {
 
-    @Mock lateinit var service: ScannedCodeService
+    @Mock
+    lateinit var service: ScannedCodeService
 
     override fun getViewClass() = CardDetailContract.View::class.java
-    override fun createPresenter() = CardDetailPresenter(Schedulers.trampoline(), service)
+    override fun createPresenter() = CardDetailPresenter(Dispatchers.Unconfined, service)
 
     @Test
-    fun `Load card success`() {
-        whn(service.getScannedCode(1))
-                .thenReturn(Single.just(ScannedCode().apply { title = "title" }))
+    fun `Load card success`() = runBlocking {
+        whenever(service.getScannedCode(1))
+            .thenReturn(ScannedCode().apply {
+                title = "title"
+            })
 
         presenter.loadCard(1)
 
@@ -31,9 +34,9 @@ class CardDetailPresenterTest : BasePresenterTest<CardDetailContract.View, CardD
     }
 
     @Test
-    fun `Load card failure`() {
-        whn(service.getScannedCode(1))
-                .thenReturn(Single.error(Throwable()))
+    fun `Load card failure`() = runBlocking {
+        whenever(service.getScannedCode(1))
+            .thenThrow(RuntimeException())
 
         presenter.loadCard(1)
 
@@ -54,10 +57,10 @@ class CardDetailPresenterTest : BasePresenterTest<CardDetailContract.View, CardD
     }
 
     @Test
-    fun `Save card success`() {
+    fun `Save card success`() = runBlocking {
         `Set card data`()
-        whn(service.updateScannedCode(any()))
-                .thenReturn(Single.just(ScannedCode()))
+        whenever(service.updateScannedCode(any()))
+            .thenReturn(ScannedCode())
 
         presenter.saveCard()
 
@@ -65,10 +68,10 @@ class CardDetailPresenterTest : BasePresenterTest<CardDetailContract.View, CardD
     }
 
     @Test
-    fun `Save card failure`() {
+    fun `Save card failure`() = runBlocking {
         `Set card data`()
-        whn(service.updateScannedCode(any()))
-                .thenReturn(Single.error(Throwable()))
+        whenever(service.updateScannedCode(any()))
+            .thenThrow(RuntimeException())
 
         presenter.saveCard()
 
@@ -85,3 +88,4 @@ class CardDetailPresenterTest : BasePresenterTest<CardDetailContract.View, CardD
         titleField.set(presenter, "original")
     }
 }
+

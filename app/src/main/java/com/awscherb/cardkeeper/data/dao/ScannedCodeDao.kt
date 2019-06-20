@@ -9,18 +9,17 @@ import io.reactivex.Single
 interface ScannedCodeDao {
 
     @Query("SELECT * FROM scannedCode WHERE id = :id LIMIT 1")
-    fun getScannedCode(id: Int): Single<ScannedCode>
+    suspend fun getScannedCode(id: Int): ScannedCode
 
     @Query("SELECT * FROM scannedCode")
-    fun listScannedCodes(): Flowable<List<ScannedCode>>
+    suspend fun listScannedCodes(): List<ScannedCode>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertCode(code: ScannedCode)
+    suspend fun insertCode(code: ScannedCode)
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
-    fun updateCode(code: ScannedCode)
+    suspend fun updateCode(code: ScannedCode)
 
     @Delete
-    fun deleteCode(code: ScannedCode)
-
+    suspend fun deleteCode(code: ScannedCode)
 }

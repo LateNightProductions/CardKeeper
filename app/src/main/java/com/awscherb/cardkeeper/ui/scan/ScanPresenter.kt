@@ -4,13 +4,13 @@ import com.awscherb.cardkeeper.data.model.ScannedCode
 import com.awscherb.cardkeeper.data.service.ScannedCodeService
 import com.awscherb.cardkeeper.ui.base.Presenter
 import com.google.zxing.BarcodeFormat
-import io.reactivex.Scheduler
+import kotlinx.coroutines.CoroutineDispatcher
 import javax.inject.Inject
 
 class ScanPresenter @Inject constructor(
-    uiScheduler: Scheduler,
+    dispatcher: CoroutineDispatcher,
     private val service: ScannedCodeService
-) : Presenter<ScanContract.View>(uiScheduler), ScanContract.Presenter {
+) : Presenter<ScanContract.View>(dispatcher), ScanContract.Presenter {
 
     override fun addNewCode(format: BarcodeFormat, text: String, title: String) {
         val scannedCode = ScannedCode().apply {
@@ -18,13 +18,10 @@ class ScanPresenter @Inject constructor(
             this.text = text
             this.title = title
         }
-        addDisposable(
+
+        uiScope {
             service.addScannedCode(scannedCode)
-                .compose(scheduleSingle())
-                .subscribe(
-                    { view?.onCodeAdded() },
-                    { view?.onError(it) }
-                )
-        )
+            view.onCodeAdded()
+        }
     }
 }

@@ -10,13 +10,17 @@ import javax.inject.Singleton
 
 @Module
 class AppModule(private val context: Context) {
-    @Provides @Singleton fun provideContext() = context
+    @Provides
+    @Singleton
+    fun provideContext() = context
 
-    @Provides @Singleton
+    @Provides
+    @Singleton
     fun provideDatabase(context: Context): CardKeeperDatabase {
         return Room.databaseBuilder(
-                context.applicationContext, CardKeeperDatabase::class.java, "cardkeeper.db")
-                .addMigrations(DatabaseMigrations.MIGRATE_10_TO_11)
-                .build()
+            context.applicationContext, CardKeeperDatabase::class.java, "cardkeeper.db"
+        )
+            .addMigrations(DatabaseMigrations.MIGRATE_10_TO_11)
+            .build()
     }
 }

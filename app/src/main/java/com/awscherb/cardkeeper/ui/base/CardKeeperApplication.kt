@@ -6,7 +6,7 @@ import com.awscherb.cardkeeper.di.component.DaggerViewComponent
 import com.awscherb.cardkeeper.di.component.ViewComponent
 import com.awscherb.cardkeeper.di.module.AppModule
 import com.awscherb.cardkeeper.di.module.DaoModule
-import com.awscherb.cardkeeper.di.module.SchedulerModule
+import com.awscherb.cardkeeper.di.module.DispatchersModule
 import com.crashlytics.android.Crashlytics
 import com.crashlytics.android.answers.Answers
 import io.fabric.sdk.android.Fabric
@@ -25,7 +25,7 @@ class CardKeeperApplication : Application() {
         viewComponent = DaggerViewComponent.builder()
             .appModule(AppModule(this))
             .daoModule(DaoModule())
-            .schedulerModule(SchedulerModule())
+            .dispatchersModule(DispatchersModule())
             .build()
 
     }

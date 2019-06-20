@@ -4,9 +4,11 @@ import dagger.Module
 import dagger.Provides
 import io.reactivex.Scheduler
 import io.reactivex.android.schedulers.AndroidSchedulers
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 
 @Module
-class SchedulerModule {
+class DispatchersModule {
     @Provides
-    fun provideUiScheduler(): Scheduler = AndroidSchedulers.mainThread()
+    fun provideMainDispatcher(): CoroutineDispatcher = Dispatchers.Main
 }

@@ -3,39 +3,35 @@ package com.awscherb.cardkeeper.data.handler
 import com.awscherb.cardkeeper.data.dao.ScannedCodeDao
 import com.awscherb.cardkeeper.data.model.ScannedCode
 import com.awscherb.cardkeeper.data.service.ScannedCodeService
-import io.reactivex.Completable
-import io.reactivex.Flowable
-import io.reactivex.Single
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.withContext
+import java.lang.RuntimeException
 import javax.inject.Inject
 
 class ScannedCodeHandler @Inject constructor(
     var scannedCodeDao: ScannedCodeDao
 ) : BaseHandler(), ScannedCodeService {
 
-    override fun getScannedCode(codeId: Int): Single<ScannedCode> =
-        scannedCodeDao.getScannedCode(codeId).compose(scheduleSingle())
-
-    override fun listAllScannedCodes(): Flowable<List<ScannedCode>> =
-        scannedCodeDao.listScannedCodes().compose(scheduleFlowable())
-
-    override fun addScannedCode(scannedCode: ScannedCode): Single<ScannedCode> {
-        return Single.fromCallable {
-            scannedCodeDao.insertCode(scannedCode)
-            scannedCode
-        }.compose(scheduleSingle())
+    override suspend fun getScannedCode(codeId: Int): ScannedCode = withContext(Dispatchers.Default) {
+        scannedCodeDao.getScannedCode(codeId)
     }
 
-    override fun updateScannedCode(scannedCode: ScannedCode): Single<ScannedCode> {
-        return Single.fromCallable {
-            scannedCodeDao.updateCode(scannedCode)
-            scannedCode
-        }.compose(scheduleSingle())
+    override suspend fun listAllScannedCodes(): List<ScannedCode> = withContext(Dispatchers.Default) {
+        scannedCodeDao.listScannedCodes()
     }
 
-    override fun deleteScannedCode(scannedCode: ScannedCode): Completable {
-        return Completable.fromCallable {
-            scannedCodeDao.deleteCode(scannedCode)
-        }.compose(scheduleCompletable())
+    override suspend fun addScannedCode(scannedCode: ScannedCode): ScannedCode = withContext(Dispatchers.Default) {
+        scannedCodeDao.insertCode(scannedCode)
+        scannedCode
     }
 
+    override suspend fun updateScannedCode(scannedCode: ScannedCode): ScannedCode = withContext(Dispatchers.Default) {
+        scannedCodeDao.updateCode(scannedCode)
+        scannedCode
+    }
+
+    override suspend fun deleteScannedCode(scannedCode: ScannedCode) = withContext(Dispatchers.Default) {
+        scannedCodeDao.deleteCode(scannedCode)
+    }
 }

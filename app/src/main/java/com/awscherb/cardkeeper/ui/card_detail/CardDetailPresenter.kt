@@ -3,14 +3,13 @@ package com.awscherb.cardkeeper.ui.card_detail
 import com.awscherb.cardkeeper.data.model.ScannedCode
 import com.awscherb.cardkeeper.data.service.ScannedCodeService
 import com.awscherb.cardkeeper.ui.base.Presenter
-import io.reactivex.Scheduler
-
+import kotlinx.coroutines.CoroutineDispatcher
 import javax.inject.Inject
 
 class CardDetailPresenter @Inject constructor(
-    uiScheduler: Scheduler,
+    dispatcher: CoroutineDispatcher,
     private val service: ScannedCodeService
-) : Presenter<CardDetailContract.View>(uiScheduler), CardDetailContract.Presenter {
+) : Presenter<CardDetailContract.View>(dispatcher), CardDetailContract.Presenter {
 
     private lateinit var originalTitle: String
     private lateinit var card: ScannedCode
@@ -20,28 +19,23 @@ class CardDetailPresenter @Inject constructor(
     //================================================================================
 
     override fun loadCard(id: Int) {
-        addDisposable(
-            service.getScannedCode(id)
-                .compose(scheduleSingle())
-                .subscribe({
-                    card = it
-                    originalTitle = it.title
-                    view?.showCard(it)
-                }, { view?.onError(it) })
-        )
+        uiScope(view::onError) {
+            val code = service.getScannedCode(id)
+            card = code
+            originalTitle = code.title
+            view.showCard(code)
+        }
     }
 
     override fun setTitle(title: String) {
-        view?.setSaveVisible(title != originalTitle)
+        view.setSaveVisible(title != originalTitle)
         card.title = title
     }
 
     override fun saveCard() {
-        addDisposable(
+        uiScope(view::onError) {
             service.updateScannedCode(card)
-                .compose(scheduleSingle())
-                .subscribe({ view?.onCardSaved() },
-                    { view?.onError(it) })
-        )
+            view.onCardSaved()
+        }
     }
 }

@@ -1,17 +1,20 @@
 package com.awscherb.cardkeeper.ui.base
 
 import androidx.annotation.CallSuper
-import io.reactivex.*
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.disposables.Disposable
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
 
 abstract class Presenter<V : BaseView> constructor(
-    private var uiScheduler: Scheduler
+    coroutineDispatcher: CoroutineDispatcher
 ) : BasePresenter<V> {
 
-    var view: V? = null
+    private val job = SupervisorJob()
 
-    private val disposable = CompositeDisposable()
+    val uiScope = CoroutineScope(coroutineDispatcher + job)
+
+    lateinit var view: V
 
     @CallSuper
     override fun attachView(view: V) {
@@ -20,15 +23,20 @@ abstract class Presenter<V : BaseView> constructor(
 
     @CallSuper
     override fun onViewDestroyed() {
-        disposable.clear()
+        job.cancel()
     }
 
-    protected fun addDisposable(d: Disposable) {
-        disposable.add(d)
+    fun uiScope(block: suspend CoroutineScope.() -> Unit) {
+        uiScope.launch(block = block)
     }
 
-    fun <T> scheduleFlowable() = FlowableTransformer<T, T> { it.observeOn(uiScheduler) }
-    fun <T> scheduleObservable() = ObservableTransformer<T, T> { it.observeOn(uiScheduler) }
-    fun <T> scheduleSingle() = SingleTransformer<T, T> { it.observeOn(uiScheduler) }
-    fun scheduleCompletable() = CompletableTransformer { it.observeOn(uiScheduler) }
+    fun uiScope(onError: (Throwable) -> Unit, block: suspend CoroutineScope.() -> Unit) {
+        uiScope.launch(block = {
+            try {
+                block()
+            } catch (e: Exception) {
+                onError(e)
+            }
+        })
+    }
 }

@@ -3,28 +3,28 @@ package com.awscherb.cardkeeper.ui.cards
 import com.awscherb.cardkeeper.data.model.ScannedCode
 import com.awscherb.cardkeeper.data.service.ScannedCodeService
 import com.awscherb.cardkeeper.ui.base.BasePresenterTest
-import com.nhaarman.mockito_kotlin.any
-import com.nhaarman.mockito_kotlin.times
-import com.nhaarman.mockito_kotlin.verify
-import io.reactivex.Completable
-import io.reactivex.Flowable
-import io.reactivex.Single
-import io.reactivex.schedulers.Schedulers
+import com.nhaarman.mockitokotlin2.any
+import com.nhaarman.mockitokotlin2.times
+import com.nhaarman.mockitokotlin2.verify
+import com.nhaarman.mockitokotlin2.whenever
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
 import org.junit.Test
 import org.mockito.Mock
-import org.mockito.Mockito.`when` as whn
 
 class CardsPresenterTest : BasePresenterTest<CardsContract.View, CardsPresenter>() {
 
-    @Mock lateinit var service: ScannedCodeService
+    @Mock
+    lateinit var service: ScannedCodeService
 
     override fun getViewClass() = CardsContract.View::class.java
-    override fun createPresenter() = CardsPresenter(Schedulers.trampoline(), service)
+
+    override fun createPresenter() = CardsPresenter(Dispatchers.Unconfined, service)
 
     @Test
-    fun `Load cards success`() {
-        whn(service.listAllScannedCodes())
-                .thenReturn(Flowable.just(ArrayList()))
+    fun `Load cards success`() = runBlocking {
+        whenever(service.listAllScannedCodes())
+            .thenReturn(ArrayList())
 
         presenter.loadCards()
 
@@ -32,9 +32,9 @@ class CardsPresenterTest : BasePresenterTest<CardsContract.View, CardsPresenter>
     }
 
     @Test
-    fun `Load cards failure`() {
-        whn(service.listAllScannedCodes())
-                .thenReturn(Flowable.error(Throwable()))
+    fun `Load cards failure`() = runBlocking {
+        whenever(service.listAllScannedCodes())
+            .thenThrow(RuntimeException())
 
         presenter.loadCards()
 
@@ -42,10 +42,10 @@ class CardsPresenterTest : BasePresenterTest<CardsContract.View, CardsPresenter>
     }
 
     @Test
-    fun `Add new card success`() {
+    fun `Add new card success`() = runBlocking {
         val newCode = ScannedCode()
-        whn(service.addScannedCode(newCode))
-                .thenReturn(Single.just(newCode))
+        whenever(service.addScannedCode(newCode))
+            .thenReturn(newCode)
 
         presenter.addNewCard(newCode)
 
@@ -53,9 +53,9 @@ class CardsPresenterTest : BasePresenterTest<CardsContract.View, CardsPresenter>
     }
 
     @Test
-    fun `Add new card failure`() {
-        whn(service.addScannedCode(any()))
-                .thenReturn(Single.error(Throwable()))
+    fun `Add new card failure`() = runBlocking {
+        whenever(service.addScannedCode(any()))
+            .thenThrow(RuntimeException())
 
         presenter.addNewCard(ScannedCode())
 
@@ -63,9 +63,9 @@ class CardsPresenterTest : BasePresenterTest<CardsContract.View, CardsPresenter>
     }
 
     @Test
-    fun `Delete card success`() {
-        whn(service.deleteScannedCode(any()))
-                .thenReturn(Completable.complete())
+    fun `Delete card success`() = runBlocking {
+        //        whenever(service.deleteScannedCode(any()))
+//            .thenAnswer {  }
 
         presenter.deleteCard(ScannedCode())
 
@@ -73,14 +73,13 @@ class CardsPresenterTest : BasePresenterTest<CardsContract.View, CardsPresenter>
     }
 
     @Test
-    fun `Delete card failure`() {
-        whn(service.deleteScannedCode(any()))
-                .thenReturn(Completable.error(Throwable()))
+    fun `Delete card failure`() = runBlocking {
+        whenever(service.deleteScannedCode(any()))
+            .thenThrow(RuntimeException())
 
         presenter.deleteCard(ScannedCode())
 
         verify(view, times(1)).onError(any())
-
     }
 }
 
