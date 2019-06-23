@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.awscherb.cardkeeper.R
 import com.awscherb.cardkeeper.data.model.ScannedCode
@@ -92,7 +93,7 @@ class CardsFragment : BaseFragment(), CardsContract.View {
     }
 
     private fun setupRecycler() {
-        layoutManager = androidx.recyclerview.widget.LinearLayoutManager(activity)
+        layoutManager = GridLayoutManager(activity, resources.getInteger(R.integer.cards_columns))
         scannedCodeAdapter = CardsAdapter(activity!!, {
             findNavController().navigate(
                 CardsFragmentDirections.actionCardsFragmentToCardDetailFragment(it.id)
