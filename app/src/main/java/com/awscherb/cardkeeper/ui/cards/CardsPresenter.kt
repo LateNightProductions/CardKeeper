@@ -27,6 +27,7 @@ class CardsPresenter @Inject constructor(
         uiScope(view::onError) {
             scannedCodeService.deleteScannedCode(code)
             view.onCardDeleted()
+            loadCards()
         }
     }
 }
