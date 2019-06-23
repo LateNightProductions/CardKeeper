@@ -15,7 +15,7 @@ interface ScannedCodeDao {
     suspend fun listScannedCodes(): List<ScannedCode>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertCode(code: ScannedCode)
+    suspend fun insertCode(code: ScannedCode): Long
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
     suspend fun updateCode(code: ScannedCode)

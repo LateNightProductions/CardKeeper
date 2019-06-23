@@ -8,6 +8,7 @@
     <string name="action_add">Add</string>
     <string name="action_cancel">Cancel</string>
     <string name="action_delete">Delete</string>
+    <string name="action_create">Create</string>
 
     <!-- Scanned Code Adapter-->
     <string name="adapter_scanned_code_delete_message">Delete code?</string>
@@ -22,5 +23,14 @@
     <!-- Card Detail Fragment -->
     <string name="fragment_card_detail_text_header">Barcode text:</string>
     <string name="fragment_card_detail_saved">Saved!</string>
+
+    <!-- Create Fragment -->
+    <string name="fragment_create_title_hint">Title</string>
+    <string name="fragment_create_text_hint">QR Code Text</string>
+    <string name="fragment_create_choose_type">Choose type</string>
+    <string name="fragment_create_invalid_title">Title cannot be blank</string>
+    <string name="fragment_create_invalid_text">Text cannot be blank</string>
+    <string name="fragment_create_invalid_format">You must pick a format</string>
+    <string name="fragment_create_complete">Card created!</string>
 
 </resources>

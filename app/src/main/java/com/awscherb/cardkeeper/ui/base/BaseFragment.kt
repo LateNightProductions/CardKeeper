@@ -1,5 +1,7 @@
 package com.awscherb.cardkeeper.ui.base
 
+import android.view.inputmethod.InputMethodManager
+import androidx.appcompat.app.AppCompatActivity
 import com.awscherb.cardkeeper.di.component.ViewComponent
 import com.google.android.material.snackbar.Snackbar
 import com.trello.rxlifecycle3.components.support.RxFragment
@@ -39,6 +41,16 @@ abstract class BaseFragment : RxFragment(), BaseView {
                 message,
                 Snackbar.LENGTH_SHORT
             ).show()
+        }
+    }
+
+    fun dismissKeyboard() {
+        activity?.let {
+            val imm =
+                it.getSystemService(AppCompatActivity.INPUT_METHOD_SERVICE) as InputMethodManager
+            it.currentFocus?.let {
+                imm.hideSoftInputFromWindow(it.windowToken, 0)
+            }
         }
     }
 }

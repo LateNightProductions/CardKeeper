@@ -37,6 +37,7 @@ class CardsFragment : BaseFragment(), CardsContract.View {
         viewComponent.inject(this)
 
         setupRecycler()
+        setupToolbar()
 
         cardsFab.setOnClickListener {
             findNavController().navigate(
@@ -76,6 +77,19 @@ class CardsFragment : BaseFragment(), CardsContract.View {
     //================================================================================
     // Helper methods
     //================================================================================
+
+    private fun setupToolbar() {
+        toolbar.inflateMenu(R.menu.menu_cards)
+        toolbar.setOnMenuItemClickListener {
+            when (it.itemId) {
+                R.id.create -> {
+                    findNavController().navigate(R.id.action_cardsFragment_to_createFragment)
+                    true
+                }
+                else -> false
+            }
+        }
+    }
 
     private fun setupRecycler() {
         layoutManager = androidx.recyclerview.widget.LinearLayoutManager(activity)

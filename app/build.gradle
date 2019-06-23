@@ -141,3 +141,7 @@ kapt {
 configurations.all {
     resolutionStrategy.force "org.jetbrains.kotlin:kotlin-stdlib:$rootProject.ext.kotlinVersion"
 }
+
+androidExtensions {
+    experimental = true
+}
