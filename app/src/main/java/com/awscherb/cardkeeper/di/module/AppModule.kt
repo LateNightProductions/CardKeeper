@@ -1,7 +1,7 @@
 package com.awscherb.cardkeeper.di.module
 
-import androidx.room.Room
 import android.content.Context
+import androidx.room.Room
 import com.awscherb.cardkeeper.data.CardKeeperDatabase
 import com.awscherb.cardkeeper.data.DatabaseMigrations
 import dagger.Module

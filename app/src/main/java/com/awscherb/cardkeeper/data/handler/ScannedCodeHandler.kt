@@ -4,9 +4,7 @@ import com.awscherb.cardkeeper.data.dao.ScannedCodeDao
 import com.awscherb.cardkeeper.data.model.ScannedCode
 import com.awscherb.cardkeeper.data.service.ScannedCodeService
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
-import java.lang.RuntimeException
 import javax.inject.Inject
 
 class ScannedCodeHandler @Inject constructor(

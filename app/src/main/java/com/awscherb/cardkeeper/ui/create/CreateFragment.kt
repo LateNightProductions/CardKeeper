@@ -1,7 +1,6 @@
 package com.awscherb.cardkeeper.ui.create
 
 import android.os.Bundle
-import android.os.Parcel
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup

@@ -1,7 +1,7 @@
 package com.awscherb.cardkeeper.data
 
-import androidx.sqlite.db.SupportSQLiteDatabase
 import androidx.room.migration.Migration
+import androidx.sqlite.db.SupportSQLiteDatabase
 
 object DatabaseMigrations {
 
