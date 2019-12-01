@@ -8,7 +8,6 @@ apply plugin: "androidx.navigation.safeargs.kotlin"
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
-    buildToolsVersion '28.0.3'
 
     defaultConfig {
         applicationId "com.awscherb.cardkeeper"
@@ -62,11 +61,6 @@ dependencies {
     // RX
     def rxJavaVersion = '2.2.9'
     def rxAndroidVersion = '2.1.1'
-    def rxBindingVersion = '3.0.0-alpha2'
-    def rxLifecycleVersion = '3.0.0'
-
-    def navVersion = "2.1.0-alpha05"
-    def roomVersion = "2.1.0"
 
     // App dependencies
     def daggerVersion = '2.16'
@@ -78,19 +72,19 @@ dependencies {
     testImplementation "junit:junit:$junitVersion"
 
     // Support libs
-    implementation 'androidx.appcompat:appcompat:1.1.0-beta01'
+    implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.cardview:cardview:1.0.0'
-    implementation 'androidx.recyclerview:recyclerview:1.1.0-alpha06'
-    implementation 'com.google.android.material:material:1.1.0-alpha07'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta1'
-    implementation "androidx.navigation:navigation-fragment-ktx:$navVersion"
-    implementation "androidx.navigation:navigation-ui-ktx:$navVersion"
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
+    implementation 'com.google.android.material:material:1.2.0-alpha02'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta3'
+    implementation "androidx.navigation:navigation-fragment-ktx:2.2.0-rc02"
+    implementation "androidx.navigation:navigation-ui-ktx:2.2.0-rc02"
 
     // Room
-    implementation "androidx.room:room-runtime:$roomVersion"
-    implementation "androidx.room:room-ktx:$roomVersion"
-    kapt "androidx.room:room-compiler:$roomVersion"
-    kapt 'androidx.lifecycle:lifecycle-compiler:2.2.0-alpha01'
+    implementation "androidx.room:room-runtime:2.2.2"
+    implementation "androidx.room:room-ktx:2.2.2"
+    kapt "androidx.room:room-compiler:2.2.2"
+    kapt 'androidx.lifecycle:lifecycle-compiler:2.2.0-rc02'
 
     // Kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
@@ -99,13 +93,13 @@ dependencies {
     implementation "io.reactivex.rxjava2:rxjava:$rxJavaVersion"
     implementation "io.reactivex.rxjava2:rxandroid:$rxAndroidVersion"
 
-    implementation "com.jakewharton.rxbinding3:rxbinding:$rxBindingVersion"
-    implementation "com.jakewharton.rxbinding3:rxbinding-core:$rxBindingVersion"
-    implementation "com.jakewharton.rxbinding3:rxbinding-appcompat:$rxBindingVersion"
-    implementation "com.jakewharton.rxbinding3:rxbinding-material:$rxBindingVersion"
+    implementation "com.jakewharton.rxbinding3:rxbinding:3.0.0"
+    implementation "com.jakewharton.rxbinding3:rxbinding-core:3.0.0"
+    implementation "com.jakewharton.rxbinding3:rxbinding-appcompat:3.0.0"
+    implementation "com.jakewharton.rxbinding3:rxbinding-material:3.0.0"
 
-    implementation "com.trello.rxlifecycle3:rxlifecycle:$rxLifecycleVersion"
-    implementation "com.trello.rxlifecycle3:rxlifecycle-components:$rxLifecycleVersion"
+    implementation "com.trello.rxlifecycle3:rxlifecycle:3.0.0"
+    implementation "com.trello.rxlifecycle3:rxlifecycle-components:3.0.0"
 
     // Scanning
     implementation 'com.google.zxing:core:3.3.3'
@@ -130,7 +124,7 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test:rules:1.2.0'
-    debugImplementation 'androidx.fragment:fragment-testing:1.1.0-beta01'
+    debugImplementation 'androidx.fragment:fragment-testing:1.2.0-rc02'
 
 }
 
