@@ -8,7 +8,6 @@ import com.awscherb.cardkeeper.di.module.ServiceModule
 import com.awscherb.cardkeeper.ui.card_detail.CardDetailFragment
 import com.awscherb.cardkeeper.ui.cards.CardsFragment
 import com.awscherb.cardkeeper.ui.create.CreateFragment
-import com.awscherb.cardkeeper.ui.create.CreatePresenter
 import com.awscherb.cardkeeper.ui.scan.ScanFragment
 import dagger.Component
 import javax.inject.Singleton

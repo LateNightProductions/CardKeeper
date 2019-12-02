@@ -4,6 +4,7 @@ import com.awscherb.cardkeeper.data.dao.ScannedCodeDao
 import com.awscherb.cardkeeper.data.model.ScannedCode
 import com.awscherb.cardkeeper.data.service.ScannedCodeService
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
@@ -16,10 +17,7 @@ class ScannedCodeHandler @Inject constructor(
             scannedCodeDao.getScannedCode(codeId)
         }
 
-    override suspend fun listAllScannedCodes(): List<ScannedCode> =
-        withContext(Dispatchers.Default) {
-            scannedCodeDao.listScannedCodes()
-        }
+    override fun listAllScannedCodes(): Flow<List<ScannedCode>> = scannedCodeDao.listScannedCodes()
 
     override suspend fun addScannedCode(scannedCode: ScannedCode): ScannedCode =
         withContext(Dispatchers.Default) {

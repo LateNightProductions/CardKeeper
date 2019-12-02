@@ -30,7 +30,7 @@ task clean(type: Delete) {
     delete rootProject.buildDir
 }
 ext {
-    kotlinVersion = '1.3.30'
+    kotlinVersion = '1.3.50'
     minSdkVersion = 19
     targetSdkVersion = 29
     compileSdkVersion = 29

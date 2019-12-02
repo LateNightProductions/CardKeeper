@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.awscherb.cardkeeper.R
@@ -12,15 +14,16 @@ import com.awscherb.cardkeeper.ui.base.BaseFragment
 import com.awscherb.cardkeeper.util.extensions.collapse
 import com.awscherb.cardkeeper.util.extensions.expand
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.zxing.BarcodeFormat
 import com.jakewharton.rxbinding3.widget.textChanges
 import kotlinx.android.synthetic.main.fragment_create.*
 import javax.inject.Inject
 
-class CreateFragment : BaseFragment(), CreateContract.View {
+class CreateFragment : BaseFragment() {
+
+    private val viewModel by viewModels<CreateViewModel> { viewModelFactory }
 
     @Inject
-    lateinit var presenter: CreateContract.Presenter
+    lateinit var viewModelFactory: CreateViewModelFactory
 
     private lateinit var bottomSheet: BottomSheetBehavior<LinearLayout>
 
@@ -38,7 +41,6 @@ class CreateFragment : BaseFragment(), CreateContract.View {
         super.onViewCreated(view, savedInstanceState)
 
         viewComponent.inject(this)
-        presenter.attachView(this)
 
         bottomSheet = BottomSheetBehavior.from(createBottomSheet)
 
@@ -50,48 +52,36 @@ class CreateFragment : BaseFragment(), CreateContract.View {
             bottomSheet.expand()
         }
 
-        savedInstanceState?.let {
-            presenter.restoreState(it)
-        }
+        viewModel.format.observe(viewLifecycleOwner, Observer {
+            if (it != null) {
+                createCodeType.text = it.title
+            }
+        })
+        viewModel.saveResult.observe(viewLifecycleOwner, Observer {
+            if (it != null) {
+                this.onSaveResult(it)
+            }
+        })
 
-        createFab.setOnClickListener { presenter.save() }
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        presenter.saveState(outState)
+        createFab.setOnClickListener { viewModel.save() }
     }
 
     //================================================================================
     // View methods
     //================================================================================
 
-    override fun onStateRestored(title: String?, text: String?, format: BarcodeFormat?) {
-        title?.let {
-            createTitle.setText(it)
-        }
 
-        text?.let {
-            createText.setText(it)
+    private fun onSaveResult(result: SaveResult) {
+        when (result) {
+            InvalidTitle -> showSnackbar(R.string.fragment_create_invalid_title)
+            InvalidText -> showSnackbar(R.string.fragment_create_invalid_text)
+            InvalidFormat -> showSnackbar(R.string.fragment_create_invalid_format)
+            is SaveSuccess -> onSaveComplete(result.codeId)
         }
-
-        format?.let {
-            val type = CreateType.typeForFormat(it)
-            createCodeType.text = type.title
-        }
+        viewModel.saveResult.postValue(null)
     }
 
-    override fun onSaveError(error: SaveError) {
-        showSnackbar(
-            when (error) {
-                SaveError.InvalidTitle -> R.string.fragment_create_invalid_title
-                SaveError.InvalidText -> R.string.fragment_create_invalid_text
-                SaveError.InvalidFormat -> R.string.fragment_create_invalid_format
-            }
-        )
-    }
-
-    override fun onSaveComplete(id: Int) {
+    private fun onSaveComplete(id: Int) {
         showSnackbar(R.string.fragment_create_complete)
         findNavController().navigate(
             CreateFragmentDirections.actionCreateFragmentToCardDetailFragment(id)
@@ -106,7 +96,7 @@ class CreateFragment : BaseFragment(), CreateContract.View {
         createTypesRecycler.layoutManager = LinearLayoutManager(requireContext())
         createTypesRecycler.adapter = CodeTypesAdapter(requireContext()) {
             createCodeType.text = it.title
-            presenter.setFormat(it.format)
+            viewModel.format.postValue(it)
             bottomSheet.collapse()
         }
     }
@@ -115,12 +105,12 @@ class CreateFragment : BaseFragment(), CreateContract.View {
         addDisposable(
             createTitle.textChanges()
                 .map { it.toString() }
-                .subscribe(presenter::setTitle)
+                .subscribe(viewModel.title::postValue)
         )
 
         addDisposable(createText.textChanges()
             .map { it.toString() }
-            .subscribe(presenter::setText))
+            .subscribe(viewModel.text::postValue))
     }
 
 }

@@ -2,6 +2,7 @@ package com.awscherb.cardkeeper.data.dao
 
 import androidx.room.*
 import com.awscherb.cardkeeper.data.model.ScannedCode
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface ScannedCodeDao {
@@ -10,7 +11,7 @@ interface ScannedCodeDao {
     suspend fun getScannedCode(id: Int): ScannedCode
 
     @Query("SELECT * FROM scannedCode")
-    suspend fun listScannedCodes(): List<ScannedCode>
+    fun listScannedCodes(): Flow<List<ScannedCode>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertCode(code: ScannedCode): Long

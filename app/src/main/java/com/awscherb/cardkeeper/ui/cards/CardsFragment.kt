@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,10 +16,12 @@ import com.awscherb.cardkeeper.ui.base.BaseFragment
 import kotlinx.android.synthetic.main.fragment_cards.*
 import javax.inject.Inject
 
-class CardsFragment : BaseFragment(), CardsContract.View {
+class CardsFragment : BaseFragment() {
+
+    private val viewModel by activityViewModels<CardsViewModel> { viewModelFactory }
 
     @Inject
-    internal lateinit var presenter: CardsContract.Presenter
+    lateinit var viewModelFactory: CardsViewModelFactory
 
     private lateinit var layoutManager: LinearLayoutManager
     private lateinit var scannedCodeAdapter: CardsAdapter
@@ -46,32 +50,14 @@ class CardsFragment : BaseFragment(), CardsContract.View {
             )
         }
 
-        presenter.attachView(this)
-    }
-
-    override fun onResume() {
-        super.onResume()
-        presenter.loadCards()
-    }
-
-    override fun onPause() {
-        presenter.onViewDestroyed()
-        super.onPause()
+        viewModel.cards.observe(viewLifecycleOwner, Observer(scannedCodeAdapter::swapObjects))
     }
 
     //================================================================================
     // View methods
     //================================================================================
 
-    override fun showCards(codes: List<ScannedCode>) {
-        scannedCodeAdapter.swapObjects(codes)
-    }
-
-    override fun onCardAdded(code: ScannedCode) {
-        showSnackbar(getString(R.string.fragment_cards_added_card, code.title))
-    }
-
-    override fun onCardDeleted() {
+    private fun onCardDeleted() {
         showSnackbar(R.string.fragment_cards_deleted_card)
     }
 
@@ -102,7 +88,8 @@ class CardsFragment : BaseFragment(), CardsContract.View {
             AlertDialog.Builder(requireContext())
                 .setTitle(R.string.adapter_scanned_code_delete_message)
                 .setPositiveButton(R.string.action_delete) { _, _ ->
-                    presenter.deleteCard(code)
+                    viewModel.deleteCard(code)
+                    onCardDeleted()
                 }
                 .setNegativeButton(R.string.action_cancel, null)
                 .show()
