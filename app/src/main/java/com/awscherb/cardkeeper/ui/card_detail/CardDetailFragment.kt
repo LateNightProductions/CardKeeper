@@ -8,9 +8,7 @@ import android.widget.ImageView
 import com.awscherb.cardkeeper.R
 import com.awscherb.cardkeeper.data.model.ScannedCode
 import com.awscherb.cardkeeper.ui.base.BaseFragment
-import com.google.zxing.BarcodeFormat.AZTEC
-import com.google.zxing.BarcodeFormat.DATA_MATRIX
-import com.google.zxing.BarcodeFormat.QR_CODE
+import com.google.zxing.BarcodeFormat.*
 import com.google.zxing.WriterException
 import com.jakewharton.rxbinding3.widget.textChanges
 import com.journeyapps.barcodescanner.BarcodeEncoder

@@ -13,11 +13,11 @@ class ScanPresenter @Inject constructor(
 ) : Presenter<ScanContract.View>(dispatcher), ScanContract.Presenter {
 
     override fun addNewCode(format: BarcodeFormat, text: String, title: String) {
-        val scannedCode = ScannedCode().apply {
-            this.format = format
-            this.text = text
-            this.title = title
-        }
+        val scannedCode = ScannedCode(
+            format = format,
+            text = text,
+            title = title
+        )
 
         uiScope {
             service.addScannedCode(scannedCode)

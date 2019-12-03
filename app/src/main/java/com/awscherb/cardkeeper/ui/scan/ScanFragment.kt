@@ -93,9 +93,11 @@ class ScanFragment : BaseFragment(), ScanContract.View {
         val callback = object : BarcodeCallback {
             override fun barcodeResult(result: BarcodeResult) {
                 if (found.compareAndSet(false, true)) {
-                    val scannedCode = ScannedCode()
-                    scannedCode.text = result.text
-                    scannedCode.format = result.barcodeFormat
+                    val scannedCode = ScannedCode(
+                        text = result.text,
+                        format = result.barcodeFormat,
+                        title = ""
+                    )
 
                     val input = EditText(activity).apply {
                         setHint(R.string.dialog_card_name_hint)
@@ -107,7 +109,11 @@ class ScanFragment : BaseFragment(), ScanContract.View {
                         .setView(input)
                         .setOnDismissListener { found.set(false) }
                         .setPositiveButton(R.string.action_add) { _, _ ->
-                            presenter.addNewCode(result.barcodeFormat, result.text, input.text.toString())
+                            presenter.addNewCode(
+                                result.barcodeFormat,
+                                result.text,
+                                input.text.toString()
+                            )
                         }
                         .setNegativeButton(R.string.action_cancel) { dialog, _ -> dialog.dismiss() }
                         .show()

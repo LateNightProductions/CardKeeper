@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.awscherb.cardkeeper.data.model.ScannedCode
 import com.awscherb.cardkeeper.data.service.ScannedCodeService
-import com.google.zxing.BarcodeFormat
 import kotlinx.coroutines.launch
 
 class CreateViewModel(
@@ -29,11 +28,11 @@ class CreateViewModel(
             textValue.isNullOrEmpty() -> saveResult.postValue(InvalidText)
             formatValue == null -> saveResult.postValue(InvalidFormat)
             else -> {
-                val scannedCode = ScannedCode().apply {
-                    title = titleValue
-                    text = textValue
+                val scannedCode = ScannedCode(
+                    title = titleValue,
+                    text = textValue,
                     format = formatValue.format
-                }
+                )
 
                 viewModelScope.launch {
                     saveResult.postValue(
