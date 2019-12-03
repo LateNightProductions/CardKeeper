@@ -29,7 +29,7 @@ abstract class BaseFragment : RxFragment(), BaseView {
 
     override fun onError(e: Throwable) {
         e.printStackTrace()
-        showSnackbar(e.message ?: "An saveResult occurred")
+        showSnackbar(e.message ?: "An error occurred")
     }
 
     fun showSnackbar(message: Int) = showSnackbar(getString(message))
