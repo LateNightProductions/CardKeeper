@@ -5,9 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import com.awscherb.cardkeeper.R
 import com.awscherb.cardkeeper.data.model.ScannedCode
+import com.awscherb.cardkeeper.data.service.ScannedCodeService
 import com.awscherb.cardkeeper.ui.base.BaseFragment
+import com.awscherb.cardkeeper.ui.create.*
 import com.google.zxing.BarcodeFormat.*
 import com.google.zxing.WriterException
 import com.jakewharton.rxbinding3.widget.textChanges
@@ -15,10 +19,17 @@ import com.journeyapps.barcodescanner.BarcodeEncoder
 import kotlinx.android.synthetic.main.fragment_card_detail.*
 import javax.inject.Inject
 
-class CardDetailFragment : BaseFragment(), CardDetailContract.View {
+class CardDetailFragment : BaseFragment() {
+
+    private val viewModel by viewModels<CardDetailViewModel> {
+        CardDetailViewModelFactory(
+            CardDetailFragmentArgs.fromBundle(arguments!!).cardId,
+            scannedCodeService
+        )
+    }
 
     @Inject
-    internal lateinit var presenter: CardDetailContract.Presenter
+    lateinit var scannedCodeService: ScannedCodeService
 
     private val encoder: BarcodeEncoder = BarcodeEncoder()
 
@@ -36,24 +47,22 @@ class CardDetailFragment : BaseFragment(), CardDetailContract.View {
         super.onViewCreated(view, savedInstanceState)
         viewComponent.inject(this)
 
-        presenter.attachView(this)
+        cardDetailSave.setOnClickListener { viewModel.save() }
 
-        cardDetailSave.setOnClickListener { presenter.saveCard() }
-
-        val args = CardDetailFragmentArgs.fromBundle(arguments!!)
-        presenter.loadCard(args.cardId)
+        viewModel.card.observe(viewLifecycleOwner, Observer(this::showCard))
+        viewModel.saveResult.observe(viewLifecycleOwner, Observer {
+            if (it != null) {
+                this.onSaveResult(it)
+            }
+        })
     }
 
-    override fun onDestroy() {
-        presenter.onViewDestroyed()
-        super.onDestroy()
-    }
 
     //================================================================================
     // View methods
     //================================================================================
 
-    override fun showCard(code: ScannedCode) {
+    private fun showCard(code: ScannedCode) {
         // Set title
         cardDetailTitle.setText(code.title)
         cardDetailText.text = code.text
@@ -80,16 +89,29 @@ class CardDetailFragment : BaseFragment(), CardDetailContract.View {
             cardDetailTitle.textChanges()
                 .map { it.toString() }
                 .compose(bindToLifecycle())
-                .subscribe({ presenter.setTitle(it) },
-                    { onError(it) })
+                .subscribe(
+                    viewModel.title::postValue,
+                    this::onError
+                )
         )
     }
 
-    override fun setSaveVisible(visible: Boolean) {
+    private fun onSaveResult(result: SaveResult) {
+        when (result) {
+            InvalidTitle -> showSnackbar(R.string.fragment_create_invalid_title)
+            InvalidText -> showSnackbar(R.string.fragment_create_invalid_text)
+            InvalidFormat -> showSnackbar(R.string.fragment_create_invalid_format)
+            is SaveSuccess -> onCardSaved()
+        }
+        viewModel.saveResult.postValue(null)
+    }
+
+
+    private fun setSaveVisible(visible: Boolean) {
         cardDetailSave.visibility = if (visible) View.VISIBLE else View.GONE
     }
 
-    override fun onCardSaved() {
+    private fun onCardSaved() {
         showSnackbar(R.string.fragment_card_detail_saved)
         activity?.onBackPressed()
     }
