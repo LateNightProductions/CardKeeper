@@ -6,16 +6,24 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/cardToolbarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:title="@string/title_activity_cards" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:title="@string/title_activity_cards" />
+
+    </com.google.android.material.appbar.AppBarLayout>
 
     <ScrollView
-        android:layout_below="@id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_below="@id/cardToolbarLayout">
 
         <RelativeLayout
             android:layout_width="match_parent"
