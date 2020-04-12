@@ -2,16 +2,12 @@ package com.awscherb.cardkeeper.ui.base
 
 import android.app.Application
 import com.awscherb.cardkeeper.R
-
 import com.awscherb.cardkeeper.di.component.DaggerViewComponent
 import com.awscherb.cardkeeper.di.component.ViewComponent
 import com.awscherb.cardkeeper.di.module.AppModule
 import com.awscherb.cardkeeper.di.module.DaoModule
 import com.awscherb.cardkeeper.di.module.DispatchersModule
 import com.clrvynce.android.Clairvoyance
-import com.crashlytics.android.Crashlytics
-import com.crashlytics.android.answers.Answers
-import io.fabric.sdk.android.Fabric
 
 
 class CardKeeperApplication : Application() {
@@ -22,7 +18,6 @@ class CardKeeperApplication : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        Fabric.with(this, Crashlytics(), Answers())
         Clairvoyance.init(this, getString(R.string.clrvynceKey))
 
         viewComponent = DaggerViewComponent.builder()

@@ -5,5 +5,4 @@
 .DS_Store
 /build
 /captures
-app/fabric.properties
 app/clrvynce.properties

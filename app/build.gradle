@@ -2,7 +2,6 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
-apply plugin: 'io.fabric'
 apply plugin: "androidx.navigation.safeargs.kotlin"
 
 
@@ -14,7 +13,7 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
-        versionCode 91
+        versionCode 92
         versionName "1.1"
     }
 
@@ -122,11 +121,6 @@ dependencies {
     // Dependency Injection
     implementation "com.google.dagger:dagger:$daggerVersion"
     kapt "com.google.dagger:dagger-compiler:$daggerVersion"
-
-    // Fabric
-    implementation('com.crashlytics.sdk.android:crashlytics:2.10.1@aar') {
-        transitive = true;
-    }
 
     implementation 'com.clrvynce.android:sdk:1.0.1'
 
