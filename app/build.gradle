@@ -14,8 +14,8 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
-        versionCode 56
-        versionName "1.0"
+        versionCode 91
+        versionName "1.1"
     }
 
     flavorDimensions "env"
@@ -34,9 +34,16 @@ android {
     }
 
     buildTypes {
+        Properties properties = new Properties()
+        properties.load(project.file('clrvynce.properties').newDataInputStream())
+        def cvyKey = properties.getProperty('API_KEY')
         release {
+            resValue "string", "clrvynceKey", cvyKey
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            resValue "string", "clrvynceKey", cvyKey
         }
     }
     compileOptions {
@@ -120,6 +127,8 @@ dependencies {
     implementation('com.crashlytics.sdk.android:crashlytics:2.10.1@aar') {
         transitive = true;
     }
+
+    implementation 'com.clrvynce.android:sdk:1.0.1'
 
     // Dependencies for local unit tests
     testImplementation "junit:junit:$junitVersion"
