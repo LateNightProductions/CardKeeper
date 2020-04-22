@@ -86,3 +86,4 @@ lint/tmp/
 app/clrvynce.properties
 *.hprof
 .DS_Store
+output.json
