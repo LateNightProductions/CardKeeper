@@ -1,6 +1,7 @@
 package com.awscherb.cardkeeper.ui.scan
 
 import android.Manifest
+import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.text.InputType
@@ -46,7 +47,7 @@ class ScanFragment : BaseFragment(), ScanContract.View {
 
         // Check permissions
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (activity?.checkSelfPermission(Manifest.permission.CAMERA) == PermissionChecker.PERMISSION_GRANTED) {
+            if (activity?.checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
                 scanScanner.resume()
             } else {
                 requestPermissions(

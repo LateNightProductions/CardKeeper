@@ -23,12 +23,6 @@ class CardsViewModel(
         }
     }
 
-    fun addNewCard(code: ScannedCode) {
-        viewModelScope.launch {
-            scannedCodeService.addScannedCode(code)
-        }
-    }
-
     fun deleteCard(code: ScannedCode) {
         viewModelScope.launch {
             scannedCodeService.deleteScannedCode(code)

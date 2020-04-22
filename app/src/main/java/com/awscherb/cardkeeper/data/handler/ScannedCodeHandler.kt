@@ -9,32 +9,32 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class ScannedCodeHandler @Inject constructor(
-    var scannedCodeDao: ScannedCodeDao
-) : BaseHandler(), ScannedCodeService {
+        private val scannedCodeDao: ScannedCodeDao
+) : ScannedCodeService {
 
     override suspend fun getScannedCode(codeId: Int): ScannedCode =
-        withContext(Dispatchers.Default) {
-            scannedCodeDao.getScannedCode(codeId)
-        }
+            withContext(Dispatchers.Default) {
+                scannedCodeDao.getScannedCode(codeId)
+            }
 
     override fun listAllScannedCodes(): Flow<List<ScannedCode>> = scannedCodeDao.listScannedCodes()
 
     override suspend fun addScannedCode(scannedCode: ScannedCode): ScannedCode =
-        withContext(Dispatchers.Default) {
-            val id = scannedCodeDao.insertCode(scannedCode)
-            scannedCode.apply {
-                this.id = id.toInt()
+            withContext(Dispatchers.Default) {
+                val id = scannedCodeDao.insertCode(scannedCode)
+                scannedCode.apply {
+                    this.id = id.toInt()
+                }
             }
-        }
 
     override suspend fun updateScannedCode(scannedCode: ScannedCode): ScannedCode =
-        withContext(Dispatchers.Default) {
-            scannedCodeDao.updateCode(scannedCode)
-            scannedCode
-        }
+            withContext(Dispatchers.Default) {
+                scannedCodeDao.updateCode(scannedCode)
+                scannedCode
+            }
 
     override suspend fun deleteScannedCode(scannedCode: ScannedCode) =
-        withContext(Dispatchers.Default) {
-            scannedCodeDao.deleteCode(scannedCode)
-        }
+            withContext(Dispatchers.Default) {
+                scannedCodeDao.deleteCode(scannedCode)
+            }
 }
