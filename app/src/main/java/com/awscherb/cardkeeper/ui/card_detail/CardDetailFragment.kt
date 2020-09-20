@@ -50,6 +50,9 @@ class CardDetailFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         viewComponent.inject(this)
 
+        toolbar.setNavigationIcon(R.drawable.ic_baseline_arrow_back_24)
+        toolbar.setNavigationOnClickListener { activity?.onBackPressed() }
+
         cardDetailSave.setOnClickListener { viewModel.save() }
 
         viewModel.card.observe(viewLifecycleOwner, Observer(this::showCard))
@@ -59,7 +62,6 @@ class CardDetailFragment : BaseFragment() {
             }
         })
     }
-
 
     //================================================================================
     // View methods
