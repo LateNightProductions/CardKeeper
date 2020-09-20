@@ -87,3 +87,5 @@ app/clrvynce.properties
 *.hprof
 .DS_Store
 output.json
+
+.idea/*

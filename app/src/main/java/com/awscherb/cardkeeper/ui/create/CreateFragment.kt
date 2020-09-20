@@ -7,15 +7,18 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.coroutineScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.awscherb.cardkeeper.R
 import com.awscherb.cardkeeper.ui.base.BaseFragment
 import com.awscherb.cardkeeper.util.extensions.collapse
 import com.awscherb.cardkeeper.util.extensions.expand
+import com.awscherb.cardkeeper.util.extensions.textChanges
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.jakewharton.rxbinding3.widget.textChanges
 import kotlinx.android.synthetic.main.fragment_create.*
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 class CreateFragment : BaseFragment() {
@@ -102,15 +105,13 @@ class CreateFragment : BaseFragment() {
     }
 
     private fun setupTextListeners() {
-        addDisposable(
-            createTitle.textChanges()
-                .map { it.toString() }
-                .subscribe(viewModel.title::postValue)
-        )
+        createTitle.textChanges()
+            .onEach { viewModel.title.postValue(it) }
+            .launchIn(viewLifecycleOwner.lifecycle.coroutineScope)
 
-        addDisposable(createText.textChanges()
-            .map { it.toString() }
-            .subscribe(viewModel.text::postValue))
+        createText.textChanges()
+            .onEach { viewModel.text.postValue(it) }
+            .launchIn(viewLifecycleOwner.lifecycle.coroutineScope)
     }
 
 }

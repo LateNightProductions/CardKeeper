@@ -7,23 +7,26 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.coroutineScope
 import com.awscherb.cardkeeper.R
 import com.awscherb.cardkeeper.data.model.ScannedCode
 import com.awscherb.cardkeeper.data.service.ScannedCodeService
 import com.awscherb.cardkeeper.ui.base.BaseFragment
 import com.awscherb.cardkeeper.ui.create.*
+import com.awscherb.cardkeeper.util.extensions.textChanges
 import com.google.zxing.BarcodeFormat.*
 import com.google.zxing.WriterException
-import com.jakewharton.rxbinding3.widget.textChanges
 import com.journeyapps.barcodescanner.BarcodeEncoder
 import kotlinx.android.synthetic.main.fragment_card_detail.*
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 class CardDetailFragment : BaseFragment() {
 
     private val viewModel by viewModels<CardDetailViewModel> {
         CardDetailViewModelFactory(
-            CardDetailFragmentArgs.fromBundle(arguments!!).cardId,
+            CardDetailFragmentArgs.fromBundle(requireArguments()).cardId,
             scannedCodeService
         )
     }
@@ -85,15 +88,9 @@ class CardDetailFragment : BaseFragment() {
             e.printStackTrace()
         }
 
-        addDisposable(
-            cardDetailTitle.textChanges()
-                .map { it.toString() }
-                .compose(bindToLifecycle())
-                .subscribe(
-                    viewModel.title::postValue,
-                    this::onError
-                )
-        )
+        cardDetailTitle.textChanges()
+            .onEach { viewModel.title.postValue(it) }
+            .launchIn(viewLifecycleOwner.lifecycle.coroutineScope)
     }
 
     private fun onSaveResult(result: SaveResult) {

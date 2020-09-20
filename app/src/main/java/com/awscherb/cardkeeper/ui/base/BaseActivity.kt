@@ -1,10 +1,9 @@
 package com.awscherb.cardkeeper.ui.base
 
+import androidx.appcompat.app.AppCompatActivity
 
-import com.trello.rxlifecycle3.components.support.RxAppCompatActivity
 
-abstract class BaseActivity : RxAppCompatActivity() {
-
+abstract class BaseActivity : AppCompatActivity() {
 
     fun viewComponent() = (application as CardKeeperApplication).viewComponent
 

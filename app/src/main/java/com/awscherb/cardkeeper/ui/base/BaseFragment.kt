@@ -2,15 +2,13 @@ package com.awscherb.cardkeeper.ui.base
 
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import com.awscherb.cardkeeper.di.component.ViewComponent
 import com.google.android.material.snackbar.Snackbar
-import com.trello.rxlifecycle3.components.support.RxFragment
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 
-abstract class BaseFragment : RxFragment(), BaseView {
-
-    private val disposables = CompositeDisposable()
+abstract class BaseFragment : Fragment(), BaseView {
 
     protected val baseActivity: BaseActivity
         inline get() = activity as BaseActivity
@@ -18,14 +16,6 @@ abstract class BaseFragment : RxFragment(), BaseView {
     protected val viewComponent: ViewComponent
         inline get() = baseActivity.viewComponent()
 
-    override fun onDestroy() {
-        super.onDestroy()
-        disposables.clear()
-    }
-
-    fun addDisposable(disposable: Disposable) {
-        disposables.add(disposable)
-    }
 
     override fun onError(e: Throwable) {
         e.printStackTrace()
