@@ -5,13 +5,13 @@ import kotlinx.coroutines.flow.Flow
 
 interface ScannedCodeService {
 
-    suspend fun getScannedCode(codeId: Int): ScannedCode
+    fun getScannedCode(codeId: Int): Flow<ScannedCode>
 
     fun listAllScannedCodes(): Flow<List<ScannedCode>>
 
-    suspend fun addScannedCode(scannedCode: ScannedCode): ScannedCode
+    fun addScannedCode(scannedCode: ScannedCode): Flow<ScannedCode>
 
-    suspend fun updateScannedCode(scannedCode: ScannedCode): ScannedCode
+    fun updateScannedCode(scannedCode: ScannedCode): Flow<ScannedCode>
 
-    suspend fun deleteScannedCode(scannedCode: ScannedCode)
+    fun deleteScannedCode(scannedCode: ScannedCode): Flow<Unit>
 }

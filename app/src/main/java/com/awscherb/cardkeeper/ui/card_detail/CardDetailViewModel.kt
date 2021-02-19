@@ -1,30 +1,29 @@
 package com.awscherb.cardkeeper.ui.card_detail
 
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.awscherb.cardkeeper.data.model.ScannedCode
 import com.awscherb.cardkeeper.data.service.ScannedCodeService
 import com.awscherb.cardkeeper.ui.create.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
 class CardDetailViewModel(
-    codeId: Int,
     private val scannedCodeService: ScannedCodeService
 ) : ViewModel() {
 
-    val card = MutableLiveData<ScannedCode>()
+    val cardId = MutableLiveData<Int>()
+
+    val card: LiveData<ScannedCode>
 
     val title = MutableLiveData<String>()
     val saveResult = MutableLiveData<SaveResult>()
 
     init {
-        viewModelScope.launch {
-            card.postValue(
-                scannedCodeService.getScannedCode(codeId)
-            )
+        card = cardId.switchMap {
+            scannedCodeService.getScannedCode(it).asLiveData(viewModelScope.coroutineContext)
         }
-
     }
 
     fun save() {
@@ -34,13 +33,10 @@ class CardDetailViewModel(
             else -> {
                 val scannedCode = card.value?.copy(title = titleValue) ?: return
 
-                viewModelScope.launch {
-                    saveResult.postValue(
-                        SaveSuccess(
-                            scannedCodeService.updateScannedCode(scannedCode).id
-                        )
-                    )
-                }
+                scannedCodeService.updateScannedCode(scannedCode)
+                    .onEach {
+                        saveResult.postValue(SaveSuccess(it.id))
+                    }.launchIn(viewModelScope)
             }
         }
     }

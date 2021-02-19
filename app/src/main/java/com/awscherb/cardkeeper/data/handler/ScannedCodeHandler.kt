@@ -5,6 +5,7 @@ import com.awscherb.cardkeeper.data.model.ScannedCode
 import com.awscherb.cardkeeper.data.service.ScannedCodeService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
@@ -12,29 +13,34 @@ class ScannedCodeHandler @Inject constructor(
         private val scannedCodeDao: ScannedCodeDao
 ) : ScannedCodeService {
 
-    override suspend fun getScannedCode(codeId: Int): ScannedCode =
-            withContext(Dispatchers.Default) {
-                scannedCodeDao.getScannedCode(codeId)
-            }
+    override fun getScannedCode(codeId: Int): Flow<ScannedCode> {
+        return scannedCodeDao.getScannedCode(codeId)
+    }
 
     override fun listAllScannedCodes(): Flow<List<ScannedCode>> = scannedCodeDao.listScannedCodes()
 
-    override suspend fun addScannedCode(scannedCode: ScannedCode): ScannedCode =
-            withContext(Dispatchers.Default) {
-                val id = scannedCodeDao.insertCode(scannedCode)
-                scannedCode.apply {
-                    this.id = id.toInt()
-                }
+    override fun addScannedCode(scannedCode: ScannedCode): Flow<ScannedCode> {
+        return flow {
+            val id = scannedCodeDao.insertCode(scannedCode)
+            scannedCode.apply {
+                this.id = id.toInt()
             }
+            emit(scannedCode)
+        }
 
-    override suspend fun updateScannedCode(scannedCode: ScannedCode): ScannedCode =
-            withContext(Dispatchers.Default) {
-                scannedCodeDao.updateCode(scannedCode)
-                scannedCode
-            }
+    }
 
-    override suspend fun deleteScannedCode(scannedCode: ScannedCode) =
-            withContext(Dispatchers.Default) {
-                scannedCodeDao.deleteCode(scannedCode)
-            }
+    override fun updateScannedCode(scannedCode: ScannedCode): Flow<ScannedCode> {
+        return flow {
+            scannedCodeDao.updateCode(scannedCode)
+            emit(scannedCode)
+        }
+    }
+
+    override fun deleteScannedCode(scannedCode: ScannedCode): Flow<Unit> {
+        return flow {
+            scannedCodeDao.deleteCode(scannedCode)
+            emit(Unit)
+        }
+    }
 }

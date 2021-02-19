@@ -6,11 +6,9 @@ import com.awscherb.cardkeeper.data.service.ScannedCodeService
 import javax.inject.Inject
 
 class CardDetailViewModelFactory @Inject constructor(
-    private val codeId: Int,
     private val scannedCodeService: ScannedCodeService
-) :
-    ViewModelProvider.NewInstanceFactory() {
+) : ViewModelProvider.NewInstanceFactory() {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        return CardDetailViewModel(codeId, scannedCodeService) as T
+        return CardDetailViewModel(scannedCodeService) as T
     }
 }

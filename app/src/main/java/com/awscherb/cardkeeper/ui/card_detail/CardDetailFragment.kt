@@ -25,14 +25,14 @@ import javax.inject.Inject
 class CardDetailFragment : BaseFragment() {
 
     private val viewModel by viewModels<CardDetailViewModel> {
-        CardDetailViewModelFactory(
-            CardDetailFragmentArgs.fromBundle(requireArguments()).cardId,
-            scannedCodeService
-        )
+        factory
     }
 
     @Inject
     lateinit var scannedCodeService: ScannedCodeService
+
+    @Inject
+    lateinit var factory: CardDetailViewModelFactory
 
     private val encoder: BarcodeEncoder = BarcodeEncoder()
 
@@ -49,6 +49,7 @@ class CardDetailFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewComponent.inject(this)
+        viewModel.cardId.value = CardDetailFragmentArgs.fromBundle(requireArguments()).cardId
 
         toolbar.setNavigationIcon(R.drawable.ic_baseline_arrow_back_24)
         toolbar.setNavigationOnClickListener { activity?.onBackPressed() }

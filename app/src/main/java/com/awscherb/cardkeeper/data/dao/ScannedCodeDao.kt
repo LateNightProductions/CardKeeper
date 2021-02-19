@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.Flow
 interface ScannedCodeDao {
 
     @Query("SELECT * FROM scannedCode WHERE id = :id LIMIT 1")
-    suspend fun getScannedCode(id: Int): ScannedCode
+    fun getScannedCode(id: Int): Flow<ScannedCode>
 
     @Query("SELECT * FROM scannedCode")
     fun listScannedCodes(): Flow<List<ScannedCode>>

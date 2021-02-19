@@ -5,6 +5,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.awscherb.cardkeeper.data.model.ScannedCode
 import com.awscherb.cardkeeper.data.service.ScannedCodeService
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
 class CreateViewModel(
@@ -34,13 +36,13 @@ class CreateViewModel(
                     format = formatValue.format
                 )
 
-                viewModelScope.launch {
-                    saveResult.postValue(
-                        SaveSuccess(
-                            scannedCodeService.addScannedCode(scannedCode).id
+
+                scannedCodeService.addScannedCode(scannedCode)
+                    .onEach {
+                        saveResult.postValue(
+                            SaveSuccess(it.id)
                         )
-                    )
-                }
+                    }.launchIn(viewModelScope)
             }
         }
     }
