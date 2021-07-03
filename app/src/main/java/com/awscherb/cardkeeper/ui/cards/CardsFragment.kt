@@ -48,8 +48,9 @@ class CardsFragment : BaseFragment() {
                 CardsFragmentDirections.actionCardsFragmentToScanFragment()
             )
         }
-
-        viewModel.cards.observe(viewLifecycleOwner, Observer(scannedCodeAdapter::swapObjects))
+        viewModel.cards.observe(viewLifecycleOwner, Observer {
+            scannedCodeAdapter.items = it
+        })
     }
 
     //================================================================================
@@ -79,7 +80,7 @@ class CardsFragment : BaseFragment() {
 
     private fun setupRecycler() {
         layoutManager = GridLayoutManager(activity, resources.getInteger(R.integer.cards_columns))
-        scannedCodeAdapter = CardsAdapter(activity!!, {
+        scannedCodeAdapter = CardsAdapter(requireActivity(), {
             findNavController().navigate(
                 CardsFragmentDirections.actionCardsFragmentToCardDetailFragment(it.id)
             )

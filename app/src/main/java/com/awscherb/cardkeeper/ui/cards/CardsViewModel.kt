@@ -6,6 +6,8 @@ import androidx.lifecycle.viewModelScope
 import com.awscherb.cardkeeper.data.model.ScannedCode
 import com.awscherb.cardkeeper.data.service.ScannedCodeService
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
 class CardsViewModel(
@@ -15,12 +17,11 @@ class CardsViewModel(
     val cards = MutableLiveData<List<ScannedCode>>()
 
     init {
-        viewModelScope.launch {
-            scannedCodeService.listAllScannedCodes()
-                .collect {
-                    cards.postValue(it)
-                }
-        }
+        scannedCodeService.listAllScannedCodes()
+            .onEach {
+                cards.postValue(it)
+            }
+            .launchIn(viewModelScope)
     }
 
     fun deleteCard(code: ScannedCode) {

@@ -2,30 +2,29 @@ package com.awscherb.cardkeeper.ui.create
 
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.awscherb.cardkeeper.R
-import kotlinx.android.synthetic.main.adapter_code_type.view.*
 
 class CodeTypesAdapter(
     private val context: Context,
     private val onClick: (CreateType) -> Unit
-) :
-    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
-        object : RecyclerView.ViewHolder(
-            LayoutInflater.from(context).inflate(R.layout.adapter_code_type, parent, false)
-        ) {
-
-        }
+) : RecyclerView.Adapter<CodeTypesViewHolder>() {
 
     override fun getItemCount() = TYPES.size
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        holder.itemView.apply {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CodeTypesViewHolder =
+        CodeTypesViewHolder(
+            LayoutInflater.from(context).inflate(R.layout.adapter_code_type, parent, false)
+        )
+
+
+    override fun onBindViewHolder(holder: CodeTypesViewHolder, position: Int) {
+        holder.apply {
             codeName.text = TYPES[position].title
-            setOnClickListener { onClick(TYPES[position]) }
+            itemView.setOnClickListener { onClick(TYPES[position]) }
         }
     }
 
@@ -39,6 +38,8 @@ class CodeTypesAdapter(
                 CreateType.QRCode
             )
     }
+}
 
-
+class CodeTypesViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+    val codeName: TextView = itemView.findViewById(R.id.adapter_code_type_name)
 }

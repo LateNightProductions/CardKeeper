@@ -2,42 +2,51 @@ package com.awscherb.cardkeeper.ui.cards
 
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.awscherb.cardkeeper.R
 import com.awscherb.cardkeeper.data.model.ScannedCode
-import com.awscherb.cardkeeper.ui.base.BaseAdapter
-import com.google.zxing.BarcodeFormat.*
+import com.google.zxing.BarcodeFormat.AZTEC
+import com.google.zxing.BarcodeFormat.DATA_MATRIX
+import com.google.zxing.BarcodeFormat.QR_CODE
 import com.google.zxing.WriterException
 import com.journeyapps.barcodescanner.BarcodeEncoder
-import kotlinx.android.synthetic.main.adapter_code.view.*
 
 
 class CardsAdapter constructor(
     private val context: Context,
     private val onClickListener: (ScannedCode) -> Unit,
     private val deleteListener: (ScannedCode) -> Unit
-) : BaseAdapter<ScannedCode>() {
+) : RecyclerView.Adapter<CardViewHolder>() {
 
     private val encoder: BarcodeEncoder = BarcodeEncoder()
+
+    var items: List<ScannedCode> = arrayListOf()
+        set(value) {
+            field = value
+            notifyDataSetChanged()
+        }
+
+    override fun getItemCount() = items.size
 
     //================================================================================
     // Adapter methods
     //================================================================================
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return object : RecyclerView.ViewHolder(
-            LayoutInflater.from(context).inflate(
-                R.layout.adapter_code,
-                parent,
-                false
-            )
-        ) {}
-    }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = CardViewHolder(
+        LayoutInflater.from(context).inflate(
+            R.layout.adapter_code,
+            parent,
+            false
+        )
+    )
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, item: ScannedCode) {
-        holder.itemView.apply {
+    override fun onBindViewHolder(holder: CardViewHolder, position: Int) {
+        val item = items[position]
+        holder.apply {
 
             // Set title
             codeTitle.text = item.title
@@ -57,10 +66,10 @@ class CardsAdapter constructor(
                 e.printStackTrace()
             }
 
-            setOnClickListener { onClickListener(item) }
+            itemView.setOnClickListener { onClickListener(item) }
 
             // Setup delete
-            setOnLongClickListener {
+            itemView.setOnLongClickListener {
                 deleteListener(item)
                 true
             }
@@ -69,5 +78,11 @@ class CardsAdapter constructor(
 
     }
 
+}
+
+class CardViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
+    val codeTitle = itemView.findViewById<TextView>(R.id.adapter_card_title)
+    val codeImage = itemView.findViewById<ImageView>(R.id.adapter_card_image)
 
 }

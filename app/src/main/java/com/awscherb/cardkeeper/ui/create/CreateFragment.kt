@@ -55,12 +55,12 @@ class CreateFragment : BaseFragment() {
             bottomSheet.expand()
         }
 
-        viewModel.format.observe(viewLifecycleOwner, Observer {
+        viewModel.format.observe(viewLifecycleOwner, {
             if (it != null) {
                 createCodeType.text = it.title
             }
         })
-        viewModel.saveResult.observe(viewLifecycleOwner, Observer {
+        viewModel.saveResult.observe(viewLifecycleOwner, {
             if (it != null) {
                 this.onSaveResult(it)
             }

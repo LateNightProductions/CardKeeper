@@ -15,16 +15,12 @@ class CardDetailViewModel(
 
     val cardId = MutableLiveData<Int>()
 
-    val card: LiveData<ScannedCode>
+    val card: LiveData<ScannedCode> = cardId.switchMap {
+        scannedCodeService.getScannedCode(it).asLiveData(viewModelScope.coroutineContext)
+    }
 
     val title = MutableLiveData<String>()
     val saveResult = MutableLiveData<SaveResult>()
-
-    init {
-        card = cardId.switchMap {
-            scannedCodeService.getScannedCode(it).asLiveData(viewModelScope.coroutineContext)
-        }
-    }
 
     fun save() {
         val titleValue = title.value
