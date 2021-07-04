@@ -4,19 +4,21 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.LinearLayout
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.lifecycle.coroutineScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.awscherb.cardkeeper.R
 import com.awscherb.cardkeeper.ui.base.BaseFragment
 import com.awscherb.cardkeeper.util.extensions.collapse
 import com.awscherb.cardkeeper.util.extensions.expand
 import com.awscherb.cardkeeper.util.extensions.textChanges
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import kotlinx.android.synthetic.main.fragment_create.*
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.textfield.TextInputEditText
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
@@ -28,7 +30,13 @@ class CreateFragment : BaseFragment() {
     @Inject
     lateinit var viewModelFactory: CreateViewModelFactory
 
-    private lateinit var bottomSheet: BottomSheetBehavior<LinearLayout>
+    private lateinit var title: TextInputEditText
+    private lateinit var text: TextInputEditText
+    private lateinit var codeType: Button
+    private lateinit var createFab: FloatingActionButton
+    private lateinit var bottomSheetLayout: LinearLayout
+    private lateinit var typesRecyler: RecyclerView
+    private lateinit var bottomSheetBehavior: BottomSheetBehavior<LinearLayout>
 
     //================================================================================
     // Lifecycle methods
@@ -45,19 +53,26 @@ class CreateFragment : BaseFragment() {
 
         viewComponent.inject(this)
 
-        bottomSheet = BottomSheetBehavior.from(createBottomSheet)
+        title = view.findViewById(R.id.fragment_create_title)
+        text = view.findViewById(R.id.fragment_create_text)
+        codeType = view.findViewById(R.id.fragment_create_code_type)
+        createFab = view.findViewById(R.id.fragment_create_fab)
+        typesRecyler = view.findViewById(R.id.fragment_create_types_recycler)
+        bottomSheetLayout = view.findViewById(R.id.fragment_create_bottom_sheet)
+
+        bottomSheetBehavior = BottomSheetBehavior.from(bottomSheetLayout)
 
         setupRecycler()
         setupTextListeners()
 
-        createCodeType.setOnClickListener {
+        codeType.setOnClickListener {
             dismissKeyboard()
-            bottomSheet.expand()
+            bottomSheetBehavior.expand()
         }
 
         viewModel.format.observe(viewLifecycleOwner, {
             if (it != null) {
-                createCodeType.text = it.title
+                codeType.text = it.title
             }
         })
         viewModel.saveResult.observe(viewLifecycleOwner, {
@@ -96,20 +111,20 @@ class CreateFragment : BaseFragment() {
     //================================================================================
 
     private fun setupRecycler() {
-        createTypesRecycler.layoutManager = LinearLayoutManager(requireContext())
-        createTypesRecycler.adapter = CodeTypesAdapter(requireContext()) {
-            createCodeType.text = it.title
+        typesRecyler.layoutManager = LinearLayoutManager(requireContext())
+        typesRecyler.adapter = CodeTypesAdapter(requireContext()) {
+            codeType.text = it.title
             viewModel.format.postValue(it)
-            bottomSheet.collapse()
+            bottomSheetBehavior.collapse()
         }
     }
 
     private fun setupTextListeners() {
-        createTitle.textChanges()
+        title.textChanges()
             .onEach { viewModel.title.postValue(it) }
             .launchIn(viewLifecycleOwner.lifecycle.coroutineScope)
 
-        createText.textChanges()
+        text.textChanges()
             .onEach { viewModel.text.postValue(it) }
             .launchIn(viewLifecycleOwner.lifecycle.coroutineScope)
     }

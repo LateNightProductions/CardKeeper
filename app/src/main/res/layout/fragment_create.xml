@@ -10,13 +10,13 @@
         android:layout_height="match_parent">
 
         <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/createToolbarLayout"
+            android:id="@+id/fragment_create_toolbar_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent">
 
             <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
+                android:id="@+id/fragment_create_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:title="@string/title_activity_cards" />
@@ -25,7 +25,7 @@
 
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/createTitleLayout"
+            android:id="@+id/fragment_create_title_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/activity_horizontal_margin"
@@ -33,22 +33,22 @@
             android:layout_marginEnd="@dimen/activity_horizontal_margin"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/createToolbarLayout">
+            app:layout_constraintTop_toBottomOf="@id/fragment_create_toolbar_layout">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/createTitle"
+                android:id="@+id/fragment_create_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/fragment_create_title_hint"
                 android:inputType="textCapWords"
                 android:maxLines="1"
-                android:nextFocusForward="@+id/createTextLayout" />
+                android:nextFocusForward="@+id/fragment_create_text_layout" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/createTextLayout"
+            android:id="@+id/fragment_create_text_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/activity_horizontal_margin"
@@ -56,10 +56,10 @@
             android:layout_marginEnd="@dimen/activity_horizontal_margin"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/createTitleLayout">
+            app:layout_constraintTop_toBottomOf="@id/fragment_create_title_layout">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/createText"
+                android:id="@+id/fragment_create_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="bottom"
@@ -71,7 +71,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
-            android:id="@+id/createCodeType"
+            android:id="@+id/fragment_create_code_type"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/activity_horizontal_margin"
@@ -81,11 +81,11 @@
             android:textAllCaps="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/createTextLayout" />
+            app:layout_constraintTop_toBottomOf="@+id/fragment_create_text_layout" />
 
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/createFab"
+            android:id="@+id/fragment_create_fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
@@ -99,7 +99,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <LinearLayout
-        android:id="@+id/createBottomSheet"
+        android:id="@+id/fragment_create_bottom_sheet"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimaryDark"
@@ -107,7 +107,7 @@
         app:layout_behavior="com.awscherb.cardkeeper.util.behavior.AutoCloseBottomSheetBehavior">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/createTypesRecycler"
+            android:id="@+id/fragment_create_types_recycler"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </LinearLayout>

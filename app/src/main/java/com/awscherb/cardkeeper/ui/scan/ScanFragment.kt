@@ -10,7 +10,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
-import androidx.core.content.PermissionChecker
 import androidx.navigation.fragment.findNavController
 import com.awscherb.cardkeeper.R
 import com.awscherb.cardkeeper.data.model.ScannedCode
@@ -18,7 +17,7 @@ import com.awscherb.cardkeeper.ui.base.BaseFragment
 import com.google.zxing.ResultPoint
 import com.journeyapps.barcodescanner.BarcodeCallback
 import com.journeyapps.barcodescanner.BarcodeResult
-import kotlinx.android.synthetic.main.fragment_scan.*
+import com.journeyapps.barcodescanner.CompoundBarcodeView
 import java.util.concurrent.atomic.AtomicBoolean
 import javax.inject.Inject
 
@@ -26,6 +25,8 @@ class ScanFragment : BaseFragment(), ScanContract.View {
 
     @Inject
     lateinit var presenter: ScanContract.Presenter
+
+    private lateinit var scannerView: CompoundBarcodeView
 
     private val found = AtomicBoolean(false)
 
@@ -43,12 +44,15 @@ class ScanFragment : BaseFragment(), ScanContract.View {
         super.onViewCreated(view, savedInstanceState)
 
         viewComponent.inject(this)
+
+        scannerView = view.findViewById(R.id.fragment_scan_scanner)
+
         presenter.attachView(this)
 
         // Check permissions
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (activity?.checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
-                scanScanner.resume()
+                scannerView.resume()
             } else {
                 requestPermissions(
                     arrayOf(Manifest.permission.CAMERA),
@@ -63,12 +67,12 @@ class ScanFragment : BaseFragment(), ScanContract.View {
 
     override fun onResume() {
         super.onResume()
-        scanScanner.resume()
+        scannerView.resume()
     }
 
     override fun onPause() {
         super.onPause()
-        scanScanner.pause()
+        scannerView.pause()
     }
 
     override fun onDestroy() {
@@ -124,7 +128,7 @@ class ScanFragment : BaseFragment(), ScanContract.View {
             override fun possibleResultPoints(resultPoints: List<ResultPoint>) {}
         }
 
-        scanScanner.decodeContinuous(callback)
+        scannerView.decodeContinuous(callback)
     }
 
     companion object {

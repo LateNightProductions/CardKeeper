@@ -5,14 +5,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.awscherb.cardkeeper.R
 import com.awscherb.cardkeeper.ui.base.BaseFragment
-import kotlinx.android.synthetic.main.fragment_cards.*
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import javax.inject.Inject
 
 class CardsFragment : BaseFragment() {
@@ -21,6 +23,10 @@ class CardsFragment : BaseFragment() {
 
     @Inject
     lateinit var viewModelFactory: CardsViewModelFactory
+
+    private lateinit var toolbar: Toolbar
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var fab: FloatingActionButton
 
     private lateinit var layoutManager: LinearLayoutManager
     private lateinit var scannedCodeAdapter: CardsAdapter
@@ -40,10 +46,14 @@ class CardsFragment : BaseFragment() {
 
         viewComponent.inject(this)
 
+        toolbar = view.findViewById(R.id.fragment_cards_toolbar)
+        recyclerView = view.findViewById(R.id.fragment_cards_recylcer)
+        fab = view.findViewById(R.id.fragment_cards_fab)
+
         setupRecycler()
         setupToolbar()
 
-        cardsFab.setOnClickListener {
+        fab.setOnClickListener {
             findNavController().navigate(
                 CardsFragmentDirections.actionCardsFragmentToScanFragment()
             )
@@ -94,7 +104,7 @@ class CardsFragment : BaseFragment() {
                 .setNegativeButton(R.string.action_cancel, null)
                 .show()
         }
-        cardsRecycler.layoutManager = layoutManager
-        cardsRecycler.adapter = scannedCodeAdapter
+        recyclerView.layoutManager = layoutManager
+        recyclerView.adapter = scannedCodeAdapter
     }
 }

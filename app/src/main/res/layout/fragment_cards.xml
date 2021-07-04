@@ -10,7 +10,7 @@
         android:layout_height="wrap_content">
 
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
+            android:id="@+id/fragment_cards_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_scrollFlags="scroll|enterAlways"
@@ -18,7 +18,7 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/cardsRecycler"
+        android:id="@+id/fragment_cards_recylcer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipToPadding="false"
@@ -26,14 +26,14 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/cardsFab"
+        android:id="@+id/fragment_cards_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
         android:src="@drawable/ic_camera"
         app:fabSize="normal"
-        app:layout_anchor="@+id/cardsRecycler"
+        app:layout_anchor="@+id/fragment_cards_recylcer"
         app:layout_anchorGravity="bottom|right|end" />
 
 
