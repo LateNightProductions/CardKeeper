@@ -2,7 +2,7 @@ package com.awscherb.cardkeeper.ui.create
 
 import android.os.Parcelable
 import com.google.zxing.BarcodeFormat
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 
 
 sealed class CreateType(val format: BarcodeFormat, val title: String) {
