@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.awscherb.cardkeeper.R
 import com.awscherb.cardkeeper.data.model.ScannedCode
@@ -21,10 +22,12 @@ import com.journeyapps.barcodescanner.CompoundBarcodeView
 import java.util.concurrent.atomic.AtomicBoolean
 import javax.inject.Inject
 
-class ScanFragment : BaseFragment(), ScanContract.View {
+class ScanFragment : BaseFragment(){
+
+    private val viewModel by viewModels<ScanViewModel> { factory }
 
     @Inject
-    lateinit var presenter: ScanContract.Presenter
+    lateinit var factory: ScanViewModelFactory
 
     private lateinit var scannerView: CompoundBarcodeView
 
@@ -47,8 +50,6 @@ class ScanFragment : BaseFragment(), ScanContract.View {
 
         scannerView = view.findViewById(R.id.fragment_scan_scanner)
 
-        presenter.attachView(this)
-
         // Check permissions
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (activity?.checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
@@ -63,6 +64,10 @@ class ScanFragment : BaseFragment(), ScanContract.View {
 
         // Setup scanner
         setCallback()
+
+        viewModel.createResult.observe(viewLifecycleOwner) {
+            onCodeAdded()
+        }
     }
 
     override fun onResume() {
@@ -75,16 +80,8 @@ class ScanFragment : BaseFragment(), ScanContract.View {
         scannerView.pause()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        presenter.onViewDestroyed()
-    }
 
-    // ========================================================================
-    // View methods
-    // ========================================================================
-
-    override fun onCodeAdded() {
+    private fun onCodeAdded() {
         findNavController().navigate(
             ScanFragmentDirections.actionScanFragmentToCardsFragment()
         )
@@ -114,10 +111,12 @@ class ScanFragment : BaseFragment(), ScanContract.View {
                         .setView(input)
                         .setOnDismissListener { found.set(false) }
                         .setPositiveButton(R.string.action_add) { _, _ ->
-                            presenter.addNewCode(
-                                result.barcodeFormat,
-                                result.text,
-                                input.text.toString()
+                            viewModel.createData.postValue(
+                                CreateCodeData(
+                                    format = result.barcodeFormat,
+                                    text = result.text,
+                                    title = input.text.toString()
+                                )
                             )
                         }
                         .setNegativeButton(R.string.action_cancel) { dialog, _ -> dialog.dismiss() }
