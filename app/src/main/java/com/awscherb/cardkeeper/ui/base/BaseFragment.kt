@@ -1,9 +1,11 @@
 package com.awscherb.cardkeeper.ui.base
 
 import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.awscherb.cardkeeper.di.component.ViewComponent
+import com.awscherb.cardkeeper.util.extensions.addLifecycleTextChangedListener
 import com.google.android.material.snackbar.Snackbar
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
@@ -42,5 +44,9 @@ abstract class BaseFragment : Fragment(), BaseView {
                 imm.hideSoftInputFromWindow(it.windowToken, 0)
             }
         }
+    }
+
+    fun EditText.addLifecycleTextWatcher(onTextChanged: (String) -> Unit) {
+        this.addLifecycleTextChangedListener(this@BaseFragment, onTextChanged)
     }
 }

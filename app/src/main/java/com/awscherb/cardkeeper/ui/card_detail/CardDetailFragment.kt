@@ -19,7 +19,6 @@ import com.awscherb.cardkeeper.ui.create.InvalidText
 import com.awscherb.cardkeeper.ui.create.InvalidTitle
 import com.awscherb.cardkeeper.ui.create.SaveResult
 import com.awscherb.cardkeeper.ui.create.SaveSuccess
-import com.awscherb.cardkeeper.util.extensions.textChanges
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.zxing.BarcodeFormat.AZTEC
 import com.google.zxing.BarcodeFormat.DATA_MATRIX
@@ -76,7 +75,7 @@ class CardDetailFragment : BaseFragment() {
         save.setOnClickListener { viewModel.save() }
 
         viewModel.card.observe(viewLifecycleOwner, Observer(this::showCard))
-        viewModel.saveResult.observe(viewLifecycleOwner, Observer {
+        viewModel.saveResult.observe(viewLifecycleOwner, {
             if (it != null) {
                 this.onSaveResult(it)
             }
@@ -110,9 +109,7 @@ class CardDetailFragment : BaseFragment() {
             e.printStackTrace()
         }
 
-        title.textChanges()
-            .onEach { viewModel.title.postValue(it) }
-            .launchIn(viewLifecycleOwner.lifecycle.coroutineScope)
+        title.addLifecycleTextWatcher(viewModel.title::postValue)
     }
 
     private fun onSaveResult(result: SaveResult) {

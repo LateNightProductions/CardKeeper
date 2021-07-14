@@ -15,7 +15,6 @@ import com.awscherb.cardkeeper.R
 import com.awscherb.cardkeeper.ui.base.BaseFragment
 import com.awscherb.cardkeeper.util.extensions.collapse
 import com.awscherb.cardkeeper.util.extensions.expand
-import com.awscherb.cardkeeper.util.extensions.textChanges
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.textfield.TextInputEditText
@@ -120,13 +119,9 @@ class CreateFragment : BaseFragment() {
     }
 
     private fun setupTextListeners() {
-        title.textChanges()
-            .onEach { viewModel.title.postValue(it) }
-            .launchIn(viewLifecycleOwner.lifecycle.coroutineScope)
+        title.addLifecycleTextWatcher(viewModel.title::postValue)
 
-        text.textChanges()
-            .onEach { viewModel.text.postValue(it) }
-            .launchIn(viewLifecycleOwner.lifecycle.coroutineScope)
+        text.addLifecycleTextWatcher(viewModel.text::postValue)
     }
 
 }

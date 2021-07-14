@@ -95,12 +95,6 @@ class ScanFragment : BaseFragment(){
         val callback = object : BarcodeCallback {
             override fun barcodeResult(result: BarcodeResult) {
                 if (found.compareAndSet(false, true)) {
-                    val scannedCode = ScannedCode(
-                        text = result.text,
-                        format = result.barcodeFormat,
-                        title = ""
-                    )
-
                     val input = EditText(activity).apply {
                         setHint(R.string.dialog_card_name_hint)
                         inputType = InputType.TYPE_TEXT_FLAG_CAP_WORDS

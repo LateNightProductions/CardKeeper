@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -58,7 +57,7 @@ class CardsFragment : BaseFragment() {
                 CardsFragmentDirections.actionCardsFragmentToScanFragment()
             )
         }
-        viewModel.cards.observe(viewLifecycleOwner, Observer {
+        viewModel.cards.observe(viewLifecycleOwner, {
             scannedCodeAdapter.items = it
         })
     }

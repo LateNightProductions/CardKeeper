@@ -6,7 +6,6 @@ import com.awscherb.cardkeeper.di.component.DaggerViewComponent
 import com.awscherb.cardkeeper.di.component.ViewComponent
 import com.awscherb.cardkeeper.di.module.AppModule
 import com.awscherb.cardkeeper.di.module.DaoModule
-import com.awscherb.cardkeeper.di.module.DispatchersModule
 import com.clrvynce.android.Clairvoyance
 
 
@@ -23,7 +22,6 @@ class CardKeeperApplication : Application() {
         viewComponent = DaggerViewComponent.builder()
             .appModule(AppModule(this))
             .daoModule(DaoModule())
-            .dispatchersModule(DispatchersModule())
             .build()
 
     }
