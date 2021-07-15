@@ -2,10 +2,11 @@ package com.awscherb.cardkeeper.ui.cards
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asFlow
 import androidx.lifecycle.viewModelScope
 import com.awscherb.cardkeeper.data.model.ScannedCode
 import com.awscherb.cardkeeper.data.service.ScannedCodeService
-import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -16,8 +17,11 @@ class CardsViewModel(
 
     val cards = MutableLiveData<List<ScannedCode>>()
 
+    val searchQuery = MutableLiveData("")
+
     init {
-        scannedCodeService.listAllScannedCodes()
+        searchQuery.asFlow()
+            .flatMapLatest { scannedCodeService.listAllScannedCodes(it) }
             .onEach {
                 cards.postValue(it)
             }

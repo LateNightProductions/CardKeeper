@@ -7,7 +7,7 @@ interface ScannedCodeService {
 
     fun getScannedCode(codeId: Int): Flow<ScannedCode>
 
-    fun listAllScannedCodes(): Flow<List<ScannedCode>>
+    fun listAllScannedCodes(query: String? = null): Flow<List<ScannedCode>>
 
     fun addScannedCode(scannedCode: ScannedCode): Flow<ScannedCode>
 

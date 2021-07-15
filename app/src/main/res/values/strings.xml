@@ -9,6 +9,7 @@
     <string name="action_cancel">Cancel</string>
     <string name="action_delete">Delete</string>
     <string name="action_create">Create</string>
+    <string name="action_search">Search</string>
 
     <!-- Scanned Code Adapter-->
     <string name="adapter_scanned_code_delete_message">Delete code?</string>

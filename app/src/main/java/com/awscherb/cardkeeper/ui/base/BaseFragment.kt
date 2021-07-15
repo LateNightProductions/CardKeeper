@@ -46,7 +46,21 @@ abstract class BaseFragment : Fragment(), BaseView {
         }
     }
 
+    fun showKeyboard() {
+
+    }
+
     fun EditText.addLifecycleTextWatcher(onTextChanged: (String) -> Unit) {
         this.addLifecycleTextChangedListener(this@BaseFragment, onTextChanged)
+    }
+    fun EditText.requestFocusAndShowKeyboard() {
+        requestFocus()
+        activity?.let {
+            val imm =
+                it.getSystemService(AppCompatActivity.INPUT_METHOD_SERVICE) as InputMethodManager
+            it.currentFocus?.let {
+                imm.showSoftInput(this, 0)
+            }
+        }
     }
 }

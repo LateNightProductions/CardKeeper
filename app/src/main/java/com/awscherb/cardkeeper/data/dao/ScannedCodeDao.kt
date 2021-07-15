@@ -13,6 +13,9 @@ interface ScannedCodeDao {
     @Query("SELECT * FROM scannedCode")
     fun listScannedCodes(): Flow<List<ScannedCode>>
 
+    @Query("SELECT * FROM scannedCode WHERE title LIKE '%' || :query || '%'")
+    fun listScannedCodes(query: String): Flow<List<ScannedCode>>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertCode(code: ScannedCode): Long
 

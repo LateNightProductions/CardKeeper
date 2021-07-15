@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
+import android.widget.ImageView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.activityViewModels
@@ -24,6 +26,9 @@ class CardsFragment : BaseFragment() {
     lateinit var viewModelFactory: CardsViewModelFactory
 
     private lateinit var toolbar: Toolbar
+    private lateinit var searchLayout: View
+    private lateinit var searchBox: EditText
+    private lateinit var searchClose: ImageView
     private lateinit var recyclerView: RecyclerView
     private lateinit var fab: FloatingActionButton
 
@@ -47,6 +52,10 @@ class CardsFragment : BaseFragment() {
 
         toolbar = view.findViewById(R.id.fragment_cards_toolbar)
         recyclerView = view.findViewById(R.id.fragment_cards_recylcer)
+        searchLayout = view.findViewById(R.id.fragment_cards_search_layout)
+        searchBox = view.findViewById(R.id.fragment_cards_search)
+        searchClose = view.findViewById(R.id.fragment_cards_search_close)
+
         fab = view.findViewById(R.id.fragment_cards_fab)
 
         setupRecycler()
@@ -60,6 +69,17 @@ class CardsFragment : BaseFragment() {
         viewModel.cards.observe(viewLifecycleOwner, {
             scannedCodeAdapter.items = it
         })
+
+        searchClose.setOnClickListener {
+            dismissKeyboard()
+            searchBox.setText("")
+            searchLayout.visibility = View.GONE
+            toolbar.visibility = View.VISIBLE
+        }
+
+        searchBox.addLifecycleTextWatcher {
+            viewModel.searchQuery.postValue(it)
+        }
     }
 
     //================================================================================
@@ -80,6 +100,12 @@ class CardsFragment : BaseFragment() {
             when (it.itemId) {
                 R.id.create -> {
                     findNavController().navigate(R.id.action_cardsFragment_to_createFragment)
+                    true
+                }
+                R.id.search -> {
+                    toolbar.visibility = View.GONE
+                    searchBox.requestFocusAndShowKeyboard()
+                    searchLayout.visibility = View.VISIBLE
                     true
                 }
                 else -> false

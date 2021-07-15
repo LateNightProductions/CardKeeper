@@ -17,7 +17,9 @@ class ScannedCodeHandler @Inject constructor(
         return scannedCodeDao.getScannedCode(codeId)
     }
 
-    override fun listAllScannedCodes(): Flow<List<ScannedCode>> = scannedCodeDao.listScannedCodes()
+    override fun listAllScannedCodes(query: String?): Flow<List<ScannedCode>> {
+        return if (query == null) scannedCodeDao.listScannedCodes() else scannedCodeDao.listScannedCodes(query)
+    }
 
     override fun addScannedCode(scannedCode: ScannedCode): Flow<ScannedCode> {
         return flow {
