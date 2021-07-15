@@ -46,10 +46,6 @@ abstract class BaseFragment : Fragment(), BaseView {
         }
     }
 
-    fun showKeyboard() {
-
-    }
-
     fun EditText.addLifecycleTextWatcher(onTextChanged: (String) -> Unit) {
         this.addLifecycleTextChangedListener(this@BaseFragment, onTextChanged)
     }

@@ -29,8 +29,6 @@ class CardsViewModel(
     }
 
     fun deleteCard(code: ScannedCode) {
-        viewModelScope.launch {
-            scannedCodeService.deleteScannedCode(code)
-        }
+        scannedCodeService.deleteScannedCode(code).launchIn(viewModelScope)
     }
 }

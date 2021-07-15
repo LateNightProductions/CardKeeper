@@ -3,10 +3,8 @@ package com.awscherb.cardkeeper.data.handler
 import com.awscherb.cardkeeper.data.dao.ScannedCodeDao
 import com.awscherb.cardkeeper.data.model.ScannedCode
 import com.awscherb.cardkeeper.data.service.ScannedCodeService
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class ScannedCodeHandler @Inject constructor(
