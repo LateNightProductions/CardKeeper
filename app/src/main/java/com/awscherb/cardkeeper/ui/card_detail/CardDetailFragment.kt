@@ -25,6 +25,7 @@ import com.google.zxing.BarcodeFormat.DATA_MATRIX
 import com.google.zxing.BarcodeFormat.QR_CODE
 import com.google.zxing.WriterException
 import com.journeyapps.barcodescanner.BarcodeEncoder
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
@@ -34,7 +35,6 @@ class CardDetailFragment : BaseFragment() {
     private val viewModel by viewModels<CardDetailViewModel> {
         factory
     }
-
 
     @Inject
     lateinit var factory: CardDetailViewModelFactory
@@ -59,6 +59,7 @@ class CardDetailFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewComponent.inject(this)
 
         toolbar = view.findViewById(R.id.fragment_card_detail_toolbar)
         title = view.findViewById(R.id.fragment_card_detail_title)
@@ -66,7 +67,6 @@ class CardDetailFragment : BaseFragment() {
         image = view.findViewById(R.id.fragment_card_detail_image)
         save = view.findViewById(R.id.fragment_card_detail_save)
 
-        viewComponent.inject(this)
         viewModel.cardId.value = CardDetailFragmentArgs.fromBundle(requireArguments()).cardId
 
         toolbar.setNavigationIcon(R.drawable.ic_baseline_arrow_back_24)
@@ -74,12 +74,16 @@ class CardDetailFragment : BaseFragment() {
 
         save.setOnClickListener { viewModel.save() }
 
-        viewModel.card.observe(viewLifecycleOwner, Observer(this::showCard))
-        viewModel.saveResult.observe(viewLifecycleOwner, {
-            if (it != null) {
-                this.onSaveResult(it)
+        viewModel.card.onEach {
+            showCard(it)
+        }.launchIn(lifecycleScope)
+
+        viewModel.saveResult
+            .filterNotNull()
+            .onEach {
+                onSaveResult(it)
+                viewModel.saveResult.value = null
             }
-        })
     }
 
     //================================================================================
@@ -109,7 +113,9 @@ class CardDetailFragment : BaseFragment() {
             e.printStackTrace()
         }
 
-        title.addLifecycleTextWatcher(viewModel.title::postValue)
+        title.addLifecycleTextWatcher {
+            viewModel.title.value = it
+        }
     }
 
     private fun onSaveResult(result: SaveResult) {
@@ -119,7 +125,6 @@ class CardDetailFragment : BaseFragment() {
             InvalidFormat -> showSnackbar(R.string.fragment_create_invalid_format)
             is SaveSuccess -> onCardSaved()
         }
-        viewModel.saveResult.postValue(null)
     }
 
 

@@ -16,6 +16,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.awscherb.cardkeeper.R
 import com.awscherb.cardkeeper.ui.base.BaseFragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 class CardsFragment : BaseFragment() {
@@ -66,9 +68,10 @@ class CardsFragment : BaseFragment() {
                 CardsFragmentDirections.actionCardsFragmentToScanFragment()
             )
         }
-        viewModel.cards.observe(viewLifecycleOwner, {
+
+        viewModel.cards.onEach {
             scannedCodeAdapter.items = it
-        })
+        }.launchIn(lifecycleScope)
 
         searchClose.setOnClickListener {
             dismissKeyboard()
@@ -78,7 +81,7 @@ class CardsFragment : BaseFragment() {
         }
 
         searchBox.addLifecycleTextWatcher {
-            viewModel.searchQuery.postValue(it)
+            viewModel.searchQuery.value = it
         }
     }
 

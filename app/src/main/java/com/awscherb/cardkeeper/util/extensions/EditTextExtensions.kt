@@ -31,12 +31,12 @@ fun EditText.addLifecycleTextChangedListener(
     }
 
     lifecycleOwner.lifecycle.addObserver(object : LifecycleObserver {
-        @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
+        @OnLifecycleEvent(Lifecycle.Event.ON_START)
         fun connectListener() {
             addTextChangedListener(tw)
         }
 
-        @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
+        @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
         fun disconnectListener() {
             removeTextChangedListener(tw)
         }

@@ -4,6 +4,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import com.awscherb.cardkeeper.di.component.ViewComponent
 import com.awscherb.cardkeeper.util.extensions.addLifecycleTextChangedListener
 import com.google.android.material.snackbar.Snackbar
@@ -18,6 +19,8 @@ abstract class BaseFragment : Fragment(), BaseView {
     protected val viewComponent: ViewComponent
         inline get() = baseActivity.viewComponent()
 
+    val lifecycleScope
+        inline get() = viewLifecycleOwner.lifecycleScope
 
     override fun onError(e: Throwable) {
         e.printStackTrace()
@@ -49,6 +52,7 @@ abstract class BaseFragment : Fragment(), BaseView {
     fun EditText.addLifecycleTextWatcher(onTextChanged: (String) -> Unit) {
         this.addLifecycleTextChangedListener(this@BaseFragment, onTextChanged)
     }
+
     fun EditText.requestFocusAndShowKeyboard() {
         requestFocus()
         activity?.let {
