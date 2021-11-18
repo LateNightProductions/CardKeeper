@@ -84,6 +84,7 @@ class CardDetailFragment : BaseFragment() {
                 onSaveResult(it)
                 viewModel.saveResult.value = null
             }
+            .launchIn(lifecycleScope)
     }
 
     //================================================================================

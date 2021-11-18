@@ -82,7 +82,7 @@ class CardsAdapter constructor(
 
 class CardViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-    val codeTitle = itemView.findViewById<TextView>(R.id.adapter_card_title)
-    val codeImage = itemView.findViewById<ImageView>(R.id.adapter_card_image)
+    val codeTitle: TextView = itemView.findViewById(R.id.adapter_card_title)
+    val codeImage: ImageView = itemView.findViewById(R.id.adapter_card_image)
 
 }
