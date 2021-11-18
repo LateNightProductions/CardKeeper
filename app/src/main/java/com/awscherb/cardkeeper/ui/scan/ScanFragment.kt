@@ -22,7 +22,7 @@ import com.journeyapps.barcodescanner.CompoundBarcodeView
 import java.util.concurrent.atomic.AtomicBoolean
 import javax.inject.Inject
 
-class ScanFragment : BaseFragment(){
+class ScanFragment : BaseFragment() {
 
     private val viewModel by viewModels<ScanViewModel> { factory }
 
@@ -79,7 +79,6 @@ class ScanFragment : BaseFragment(){
         super.onPause()
         scannerView.pause()
     }
-
 
     private fun onCodeAdded() {
         findNavController().navigate(

@@ -8,6 +8,7 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.coroutineScope
@@ -32,7 +33,7 @@ import javax.inject.Inject
 
 class CardDetailFragment : BaseFragment() {
 
-    private val viewModel by viewModels<CardDetailViewModel> {
+    private val viewModel by activityViewModels<CardDetailViewModel> {
         factory
     }
 
@@ -66,8 +67,6 @@ class CardDetailFragment : BaseFragment() {
         text = view.findViewById(R.id.fragment_card_detail_text)
         image = view.findViewById(R.id.fragment_card_detail_image)
         save = view.findViewById(R.id.fragment_card_detail_save)
-
-        viewModel.cardId.value = CardDetailFragmentArgs.fromBundle(requireArguments()).cardId
 
         toolbar.setNavigationIcon(R.drawable.ic_baseline_arrow_back_24)
         toolbar.setNavigationOnClickListener { activity?.onBackPressed() }

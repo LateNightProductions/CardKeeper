@@ -15,6 +15,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.awscherb.cardkeeper.R
 import com.awscherb.cardkeeper.ui.base.BaseFragment
+import com.awscherb.cardkeeper.ui.base.CardKeeperNavigator
+import com.awscherb.cardkeeper.ui.card_detail.CardDetailViewModel
+import com.awscherb.cardkeeper.ui.card_detail.CardDetailViewModelFactory
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -26,6 +29,13 @@ class CardsFragment : BaseFragment() {
 
     @Inject
     lateinit var viewModelFactory: CardsViewModelFactory
+
+    private val detailViewModel by activityViewModels<CardDetailViewModel> { detailFactory }
+
+    @Inject
+    lateinit var detailFactory: CardDetailViewModelFactory
+
+    private val navigator by lazy { CardKeeperNavigator(resources.getBoolean(R.bool.portrait)) }
 
     private lateinit var toolbar: Toolbar
     private lateinit var searchLayout: View
@@ -119,9 +129,8 @@ class CardsFragment : BaseFragment() {
     private fun setupRecycler() {
         layoutManager = GridLayoutManager(activity, resources.getInteger(R.integer.cards_columns))
         scannedCodeAdapter = CardsAdapter(requireActivity(), {
-            findNavController().navigate(
-                CardsFragmentDirections.actionCardsFragmentToCardDetailFragment(it.id)
-            )
+            detailViewModel.cardId.value = it.id
+            navigator.navigateToDetail(this, it.id)
         }) { code ->
             AlertDialog.Builder(requireContext())
                 .setTitle(R.string.adapter_scanned_code_delete_message)

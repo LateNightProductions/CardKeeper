@@ -6,20 +6,20 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.LinearLayout
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.coroutineScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.awscherb.cardkeeper.R
 import com.awscherb.cardkeeper.ui.base.BaseFragment
+import com.awscherb.cardkeeper.ui.card_detail.CardDetailViewModel
+import com.awscherb.cardkeeper.ui.card_detail.CardDetailViewModelFactory
 import com.awscherb.cardkeeper.util.extensions.collapse
 import com.awscherb.cardkeeper.util.extensions.expand
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.textfield.TextInputEditText
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 class CreateFragment : BaseFragment() {
@@ -28,6 +28,11 @@ class CreateFragment : BaseFragment() {
 
     @Inject
     lateinit var viewModelFactory: CreateViewModelFactory
+
+    private val detailViewModel by activityViewModels<CardDetailViewModel> { detailFactory }
+
+    @Inject
+    lateinit var detailFactory: CardDetailViewModelFactory
 
     private lateinit var title: TextInputEditText
     private lateinit var text: TextInputEditText
@@ -100,6 +105,7 @@ class CreateFragment : BaseFragment() {
 
     private fun onSaveComplete(id: Int) {
         showSnackbar(R.string.fragment_create_complete)
+        detailViewModel.cardId.value = id
         findNavController().navigate(
             CreateFragmentDirections.actionCreateFragmentToCardDetailFragment(id)
         )

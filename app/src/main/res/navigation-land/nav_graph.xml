@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/emptyFragment">
+
+  <fragment
+      android:id="@+id/emptyFragment"
+      android:name="androidx.fragment.app.Fragment"
+      android:label="Home" />
+
+  <fragment
+      android:id="@+id/cardDetailFragment"
+      android:name="com.awscherb.cardkeeper.ui.card_detail.CardDetailFragment"
+      android:label="CardDetailFragment">
+
+  </fragment>
+  <fragment
+      android:id="@+id/scanFragment"
+      android:name="com.awscherb.cardkeeper.ui.scan.ScanFragment"
+      android:label="ScanFragment" />
+  <fragment
+      android:id="@+id/createFragment"
+      android:name="com.awscherb.cardkeeper.ui.create.CreateFragment"
+      android:label="CreateFragment" />
+  <action
+      android:id="@+id/action_global_cardDetailFragment"
+      app:destination="@id/cardDetailFragment" />
+  <action
+      android:id="@+id/action_global_createFragment"
+      app:destination="@id/createFragment" />
+  <action
+      android:id="@+id/action_global_scanFragment"
+      app:destination="@id/scanFragment" />
+
+
+</navigation>
