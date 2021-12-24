@@ -26,6 +26,7 @@
       tools:ignore="GoogleAppIndexingWarning">
 
     <activity
+        android:exported="true"
         android:screenOrientation="portrait"
         android:name=".ui.base.CardKeeperActivity"
         android:windowSoftInputMode="adjustPan"

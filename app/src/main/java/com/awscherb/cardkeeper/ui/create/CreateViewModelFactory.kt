@@ -8,7 +8,7 @@ import javax.inject.Inject
 class CreateViewModelFactory @Inject constructor(
     private val scannedCodeService: ScannedCodeService
 ): ViewModelProvider.NewInstanceFactory() {
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return CreateViewModel(scannedCodeService) as T
     }
 }
