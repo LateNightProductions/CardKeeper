@@ -10,12 +10,12 @@ plugins {
 }
 
 android {
-    compileSdk = 31
+    compileSdk = 32
 
     defaultConfig {
         applicationId = "com.awscherb.cardkeeper"
         minSdk = 21
-        targetSdk = 31
+        targetSdk = 32
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         versionCode = 92
         versionName = "1.1"
@@ -63,36 +63,36 @@ android {
 dependencies {
 
     // Support libs
-    implementation("androidx.appcompat:appcompat:1.4.0")
+    implementation("androidx.appcompat:appcompat:1.5.0")
     implementation("androidx.cardview:cardview:1.0.0")
     implementation("androidx.recyclerview:recyclerview:1.2.1")
-    implementation("com.google.android.material:material:1.4.0")
-    implementation("androidx.constraintlayout:constraintlayout:2.1.2")
-    implementation("androidx.navigation:navigation-fragment-ktx:2.3.5")
-    implementation("androidx.navigation:navigation-ui-ktx:2.3.5")
+    implementation("com.google.android.material:material:1.6.1")
+    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+    implementation("androidx.navigation:navigation-fragment-ktx:2.5.1")
+    implementation("androidx.navigation:navigation-ui-ktx:2.5.1")
     implementation("androidx.lifecycle:lifecycle-extensions:2.2.0")
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.4.0")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.5.1")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1")
 
     // Room
-    implementation("androidx.room:room-runtime:2.4.0")
-    implementation("androidx.room:room-ktx:2.4.0")
-    kapt("androidx.room:room-compiler:2.4.0")
-    kapt("androidx.lifecycle:lifecycle-common-java8:2.4.0")
+    implementation("androidx.room:room-runtime:2.4.3")
+    implementation("androidx.room:room-ktx:2.4.3")
+    kapt("androidx.room:room-compiler:2.4.3")
+    kapt("androidx.lifecycle:lifecycle-common-java8:2.5.1")
 
     // Scanning
-    implementation("com.google.zxing:core:3.4.0")
+    implementation("com.google.zxing:core:3.5.0")
     implementation("com.journeyapps:zxing-android-embedded:3.6.0@aar")
 
     // Dependency Injection
-    implementation("com.google.dagger:dagger:2.40")
-    kapt("com.google.dagger:dagger-compiler:2.40")
+    implementation("com.google.dagger:dagger:2.43.2")
+    kapt("com.google.dagger:dagger-compiler:2.43.2")
 
     implementation("com.clrvynce.android:sdk:1.0.2")
 
     // Dependencies for local unit tests
     testImplementation("junit:junit:4.13.2")
-    testImplementation("org.mockito:mockito-core:3.9.0")
+    testImplementation("org.mockito:mockito-core:4.7.0")
     testImplementation("org.hamcrest:hamcrest-all:1.3")
     testImplementation("com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0")
 
@@ -100,6 +100,6 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.1.3")
     androidTestImplementation("androidx.test:runner:1.4.0")
     androidTestImplementation("androidx.test:rules:1.4.0")
-    debugImplementation("androidx.fragment:fragment-testing:1.4.0")
+    debugImplementation("androidx.fragment:fragment-testing:1.5.2")
 
 }
