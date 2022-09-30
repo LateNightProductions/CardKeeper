@@ -2,7 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/cardsFragment">
+    app:startDestination="@id/cardsFragmentCompose">
 
     <fragment
         android:id="@+id/cardsFragment"
@@ -30,6 +30,35 @@
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
+
+    <fragment
+        android:id="@+id/cardsFragmentCompose"
+        android:name="com.awscherb.cardkeeper.ui.cards.CardsFragmentCompose"
+        android:label="CardsFragment">
+        <action
+            android:id="@+id/action_cardsFragment_to_cardDetailFragment"
+            app:destination="@id/cardDetailFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_cardsFragment_to_scanFragment"
+            app:destination="@id/scanFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_cardsFragment_to_createFragment"
+            app:destination="@id/createFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+
+
     <fragment
         android:id="@+id/cardDetailFragment"
         android:name="com.awscherb.cardkeeper.ui.card_detail.CardDetailFragment"

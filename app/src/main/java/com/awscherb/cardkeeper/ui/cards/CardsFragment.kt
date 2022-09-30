@@ -74,9 +74,9 @@ class CardsFragment : BaseFragment() {
         setupToolbar()
 
         fab.setOnClickListener {
-            findNavController().navigate(
-                CardsFragmentDirections.actionCardsFragmentToScanFragment()
-            )
+//            findNavController().navigate(
+//                CardsFragmentDirections.actionCardsFragmentToScanFragment()
+//            )
         }
 
         viewModel.cards.onEach {

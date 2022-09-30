@@ -10,12 +10,12 @@ plugins {
 }
 
 android {
-    compileSdk = 32
+    compileSdk = 33
 
     defaultConfig {
         applicationId = "com.awscherb.cardkeeper"
-        minSdk = 21
-        targetSdk = 32
+        minSdk = 28
+        targetSdk = 33
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         versionCode = 92
         versionName = "1.1"
@@ -58,21 +58,37 @@ android {
         jvmTarget = "1.8"
     }
 
+    buildFeatures {
+        compose = true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.3.0"
+    }
+
+
+    namespace = "com.awscherb.cardkeeper"
+
 }
 
 dependencies {
 
     // Support libs
-    implementation("androidx.appcompat:appcompat:1.5.0")
+    implementation("androidx.appcompat:appcompat:1.5.1")
     implementation("androidx.cardview:cardview:1.0.0")
     implementation("androidx.recyclerview:recyclerview:1.2.1")
     implementation("com.google.android.material:material:1.6.1")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
-    implementation("androidx.navigation:navigation-fragment-ktx:2.5.1")
-    implementation("androidx.navigation:navigation-ui-ktx:2.5.1")
+    implementation("androidx.navigation:navigation-fragment-ktx:2.5.2")
+    implementation("androidx.navigation:navigation-ui-ktx:2.5.2")
     implementation("androidx.lifecycle:lifecycle-extensions:2.2.0")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.5.1")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1")
+    implementation("androidx.activity:activity-compose:1.6.0")
+    implementation("androidx.compose.ui:ui:1.2.1")
+    implementation("androidx.compose.material:material:1.2.1")
+    implementation("androidx.navigation:navigation-compose:2.5.2")
+    implementation("androidx.compose.ui:ui-tooling-preview:1.2.1")
 
     // Room
     implementation("androidx.room:room-runtime:2.4.3")
@@ -100,6 +116,6 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.1.3")
     androidTestImplementation("androidx.test:runner:1.4.0")
     androidTestImplementation("androidx.test:rules:1.4.0")
-    debugImplementation("androidx.fragment:fragment-testing:1.5.2")
+    debugImplementation("androidx.fragment:fragment-testing:1.5.3")
 
 }
