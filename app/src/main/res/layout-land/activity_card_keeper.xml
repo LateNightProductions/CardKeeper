@@ -10,7 +10,7 @@
       android:layout_width="0dp"
       android:layout_weight="1"
       android:layout_height="match_parent"
-      android:name="com.awscherb.cardkeeper.ui.cards.CardsFragment"
+      android:name="com.awscherb.cardkeeper.ui.items.ItemsFragment"
       />
 
 

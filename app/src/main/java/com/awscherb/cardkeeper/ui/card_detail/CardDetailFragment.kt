@@ -9,11 +9,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
-import androidx.lifecycle.coroutineScope
 import com.awscherb.cardkeeper.R
-import com.awscherb.cardkeeper.data.model.ScannedCode
+import com.awscherb.cardkeeper.data.entity.ScannedCodeEntity
 import com.awscherb.cardkeeper.ui.base.BaseFragment
 import com.awscherb.cardkeeper.ui.create.InvalidFormat
 import com.awscherb.cardkeeper.ui.create.InvalidText
@@ -90,7 +87,7 @@ class CardDetailFragment : BaseFragment() {
     // View methods
     //================================================================================
 
-    private fun showCard(code: ScannedCode) {
+    private fun showCard(code: ScannedCodeEntity) {
         // Set title
         title.setText(code.title)
         text.setText(code.text)

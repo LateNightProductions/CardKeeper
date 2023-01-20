@@ -1,14 +1,15 @@
-package com.awscherb.cardkeeper.ui.cards
+package com.awscherb.cardkeeper.ui.items
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.awscherb.cardkeeper.data.repository.SavedItemRepository
 import com.awscherb.cardkeeper.data.service.ScannedCodeService
 import javax.inject.Inject
 
-class CardsViewModelFactory @Inject constructor(
-    private val scannedCodeService: ScannedCodeService
+class ItemsViewModelFactory @Inject constructor(
+    private val savedItemRepository: SavedItemRepository
 ): ViewModelProvider.NewInstanceFactory() {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return CardsViewModel(scannedCodeService) as T
+        return ItemsViewModel(savedItemRepository) as T
     }
 }

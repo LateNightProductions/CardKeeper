@@ -9,7 +9,7 @@ import android.support.test.filters.LargeTest
 import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
 import com.awscherb.cardkeeper.R
-import com.awscherb.cardkeeper.data.model.ScannedCode
+import com.awscherb.cardkeeper.data.entity.ScannedCodeEntity
 import com.awscherb.cardkeeper.di.module.MockScannedCodeService
 import com.google.zxing.BarcodeFormat
 import org.junit.Before
@@ -28,7 +28,7 @@ class CardDetailFragmentTest {
 
     @Before
     fun setup() {
-        MockScannedCodeService.codes[1] = ScannedCode().apply {
+        MockScannedCodeService.codes[1] = ScannedCodeEntity().apply {
             title = "Title"
             text = "Text"
             format = BarcodeFormat.EAN_13

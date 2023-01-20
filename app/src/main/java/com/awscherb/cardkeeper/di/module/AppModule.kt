@@ -20,7 +20,7 @@ class AppModule(private val context: Context) {
         return Room.databaseBuilder(
             context.applicationContext, CardKeeperDatabase::class.java, "cardkeeper.db"
         )
-            .addMigrations(DatabaseMigrations.MIGRATE_10_TO_11)
+            .fallbackToDestructiveMigration()
             .build()
     }
 }

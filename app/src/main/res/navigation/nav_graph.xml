@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/cardsFragment"
-        android:name="com.awscherb.cardkeeper.ui.cards.CardsFragment"
+        android:name="com.awscherb.cardkeeper.ui.items.ItemsFragment"
         android:label="CardsFragment">
         <action
             android:id="@+id/action_cardsFragment_to_cardDetailFragment"

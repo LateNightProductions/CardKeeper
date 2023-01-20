@@ -7,7 +7,7 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.map
 import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
-import com.awscherb.cardkeeper.data.model.ScannedCode
+import com.awscherb.cardkeeper.data.entity.ScannedCodeEntity
 import com.awscherb.cardkeeper.data.service.ScannedCodeService
 import com.google.zxing.BarcodeFormat
 
@@ -19,14 +19,14 @@ class ScanViewModel(
 
     val createResult: LiveData<Unit> = createData.switchMap {
         scannedCodeService.addScannedCode(
-            ScannedCode(
+            ScannedCodeEntity(
                 format = it.format,
                 text = it.text,
-                title = it.title
+                title = it.title,
+                created = System.currentTimeMillis()
             )
         ).asLiveData(viewModelScope.coroutineContext)
     }.map { }
-
 }
 
 data class CreateCodeData(

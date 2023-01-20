@@ -3,11 +3,10 @@ package com.awscherb.cardkeeper.ui.create
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.awscherb.cardkeeper.data.model.ScannedCode
+import com.awscherb.cardkeeper.data.entity.ScannedCodeEntity
 import com.awscherb.cardkeeper.data.service.ScannedCodeService
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.launch
 
 class CreateViewModel(
     private val scannedCodeService: ScannedCodeService
@@ -30,12 +29,12 @@ class CreateViewModel(
             textValue.isNullOrEmpty() -> saveResult.postValue(InvalidText)
             formatValue == null -> saveResult.postValue(InvalidFormat)
             else -> {
-                val scannedCode = ScannedCode(
+                val scannedCode = ScannedCodeEntity(
                     title = titleValue,
                     text = textValue,
-                    format = formatValue.format
+                    format = formatValue.format,
+                    created = System.currentTimeMillis()
                 )
-
 
                 scannedCodeService.addScannedCode(scannedCode)
                     .onEach {

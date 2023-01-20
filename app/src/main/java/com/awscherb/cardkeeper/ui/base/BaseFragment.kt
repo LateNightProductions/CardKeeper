@@ -8,8 +8,6 @@ import androidx.lifecycle.lifecycleScope
 import com.awscherb.cardkeeper.di.component.ViewComponent
 import com.awscherb.cardkeeper.util.extensions.addLifecycleTextChangedListener
 import com.google.android.material.snackbar.Snackbar
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.disposables.Disposable
 
 abstract class BaseFragment : Fragment(), BaseView {
 

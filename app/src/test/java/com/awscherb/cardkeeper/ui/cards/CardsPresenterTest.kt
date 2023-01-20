@@ -1,6 +1,6 @@
 package com.awscherb.cardkeeper.ui.cards
 
-import com.awscherb.cardkeeper.data.model.ScannedCode
+import com.awscherb.cardkeeper.data.entity.ScannedCodeEntity
 import com.awscherb.cardkeeper.data.service.ScannedCodeService
 import com.awscherb.cardkeeper.ui.base.BasePresenterTest
 import com.nhaarman.mockitokotlin2.any
@@ -43,7 +43,7 @@ class CardsPresenterTest : BasePresenterTest<CardsContract.View, CardsPresenter>
 
     @Test
     fun `Add new card success`() = runBlocking {
-        val newCode = ScannedCode()
+        val newCode = ScannedCodeEntity()
         whenever(service.addScannedCode(newCode))
             .thenReturn(newCode)
 
@@ -57,7 +57,7 @@ class CardsPresenterTest : BasePresenterTest<CardsContract.View, CardsPresenter>
         whenever(service.addScannedCode(any()))
             .thenThrow(RuntimeException())
 
-        presenter.addNewCard(ScannedCode())
+        presenter.addNewCard(ScannedCodeEntity())
 
         verify(view, times(1)).onError(any())
     }
@@ -67,7 +67,7 @@ class CardsPresenterTest : BasePresenterTest<CardsContract.View, CardsPresenter>
         //        whenever(service.deleteScannedCode(any()))
 //            .thenAnswer {  }
 
-        presenter.deleteCard(ScannedCode())
+        presenter.deleteCard(ScannedCodeEntity())
 
         verify(view, times(1)).onCardDeleted()
     }
@@ -77,7 +77,7 @@ class CardsPresenterTest : BasePresenterTest<CardsContract.View, CardsPresenter>
         whenever(service.deleteScannedCode(any()))
             .thenThrow(RuntimeException())
 
-        presenter.deleteCard(ScannedCode())
+        presenter.deleteCard(ScannedCodeEntity())
 
         verify(view, times(1)).onError(any())
     }

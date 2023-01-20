@@ -1,17 +1,15 @@
 package com.awscherb.cardkeeper.data.service
 
-import com.awscherb.cardkeeper.data.model.ScannedCode
+import com.awscherb.cardkeeper.data.entity.ScannedCodeEntity
+import com.awscherb.cardkeeper.data.model.ScannedCodeModel
 import kotlinx.coroutines.flow.Flow
 
-interface ScannedCodeService {
+interface ScannedCodeService : SavedItemService<ScannedCodeModel> {
 
-    fun getScannedCode(codeId: Int): Flow<ScannedCode>
+    fun getScannedCode(codeId: Int): Flow<ScannedCodeEntity>
 
-    fun listAllScannedCodes(query: String? = null): Flow<List<ScannedCode>>
+    fun addScannedCode(scannedCode: ScannedCodeEntity): Flow<ScannedCodeEntity>
 
-    fun addScannedCode(scannedCode: ScannedCode): Flow<ScannedCode>
+    fun updateScannedCode(scannedCode: ScannedCodeEntity): Flow<ScannedCodeEntity>
 
-    fun updateScannedCode(scannedCode: ScannedCode): Flow<ScannedCode>
-
-    fun deleteScannedCode(scannedCode: ScannedCode): Flow<Unit>
 }

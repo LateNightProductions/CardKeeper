@@ -1,18 +1,17 @@
 package com.awscherb.cardkeeper.ui.card_detail
 
 import androidx.lifecycle.*
-import com.awscherb.cardkeeper.data.model.ScannedCode
+import com.awscherb.cardkeeper.data.entity.ScannedCodeEntity
 import com.awscherb.cardkeeper.data.service.ScannedCodeService
 import com.awscherb.cardkeeper.ui.create.*
 import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.launch
 
 class CardDetailViewModel(
     private val scannedCodeService: ScannedCodeService
 ) : ViewModel() {
 
     val cardId = MutableStateFlow(-1)
-    private val cardState = MutableStateFlow<ScannedCode?>(null)
+    private val cardState = MutableStateFlow<ScannedCodeEntity?>(null)
     val card = cardState.filterNotNull()
 
     val title = MutableStateFlow<String?>(null)

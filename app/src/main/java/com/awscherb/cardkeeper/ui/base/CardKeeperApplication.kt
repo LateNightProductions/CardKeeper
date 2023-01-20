@@ -6,7 +6,6 @@ import com.awscherb.cardkeeper.di.component.DaggerViewComponent
 import com.awscherb.cardkeeper.di.component.ViewComponent
 import com.awscherb.cardkeeper.di.module.AppModule
 import com.awscherb.cardkeeper.di.module.DaoModule
-import com.clrvynce.android.Clairvoyance
 
 
 class CardKeeperApplication : Application() {
@@ -17,12 +16,16 @@ class CardKeeperApplication : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        Clairvoyance.init(this, getString(R.string.clrvynceKey))
-
         viewComponent = DaggerViewComponent.builder()
             .appModule(AppModule(this))
             .daoModule(DaoModule())
             .build()
+
+
+
+    }
+
+    fun a() {
 
     }
 }

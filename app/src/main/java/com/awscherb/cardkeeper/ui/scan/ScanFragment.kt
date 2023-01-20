@@ -13,7 +13,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.awscherb.cardkeeper.R
-import com.awscherb.cardkeeper.data.model.ScannedCode
 import com.awscherb.cardkeeper.ui.base.BaseFragment
 import com.google.zxing.ResultPoint
 import com.journeyapps.barcodescanner.BarcodeCallback

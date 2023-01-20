@@ -1,4 +1,4 @@
-package com.awscherb.cardkeeper.ui.cards
+package com.awscherb.cardkeeper.ui.items
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -14,6 +14,8 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.awscherb.cardkeeper.R
+import com.awscherb.cardkeeper.data.model.PkPassModel
+import com.awscherb.cardkeeper.data.model.ScannedCodeModel
 import com.awscherb.cardkeeper.ui.base.BaseFragment
 import com.awscherb.cardkeeper.ui.base.CardKeeperNavigator
 import com.awscherb.cardkeeper.ui.card_detail.CardDetailViewModel
@@ -23,12 +25,12 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
-class CardsFragment : BaseFragment() {
+class ItemsFragment : BaseFragment() {
 
-    private val viewModel by activityViewModels<CardsViewModel> { viewModelFactory }
+    private val viewModel by activityViewModels<ItemsViewModel> { viewModelFactory }
 
     @Inject
-    lateinit var viewModelFactory: CardsViewModelFactory
+    lateinit var viewModelFactory: ItemsViewModelFactory
 
     private val detailViewModel by activityViewModels<CardDetailViewModel> { detailFactory }
 
@@ -45,7 +47,7 @@ class CardsFragment : BaseFragment() {
     private lateinit var fab: FloatingActionButton
 
     private lateinit var layoutManager: LinearLayoutManager
-    private lateinit var scannedCodeAdapter: CardsAdapter
+    private lateinit var scannedCodeAdapter: ItemsAdapter
 
     //================================================================================
     // Lifecycle methods
@@ -55,7 +57,7 @@ class CardsFragment : BaseFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View = inflater.inflate(R.layout.fragment_cards, container, false)
+    ): View = inflater.inflate(R.layout.fragment_items, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -75,11 +77,11 @@ class CardsFragment : BaseFragment() {
 
         fab.setOnClickListener {
             findNavController().navigate(
-                CardsFragmentDirections.actionCardsFragmentToScanFragment()
+                ItemsFragmentDirections.actionCardsFragmentToScanFragment()
             )
         }
 
-        viewModel.cards.onEach {
+        viewModel.items.onEach {
             scannedCodeAdapter.items = it
         }.launchIn(lifecycleScope)
 
@@ -128,15 +130,29 @@ class CardsFragment : BaseFragment() {
 
     private fun setupRecycler() {
         layoutManager = GridLayoutManager(activity, resources.getInteger(R.integer.cards_columns))
-        scannedCodeAdapter = CardsAdapter(requireActivity(), {
-            detailViewModel.cardId.value = it.id
-            navigator.navigateToDetail(this, it.id)
+        scannedCodeAdapter = ItemsAdapter(requireActivity(), {
+            when (it) {
+                is PkPassModel -> {
+
+                }
+                is ScannedCodeModel -> {
+                    detailViewModel.cardId.value = it.id
+                    navigator.navigateToDetail(this, it.id)
+                }
+            }
         }) { code ->
             AlertDialog.Builder(requireContext())
                 .setTitle(R.string.adapter_scanned_code_delete_message)
                 .setPositiveButton(R.string.action_delete) { _, _ ->
-                    viewModel.deleteCard(code)
-                    onCardDeleted()
+                    when (code) {
+                        is PkPassModel -> {
+
+                        }
+                        is ScannedCodeModel -> {
+                            viewModel.deleteCard(code)
+                            onCardDeleted()
+                        }
+                    }
                 }
                 .setNegativeButton(R.string.action_cancel, null)
                 .show()

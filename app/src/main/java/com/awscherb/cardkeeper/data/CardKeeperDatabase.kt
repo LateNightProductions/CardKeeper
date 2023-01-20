@@ -3,12 +3,20 @@ package com.awscherb.cardkeeper.data
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import com.awscherb.cardkeeper.data.dao.PkPassDao
 import com.awscherb.cardkeeper.data.dao.ScannedCodeDao
-import com.awscherb.cardkeeper.data.model.ScannedCode
-import com.awscherb.cardkeeper.util.db.BarcodeConverters
+import com.awscherb.cardkeeper.data.entity.PkPassEntity
+import com.awscherb.cardkeeper.data.entity.ScannedCodeEntity
 
-@Database(entities = [(ScannedCode::class)], version = 11, exportSchema = false)
-@TypeConverters(BarcodeConverters::class)
+@Database(
+    entities = [
+        ScannedCodeEntity::class,
+        PkPassEntity::class,
+    ],
+    version = 12, exportSchema = false
+)
+@TypeConverters(com.awscherb.cardkeeper.util.db.TypeConverters::class)
 abstract class CardKeeperDatabase : RoomDatabase() {
     abstract fun scannedCodeDao(): ScannedCodeDao
+    abstract fun pkPassDao(): PkPassDao
 }

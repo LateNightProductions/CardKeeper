@@ -1,6 +1,6 @@
 package com.awscherb.cardkeeper.ui.card_detail
 
-import com.awscherb.cardkeeper.data.model.ScannedCode
+import com.awscherb.cardkeeper.data.entity.ScannedCodeEntity
 import com.awscherb.cardkeeper.data.service.ScannedCodeService
 import com.awscherb.cardkeeper.ui.base.BasePresenterTest
 import com.nhaarman.mockitokotlin2.any
@@ -24,7 +24,7 @@ class CardDetailPresenterTest : BasePresenterTest<CardDetailContract.View, CardD
     @Test
     fun `Load card success`() = runBlocking {
         whenever(service.getScannedCode(1))
-            .thenReturn(ScannedCode().apply {
+            .thenReturn(ScannedCodeEntity().apply {
                 title = "title"
             })
 
@@ -47,7 +47,7 @@ class CardDetailPresenterTest : BasePresenterTest<CardDetailContract.View, CardD
     fun `Update title`() {
         `Set card data`()
         val cardField = presenter.javaClass.getDeclaredField("card").apply { isAccessible = true }
-        val code = cardField.get(presenter) as ScannedCode
+        val code = cardField.get(presenter) as ScannedCodeEntity
 
         presenter.setTitle("Title")
 
@@ -60,7 +60,7 @@ class CardDetailPresenterTest : BasePresenterTest<CardDetailContract.View, CardD
     fun `Save card success`() = runBlocking {
         `Set card data`()
         whenever(service.updateScannedCode(any()))
-            .thenReturn(ScannedCode())
+            .thenReturn(ScannedCodeEntity())
 
         presenter.saveCard()
 
@@ -81,7 +81,7 @@ class CardDetailPresenterTest : BasePresenterTest<CardDetailContract.View, CardD
     private fun `Set card data`() {
         val cardField = presenter.javaClass.getDeclaredField("card")
         cardField.isAccessible = true
-        cardField.set(presenter, ScannedCode())
+        cardField.set(presenter, ScannedCodeEntity())
 
         val titleField = presenter.javaClass.getDeclaredField("originalTitle")
         titleField.isAccessible = true

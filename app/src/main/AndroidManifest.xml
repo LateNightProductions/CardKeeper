@@ -3,23 +3,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.awscherb.cardkeeper">
 
-  <uses-permission android:name="android.permission.INTERNET" />
-
-  <uses-feature
-      android:name="android.hardware.camera"
-      android:required="false" />
-  <uses-feature
-      android:name="android.hardware.camera.autofocus"
-      android:required="false" />
   <uses-feature
       android:name="android.hardware.camera.flash"
       android:required="false" />
+  <uses-feature
+      android:name="android.hardware.camera"
+      android:required="false" />
+
+  <uses-feature
+      android:name="android.hardware.camera.autofocus"
+      android:required="false" />
+
+  <uses-permission android:name="android.permission.INTERNET" />
 
   <application
-      android:name=".ui.base.CardKeeperApplication"
       android:allowBackup="true"
       android:icon="@mipmap/ic_launcher"
       android:label="@string/app_name"
+      android:name=".ui.base.CardKeeperApplication"
       android:roundIcon="@mipmap/ic_launcher_round"
       android:supportsRtl="true"
       android:theme="@style/Theme.AppCompat.NoActionBar"
@@ -27,15 +28,48 @@
 
     <activity
         android:exported="true"
-        android:screenOrientation="portrait"
+        android:label="@string/title_activity_cards"
         android:name=".ui.base.CardKeeperActivity"
-        android:windowSoftInputMode="adjustPan"
-        android:label="@string/title_activity_cards">
+        android:screenOrientation="portrait"
+        android:windowSoftInputMode="adjustPan">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
 
         <category android:name="android.intent.category.LAUNCHER" />
       </intent-filter>
+
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW" />
+        <category android:name="android.intent.category.DEFAULT" />
+        <data
+            android:mimeType="application/vnd-com.apple.pkpass"
+            android:scheme="content" />
+      </intent-filter>
+
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW" />
+        <category android:name="android.intent.category.DEFAULT" />
+        <data
+            android:mimeType="application/vnd.apple.pkpass"
+            android:scheme="content" />
+      </intent-filter>
+
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW" />
+        <category android:name="android.intent.category.DEFAULT" />
+        <data
+            android:mimeType="application/vnd-com.apple.pkpass"
+            android:scheme="file" />
+      </intent-filter>
+
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW" />
+        <category android:name="android.intent.category.DEFAULT" />
+        <data
+            android:mimeType="application/vnd.apple.pkpass"
+            android:scheme="file" />
+      </intent-filter>
+
     </activity>
 
   </application>
