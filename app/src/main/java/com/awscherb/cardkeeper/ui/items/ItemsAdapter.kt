@@ -1,16 +1,20 @@
 package com.awscherb.cardkeeper.ui.items
 
 import android.content.Context
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.awscherb.cardkeeper.R
+import com.awscherb.cardkeeper.data.CardKeeperDatabase
 import com.awscherb.cardkeeper.data.model.PkPassModel
 import com.awscherb.cardkeeper.data.model.SavedItem
 import com.awscherb.cardkeeper.data.model.ScannedCodeModel
+import com.awscherb.cardkeeper.data.model.parseHexColor
 import com.google.zxing.BarcodeFormat.AZTEC
 import com.google.zxing.BarcodeFormat.DATA_MATRIX
 import com.google.zxing.BarcodeFormat.QR_CODE
@@ -106,6 +110,11 @@ class ItemsAdapter constructor(
     }
 
     private fun bindPkPassViewHolder(holder: PkPassViewHolder, pass: PkPassModel) {
+        holder.apply {
+            card.setCardBackgroundColor(Color.parseColor(pass.backgroundColor.parseHexColor()))
+            title.setTextColor(Color.parseColor(pass.labelColor.parseHexColor()))
+            title.text = pass.description
+        }
     }
 }
 
@@ -116,4 +125,7 @@ class ScannedCodeViewHolder(itemView: View) : SavedItemViewHolder(itemView) {
     val codeImage: ImageView = itemView.findViewById(R.id.adapter_card_image)
 }
 
-class PkPassViewHolder(itemView: View) : SavedItemViewHolder(itemView)
+class PkPassViewHolder(itemView: View) : SavedItemViewHolder(itemView) {
+    val card: CardView = itemView.findViewById(R.id.adapter_pkpass_card)
+    val title: TextView = itemView.findViewById(R.id.adapter_pkpass_title)
+}

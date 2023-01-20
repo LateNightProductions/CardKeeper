@@ -5,6 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.awscherb.cardkeeper.data.model.Barcode
 import com.awscherb.cardkeeper.data.model.PkPassModel
+import com.google.zxing.BarcodeFormat
 
 @Entity
 data class PkPassEntity(
@@ -27,7 +28,7 @@ data class PkPassEntity(
 
 data class BarcodeStruct(
     override val altText: String?,
-    override val format: String,
+    override val format: BarcodeFormat,
     override val message: String,
     override val messageEncoding: String
 ) : Barcode
