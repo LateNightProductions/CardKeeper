@@ -3,6 +3,7 @@ package com.awscherb.cardkeeper.di.component
 import com.awscherb.cardkeeper.di.module.AppModule
 import com.awscherb.cardkeeper.di.module.DaoModule
 import com.awscherb.cardkeeper.di.module.ServiceModule
+import com.awscherb.cardkeeper.ui.base.CardKeeperActivity
 import com.awscherb.cardkeeper.ui.card_detail.CardDetailFragment
 import com.awscherb.cardkeeper.ui.items.ItemsFragment
 import com.awscherb.cardkeeper.ui.create.CreateFragment
@@ -23,4 +24,5 @@ interface ViewComponent {
     fun inject(view: ItemsFragment)
     fun inject(view: CreateFragment)
     fun inject(view: ScanFragment)
+    fun inject(activity: CardKeeperActivity)
 }

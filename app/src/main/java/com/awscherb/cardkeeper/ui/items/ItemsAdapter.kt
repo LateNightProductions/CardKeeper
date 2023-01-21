@@ -15,11 +15,13 @@ import com.awscherb.cardkeeper.data.model.PkPassModel
 import com.awscherb.cardkeeper.data.model.SavedItem
 import com.awscherb.cardkeeper.data.model.ScannedCodeModel
 import com.awscherb.cardkeeper.data.model.parseHexColor
+import com.bumptech.glide.Glide
 import com.google.zxing.BarcodeFormat.AZTEC
 import com.google.zxing.BarcodeFormat.DATA_MATRIX
 import com.google.zxing.BarcodeFormat.QR_CODE
 import com.google.zxing.WriterException
 import com.journeyapps.barcodescanner.BarcodeEncoder
+import java.io.File
 
 class ItemsAdapter constructor(
     private val context: Context,
@@ -111,9 +113,40 @@ class ItemsAdapter constructor(
 
     private fun bindPkPassViewHolder(holder: PkPassViewHolder, pass: PkPassModel) {
         holder.apply {
+            val labelColor = Color.parseColor(pass.labelColor.parseHexColor())
             card.setCardBackgroundColor(Color.parseColor(pass.backgroundColor.parseHexColor()))
-            title.setTextColor(Color.parseColor(pass.labelColor.parseHexColor()))
-            title.text = pass.description
+
+            val headers = if (pass.boardingPass?.headerFields?.isNotEmpty() == true)
+                pass.boardingPass?.headerFields else pass.boardingPass?.primaryFields
+
+            if (headers?.isNotEmpty() == true) {
+                label1.visibility = View.VISIBLE
+                label1.setTextColor(labelColor)
+                value1.visibility = View.VISIBLE
+                value1.setTextColor(labelColor)
+                val firstPass = headers[0]
+                label1.text = firstPass.label
+                value1.text = firstPass.value
+
+                if (headers.size > 1) {
+                    label2.visibility = View.VISIBLE
+                    label2.setTextColor(labelColor)
+                    value2.visibility = View.VISIBLE
+                    value2.setTextColor(labelColor)
+                    val secondPass = headers[1]
+                    label2.text = secondPass.label
+                    value2.text = secondPass.value
+                } else {
+                    label2.visibility = View.GONE
+                    value2.visibility = View.GONE
+                }
+            }
+
+            pass.logoPath?.let {
+                Glide.with(this.itemView)
+                    .load(File(it))
+                    .into(image)
+            }
         }
     }
 }
@@ -126,6 +159,14 @@ class ScannedCodeViewHolder(itemView: View) : SavedItemViewHolder(itemView) {
 }
 
 class PkPassViewHolder(itemView: View) : SavedItemViewHolder(itemView) {
+
+    val image: ImageView = itemView.findViewById(R.id.adapter_pkpass_icon)
     val card: CardView = itemView.findViewById(R.id.adapter_pkpass_card)
-    val title: TextView = itemView.findViewById(R.id.adapter_pkpass_title)
+
+    val label1: TextView = itemView.findViewById(R.id.adapter_pkpass_header1_label)
+    val value1: TextView = itemView.findViewById(R.id.adapter_pkpass_header1_value)
+
+
+    val label2: TextView = itemView.findViewById(R.id.adapter_pkpass_header2_label)
+    val value2: TextView = itemView.findViewById(R.id.adapter_pkpass_header2_value)
 }

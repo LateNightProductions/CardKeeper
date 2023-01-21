@@ -19,5 +19,5 @@ interface PkPassDao {
     suspend fun insertPass(pass: PkPassEntity): Long
 
     @Query("DELETE FROM PkPassEntity WHERE id = :id")
-    suspend fun delete(id: Int): Int
+    suspend fun delete(id: String): Int
 }

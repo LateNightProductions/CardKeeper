@@ -3,7 +3,7 @@ package com.awscherb.cardkeeper.data.model
 import com.google.zxing.BarcodeFormat
 
 interface PkPassModel : SavedItem {
-    val id: Int
+    val id: String
     val description: String
     val organizationName: String
     val barcode: Barcode?
@@ -15,14 +15,29 @@ interface PkPassModel : SavedItem {
     val backgroundColor: String?
     val foregroundColor: String?
     val labelColor: String?
+
+    val boardingPass: BoardingPass?
+
+    val logoPath: String?
+}
+
+interface BoardingPass {
+    val headerFields: List<FieldObject>?
+    val primaryFields: List<FieldObject>?
 }
 
 interface Barcode {
     val altText: String?
-    val format: BarcodeFormat
+    val format: String
     val message: String
     val messageEncoding: String
 }
+
+data class FieldObject(
+    val key: String,
+    val label: String,
+    val value: String,
+)
 
 fun String.toBarcodeFormat() =
     when (this) {
@@ -35,7 +50,7 @@ fun String.toBarcodeFormat() =
 
 fun String?.parseHexColor(): String {
     return when (this) {
-        null -> ""
+        null -> "#000000"
         else -> {
             val parse = subSequence(indexOf("(") + 1, indexOf(")"))
             val numbers = parse.split(",")

@@ -82,6 +82,8 @@ dependencies {
     kapt("com.google.dagger:dagger-compiler:2.44.2")
 
     implementation("com.google.code.gson:gson:2.10.1")
+    implementation("com.github.bumptech.glide:glide:4.14.2")
+    kapt("com.github.bumptech.glide:compiler:4.14.2")
 
     // Dependencies for local unit tests
     testImplementation("junit:junit:4.13.2")
