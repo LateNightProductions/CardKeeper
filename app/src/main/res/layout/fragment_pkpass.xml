@@ -4,6 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     >
 
   <androidx.constraintlayout.widget.ConstraintLayout
@@ -13,10 +14,10 @@
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_start"
-        app:layout_constraintGuide_begin="16dp"
-        android:orientation="vertical"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="17dp"
         />
 
     <androidx.constraintlayout.widget.Guideline
@@ -30,7 +31,7 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/pass_detail_card"
         android:layout_width="0dp"
-        app:layout_constraintBottom_toBottomOf="@id/pass_detail_secondary"
+        app:layout_constraintBottom_toBottomOf="@id/pass_detail_barcode"
         app:layout_constraintTop_toBottomOf="@id/pass_detail_toolbar"
         app:layout_constraintStart_toEndOf="@id/guideline_start"
         app:layout_constraintEnd_toStartOf="@id/guideline_end"
@@ -77,10 +78,11 @@
     <com.google.android.flexbox.FlexboxLayout
         android:id="@+id/pass_detail_primary"
         android:layout_width="0dp"
-        android:paddingTop="16dp"
         android:layout_height="wrap_content"
         android:foregroundGravity="center"
         app:justifyContent="space_evenly"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
         app:flexDirection="row"
         app:layout_constraintTop_toBottomOf="@id/pass_detail_header"
         app:layout_constraintStart_toEndOf="@id/guideline_start"
@@ -92,7 +94,8 @@
         android:id="@+id/pass_detail_header_barrier"
         app:constraint_referenced_ids="pass_detail_strip,pass_detail_primary"
         android:layout_width="match_parent"
-        android:layout_height="0dp"/>
+        android:layout_height="0dp"
+        />
 
     <com.google.android.flexbox.FlexboxLayout
         android:id="@+id/pass_detail_auxiliary"
@@ -126,6 +129,18 @@
         app:layout_constraintEnd_toStartOf="@id/guideline_end"
         />
 
+    <ImageView
+        android:id="@+id/pass_detail_barcode"
+        app:layout_constraintStart_toEndOf="@id/guideline_start"
+        app:layout_constraintEnd_toStartOf="@id/guideline_end"
+        android:layout_width="0dp"
+        android:layout_marginTop="16dp"
+        android:paddingBottom="16dp"
+        android:layout_height="150dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintTop_toBottomOf="@id/pass_detail_secondary"
+        tools:src="@mipmap/ic_launcher"
+        />
 
   </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -26,6 +26,7 @@ interface PkPassModel : SavedItem {
 }
 
 interface PassInfo {
+    val transitType: String?
     val headerFields: List<FieldObject>?
     val primaryFields: List<FieldObject>?
     val secondaryFields: List<FieldObject>?
@@ -52,6 +53,16 @@ fun String.toBarcodeFormat() =
         "PKBarcodeFormatAztec" -> BarcodeFormat.AZTEC
         "PKBarcodeFormatCode128" -> BarcodeFormat.CODE_128
         else -> throw IllegalArgumentException("Unknown type $this")
+    }
+
+enum class TransitType {
+    AIR
+}
+
+fun String?.toTransitType(): TransitType? =
+    when (this) {
+        "PKTransitTypeAir" -> TransitType.AIR
+        else -> null
     }
 
 fun String?.parseHexColor(): String {

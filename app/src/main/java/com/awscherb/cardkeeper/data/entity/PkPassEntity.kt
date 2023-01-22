@@ -43,6 +43,7 @@ data class BarcodeStruct(
 ) : Barcode
 
 data class PassInfoStruct(
+    override val transitType: String?,
     override val headerFields: List<FieldObject>?,
     override val primaryFields: List<FieldObject>?,
     override val secondaryFields: List<FieldObject>?,

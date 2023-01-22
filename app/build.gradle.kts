@@ -75,7 +75,7 @@ dependencies {
 
     // Scanning
     implementation("com.google.zxing:core:3.5.0")
-    implementation("com.journeyapps:zxing-android-embedded:3.6.0@aar")
+    implementation("com.journeyapps:zxing-android-embedded:4.3.0@aar")
 
     // Dependency Injection
     implementation("com.google.dagger:dagger:2.44.2")
