@@ -55,8 +55,8 @@ class CardKeeperActivity : BaseActivity() {
         }
     }
 
-    fun unzip(stream: InputStream?, destination: String) {
-        dirChecker(destination, "")
+    fun unzip(stream: InputStream?, parent: String) {
+        dirChecker(parent, "")
         val buffer = ByteArray(1024)
         try {
             val zin = ZipInputStream(stream)
@@ -65,15 +65,15 @@ class CardKeeperActivity : BaseActivity() {
 
                 Log.v("CardKeeper", "Unzipping " + ze!!.name)
                 if (ze!!.isDirectory) {
-                    dirChecker(destination, ze!!.name)
+                    dirChecker(parent, ze!!.name)
                 } else {
                     if (ze!!.name.contains("/")) {
                         // lproj dir, should make this more robust
                         val names = ze!!.name.split("/")
-                        dirChecker(destination, names[0])
+                        dirChecker(parent, names[0])
                     }
 
-                    val f = File(destination, ze!!.name)
+                    val f = File(parent, ze!!.name)
                     if (!f.exists()) {
                         val success = f.createNewFile()
                         if (!success) {
@@ -96,8 +96,8 @@ class CardKeeperActivity : BaseActivity() {
         }
     }
 
-    private fun dirChecker(destination: String, dir: String) {
-        val f = File(destination, dir)
+    private fun dirChecker(parent: String, child: String) {
+        val f = File(parent, child)
         if (!f.isDirectory) {
             val success = f.mkdirs()
             if (!success) {

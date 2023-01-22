@@ -6,101 +6,10 @@
     android:orientation="vertical"
     >
 
-  <androidx.cardview.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
-      android:id="@+id/adapter_pkpass_card"
+  <com.awscherb.cardkeeper.ui.view.PkPassHeaderView
+      android:id="@+id/adapter_pkpass_header"
       android:layout_width="match_parent"
-
       android:layout_height="wrap_content"
-      android:layout_gravity="center"
-      android:layout_marginBottom="8dp"
-      android:layout_marginLeft="@dimen/activity_horizontal_margin"
-      android:layout_marginRight="@dimen/activity_horizontal_margin"
-      android:layout_marginTop="8dp"
-      card_view:cardBackgroundColor="@color/cardview_light_background"
-      card_view:cardCornerRadius="4dp"
-      >
-
-
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        >
-
-      <ImageView
-          android:id="@+id/adapter_pkpass_icon"
-          android:layout_width="wrap_content"
-          tools:src="@drawable/ic_baseline_arrow_back_24"
-          android:adjustViewBounds="true"
-          android:layout_marginStart="8dp"
-          app:layout_constraintBottom_toBottomOf="parent"
-          android:layout_height="32dp"
-          app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toTopOf="parent"
-          />
-
-
-      <TextView
-          android:id="@+id/adapter_pkpass_header1_label"
-          android:layout_marginEnd="8dp"
-          tools:text="GATE"
-          app:layout_constraintTop_toTopOf="parent"
-          app:layout_constraintEnd_toStartOf="@id/adapter_pkpass_header2_barrier"
-          android:layout_marginTop="8dp"
-          android:layout_width="wrap_content"
-          android:textColor="@color/colorPrimary"
-          android:textStyle="bold"
-          android:layout_height="wrap_content"
-          />
-
-      <TextView
-          android:id="@+id/adapter_pkpass_header1_value"
-          tools:text="C14"
-          app:layout_constraintBottom_toBottomOf="parent"
-          android:layout_marginBottom="8dp"
-          android:layout_marginEnd="8dp"
-          app:layout_constraintTop_toBottomOf="@id/adapter_pkpass_header1_label"
-          app:layout_constraintEnd_toStartOf="@id/adapter_pkpass_header2_barrier"
-          android:textColor="@color/colorPrimary"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          />
-
-
-      <androidx.constraintlayout.widget.Barrier
-          app:barrierDirection="start"
-          android:id="@+id/adapter_pkpass_header2_barrier"
-          android:layout_width="0dp"
-          android:layout_height="0dp"
-          app:constraint_referenced_ids="adapter_pkpass_header2_label,adapter_pkpass_header2_value"
-          />
-
-      <TextView
-          android:id="@+id/adapter_pkpass_header2_label"
-          app:layout_constraintTop_toTopOf="parent"
-          app:layout_constraintEnd_toEndOf="parent"
-          android:layout_marginTop="8dp"
-          android:layout_marginEnd="8dp"
-          tools:text="SEAT"
-          android:layout_width="wrap_content"
-          android:textColor="@color/colorPrimary"
-          android:textStyle="bold"
-          android:layout_height="wrap_content"
-          />
-
-      <TextView
-          android:id="@+id/adapter_pkpass_header2_value"
-          tools:text="28D"
-          app:layout_constraintEnd_toEndOf="@id/adapter_pkpass_header2_label"
-          app:layout_constraintTop_toBottomOf="@id/adapter_pkpass_header2_label"
-          android:layout_marginBottom="8dp"
-          android:textColor="@color/colorPrimary"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-  </androidx.cardview.widget.CardView>
+      />
 
 </FrameLayout>

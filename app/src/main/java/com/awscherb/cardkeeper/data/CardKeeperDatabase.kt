@@ -13,7 +13,7 @@ import com.awscherb.cardkeeper.data.entity.ScannedCodeEntity
         ScannedCodeEntity::class,
         PkPassEntity::class,
     ],
-    version = 17, exportSchema = false
+    version = 18, exportSchema = false
 )
 @TypeConverters(com.awscherb.cardkeeper.util.db.TypeConverters::class)
 abstract class CardKeeperDatabase : RoomDatabase() {

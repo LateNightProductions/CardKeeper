@@ -10,6 +10,7 @@ interface PkPassModel : SavedItem {
     val barcodes: List<Barcode>?
     val passTypeIdentifier: String
     val serialNumber: String
+    val logoText: String?
 
     // rgb(0, 187, 82)
     val backgroundColor: String?

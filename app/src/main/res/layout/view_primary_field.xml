@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout"
+    >
+
+  <TextView
+      android:id="@+id/view_primary_field_label"
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      tools:text="New York, NY"
+      android:layout_width="wrap_content"
+      android:textColor="@color/colorPrimary"
+      android:textStyle="bold"
+      android:layout_height="wrap_content"
+      />
+
+  <TextView
+      android:id="@+id/view_primary_field_value"
+      tools:text="JFK"
+      android:textSize="36sp"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/view_primary_field_label"
+      android:layout_marginBottom="8dp"
+      android:textColor="@color/colorPrimary"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"/>
+
+</merge>

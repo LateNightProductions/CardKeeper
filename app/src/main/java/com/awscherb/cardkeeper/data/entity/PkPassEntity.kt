@@ -20,6 +20,7 @@ data class PkPassEntity(
     override val barcodes: List<BarcodeStruct>? = emptyList(),
     override val passTypeIdentifier: String,
     override val serialNumber: String,
+    override val logoText: String?,
     // ex rgb(23, 187, 82)
     override val backgroundColor: String?,
     override val foregroundColor: String?,

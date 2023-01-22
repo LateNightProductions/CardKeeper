@@ -19,7 +19,7 @@ class SavedItemRepository @Inject constructor(
             scannedCodeService.listAll(query),
             pkPassService.listAll(query)
         ) { codes, passes ->
-            (codes + passes).sortedBy { it.created }
+            (codes + passes).sortedBy { -it.created }
         }
     }
 
