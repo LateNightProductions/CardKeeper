@@ -87,6 +87,8 @@ dependencies {
     implementation("com.github.bumptech.glide:glide:4.14.2")
     kapt("com.github.bumptech.glide:compiler:4.14.2")
 
+    implementation("com.google.android.flexbox:flexbox:3.0.0")
+
     // Dependencies for local unit tests
     testImplementation("junit:junit:4.13.2")
     testImplementation("org.mockito:mockito-core:4.11.0")

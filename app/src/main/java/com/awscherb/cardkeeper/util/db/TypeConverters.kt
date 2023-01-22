@@ -2,9 +2,7 @@ package com.awscherb.cardkeeper.util.db
 
 import androidx.room.TypeConverter
 import com.awscherb.cardkeeper.data.entity.BarcodeStruct
-import com.awscherb.cardkeeper.data.entity.BoardingPassStruct
-import com.awscherb.cardkeeper.data.model.BoardingPass
-import com.awscherb.cardkeeper.data.model.FieldObject
+import com.awscherb.cardkeeper.data.entity.PassInfoStruct
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 import com.google.zxing.BarcodeFormat
@@ -32,12 +30,12 @@ object TypeConverters {
     }
 
     @[TypeConverter JvmStatic]
-    fun toBoardingPass(pass: String?): BoardingPassStruct? {
-        return gson.fromJson(pass, BoardingPassStruct::class.java)
+    fun toPassInfo(pass: String?): PassInfoStruct? {
+        return gson.fromJson(pass, PassInfoStruct::class.java)
     }
 
     @[TypeConverter JvmStatic]
-    fun fromBoardingPass(list: BoardingPassStruct?): String? {
+    fun fromPassInfo(list: PassInfoStruct?): String? {
         return gson.toJson(list)
     }
 

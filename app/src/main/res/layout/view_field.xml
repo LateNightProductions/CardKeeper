@@ -7,7 +7,6 @@
 
   <TextView
       android:id="@+id/view_field_header"
-      android:maxLength="8"
       android:ellipsize="end"
       app:layout_constraintTop_toTopOf="parent"
       app:layout_constraintEnd_toEndOf="parent"

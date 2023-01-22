@@ -7,9 +7,9 @@ import android.view.View
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.cardview.widget.CardView
 import com.awscherb.cardkeeper.R
 import com.awscherb.cardkeeper.data.model.PkPassModel
+import com.awscherb.cardkeeper.data.model.findPassInfo
 import com.awscherb.cardkeeper.data.model.parseHexColor
 import com.bumptech.glide.Glide
 import java.io.File
@@ -22,11 +22,11 @@ class PkPassHeaderView @JvmOverloads constructor(
         inflate(context, R.layout.view_pkpass_header, this)
     }
 
-    val image: ImageView = findViewById(R.id.header_pkpass_icon)
-    val logoText: TextView = findViewById(R.id.header_pkpass_logo_text)
+    private val image: ImageView = findViewById(R.id.header_pkpass_icon)
+    private val logoText: TextView = findViewById(R.id.header_pkpass_logo_text)
 
-    val headerField1: FieldView = findViewById(R.id.header_pkpass_field1)
-    val headerField2: FieldView = findViewById(R.id.header_pkpass_field2)
+    private val headerField1: FieldView = findViewById(R.id.header_pkpass_field1)
+    private val headerField2: FieldView = findViewById(R.id.header_pkpass_field2)
 
     var pass: PkPassModel? = null
         set(value) {
@@ -42,14 +42,14 @@ class PkPassHeaderView @JvmOverloads constructor(
                     logoText.visibility = View.GONE
                 }
 
-                val headers = it.boardingPass?.headerFields
+                val headers = it.findPassInfo()?.headerFields
                 if (headers?.isNotEmpty() == true) {
                     headerField1.visibility = View.VISIBLE
                     val firstPass = headers[0]
                     headerField1.fieldConfig = FieldConfig(
                         label = firstPass.label,
                         value = firstPass.value,
-                        color = labelColor
+                        labelColor = labelColor
                     )
 
                     if (headers.size > 1) {
@@ -58,7 +58,7 @@ class PkPassHeaderView @JvmOverloads constructor(
                         headerField2.fieldConfig = FieldConfig(
                             label = secondPass.label,
                             value = secondPass.value,
-                            color = labelColor
+                            labelColor = labelColor
                         )
                     } else {
                         headerField2.visibility = View.GONE

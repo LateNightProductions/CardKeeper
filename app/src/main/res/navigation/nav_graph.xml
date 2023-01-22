@@ -29,6 +29,9 @@
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_cardsFragment_to_pkPassDetailFragment"
+            app:destination="@id/pkPassDetailFragment" />
     </fragment>
     <fragment
         android:id="@+id/cardDetailFragment"
@@ -65,4 +68,8 @@
             app:popExitAnim="@anim/nav_default_pop_exit_anim"
             app:popUpTo="@+id/cardsFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/pkPassDetailFragment"
+        android:name="com.awscherb.cardkeeper.ui.pkpassDetail.PkPassDetailFragment"
+        android:label="PkPassDetailFragment" />
 </navigation>

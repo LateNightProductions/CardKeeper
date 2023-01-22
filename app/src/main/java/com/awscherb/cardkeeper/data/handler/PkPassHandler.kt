@@ -1,16 +1,9 @@
 package com.awscherb.cardkeeper.data.handler
 
 import com.awscherb.cardkeeper.data.dao.PkPassDao
-import com.awscherb.cardkeeper.data.entity.BarcodeStruct
-import com.awscherb.cardkeeper.data.entity.BoardingPassStruct
-import com.awscherb.cardkeeper.data.entity.PkPassEntity
-import com.awscherb.cardkeeper.data.model.FieldObject
 import com.awscherb.cardkeeper.data.model.PkPassModel
-import com.awscherb.cardkeeper.data.model.toBarcodeFormat
 import com.awscherb.cardkeeper.data.service.PkPassService
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class PkPassHandler @Inject constructor(

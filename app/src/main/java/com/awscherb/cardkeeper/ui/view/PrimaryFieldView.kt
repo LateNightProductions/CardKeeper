@@ -24,8 +24,8 @@ class PrimaryFieldView @JvmOverloads constructor(
 
                 label.text = it.label
                 valueText.text = it.value
-                label.setTextColor(it.color)
-                valueText.setTextColor(it.color)
+                label.setTextColor(it.labelColor)
+                valueText.setTextColor(it.valueColor)
             }
         }
 }

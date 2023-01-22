@@ -108,11 +108,48 @@ class CardKeeperActivity : AppCompatActivity() {
         }
     }
 
+    private fun attemptImageCopy(imageFile: File, entity: PkPassEntity, type: String, pathAction: (String) -> Unit) {
+        if (!imageFile.exists()) {
+            return
+        }
+        val newOutputFile = File(filesDir.absolutePath + "/${entity.serialNumber}-$type")
+
+        val imageInputStream = FileInputStream(imageFile)
+        val out = FileOutputStream(newOutputFile)
+
+        val buffer = ByteArray(1024)
+        var read: Int
+        while (imageInputStream.read(buffer).also { read = it } != -1) {
+            out.write(buffer, 0, read)
+        }
+        imageInputStream.close()
+
+        // write the output file
+        out.flush()
+        out.close()
+
+        // delete the original file
+        pathAction(newOutputFile.absolutePath)
+    }
+
+    private fun findLargestImageFile(name: String): File {
+        val x3 = File(filesDir.absolutePath + "/current/$name@3x.png")
+        val x2 = File(filesDir.absolutePath + "/current/$name@2x.png")
+        val x1 = File(filesDir.absolutePath + "/current/$name.png")
+
+        return when {
+            x3.exists() -> x3
+            x2.exists() -> x2
+            else -> x1
+        }
+    }
+
     private fun handleZipInput(input: InputStream) {
         unzip(input, filesDir.absolutePath + "/current")
 
         val passFile = File(filesDir.absolutePath + "/current/pass.json")
-        val logoFile = File(filesDir.absolutePath + "/current/logo.png")
+        val logoFile = findLargestImageFile("logo")
+        val stripFile = findLargestImageFile("strip")
         val pass: PkPassEntity?
 
         try {
@@ -129,27 +166,20 @@ class CardKeeperActivity : AppCompatActivity() {
             pass = gson.fromJson(sb.toString(), PkPassEntity::class.java)
             pass.id = pass.serialNumber
 
-            // move and rename image
-            if (logoFile.exists()) {
-                val newOutputFile = File(filesDir.absolutePath + "/${pass.serialNumber}-img")
+            attemptImageCopy(
+                imageFile = logoFile,
+                entity = pass,
+                type = "logo",
+            ) {
+                pass.logoPath = it
+            }
 
-                val logoInputStream = FileInputStream(logoFile)
-                val out = FileOutputStream(newOutputFile)
-
-                val buffer = ByteArray(1024)
-                var read: Int
-                while (logoInputStream.read(buffer).also { read = it } != -1) {
-                    out.write(buffer, 0, read)
-                }
-                logoInputStream.close()
-
-                // write the output file
-                out.flush()
-                out.close()
-
-                // delete the original file
-                logoFile.delete()
-                pass.logoPath = newOutputFile.absolutePath
+            attemptImageCopy(
+                imageFile = stripFile,
+                entity = pass,
+                type = "strip",
+            ) {
+                pass.stripPath = it
             }
 
             lifecycleScope.launch {

@@ -17,14 +17,19 @@ interface PkPassModel : SavedItem {
     val foregroundColor: String?
     val labelColor: String?
 
-    val boardingPass: BoardingPass?
+    val boardingPass: PassInfo?
+    val storeCard: PassInfo?
+    val generic: PassInfo?
 
     val logoPath: String?
+    val stripPath: String?
 }
 
-interface BoardingPass {
+interface PassInfo {
     val headerFields: List<FieldObject>?
     val primaryFields: List<FieldObject>?
+    val secondaryFields: List<FieldObject>?
+    val auxiliaryFields: List<FieldObject>?
 }
 
 interface Barcode {
@@ -36,7 +41,7 @@ interface Barcode {
 
 data class FieldObject(
     val key: String,
-    val label: String,
+    val label: String?,
     val value: String,
 )
 
@@ -63,4 +68,11 @@ fun String?.parseHexColor(): String {
             "#$sb"
         }
     }
+}
+
+fun PkPassModel.findPassInfo(): PassInfo? = when {
+    boardingPass != null -> boardingPass
+    storeCard != null -> storeCard
+    generic != null -> generic
+    else -> null
 }

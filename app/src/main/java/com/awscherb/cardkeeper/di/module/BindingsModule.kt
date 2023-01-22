@@ -4,6 +4,7 @@ import com.awscherb.cardkeeper.ui.base.CardKeeperActivity
 import com.awscherb.cardkeeper.ui.card_detail.CardDetailFragment
 import com.awscherb.cardkeeper.ui.create.CreateFragment
 import com.awscherb.cardkeeper.ui.items.ItemsFragment
+import com.awscherb.cardkeeper.ui.pkpassDetail.PkPassDetailFragment
 import com.awscherb.cardkeeper.ui.scan.ScanFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
@@ -22,6 +23,9 @@ abstract class BindingsModule {
 
     @ContributesAndroidInjector
     abstract fun contributesScanFragment(): ScanFragment
+
+    @ContributesAndroidInjector
+    abstract fun contributePkPassDetailFragment(): PkPassDetailFragment
 
     @ContributesAndroidInjector
     abstract fun contributesCardKeeperActivity(): CardKeeperActivity

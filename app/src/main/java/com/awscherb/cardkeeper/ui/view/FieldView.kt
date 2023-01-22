@@ -2,6 +2,7 @@ package com.awscherb.cardkeeper.ui.view
 
 import android.content.Context
 import android.util.AttributeSet
+import android.util.TypedValue
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.awscherb.cardkeeper.R
@@ -21,11 +22,17 @@ class FieldView @JvmOverloads constructor(
         set(value) {
             field = value
             fieldConfig?.let {
-                label.text = it.label
+                if (it.label == null) {
+                    label.visibility = GONE
+                    valueText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18f)
+                } else {
+                    valueText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14f)
+                    label.text = it.label
+                    label.visibility = VISIBLE
+                }
                 valueText.text = it.value
-                label.setTextColor(it.color)
-                valueText.setTextColor(it.color)
+                label.setTextColor(it.labelColor)
+                valueText.setTextColor(it.labelColor)
             }
         }
-
 }

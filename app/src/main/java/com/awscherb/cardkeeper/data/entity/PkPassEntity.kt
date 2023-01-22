@@ -4,10 +4,9 @@ import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.awscherb.cardkeeper.data.model.Barcode
-import com.awscherb.cardkeeper.data.model.BoardingPass
+import com.awscherb.cardkeeper.data.model.PassInfo
 import com.awscherb.cardkeeper.data.model.FieldObject
 import com.awscherb.cardkeeper.data.model.PkPassModel
-import com.google.zxing.BarcodeFormat
 
 @Entity
 data class PkPassEntity(
@@ -27,9 +26,13 @@ data class PkPassEntity(
     override val labelColor: String?,
     // local attr
     override val created: Long,
-    override val boardingPass: BoardingPassStruct?,
+    override val boardingPass: PassInfoStruct?,
+    override val storeCard: PassInfoStruct?,
+    override val generic: PassInfoStruct?,
 
-    override var logoPath: String?
+    override var logoPath: String?,
+    override var stripPath: String?
+
 ) : PkPassModel
 
 data class BarcodeStruct(
@@ -39,8 +42,10 @@ data class BarcodeStruct(
     override val messageEncoding: String
 ) : Barcode
 
-data class BoardingPassStruct(
+data class PassInfoStruct(
     override val headerFields: List<FieldObject>?,
     override val primaryFields: List<FieldObject>?,
-) : BoardingPass
+    override val secondaryFields: List<FieldObject>?,
+    override val auxiliaryFields: List<FieldObject>?,
+) : PassInfo
 

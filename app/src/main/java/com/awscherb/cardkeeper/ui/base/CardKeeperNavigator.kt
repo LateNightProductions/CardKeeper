@@ -21,4 +21,10 @@ class CardKeeperNavigator(
         }
     }
 
+    fun navigateToPkPass(fragment: Fragment) {
+        fragment.findNavController().navigate(
+            ItemsFragmentDirections.actionCardsFragmentToPkPassDetailFragment()
+        )
+    }
+
 }

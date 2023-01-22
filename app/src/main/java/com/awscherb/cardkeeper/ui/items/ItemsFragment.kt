@@ -21,6 +21,8 @@ import com.awscherb.cardkeeper.ui.base.BaseFragment
 import com.awscherb.cardkeeper.ui.base.CardKeeperNavigator
 import com.awscherb.cardkeeper.ui.card_detail.CardDetailViewModel
 import com.awscherb.cardkeeper.ui.card_detail.CardDetailViewModelFactory
+import com.awscherb.cardkeeper.ui.pkpassDetail.PkPassViewModel
+import com.awscherb.cardkeeper.ui.pkpassDetail.PkPassViewModelFactory
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.coroutines.flow.launchIn
@@ -30,14 +32,15 @@ import javax.inject.Inject
 class ItemsFragment : BaseFragment() {
 
     private val viewModel by activityViewModels<ItemsViewModel> { viewModelFactory }
+    private val detailViewModel by activityViewModels<CardDetailViewModel> { detailFactory }
+    private val pkPassViewModel by activityViewModels<PkPassViewModel> { pkPassFactory }
 
     @Inject
     lateinit var viewModelFactory: ItemsViewModelFactory
-
-    private val detailViewModel by activityViewModels<CardDetailViewModel> { detailFactory }
-
     @Inject
     lateinit var detailFactory: CardDetailViewModelFactory
+    @Inject
+    lateinit var pkPassFactory: PkPassViewModelFactory
 
     private val navigator by lazy { CardKeeperNavigator(resources.getBoolean(R.bool.portrait)) }
 
@@ -135,7 +138,8 @@ class ItemsFragment : BaseFragment() {
         scannedCodeAdapter = ItemsAdapter(requireActivity(), {
             when (it) {
                 is PkPassModel -> {
-
+                    pkPassViewModel.pass.value = it
+                    navigator.navigateToPkPass(this)
                 }
                 is ScannedCodeModel -> {
                     detailViewModel.cardId.value = it.id
