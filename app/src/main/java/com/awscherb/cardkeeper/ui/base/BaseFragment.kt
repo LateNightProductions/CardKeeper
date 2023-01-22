@@ -11,15 +11,6 @@ import com.google.android.material.snackbar.Snackbar
 
 abstract class BaseFragment : Fragment(), BaseView {
 
-    protected val baseActivity: BaseActivity
-        inline get() = activity as BaseActivity
-
-    protected val viewComponent: ViewComponent
-        inline get() = baseActivity.viewComponent()
-
-    val lifecycleScope
-        inline get() = viewLifecycleOwner.lifecycleScope
-
     override fun onError(e: Throwable) {
         e.printStackTrace()
         showSnackbar(e.message ?: "An error occurred")

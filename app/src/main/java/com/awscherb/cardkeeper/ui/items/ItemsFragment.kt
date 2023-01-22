@@ -9,6 +9,7 @@ import android.widget.ImageView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,6 +22,7 @@ import com.awscherb.cardkeeper.ui.base.CardKeeperNavigator
 import com.awscherb.cardkeeper.ui.card_detail.CardDetailViewModel
 import com.awscherb.cardkeeper.ui.card_detail.CardDetailViewModelFactory
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import dagger.android.support.AndroidSupportInjection
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
@@ -62,7 +64,7 @@ class ItemsFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewComponent.inject(this)
+        AndroidSupportInjection.inject(this)
 
         toolbar = view.findViewById(R.id.fragment_cards_toolbar)
         recyclerView = view.findViewById(R.id.fragment_cards_recylcer)

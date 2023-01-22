@@ -20,6 +20,7 @@ import com.awscherb.cardkeeper.util.extensions.expand
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.textfield.TextInputEditText
+import dagger.android.support.AndroidSupportInjection
 import javax.inject.Inject
 
 class CreateFragment : BaseFragment() {
@@ -55,7 +56,7 @@ class CreateFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewComponent.inject(this)
+        AndroidSupportInjection.inject(this)
 
         title = view.findViewById(R.id.fragment_create_title)
         text = view.findViewById(R.id.fragment_create_text)

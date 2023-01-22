@@ -3,11 +3,13 @@ package com.awscherb.cardkeeper.ui.base
 import android.content.ContentResolver
 import android.os.Bundle
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.awscherb.cardkeeper.R
 import com.awscherb.cardkeeper.data.dao.PkPassDao
 import com.awscherb.cardkeeper.data.entity.PkPassEntity
 import com.google.gson.GsonBuilder
+import dagger.android.AndroidInjection
 import kotlinx.coroutines.launch
 import java.io.BufferedReader
 import java.io.File
@@ -20,7 +22,7 @@ import java.util.zip.ZipEntry
 import java.util.zip.ZipInputStream
 import javax.inject.Inject
 
-class CardKeeperActivity : BaseActivity() {
+class CardKeeperActivity : AppCompatActivity() {
 
     @Inject
     lateinit var pkPassDao: PkPassDao
@@ -29,7 +31,7 @@ class CardKeeperActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewComponent().inject(this)
+        AndroidInjection.inject(this)
         setContentView(R.layout.activity_card_keeper)
 
         val uri = intent.data

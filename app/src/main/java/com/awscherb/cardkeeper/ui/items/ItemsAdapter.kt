@@ -117,6 +117,7 @@ class ItemsAdapter constructor(
 
     private fun bindPkPassViewHolder(holder: PkPassViewHolder, pass: PkPassModel) {
         holder.apply {
+            headerCard.setCardBackgroundColor(Color.parseColor(pass.backgroundColor.parseHexColor()))
             headerView.pass = pass
         }
     }
@@ -130,5 +131,6 @@ class ScannedCodeViewHolder(itemView: View) : SavedItemViewHolder(itemView) {
 }
 
 class PkPassViewHolder(itemView: View) : SavedItemViewHolder(itemView) {
-    val headerView :PkPassHeaderView = itemView.findViewById(R.id.adapter_pkpass_header)
+    val headerCard: CardView = itemView.findViewById(R.id.adapter_pkpass_card)
+    val headerView: PkPassHeaderView = itemView.findViewById(R.id.adapter_pkpass_header)
 }

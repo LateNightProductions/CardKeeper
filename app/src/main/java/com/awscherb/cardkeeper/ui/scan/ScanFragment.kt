@@ -18,6 +18,7 @@ import com.google.zxing.ResultPoint
 import com.journeyapps.barcodescanner.BarcodeCallback
 import com.journeyapps.barcodescanner.BarcodeResult
 import com.journeyapps.barcodescanner.CompoundBarcodeView
+import dagger.android.support.AndroidSupportInjection
 import java.util.concurrent.atomic.AtomicBoolean
 import javax.inject.Inject
 
@@ -45,7 +46,7 @@ class ScanFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewComponent.inject(this)
+        AndroidSupportInjection.inject(this)
 
         scannerView = view.findViewById(R.id.fragment_scan_scanner)
 

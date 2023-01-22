@@ -6,26 +6,24 @@ import com.awscherb.cardkeeper.di.component.DaggerViewComponent
 import com.awscherb.cardkeeper.di.component.ViewComponent
 import com.awscherb.cardkeeper.di.module.AppModule
 import com.awscherb.cardkeeper.di.module.DaoModule
+import dagger.android.DispatchingAndroidInjector
+import dagger.android.HasAndroidInjector
+import javax.inject.Inject
 
+class CardKeeperApplication : Application(), HasAndroidInjector {
 
-class CardKeeperApplication : Application() {
+    @Inject
+    lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Any>
 
-    lateinit var viewComponent: ViewComponent
-        private set
+    override fun androidInjector() = dispatchingAndroidInjector
 
     override fun onCreate() {
         super.onCreate()
 
-        viewComponent = DaggerViewComponent.builder()
+        DaggerViewComponent.builder()
             .appModule(AppModule(this))
             .daoModule(DaoModule())
             .build()
-
-
-
-    }
-
-    fun a() {
-
+            .inject(this)
     }
 }

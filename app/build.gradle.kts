@@ -79,7 +79,9 @@ dependencies {
 
     // Dependency Injection
     implementation("com.google.dagger:dagger:2.44.2")
+    implementation("com.google.dagger:dagger-android-support:2.44.2")
     kapt("com.google.dagger:dagger-compiler:2.44.2")
+    kapt("com.google.dagger:dagger-android-processor:2.44.2")
 
     implementation("com.google.code.gson:gson:2.10.1")
     implementation("com.github.bumptech.glide:glide:4.14.2")

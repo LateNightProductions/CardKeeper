@@ -22,7 +22,6 @@ class PkPassHeaderView @JvmOverloads constructor(
         inflate(context, R.layout.view_pkpass_header, this)
     }
 
-    val card: CardView = findViewById(R.id.header_pkpass_card)
     val image: ImageView = findViewById(R.id.header_pkpass_icon)
     val logoText: TextView = findViewById(R.id.header_pkpass_logo_text)
 
@@ -34,11 +33,13 @@ class PkPassHeaderView @JvmOverloads constructor(
             field = value
             value?.let {
                 val labelColor = Color.parseColor(it.labelColor.parseHexColor())
-                card.setCardBackgroundColor(Color.parseColor(it.backgroundColor.parseHexColor()))
 
                 if (!it.logoText.isNullOrEmpty()) {
+                    logoText.visibility = View.VISIBLE
                     logoText.text = it.logoText
                     logoText.setTextColor(labelColor)
+                } else {
+                    logoText.visibility = View.GONE
                 }
 
                 val headers = it.boardingPass?.headerFields

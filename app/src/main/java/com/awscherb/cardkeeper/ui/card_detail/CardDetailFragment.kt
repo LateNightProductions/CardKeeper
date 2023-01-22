@@ -9,6 +9,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import com.awscherb.cardkeeper.R
 import com.awscherb.cardkeeper.data.entity.ScannedCodeEntity
 import com.awscherb.cardkeeper.ui.base.BaseFragment
@@ -23,6 +24,8 @@ import com.google.zxing.BarcodeFormat.DATA_MATRIX
 import com.google.zxing.BarcodeFormat.QR_CODE
 import com.google.zxing.WriterException
 import com.journeyapps.barcodescanner.BarcodeEncoder
+import dagger.android.AndroidInjection
+import dagger.android.support.AndroidSupportInjection
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -57,7 +60,7 @@ class CardDetailFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewComponent.inject(this)
+        AndroidSupportInjection.inject(this)
 
         toolbar = view.findViewById(R.id.fragment_card_detail_toolbar)
         title = view.findViewById(R.id.fragment_card_detail_title)
