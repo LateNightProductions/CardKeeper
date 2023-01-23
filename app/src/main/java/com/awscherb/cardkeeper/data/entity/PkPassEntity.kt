@@ -31,7 +31,9 @@ data class PkPassEntity(
     override val generic: PassInfoStruct?,
 
     override var logoPath: String?,
-    override var stripPath: String?
+    override var stripPath: String?,
+
+    override var translation: Map<String, String>?
 
 ) : PkPassModel
 

@@ -118,7 +118,7 @@ class ItemsAdapter constructor(
     private fun bindPkPassViewHolder(holder: PkPassViewHolder, pass: PkPassModel) {
         holder.apply {
             itemView.setOnClickListener { onClickListener(pass) }
-            headerCard.setCardBackgroundColor(Color.parseColor(pass.backgroundColor.parseHexColor()))
+            headerCard.setCardBackgroundColor(pass.backgroundColor.parseHexColor())
             headerView.pass = pass
         }
     }

@@ -1,5 +1,6 @@
 package com.awscherb.cardkeeper.data.model
 
+import android.graphics.Color
 import com.google.zxing.BarcodeFormat
 
 interface PkPassModel : SavedItem {
@@ -23,6 +24,8 @@ interface PkPassModel : SavedItem {
 
     val logoPath: String?
     val stripPath: String?
+
+    val translation: Map<String, String>?
 }
 
 interface PassInfo {
@@ -59,14 +62,22 @@ enum class TransitType {
     AIR
 }
 
+fun PkPassModel.getTranslatedLabel(label: String?): String? {
+    val tr = translation
+    return when {
+        tr != null -> tr[label] ?: label
+        else -> label
+    }
+}
+
 fun String?.toTransitType(): TransitType? =
     when (this) {
         "PKTransitTypeAir" -> TransitType.AIR
         else -> null
     }
 
-fun String?.parseHexColor(): String {
-    return when (this) {
+fun String?.parseHexColor(): Int {
+    return Color.parseColor(when (this) {
         null -> "#000000"
         else -> {
             val parse = subSequence(indexOf("(") + 1, indexOf(")"))
@@ -78,7 +89,7 @@ fun String?.parseHexColor(): String {
             padded.forEach { sb.append(it) }
             "#$sb"
         }
-    }
+    })
 }
 
 fun PkPassModel.findPassInfo(): PassInfo? = when {

@@ -14,6 +14,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import com.awscherb.cardkeeper.R
 import com.awscherb.cardkeeper.data.model.findPassInfo
+import com.awscherb.cardkeeper.data.model.getTranslatedLabel
 import com.awscherb.cardkeeper.data.model.parseHexColor
 import com.awscherb.cardkeeper.data.model.toBarcodeFormat
 import com.awscherb.cardkeeper.ui.base.BaseFragment
@@ -71,7 +72,7 @@ class PkPassDetailFragment : BaseFragment() {
             .filterNotNull()
             .onEach { pass ->
 
-                card.setCardBackgroundColor(Color.parseColor(pass.backgroundColor.parseHexColor()))
+                card.setCardBackgroundColor(pass.backgroundColor.parseHexColor())
                 header.pass = pass
 
                 if (pass.stripPath == null) {
@@ -109,10 +110,10 @@ class PkPassDetailFragment : BaseFragment() {
                                 PrimaryFieldView(ctx, null)
                                     .apply {
                                         fieldConfig = FieldConfig(
-                                            label = field.label,
+                                            label = pass.getTranslatedLabel(field.label),
                                             value = field.value,
-                                            labelColor = Color.parseColor(pass.labelColor.parseHexColor()),
-                                            valueColor = Color.parseColor(pass.foregroundColor.parseHexColor())
+                                            labelColor = pass.labelColor.parseHexColor(),
+                                            valueColor = pass.foregroundColor.parseHexColor()
                                         )
                                     }
                             )
@@ -121,18 +122,13 @@ class PkPassDetailFragment : BaseFragment() {
 
                     passInfo.auxiliaryFields?.forEach { field ->
                         context?.let { ctx ->
-                            // val maxWidth = auxSecondaryFieldsView.getMaximumWidthForChild(4)
                             auxFieldsView.addView(
                                 FieldView(ctx, null).apply {
                                     fieldConfig = FieldConfig(
-                                        label = field.label,
+                                        label = pass.getTranslatedLabel(field.label),
                                         value = field.value,
-                                        labelColor = Color.parseColor((pass.labelColor.parseHexColor()))
+                                        labelColor = pass.labelColor.parseHexColor()
                                     )
-                                    // layoutParams = FlexboxLayout.LayoutParams(
-                                    //     maxWidth,
-                                    //     FlexboxLayout.LayoutParams.WRAP_CONTENT
-                                    // )
                                 }
                             )
                         }
@@ -140,18 +136,13 @@ class PkPassDetailFragment : BaseFragment() {
 
                     passInfo.secondaryFields?.forEach { field ->
                         context?.let { ctx ->
-                            // val maxWidth = auxSecondaryFieldsView.getMaximumWidthForChild(4)
                             secondaryFieldsView.addView(
                                 FieldView(ctx, null).apply {
                                     fieldConfig = FieldConfig(
-                                        label = field.label,
+                                        label = pass.getTranslatedLabel(field.label),
                                         value = field.value,
-                                        labelColor = Color.parseColor((pass.labelColor.parseHexColor()))
+                                        labelColor = pass.labelColor.parseHexColor()
                                     )
-                                    // layoutParams = FlexboxLayout.LayoutParams(
-                                    //     maxWidth,
-                                    //     FlexboxLayout.LayoutParams.WRAP_CONTENT
-                                    // )
                                 }
                             )
                         }

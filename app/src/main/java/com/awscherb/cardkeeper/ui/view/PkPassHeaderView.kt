@@ -10,6 +10,7 @@ import android.widget.TextView
 import com.awscherb.cardkeeper.R
 import com.awscherb.cardkeeper.data.model.PkPassModel
 import com.awscherb.cardkeeper.data.model.findPassInfo
+import com.awscherb.cardkeeper.data.model.getTranslatedLabel
 import com.awscherb.cardkeeper.data.model.parseHexColor
 import com.bumptech.glide.Glide
 import java.io.File
@@ -31,23 +32,23 @@ class PkPassHeaderView @JvmOverloads constructor(
     var pass: PkPassModel? = null
         set(value) {
             field = value
-            value?.let {
-                val labelColor = Color.parseColor(it.labelColor.parseHexColor())
+            value?.let { pass ->
+                val labelColor = pass.labelColor.parseHexColor()
 
-                if (!it.logoText.isNullOrEmpty()) {
+                if (!pass.logoText.isNullOrEmpty()) {
                     logoText.visibility = View.VISIBLE
-                    logoText.text = it.logoText
+                    logoText.text = pass.logoText
                     logoText.setTextColor(labelColor)
                 } else {
                     logoText.visibility = View.GONE
                 }
 
-                val headers = it.findPassInfo()?.headerFields
+                val headers = pass.findPassInfo()?.headerFields
                 if (headers?.isNotEmpty() == true) {
                     headerField1.visibility = View.VISIBLE
                     val firstPass = headers[0]
                     headerField1.fieldConfig = FieldConfig(
-                        label = firstPass.label,
+                        label = pass.getTranslatedLabel(firstPass.label),
                         value = firstPass.value,
                         labelColor = labelColor
                     )
@@ -56,7 +57,7 @@ class PkPassHeaderView @JvmOverloads constructor(
                         headerField2.visibility = View.VISIBLE
                         val secondPass = headers[1]
                         headerField2.fieldConfig = FieldConfig(
-                            label = secondPass.label,
+                            label = pass.getTranslatedLabel(secondPass.label),
                             value = secondPass.value,
                             labelColor = labelColor
                         )
@@ -65,7 +66,7 @@ class PkPassHeaderView @JvmOverloads constructor(
                     }
                 }
 
-                it.logoPath?.let {
+                pass.logoPath?.let {
                     Glide.with(this)
                         .load(File(it))
                         .into(image)

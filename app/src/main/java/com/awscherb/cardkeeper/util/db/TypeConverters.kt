@@ -30,6 +30,18 @@ object TypeConverters {
     }
 
     @[TypeConverter JvmStatic]
+    fun toTranslation(list: String?): Map<String, String>? {
+        val mapType = object : TypeToken<Map<String, String>?>() {
+        }.type
+        return gson.fromJson(list, mapType)
+    }
+
+    @[TypeConverter JvmStatic]
+    fun fromTranslation(list: Map<String, String>?): String? {
+        return gson.toJson(list)
+    }
+
+    @[TypeConverter JvmStatic]
     fun toPassInfo(pass: String?): PassInfoStruct? {
         return gson.fromJson(pass, PassInfoStruct::class.java)
     }

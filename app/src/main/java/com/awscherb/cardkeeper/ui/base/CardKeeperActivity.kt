@@ -16,8 +16,10 @@ import java.io.File
 import java.io.FileInputStream
 import java.io.FileNotFoundException
 import java.io.FileOutputStream
+import java.io.FileReader
 import java.io.InputStream
 import java.io.InputStreamReader
+import java.nio.file.Files
 import java.util.zip.ZipEntry
 import java.util.zip.ZipInputStream
 import javax.inject.Inject
@@ -133,9 +135,9 @@ class CardKeeperActivity : AppCompatActivity() {
     }
 
     private fun findLargestImageFile(name: String): File {
-        val x3 = File(filesDir.absolutePath + "/current/$name@3x.png")
-        val x2 = File(filesDir.absolutePath + "/current/$name@2x.png")
-        val x1 = File(filesDir.absolutePath + "/current/$name.png")
+        val x3 = File(filesDir.absolutePath + "$WORKING_DIR/$name@3x.png")
+        val x2 = File(filesDir.absolutePath + "$WORKING_DIR/$name@2x.png")
+        val x1 = File(filesDir.absolutePath + "$WORKING_DIR/$name.png")
 
         return when {
             x3.exists() -> x3
@@ -144,27 +146,66 @@ class CardKeeperActivity : AppCompatActivity() {
         }
     }
 
-    private fun handleZipInput(input: InputStream) {
-        unzip(input, filesDir.absolutePath + "/current")
+    /**
+     * Parse pass file
+     */
+    private fun createPass(): PkPassEntity {
+        val fis = FileInputStream(File(filesDir.absolutePath + "$WORKING_DIR/pass.json"))
 
-        val passFile = File(filesDir.absolutePath + "/current/pass.json")
-        val logoFile = findLargestImageFile("logo")
-        val stripFile = findLargestImageFile("strip")
-        val pass: PkPassEntity?
+        // parse pass
+        val reader = BufferedReader(InputStreamReader(fis))
+        val sb = StringBuilder()
+        var line: String?
+        while (reader.readLine().also { line = it } != null) {
+            sb.append(line).append("\n")
+        }
+        reader.close()
+        val pass = gson.fromJson(sb.toString(), PkPassEntity::class.java)
+        pass.id = pass.serialNumber
+        return pass
+    }
+
+    private fun parsePassTranslation(lang: String): HashMap<String, String> {
+        fun split(str: String): Pair<String, String> {
+            val parts = str.split("=")
+            if (parts.size != 2) {
+                return "" to ""
+            }
+            return parts[0].replace("\"", "").trim() to
+                parts[1].replace("\"", "").trim()
+        }
+
+        val out = HashMap<String, String>()
+        val languageFile = File(filesDir.absolutePath + WORKING_DIR + "/$lang", "pass.strings")
+        if (languageFile.exists()) {
+            BufferedReader(FileReader(languageFile)).use { br ->
+                br.lines().forEach { line ->
+                    if (!line.startsWith("/*")) {
+                        line.split(";").forEach {
+                            if (it.contains("=")) {
+                                val pair = split(it)
+                                val (key, translation) = pair
+                                if (key.isNotEmpty()) {
+                                    out[key] = translation
+                                }
+                            }
+                        }
+                    }
+
+                }
+            }
+        }
+        return out
+    }
+
+    private fun handleZipInput(input: InputStream) {
+        unzip(input, filesDir.absolutePath + WORKING_DIR)
 
         try {
-            val fis = FileInputStream(passFile)
+            val pass = createPass()
 
-            // parse pass
-            val reader = BufferedReader(InputStreamReader(fis))
-            val sb = StringBuilder()
-            var line: String?
-            while (reader.readLine().also { line = it } != null) {
-                sb.append(line).append("\n")
-            }
-            reader.close()
-            pass = gson.fromJson(sb.toString(), PkPassEntity::class.java)
-            pass.id = pass.serialNumber
+            val logoFile = findLargestImageFile("logo")
+            val stripFile = findLargestImageFile("strip")
 
             attemptImageCopy(
                 imageFile = logoFile,
@@ -182,10 +223,15 @@ class CardKeeperActivity : AppCompatActivity() {
                 pass.stripPath = it
             }
 
+            val translation = parsePassTranslation("en.lproj")
+            if (translation.isNotEmpty()) {
+                pass.translation = translation
+            }
+
             lifecycleScope.launch {
                 pkPassDao.insertPass(pass)
 
-                deleteDirectory(File(filesDir.absolutePath + "/current"))
+                deleteDirectory(File(filesDir.absolutePath + WORKING_DIR))
 
             }
         } catch (e: Exception) {
@@ -201,5 +247,9 @@ class CardKeeperActivity : AppCompatActivity() {
             }
         }
         return directoryToBeDeleted.delete()
+    }
+
+    companion object {
+        private val WORKING_DIR = "/current"
     }
 }
