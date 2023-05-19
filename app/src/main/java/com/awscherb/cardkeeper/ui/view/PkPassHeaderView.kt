@@ -38,7 +38,7 @@ class PkPassHeaderView @JvmOverloads constructor(
                 if (!pass.logoText.isNullOrEmpty()) {
                     logoText.visibility = View.VISIBLE
                     logoText.text = pass.logoText
-                    logoText.setTextColor(labelColor)
+                    logoText.setTextColor(pass.foregroundColor.parseHexColor())
                 } else {
                     logoText.visibility = View.GONE
                 }

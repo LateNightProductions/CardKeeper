@@ -70,6 +70,7 @@
         app:layout_constraintStart_toEndOf="@id/guideline_start"
         app:layout_constraintEnd_toStartOf="@id/guideline_end"
         android:layout_width="0dp"
+        android:scaleType="center"
         app:layout_constraintDimensionRatio="2.36"
         app:layout_constraintTop_toBottomOf="@id/pass_detail_header"
         android:layout_height="0dp"

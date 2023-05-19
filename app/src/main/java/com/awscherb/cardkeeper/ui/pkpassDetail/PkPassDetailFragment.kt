@@ -127,7 +127,8 @@ class PkPassDetailFragment : BaseFragment() {
                                     fieldConfig = FieldConfig(
                                         label = pass.getTranslatedLabel(field.label),
                                         value = field.value,
-                                        labelColor = pass.labelColor.parseHexColor()
+                                        labelColor = pass.labelColor.parseHexColor(),
+                                        valueColor = pass.foregroundColor.parseHexColor()
                                     )
                                 }
                             )

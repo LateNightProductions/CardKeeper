@@ -80,14 +80,18 @@ fun String?.parseHexColor(): Int {
     return Color.parseColor(when (this) {
         null -> "#000000"
         else -> {
-            val parse = subSequence(indexOf("(") + 1, indexOf(")"))
-            val numbers = parse.split(",")
-            val ints = numbers.map { it.trim().toInt() }
-            val hex = ints.map { Integer.toHexString(it) }
-            val padded = hex.map { if (it.length == 1) "0$it" else it }
-            val sb = StringBuilder()
-            padded.forEach { sb.append(it) }
-            "#$sb"
+            if (this.startsWith("#")) {
+                this
+            } else {
+                val parse = subSequence(indexOf("(") + 1, indexOf(")"))
+                val numbers = parse.split(",")
+                val ints = numbers.map { it.trim().toInt() }
+                val hex = ints.map { Integer.toHexString(it) }
+                val padded = hex.map { if (it.length == 1) "0$it" else it }
+                val sb = StringBuilder()
+                padded.forEach { sb.append(it) }
+                "#$sb"
+            }
         }
     })
 }

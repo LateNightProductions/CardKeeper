@@ -32,7 +32,7 @@ class FieldView @JvmOverloads constructor(
                 }
                 valueText.text = it.value
                 label.setTextColor(it.labelColor)
-                valueText.setTextColor(it.labelColor)
+                valueText.setTextColor(it.valueColor)
             }
         }
 }
