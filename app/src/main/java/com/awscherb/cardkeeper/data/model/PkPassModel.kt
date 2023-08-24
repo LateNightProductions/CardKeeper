@@ -10,7 +10,6 @@ interface PkPassModel : SavedItem {
     val barcode: Barcode?
     val barcodes: List<Barcode>?
     val passTypeIdentifier: String
-    val serialNumber: String
     val logoText: String?
 
     // rgb(0, 187, 82)
@@ -24,6 +23,11 @@ interface PkPassModel : SavedItem {
 
     val logoPath: String?
     val stripPath: String?
+
+    // WebService -related fields
+    val serialNumber: String?
+    val webServiceURL: String?
+    val authenticationToken: String?
 
     val translation: Map<String, String>?
 }

@@ -13,6 +13,7 @@ import androidx.lifecycle.lifecycleScope
 import com.awscherb.cardkeeper.R
 import com.awscherb.cardkeeper.data.entity.ScannedCodeEntity
 import com.awscherb.cardkeeper.ui.base.BaseFragment
+import com.awscherb.cardkeeper.ui.create.Failure
 import com.awscherb.cardkeeper.ui.create.InvalidFormat
 import com.awscherb.cardkeeper.ui.create.InvalidText
 import com.awscherb.cardkeeper.ui.create.InvalidTitle
@@ -123,6 +124,10 @@ class CardDetailFragment : BaseFragment() {
             InvalidTitle -> showSnackbar(R.string.fragment_create_invalid_title)
             InvalidText -> showSnackbar(R.string.fragment_create_invalid_text)
             InvalidFormat -> showSnackbar(R.string.fragment_create_invalid_format)
+            is Failure -> showSnackbar(
+                result.e.message ?: getString(R.string.fragment_create_error_generic)
+            )
+
             is SaveSuccess -> onCardSaved()
         }
     }

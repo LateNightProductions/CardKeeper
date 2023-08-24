@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.Flow
 interface ScannedCodeDao {
 
     @Query("SELECT * FROM scannedCode WHERE id = :id LIMIT 1")
-    fun getScannedCode(id: Int): Flow<ScannedCodeEntity>
+    fun getScannedCode(id: Int): Flow<List<ScannedCodeEntity>>
 
     @Query("SELECT * FROM scannedCode")
     fun listScannedCodes(): Flow<List<ScannedCodeEntity>>
@@ -20,7 +20,7 @@ interface ScannedCodeDao {
     suspend fun insertCode(code: ScannedCodeEntity): Long
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun updateCode(code: ScannedCodeEntity)
+    fun updateCode(code: ScannedCodeEntity): Int
 
     @Query("DELETE FROM scannedCode WHERE id = :id")
     suspend fun deleteCode(id: Int): Int

@@ -1,6 +1,3 @@
-import java.io.FileInputStream
-import java.util.*
-
 plugins {
     id("com.android.application")
     id("kotlin-android")
@@ -10,12 +7,12 @@ plugins {
 }
 
 android {
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.awscherb.cardkeeper"
         minSdk = 24
-        targetSdk = 33
+        targetSdk = 34
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         versionCode = 92
         versionName = "1.1"
@@ -42,52 +39,62 @@ android {
             proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
         }
     }
+
     compileOptions {
-        targetCompatibility = JavaVersion.VERSION_1_8
-        sourceCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+    kotlinOptions {
+        jvmTarget = "17"
     }
 
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
+    namespace = "com.awscherb.cardkeeper"
 
 }
 
 dependencies {
 
     // Support libs
-    implementation("androidx.appcompat:appcompat:1.6.0")
+    implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("androidx.cardview:cardview:1.0.0")
-    implementation("androidx.recyclerview:recyclerview:1.2.1")
-    implementation("com.google.android.material:material:1.7.0")
+    implementation("androidx.recyclerview:recyclerview:1.3.1")
+    implementation("com.google.android.material:material:1.9.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
-    implementation("androidx.navigation:navigation-fragment-ktx:2.5.3")
-    implementation("androidx.navigation:navigation-ui-ktx:2.5.3")
+    implementation("androidx.navigation:navigation-fragment-ktx:2.7.1")
+    implementation("androidx.navigation:navigation-ui-ktx:2.7.1")
     implementation("androidx.lifecycle:lifecycle-extensions:2.2.0")
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.5.1")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.1")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1")
 
     // Room
-    implementation("androidx.room:room-runtime:2.5.0")
-    implementation("androidx.room:room-ktx:2.5.0")
-    kapt("androidx.room:room-compiler:2.5.0")
-    kapt("androidx.lifecycle:lifecycle-common-java8:2.5.1")
+    implementation("androidx.room:room-runtime:2.5.2")
+    implementation("androidx.room:room-ktx:2.5.2")
+    kapt("androidx.room:room-compiler:2.5.2")
+    kapt("androidx.lifecycle:lifecycle-common-java8:2.6.1")
+
+    implementation("androidx.work:work-runtime-ktx:2.8.1")
+
 
     // Scanning
     implementation("com.google.zxing:core:3.5.0")
     implementation("com.journeyapps:zxing-android-embedded:4.3.0@aar")
 
     // Dependency Injection
-    implementation("com.google.dagger:dagger:2.44.2")
-    implementation("com.google.dagger:dagger-android-support:2.44.2")
-    kapt("com.google.dagger:dagger-compiler:2.44.2")
-    kapt("com.google.dagger:dagger-android-processor:2.44.2")
+    implementation("com.google.dagger:dagger:2.45")
+    implementation("com.google.dagger:dagger-android-support:2.45")
+    kapt("com.google.dagger:dagger-compiler:2.45")
+    kapt("com.google.dagger:dagger-android-processor:2.45")
 
     implementation("com.google.code.gson:gson:2.10.1")
     implementation("com.github.bumptech.glide:glide:4.14.2")
     kapt("com.github.bumptech.glide:compiler:4.14.2")
 
     implementation("com.google.android.flexbox:flexbox:3.0.0")
+
+    implementation("com.squareup.okhttp3:okhttp:4.11.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
 
     // Dependencies for local unit tests
     testImplementation("junit:junit:4.13.2")

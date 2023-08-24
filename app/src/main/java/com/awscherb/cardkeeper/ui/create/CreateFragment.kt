@@ -100,6 +100,9 @@ class CreateFragment : BaseFragment() {
             InvalidText -> showSnackbar(R.string.fragment_create_invalid_text)
             InvalidFormat -> showSnackbar(R.string.fragment_create_invalid_format)
             is SaveSuccess -> onSaveComplete(result.codeId)
+            is Failure -> showSnackbar(
+                result.e.message ?: getString(R.string.fragment_create_error_generic)
+            )
         }
         viewModel.saveResult.postValue(null)
     }

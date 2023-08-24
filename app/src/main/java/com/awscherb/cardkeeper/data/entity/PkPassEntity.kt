@@ -33,7 +33,9 @@ data class PkPassEntity(
     override var logoPath: String?,
     override var stripPath: String?,
 
-    override var translation: Map<String, String>?
+    override var translation: Map<String, String>?,
+    override val webServiceURL: String?,
+    override val authenticationToken: String?
 
 ) : PkPassModel
 

@@ -35,9 +35,12 @@ class CardDetailViewModel(
 
                 val scannedCode = cardState.value?.copy(title = titleValue) ?: return
 
-                scannedCodeService.updateScannedCode(scannedCode)
+                scannedCodeService.update(scannedCode)
                     .onEach {
-                        saveResult.value = SaveSuccess(it.id)
+                        saveResult.value = when (it.isSuccess) {
+                            true -> SaveSuccess(it.getOrThrow().id)
+                            false -> Failure(it.exceptionOrNull()!!)
+                        }
                     }.launchIn(viewModelScope)
             }
         }

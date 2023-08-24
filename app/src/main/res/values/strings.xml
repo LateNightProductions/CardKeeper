@@ -32,6 +32,8 @@
     <string name="fragment_create_invalid_title">Title cannot be blank</string>
     <string name="fragment_create_invalid_text">Text cannot be blank</string>
     <string name="fragment_create_invalid_format">You must pick a format</string>
+    <string name="fragment_create_error_generic">An error occurred</string>
     <string name="fragment_create_complete">Card created!</string>
+    <string name="fragment_create_generic_error">Error creating card</string>
 
 </resources>
