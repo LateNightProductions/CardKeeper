@@ -138,7 +138,7 @@ class ItemsFragment : BaseFragment() {
         scannedCodeAdapter = ItemsAdapter(requireActivity(), {
             when (it) {
                 is PkPassModel -> {
-                    pkPassViewModel.pass.value = it
+                    pkPassViewModel.passId.value = it.id
                     navigator.navigateToPkPass(this)
                 }
                 is ScannedCodeModel -> {

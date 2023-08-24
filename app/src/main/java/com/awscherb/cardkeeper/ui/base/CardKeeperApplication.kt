@@ -2,6 +2,7 @@ package com.awscherb.cardkeeper.ui.base
 
 import android.app.Application
 import androidx.work.Configuration
+import com.awscherb.cardkeeper.data.api.PkPassApi
 import com.awscherb.cardkeeper.data.dao.PkPassDao
 import com.awscherb.cardkeeper.data.work.CardKeeperWorkerFactory
 import com.awscherb.cardkeeper.di.component.DaggerViewComponent
@@ -18,6 +19,9 @@ class CardKeeperApplication : Application(), HasAndroidInjector, Configuration.P
 
     @Inject
     lateinit var pkPassDao: PkPassDao
+
+    @Inject
+    lateinit var pkPassApi: PkPassApi
 
     override fun androidInjector() = dispatchingAndroidInjector
 
@@ -36,7 +40,8 @@ class CardKeeperApplication : Application(), HasAndroidInjector, Configuration.P
             .setMinimumLoggingLevel(android.util.Log.INFO)
             .setWorkerFactory(
                 CardKeeperWorkerFactory(
-                    pkPassDao
+                    pkPassDao,
+                    pkPassApi
                 )
             )
             .build()

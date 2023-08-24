@@ -1,17 +1,19 @@
 package com.awscherb.cardkeeper.util
 
+import com.awscherb.cardkeeper.data.model.PkPassModel
+import com.awscherb.cardkeeper.data.model.canBeUpdated
+
 object WebServiceUrlBuilder {
 
     fun buildUrl(
-        webServiceUrl: String,
-        identifier: String,
-        serial: String
+       pass: PkPassModel
     ): String {
+        if (!pass.canBeUpdated()) return ""
         val cleanedUrl =
-            if (webServiceUrl.endsWith("/"))
-                webServiceUrl.removeSuffix("/")
-            else webServiceUrl
+            if (pass.webServiceURL!!.endsWith("/"))
+                pass.webServiceURL!!.removeSuffix("/")
+            else pass.webServiceURL
 
-        return "$cleanedUrl/v1/passes/$identifier/$serial"
+        return "$cleanedUrl/v1/passes/${pass.passTypeIdentifier}/${pass.id}"
     }
 }

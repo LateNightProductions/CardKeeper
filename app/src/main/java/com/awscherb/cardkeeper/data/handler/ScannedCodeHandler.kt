@@ -17,7 +17,7 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class ScannedCodeHandler @Inject constructor(
-    private val scannedCodeDao: ScannedCodeDao
+    private val scannedCodeDao: ScannedCodeDao,
 ) : ScannedCodeService, SavedItemService<ScannedCodeModel> {
 
     override fun getScannedCode(codeId: Int): Flow<ScannedCodeEntity> {

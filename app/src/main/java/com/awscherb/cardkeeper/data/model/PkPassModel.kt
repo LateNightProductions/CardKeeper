@@ -106,3 +106,5 @@ fun PkPassModel.findPassInfo(): PassInfo? = when {
     generic != null -> generic
     else -> null
 }
+
+fun PkPassModel.canBeUpdated() = !this.webServiceURL.isNullOrEmpty()

@@ -34,8 +34,6 @@ class CardKeeperActivity : AppCompatActivity() {
     @Inject
     lateinit var pkPassDao: PkPassDao
 
-    private val gson by lazy { GsonBuilder().create() }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         AndroidInjection.inject(this)
@@ -44,30 +42,35 @@ class CardKeeperActivity : AppCompatActivity() {
         val uri = intent.data
         val scheme = uri?.scheme
 
+        if (scheme != null) {
+            val type: String
+            val passUri: String
+            when (ContentResolver.SCHEME_CONTENT == scheme) {
+                true -> {
+                    type = ImportPassWorker.TYPE_URI
+                    passUri = uri.toString()
+                }
 
-        val type: String
-        val passUri: String
-        when (ContentResolver.SCHEME_CONTENT == scheme) {
-             true -> {
-                 type = ImportPassWorker.TYPE_URI
-                 passUri = uri.toString()
-             }
-            false -> {
-                type = ImportPassWorker.TYPE_FILE
-                passUri = uri?.encodedPath ?: ""
+                false -> {
+                    type = ImportPassWorker.TYPE_FILE
+                    passUri = uri.encodedPath ?: ""
+                }
+
             }
 
+            val req = OneTimeWorkRequestBuilder<ImportPassWorker>()
+                .setInputData(
+                    workDataOf(
+                        ImportPassWorker.INPUT_TYPE to type,
+                        ImportPassWorker.URI to passUri
+                    )
+                )
+                .build()
+
+            WorkManager.getInstance(this)
+                .enqueue(req)
         }
 
-        val req = OneTimeWorkRequestBuilder<ImportPassWorker>()
-            .setInputData(workDataOf(
-                ImportPassWorker.INPUT_TYPE to type,
-                ImportPassWorker.URI to passUri
-            ))
-            .build()
-
-        WorkManager.getInstance(this)
-            .enqueue(req)
     }
 
 }

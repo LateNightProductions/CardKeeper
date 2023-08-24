@@ -1,5 +1,6 @@
 package com.awscherb.cardkeeper.di.component
 
+import com.awscherb.cardkeeper.di.module.ApiModule
 import com.awscherb.cardkeeper.di.module.AppModule
 import com.awscherb.cardkeeper.di.module.BindingsModule
 import com.awscherb.cardkeeper.di.module.DaoModule
@@ -17,6 +18,7 @@ import javax.inject.Singleton
 @Component(
     modules = [
         AndroidInjectionModule::class,
+        ApiModule::class,
         AppModule::class,
         BindingsModule::class,
         DaoModule::class,
