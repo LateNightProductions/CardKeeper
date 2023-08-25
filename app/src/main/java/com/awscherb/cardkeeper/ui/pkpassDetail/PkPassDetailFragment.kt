@@ -7,6 +7,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.Toolbar
 import androidx.cardview.widget.CardView
@@ -43,6 +44,8 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.Date
 import java.util.concurrent.atomic.AtomicBoolean
 import javax.inject.Inject
 
@@ -65,8 +68,10 @@ class PkPassDetailFragment : BaseFragment(), Toolbar.OnMenuItemClickListener {
     private lateinit var auxFieldsView: FlexboxLayout
     private lateinit var secondaryFieldsView: FlexboxLayout
     private lateinit var barcodeImage: ImageView
+    private lateinit var lastUpdated: TextView
 
     private val refreshing = AtomicBoolean(false)
+    private val updateDateFormat = SimpleDateFormat("h:mm a")
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -86,6 +91,7 @@ class PkPassDetailFragment : BaseFragment(), Toolbar.OnMenuItemClickListener {
         auxFieldsView = view.findViewById(R.id.pass_detail_auxiliary)
         secondaryFieldsView = view.findViewById(R.id.pass_detail_secondary)
         barcodeImage = view.findViewById(R.id.pass_detail_barcode)
+        lastUpdated = view.findViewById(R.id.pass_last_updated)
 
         toolbar.inflateMenu(R.menu.menu_pass_detail)
         toolbar.setOnMenuItemClickListener(this)
@@ -238,6 +244,12 @@ class PkPassDetailFragment : BaseFragment(), Toolbar.OnMenuItemClickListener {
                     if (it.state == WorkInfo.State.SUCCEEDED) {
                         refreshing.set(false)
                         refreshItem?.isVisible = true
+                        lastUpdated.visibility = View.VISIBLE
+                        lastUpdated.text = getString(
+                            R.string.fragment_pass_detail_last_updated,
+                            updateDateFormat.format(Date(System.currentTimeMillis()))
+                        )
+
                     }
                 }
         }
