@@ -1,10 +1,11 @@
 package com.awscherb.cardkeeper.di.module
 
+import com.awscherb.cardkeeper.BuildConfig
 import com.awscherb.cardkeeper.data.api.PkPassApi
 import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
-import okhttp3.OkHttp
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -15,18 +16,28 @@ import javax.inject.Singleton
 class ApiModule {
 
     @Provides
-    @Singleton
-    fun provideOkHttp() = OkHttpClient.Builder()
-        .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
+    fun provideLevel() =
+        if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.HEADERS
+        else HttpLoggingInterceptor.Level.NONE
+
+    @Provides
+    fun provideOkHttp(level: HttpLoggingInterceptor.Level) = OkHttpClient.Builder()
+        .addInterceptor(HttpLoggingInterceptor().setLevel(level))
         .build()
 
     @Provides
+    fun provideGson() = GsonBuilder().create()
+
+    @Provides
     @Singleton
-    fun provideRetrofit(okHttpClient: OkHttpClient) =
+    fun provideRetrofit(
+        okHttpClient: OkHttpClient,
+        gson: Gson
+    ) =
         Retrofit.Builder()
             .client(okHttpClient)
             .baseUrl("https://www.google.com")
-            .addConverterFactory(GsonConverterFactory.create(Gson()))
+            .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
 
     @Provides

@@ -4,15 +4,17 @@ import android.content.Context
 import androidx.work.WorkerParameters
 import com.awscherb.cardkeeper.data.api.PkPassApi
 import com.awscherb.cardkeeper.data.dao.PkPassDao
+import com.google.gson.Gson
 import java.io.InputStream
 
 class UpdatePassWorker(
     context: Context,
+    gson: Gson,
     private val workerParams: WorkerParameters,
     private val pkPassDao: PkPassDao,
-    private val pkPassApi: PkPassApi
+    private val pkPassApi: PkPassApi,
 ) : InputStreamWorker(
-    workerParams, context
+    workerParams, context, gson
 ) {
 
     companion object {
@@ -21,25 +23,28 @@ class UpdatePassWorker(
     }
 
     override suspend fun doWork(): Result {
-        val url = workerParams.inputData.getString(KEY_URL) ?: throw IllegalArgumentException()
-        val token = workerParams.inputData.getString(KEY_TOKEN) ?: throw IllegalArgumentException()
+        val url = workerParams.inputData.getString(KEY_URL) ?: throw IllegalArgumentException(
+            "URL is required"
+        )
+        val token = workerParams.inputData.getString(KEY_TOKEN) ?: throw IllegalArgumentException(
+            "Auth token is required"
+        )
 
-        val inputStream: InputStream?
-        try {
+        return try {
             val response = pkPassApi.getPass(url, "ApplePass $token")
 
-            inputStream = response.body()?.byteStream()
-        } catch (e: Exception) {
-            return Result.failure()
-        }
+            val inputStream = response.body()?.byteStream()
 
-        inputStream?.let {
-            createPassFromZipInput(it)?.let { pass ->
-                pkPassDao.updatePass(pass)
+            inputStream?.use {
+                createPassFromZipInput(it)?.let { pass ->
+                    pkPassDao.updatePass(pass)
+                }
             }
+            Result.success()
+        } catch (e: Exception) {
+            Result.failure()
         }
 
-        return Result.success()
     }
 
 }

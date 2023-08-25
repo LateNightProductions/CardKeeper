@@ -4,17 +4,18 @@ import android.content.Context
 import android.net.Uri
 import androidx.work.WorkerParameters
 import com.awscherb.cardkeeper.data.dao.PkPassDao
-import com.google.gson.GsonBuilder
+import com.google.gson.Gson
 import java.io.FileInputStream
 import java.io.FileNotFoundException
 import java.io.InputStream
 
 class ImportPassWorker(
+    gson: Gson,
     private val workerParams: WorkerParameters,
     private val context: Context,
     private val pkPassDao: PkPassDao,
 ) : InputStreamWorker(
-    workerParams, context
+    workerParams, context, gson
 ) {
 
     companion object {
@@ -26,7 +27,9 @@ class ImportPassWorker(
     }
 
     override suspend fun doWork(): Result {
-        val uriString = workerParams.inputData.getString(URI) ?: throw IllegalArgumentException()
+        val uriString = workerParams.inputData.getString(URI) ?: throw IllegalArgumentException(
+            "URI string is required"
+        )
         var inputStream: InputStream? = null
         if (workerParams.inputData.getString(INPUT_TYPE) == TYPE_URI) {
             try {
@@ -48,7 +51,7 @@ class ImportPassWorker(
             }
         }
 
-        inputStream?.let {
+        inputStream?.use {
             createPassFromZipInput(it)?.let { pass ->
                 pkPassDao.insertPass(pass)
             }

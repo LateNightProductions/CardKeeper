@@ -6,8 +6,10 @@ import androidx.work.WorkerFactory
 import androidx.work.WorkerParameters
 import com.awscherb.cardkeeper.data.api.PkPassApi
 import com.awscherb.cardkeeper.data.dao.PkPassDao
+import com.google.gson.Gson
 
 class CardKeeperWorkerFactory constructor(
+    private val gson: Gson,
     private val pkPassDao: PkPassDao,
     private val pkPassApi: PkPassApi
 ) : WorkerFactory() {
@@ -18,10 +20,10 @@ class CardKeeperWorkerFactory constructor(
     ): ListenableWorker? {
         return when (workerClassName) {
             ImportPassWorker::class.java.name ->
-                ImportPassWorker(workerParameters, appContext, pkPassDao)
+                ImportPassWorker(gson, workerParameters, appContext, pkPassDao)
 
             UpdatePassWorker::class.java.name ->
-                UpdatePassWorker(appContext, workerParameters, pkPassDao, pkPassApi)
+                UpdatePassWorker(appContext, gson, workerParameters, pkPassDao, pkPassApi)
 
             else -> null
         }

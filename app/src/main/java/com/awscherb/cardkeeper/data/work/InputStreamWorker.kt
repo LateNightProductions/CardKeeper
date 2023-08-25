@@ -5,7 +5,7 @@ import android.util.Log
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.awscherb.cardkeeper.data.entity.PkPassEntity
-import com.google.gson.GsonBuilder
+import com.google.gson.Gson
 import java.io.BufferedReader
 import java.io.File
 import java.io.FileInputStream
@@ -17,23 +17,16 @@ import java.util.zip.ZipEntry
 import java.util.zip.ZipInputStream
 
 abstract class InputStreamWorker(
-    private val workerParams: WorkerParameters,
+    workerParams: WorkerParameters,
     private val context: Context,
+    private val gson: Gson
 ) : CoroutineWorker(
     context, workerParams
 ) {
 
     companion object {
-        const val INPUT_TYPE = "input_type"
-        const val TYPE_URI = "type_uri"
-        const val TYPE_FILE = "type_file"
-        const val URI = "uri"
-
         private val WORKING_DIR = "/current"
     }
-
-    private val gson by lazy { GsonBuilder().create() }
-
 
     /**
      * Creates a PkPassEntity from InputStream
@@ -44,7 +37,7 @@ abstract class InputStreamWorker(
         var pass: PkPassEntity? = null
 
         try {
-            pass = parsePassEntityFromDisk()
+            pass = parsePassEntityFromDisk() ?: return null
 
             val logoFile = findLargestImageFile("logo")
             val stripFile = findLargestImageFile("strip")
@@ -78,7 +71,6 @@ abstract class InputStreamWorker(
                     context.filesDir.absolutePath + WORKING_DIR
                 )
             )
-
         }
 
         return pass
@@ -88,7 +80,7 @@ abstract class InputStreamWorker(
      * Takes an InputStream of a .zip, unzips in parent dir
      */
     private fun unzipToDirectory(stream: InputStream, parent: String) {
-        dirChecker(parent, "")
+        createDirectory(parent, "")
         val buffer = ByteArray(1024)
         try {
             val zin = ZipInputStream(stream)
@@ -97,12 +89,12 @@ abstract class InputStreamWorker(
 
                 Log.v("CardKeeper", "Unzipping " + ze!!.name)
                 if (ze!!.isDirectory) {
-                    dirChecker(parent, ze!!.name)
+                    createDirectory(parent, ze!!.name)
                 } else {
                     if (ze!!.name.contains("/")) {
                         // lproj dir, should make this more robust
                         val names = ze!!.name.split("/")
-                        dirChecker(parent, names[0])
+                        createDirectory(parent, names[0])
                     }
 
                     val f = File(parent, ze!!.name)
@@ -132,24 +124,34 @@ abstract class InputStreamWorker(
     /**
      * Parse pass file from working dir
      */
-    private fun parsePassEntityFromDisk(): PkPassEntity {
-        val fis = FileInputStream(
-            File(
-                context.filesDir.absolutePath + "${WORKING_DIR}/pass.json"
-            )
-        )
+    private fun parsePassEntityFromDisk(): PkPassEntity? {
+        var reader: BufferedReader? = null
 
-        // parse pass
-        val reader = BufferedReader(InputStreamReader(fis))
-        val sb = StringBuilder()
-        var line: String?
-        while (reader.readLine().also { line = it } != null) {
-            sb.append(line).append("\n")
+        return try {
+            reader = BufferedReader(
+                InputStreamReader(
+                    FileInputStream(
+                        File(
+                            context.filesDir.absolutePath + "${WORKING_DIR}/pass.json"
+                        )
+                    )
+                )
+            )
+
+            val sb = StringBuilder()
+            var line: String?
+            while (reader.readLine().also { line = it } != null) {
+                sb.append(line).append("\n")
+            }
+            val pass = gson.fromJson(sb.toString(), PkPassEntity::class.java)
+            pass.id = pass.serialNumber
+            pass
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        } finally {
+            reader?.close()
         }
-        reader.close()
-        val pass = gson.fromJson(sb.toString(), PkPassEntity::class.java)
-        pass.id = pass.serialNumber
-        return pass
     }
 
     private fun parsePassTranslation(lang: String): HashMap<String, String> {
@@ -227,7 +229,7 @@ abstract class InputStreamWorker(
         pathAction(newOutputFile.absolutePath)
     }
 
-    private fun dirChecker(parent: String, child: String) {
+    private fun createDirectory(parent: String, child: String) {
         val f = File(parent, child)
         if (!f.isDirectory) {
             val success = f.mkdirs()
@@ -246,6 +248,5 @@ abstract class InputStreamWorker(
         }
         return directoryToBeDeleted.delete()
     }
-
 
 }
