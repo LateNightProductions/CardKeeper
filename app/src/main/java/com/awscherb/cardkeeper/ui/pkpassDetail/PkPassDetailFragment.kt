@@ -3,15 +3,20 @@ package com.awscherb.cardkeeper.ui.pkpassDetail
 import android.os.Bundle
 import android.util.DisplayMetrics
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.widget.Toolbar
 import androidx.cardview.widget.CardView
 import androidx.core.view.marginEnd
 import androidx.core.view.marginStart
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkInfo
 import androidx.work.WorkManager
 import androidx.work.workDataOf
 import com.awscherb.cardkeeper.R
@@ -33,12 +38,15 @@ import com.google.zxing.BarcodeFormat
 import com.google.zxing.WriterException
 import com.journeyapps.barcodescanner.BarcodeEncoder
 import dagger.android.support.AndroidSupportInjection
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.take
+import kotlinx.coroutines.launch
+import java.util.concurrent.atomic.AtomicBoolean
 import javax.inject.Inject
 
-class PkPassDetailFragment : BaseFragment() {
+class PkPassDetailFragment : BaseFragment(), Toolbar.OnMenuItemClickListener {
 
     private val viewModel by activityViewModels<PkPassViewModel> { factory }
 
@@ -47,13 +55,18 @@ class PkPassDetailFragment : BaseFragment() {
 
     private val encoder: BarcodeEncoder = BarcodeEncoder()
 
-    lateinit var card: CardView
-    lateinit var header: PkPassHeaderView
-    lateinit var strip: ImageView
-    lateinit var primaryFieldsView: FlexboxLayout
-    lateinit var auxFieldsView: FlexboxLayout
-    lateinit var secondaryFieldsView: FlexboxLayout
-    lateinit var barcodeImage: ImageView
+    private var refreshItem: MenuItem? = null
+
+    private lateinit var toolbar: Toolbar
+    private lateinit var card: CardView
+    private lateinit var header: PkPassHeaderView
+    private lateinit var strip: ImageView
+    private lateinit var primaryFieldsView: FlexboxLayout
+    private lateinit var auxFieldsView: FlexboxLayout
+    private lateinit var secondaryFieldsView: FlexboxLayout
+    private lateinit var barcodeImage: ImageView
+
+    private val refreshing = AtomicBoolean(false)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -65,6 +78,7 @@ class PkPassDetailFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         AndroidSupportInjection.inject(this)
 
+        toolbar = view.findViewById(R.id.pass_detail_toolbar)
         card = view.findViewById(R.id.pass_detail_card)
         header = view.findViewById(R.id.pass_detail_header)
         strip = view.findViewById(R.id.pass_detail_strip)
@@ -72,6 +86,10 @@ class PkPassDetailFragment : BaseFragment() {
         auxFieldsView = view.findViewById(R.id.pass_detail_auxiliary)
         secondaryFieldsView = view.findViewById(R.id.pass_detail_secondary)
         barcodeImage = view.findViewById(R.id.pass_detail_barcode)
+
+        toolbar.inflateMenu(R.menu.menu_pass_detail)
+        toolbar.setOnMenuItemClickListener(this)
+        refreshItem = toolbar.menu.findItem(R.id.pass_refresh)
 
         viewModel.pass
             .onEach { pass ->
@@ -162,22 +180,67 @@ class PkPassDetailFragment : BaseFragment() {
 
         viewModel.pass
             .take(1)
-            .onEach { pass ->
-                if (pass.canBeUpdated()) {
-                    val req = OneTimeWorkRequestBuilder<UpdatePassWorker>()
-                        .setInputData(
-                            workDataOf(
-                                UpdatePassWorker.KEY_URL to WebServiceUrlBuilder.buildUrl(pass),
-                                UpdatePassWorker.KEY_TOKEN to pass.authenticationToken
-                            )
-                        )
-                        .build()
-
-                    WorkManager.getInstance(requireContext())
-                        .enqueue(req)
+            .onEach {
+                if (it.canBeUpdated()) {
+                    refreshItem?.isVisible = true
+                    refreshPass()
                 }
             }.launchIn(lifecycleScope)
 
+    }
+
+    override fun onMenuItemClick(item: MenuItem?): Boolean {
+        return when (item?.itemId) {
+            R.id.pass_refresh -> {
+                lifecycleScope.launch { refreshPass() }
+                true
+            }
+
+            R.id.pass_delete -> {
+                promptDelete()
+                true
+            }
+
+            else -> false
+        }
+    }
+
+    private fun promptDelete() {
+        AlertDialog.Builder(requireContext())
+            .setTitle(R.string.fragment_pass_detail_delete_title)
+            .setMessage(R.string.fragment_pass_detail_delete_prompt)
+            .setPositiveButton(R.string.action_delete) { _, _ ->
+                viewModel.deletePass()
+                findNavController().popBackStack()
+            }
+            .setNegativeButton(R.string.action_cancel, null)
+            .show()
+    }
+
+    private suspend fun refreshPass() {
+        val pass = viewModel.pass.firstOrNull() ?: return
+        if (pass.canBeUpdated() && refreshing.compareAndSet(false, true)) {
+            refreshItem?.isVisible = false
+            val req = OneTimeWorkRequestBuilder<UpdatePassWorker>()
+                .setInputData(
+                    workDataOf(
+                        UpdatePassWorker.KEY_URL to WebServiceUrlBuilder.buildUrl(pass),
+                        UpdatePassWorker.KEY_TOKEN to pass.authenticationToken
+                    )
+                )
+                .build()
+
+            WorkManager.getInstance(requireContext())
+                .enqueue(req)
+            WorkManager.getInstance(requireContext())
+                .getWorkInfoByIdLiveData(req.id)
+                .observe(viewLifecycleOwner) {
+                    if (it.state == WorkInfo.State.SUCCEEDED) {
+                        refreshing.set(false)
+                        refreshItem?.isVisible = true
+                    }
+                }
+        }
     }
 }
 

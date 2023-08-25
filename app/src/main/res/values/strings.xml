@@ -3,6 +3,8 @@
 
     <!-- Titles -->
     <string name="title_activity_cards">CardKeeper</string>
+    <string name="pass_refresh">Refresh</string>
+    <string name="pass_delete">Delete</string>
 
     <!--Actions-->
     <string name="action_add">Add</string>
@@ -35,5 +37,9 @@
     <string name="fragment_create_error_generic">An error occurred</string>
     <string name="fragment_create_complete">Card created!</string>
     <string name="fragment_create_generic_error">Error creating card</string>
+
+    <!-- Pass Detail Fragment -->
+    <string name="fragment_pass_detail_delete_title">Delete Pass</string>
+    <string name="fragment_pass_detail_delete_prompt">Delete this pass?</string>
 
 </resources>
