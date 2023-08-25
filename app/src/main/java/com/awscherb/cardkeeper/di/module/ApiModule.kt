@@ -26,6 +26,7 @@ class ApiModule {
         .build()
 
     @Provides
+    @Singleton
     fun provideGson() = GsonBuilder().create()
 
     @Provides

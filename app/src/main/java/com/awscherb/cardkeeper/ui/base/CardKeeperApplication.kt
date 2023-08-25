@@ -8,6 +8,7 @@ import com.awscherb.cardkeeper.data.work.CardKeeperWorkerFactory
 import com.awscherb.cardkeeper.di.component.DaggerViewComponent
 import com.awscherb.cardkeeper.di.module.AppModule
 import com.awscherb.cardkeeper.di.module.DaoModule
+import com.google.gson.Gson
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector
 import javax.inject.Inject
@@ -16,6 +17,9 @@ class CardKeeperApplication : Application(), HasAndroidInjector, Configuration.P
 
     @Inject
     lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Any>
+
+    @Inject
+    lateinit var gson: Gson
 
     @Inject
     lateinit var pkPassDao: PkPassDao
@@ -40,6 +44,7 @@ class CardKeeperApplication : Application(), HasAndroidInjector, Configuration.P
             .setMinimumLoggingLevel(android.util.Log.INFO)
             .setWorkerFactory(
                 CardKeeperWorkerFactory(
+                    gson,
                     pkPassDao,
                     pkPassApi
                 )

@@ -33,7 +33,7 @@ class ImportPassWorker(
         var inputStream: InputStream? = null
         if (workerParams.inputData.getString(INPUT_TYPE) == TYPE_URI) {
             try {
-                context.contentResolver.openInputStream(Uri.parse(uriString))?.use {
+                context.contentResolver.openInputStream(Uri.parse(uriString))?.let {
                     inputStream = it
                 }
             } catch (e: FileNotFoundException) {
