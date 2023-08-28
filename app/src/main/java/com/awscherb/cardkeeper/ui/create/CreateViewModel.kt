@@ -1,10 +1,10 @@
 package com.awscherb.cardkeeper.ui.create
 
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.awscherb.cardkeeper.data.entity.ScannedCodeEntity
 import com.awscherb.cardkeeper.data.service.ScannedCodeService
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
@@ -12,22 +12,22 @@ class CreateViewModel(
     private val scannedCodeService: ScannedCodeService
 ) : ViewModel() {
 
-    val title = MutableLiveData<String>()
+    val title = MutableStateFlow<String?>(null)
 
-    val text = MutableLiveData<String>()
+    val text = MutableStateFlow<String?>(null)
 
-    val format = MutableLiveData<CreateType>()
+    val format = MutableStateFlow<CreateType?>(null)
 
-    val saveResult = MutableLiveData<SaveResult>()
+    val saveResult = MutableStateFlow<SaveResult?>(null)
 
     fun save() {
         val titleValue = title.value
         val textValue = text.value
         val formatValue = format.value
         when {
-            titleValue.isNullOrEmpty() -> saveResult.postValue(InvalidTitle)
-            textValue.isNullOrEmpty() -> saveResult.postValue(InvalidText)
-            formatValue == null -> saveResult.postValue(InvalidFormat)
+            titleValue.isNullOrEmpty() -> saveResult.value = InvalidTitle
+            textValue.isNullOrEmpty() -> saveResult.value = InvalidText
+            formatValue == null -> saveResult.value = InvalidFormat
             else -> {
                 val scannedCode = ScannedCodeEntity(
                     title = titleValue,
@@ -38,9 +38,7 @@ class CreateViewModel(
 
                 scannedCodeService.addScannedCode(scannedCode)
                     .onEach {
-                        saveResult.postValue(
-                            SaveSuccess(it.id)
-                        )
+                        saveResult.value = SaveSuccess(it.id)
                     }.launchIn(viewModelScope)
             }
         }
@@ -53,4 +51,4 @@ object InvalidTitle : SaveResult()
 object InvalidText : SaveResult()
 object InvalidFormat : SaveResult()
 data class SaveSuccess(val codeId: Int) : SaveResult()
-data class Failure(val e: Throwable): SaveResult()
+data class Failure(val e: Throwable) : SaveResult()

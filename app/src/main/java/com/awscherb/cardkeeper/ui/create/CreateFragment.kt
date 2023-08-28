@@ -8,6 +8,7 @@ import android.widget.Button
 import android.widget.LinearLayout
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -21,6 +22,9 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.textfield.TextInputEditText
 import dagger.android.support.AndroidSupportInjection
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 class CreateFragment : BaseFragment() {
@@ -75,16 +79,18 @@ class CreateFragment : BaseFragment() {
             bottomSheetBehavior.expand()
         }
 
-        viewModel.format.observe(viewLifecycleOwner, {
+        viewModel.format.onEach {
             if (it != null) {
                 codeType.text = it.title
             }
-        })
-        viewModel.saveResult.observe(viewLifecycleOwner, {
-            if (it != null) {
-                this.onSaveResult(it)
-            }
-        })
+        }.launchIn(lifecycleScope)
+
+        viewModel.saveResult
+            .filterNotNull()
+            .onEach {
+                viewModel.saveResult.value = null
+                onSaveResult(it)
+            }.launchIn(lifecycleScope)
 
         createFab.setOnClickListener { viewModel.save() }
     }
@@ -104,7 +110,6 @@ class CreateFragment : BaseFragment() {
                 result.e.message ?: getString(R.string.fragment_create_error_generic)
             )
         }
-        viewModel.saveResult.postValue(null)
     }
 
     private fun onSaveComplete(id: Int) {
@@ -123,15 +128,15 @@ class CreateFragment : BaseFragment() {
         typesRecyler.layoutManager = LinearLayoutManager(requireContext())
         typesRecyler.adapter = CodeTypesAdapter(requireContext()) {
             codeType.text = it.title
-            viewModel.format.postValue(it)
+            viewModel.format.value = it
             bottomSheetBehavior.collapse()
         }
     }
 
     private fun setupTextListeners() {
-        title.addLifecycleTextWatcher(viewModel.title::postValue)
+        title.addLifecycleTextWatcher { viewModel.title.value = it }
 
-        text.addLifecycleTextWatcher(viewModel.text::postValue)
+        text.addLifecycleTextWatcher { viewModel.text.value = it }
     }
 
 }

@@ -1,32 +1,33 @@
 package com.awscherb.cardkeeper.ui.scan
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
-import androidx.lifecycle.map
-import androidx.lifecycle.switchMap
-import androidx.lifecycle.viewModelScope
 import com.awscherb.cardkeeper.data.entity.ScannedCodeEntity
 import com.awscherb.cardkeeper.data.service.ScannedCodeService
 import com.google.zxing.BarcodeFormat
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.map
 
 class ScanViewModel(
     scannedCodeService: ScannedCodeService
 ) : ViewModel() {
 
-    val createData = MutableLiveData<CreateCodeData>()
+    val createData = MutableStateFlow<CreateCodeData?>(null)
 
-    val createResult: LiveData<Unit> = createData.switchMap {
-        scannedCodeService.addScannedCode(
-            ScannedCodeEntity(
-                format = it.format,
-                text = it.text,
-                title = it.title,
-                created = System.currentTimeMillis()
+    val createResult: Flow<Unit> = createData
+        .filterNotNull()
+        .flatMapLatest {
+            scannedCodeService.addScannedCode(
+                ScannedCodeEntity(
+                    format = it.format,
+                    text = it.text,
+                    title = it.title,
+                    created = System.currentTimeMillis()
+                )
             )
-        ).asLiveData(viewModelScope.coroutineContext)
-    }.map { }
+        }.map { }
 }
 
 data class CreateCodeData(

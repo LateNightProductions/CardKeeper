@@ -14,7 +14,7 @@
     <string name="action_search">Search</string>
 
     <!-- Scanned Code Adapter-->
-    <string name="adapter_scanned_code_delete_message">Delete code?</string>
+    <string name="adapter_scanned_code_delete_message">Delete this item?</string>
 
     <!-- Card Name Dialog -->
     <string name="dialog_card_name_hint">Enter a name</string>

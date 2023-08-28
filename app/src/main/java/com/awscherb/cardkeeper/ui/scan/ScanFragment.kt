@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.awscherb.cardkeeper.R
 import com.awscherb.cardkeeper.ui.base.BaseFragment
@@ -19,6 +20,8 @@ import com.journeyapps.barcodescanner.BarcodeCallback
 import com.journeyapps.barcodescanner.BarcodeResult
 import com.journeyapps.barcodescanner.CompoundBarcodeView
 import dagger.android.support.AndroidSupportInjection
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import java.util.concurrent.atomic.AtomicBoolean
 import javax.inject.Inject
 
@@ -51,23 +54,21 @@ class ScanFragment : BaseFragment() {
         scannerView = view.findViewById(R.id.fragment_scan_scanner)
 
         // Check permissions
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (activity?.checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
-                scannerView.resume()
-            } else {
-                requestPermissions(
-                    arrayOf(Manifest.permission.CAMERA),
-                    REQUEST_CAMERA
-                )
-            }
+        if (activity?.checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+            scannerView.resume()
+        } else {
+            requestPermissions(
+                arrayOf(Manifest.permission.CAMERA),
+                REQUEST_CAMERA
+            )
         }
 
         // Setup scanner
         setCallback()
 
-        viewModel.createResult.observe(viewLifecycleOwner) {
+        viewModel.createResult.onEach {
             onCodeAdded()
-        }
+        }.launchIn(lifecycleScope)
     }
 
     override fun onResume() {
@@ -104,13 +105,12 @@ class ScanFragment : BaseFragment() {
                         .setView(input)
                         .setOnDismissListener { found.set(false) }
                         .setPositiveButton(R.string.action_add) { _, _ ->
-                            viewModel.createData.postValue(
+                            viewModel.createData.value =
                                 CreateCodeData(
                                     format = result.barcodeFormat,
                                     text = result.text,
                                     title = input.text.toString()
                                 )
-                            )
                         }
                         .setNegativeButton(R.string.action_cancel) { dialog, _ -> dialog.dismiss() }
                         .show()

@@ -152,7 +152,7 @@ class ItemsFragment : BaseFragment() {
                 .setPositiveButton(R.string.action_delete) { _, _ ->
                     when (code) {
                         is PkPassModel -> {
-
+                            viewModel.deletePass(code)
                         }
                         is ScannedCodeModel -> {
                             viewModel.deleteCard(code)
