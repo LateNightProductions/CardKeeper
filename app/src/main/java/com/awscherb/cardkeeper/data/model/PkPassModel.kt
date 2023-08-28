@@ -24,6 +24,7 @@ interface PkPassModel : SavedItem {
     val boardingPass: PassInfo?
     val storeCard: PassInfo?
     val generic: PassInfo?
+    val eventTicket: PassInfo?
 
     val logoPath: String?
     val stripPath: String?
@@ -110,6 +111,7 @@ fun PkPassModel.findPassInfo(): PassInfo? = when {
     boardingPass != null -> boardingPass
     storeCard != null -> storeCard
     generic != null -> generic
+    eventTicket != null -> eventTicket
     else -> null
 }
 

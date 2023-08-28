@@ -32,6 +32,7 @@ data class PkPassEntity(
     override val boardingPass: PassInfoStruct?,
     override val storeCard: PassInfoStruct?,
     override val generic: PassInfoStruct?,
+    override val eventTicket: PassInfoStruct?,
 
     override var logoPath: String?,
     override var stripPath: String?,
