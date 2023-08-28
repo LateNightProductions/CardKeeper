@@ -2,11 +2,13 @@ package com.awscherb.cardkeeper.ui.pkpassDetail
 
 import android.os.Bundle
 import android.util.DisplayMetrics
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.Toolbar
@@ -16,6 +18,9 @@ import androidx.core.view.marginStart
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkInfo
 import androidx.work.WorkManager
@@ -33,8 +38,10 @@ import com.awscherb.cardkeeper.ui.view.FieldView
 import com.awscherb.cardkeeper.ui.view.PkPassHeaderView
 import com.awscherb.cardkeeper.ui.view.PrimaryFieldView
 import com.awscherb.cardkeeper.util.WebServiceUrlBuilder
+import com.awscherb.cardkeeper.util.extensions.expand
 import com.bumptech.glide.Glide
 import com.google.android.flexbox.FlexboxLayout
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.WriterException
 import com.journeyapps.barcodescanner.BarcodeEncoder
@@ -69,11 +76,17 @@ class PkPassDetailFragment : BaseFragment(), Toolbar.OnMenuItemClickListener {
     private lateinit var secondaryFieldsView: FlexboxLayout
     private lateinit var barcodeImage: ImageView
     private lateinit var footerImage: ImageView
+    private lateinit var infoButton: ImageView
     private lateinit var expiredText: TextView
     private lateinit var lastUpdated: TextView
 
+    private lateinit var bottomSheet: LinearLayout
+    private lateinit var bottomRecycler: RecyclerView
+    private lateinit var bottomSheetBehavior: BottomSheetBehavior<LinearLayout>
+
     private val refreshing = AtomicBoolean(false)
     private val updateDateFormat = SimpleDateFormat("h:mm a")
+    private val backItemAdapter = BackItemAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -94,8 +107,21 @@ class PkPassDetailFragment : BaseFragment(), Toolbar.OnMenuItemClickListener {
         secondaryFieldsView = view.findViewById(R.id.pass_detail_secondary)
         barcodeImage = view.findViewById(R.id.pass_detail_barcode)
         footerImage = view.findViewById(R.id.pass_detail_footer)
+        infoButton = view.findViewById(R.id.pass_detail_info)
         lastUpdated = view.findViewById(R.id.pass_last_updated)
         expiredText = view.findViewById(R.id.pass_detail_expired)
+
+        bottomSheet = view.findViewById(R.id.pass_detail_bottom_sheet)
+        bottomRecycler = view.findViewById(R.id.pass_detail_back_recycler)
+        bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet)
+        bottomRecycler.layoutManager = LinearLayoutManager(requireContext())
+        bottomRecycler.adapter = backItemAdapter
+        bottomRecycler.addItemDecoration(
+            DividerItemDecoration(
+                requireContext(),
+                RecyclerView.VERTICAL
+            )
+        )
 
         toolbar.inflateMenu(R.menu.menu_pass_detail)
         toolbar.setOnMenuItemClickListener(this)
@@ -200,6 +226,20 @@ class PkPassDetailFragment : BaseFragment(), Toolbar.OnMenuItemClickListener {
                         }
                     }
 
+                }
+            }.launchIn(lifecycleScope)
+
+        viewModel.backItems
+            .onEach {
+                backItemAdapter.items = it
+                if (it.isEmpty()) {
+                    infoButton.visibility = View.GONE
+                } else {
+                    infoButton.visibility = View.VISIBLE
+
+                    infoButton.setOnClickListener {
+                        bottomSheetBehavior.expand()
+                    }
                 }
             }.launchIn(lifecycleScope)
 

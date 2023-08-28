@@ -56,5 +56,6 @@ data class PassInfoStruct(
     override val primaryFields: List<FieldObject>?,
     override val secondaryFields: List<FieldObject>?,
     override val auxiliaryFields: List<FieldObject>?,
+    override val backFields: List<FieldObject>?,
 ) : PassInfo
 

@@ -43,6 +43,7 @@ interface PassInfo {
     val primaryFields: List<FieldObject>?
     val secondaryFields: List<FieldObject>?
     val auxiliaryFields: List<FieldObject>?
+    val backFields: List<FieldObject>?
 }
 
 interface Barcode {
