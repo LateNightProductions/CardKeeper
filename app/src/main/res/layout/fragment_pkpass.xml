@@ -36,7 +36,7 @@
             app:cardElevation="0dp"
             android:layout_height="0dp"
             card_view:cardBackgroundColor="@color/cardview_light_background"
-            card_view:cardCornerRadius="4dp" />
+            card_view:cardCornerRadius="8dp" />
 
 
         <androidx.appcompat.widget.Toolbar
@@ -119,6 +119,18 @@
             app:layout_constraintEnd_toStartOf="@id/guideline_end" />
 
         <ImageView
+            android:id="@+id/pass_detail_footer"
+            android:scaleType="center"
+            app:layout_constraintDimensionRatio="19"
+            android:layout_width="0dp"
+            app:layout_constraintWidth_percent=".5"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toEndOf="@id/pass_detail_card"
+            app:layout_constraintStart_toStartOf="@id/pass_detail_card"
+            app:layout_constraintTop_toBottomOf="@id/pass_detail_secondary"
+            android:layout_height="0dp" />
+
+        <ImageView
             android:id="@+id/pass_detail_barcode"
             app:layout_constraintStart_toEndOf="@id/guideline_start"
             app:layout_constraintEnd_toStartOf="@id/guideline_end"
@@ -127,13 +139,31 @@
             android:paddingBottom="16dp"
             android:layout_height="150dp"
             android:scaleType="fitCenter"
-            app:layout_constraintTop_toBottomOf="@id/pass_detail_secondary"
+            app:layout_constraintTop_toBottomOf="@id/pass_detail_footer"
             tools:src="@mipmap/ic_launcher" />
+
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/pass_detail_expired"
+            android:layout_width="wrap_content"
+            android:textColor="@color/colorAccent"
+            android:shadowColor="#ffffff"
+            android:shadowDx="1.01"
+            android:textStyle="bold"
+            android:shadowDy="1.1"
+            android:shadowRadius="1.1"
+            android:layout_marginTop="16dp"
+            tools:visibility="visible"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@id/pass_detail_card"
+            app:layout_constraintEnd_toEndOf="@id/pass_detail_card"
+            app:layout_constraintTop_toBottomOf="@id/pass_detail_barcode"
+            android:text="@string/fragment_pass_detail_expired" />
 
         <TextView
             android:id="@+id/pass_last_updated"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:visibility="gone"
             android:textStyle="italic"
             android:textSize="12sp"
@@ -142,7 +172,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             tools:text="Last updated 6:30 PM"
-            app:layout_constraintTop_toBottomOf="@id/pass_detail_card"
+            app:layout_constraintTop_toBottomOf="@id/pass_detail_expired"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </androidx.constraintlayout.widget.ConstraintLayout>

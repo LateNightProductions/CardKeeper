@@ -16,7 +16,7 @@
       android:layout_marginTop="4dp"
       android:layout_marginRight="@dimen/activity_horizontal_margin"
       card_view:cardBackgroundColor="@color/cardview_light_background"
-      card_view:cardCornerRadius="4dp"
+      card_view:cardCornerRadius="8dp"
       >
 
     <com.awscherb.cardkeeper.ui.view.PkPassHeaderView

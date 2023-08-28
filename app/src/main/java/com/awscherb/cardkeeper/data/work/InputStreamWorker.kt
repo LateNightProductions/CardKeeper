@@ -15,6 +15,7 @@ import java.io.InputStream
 import java.io.InputStreamReader
 import java.util.zip.ZipEntry
 import java.util.zip.ZipInputStream
+import kotlin.math.log
 
 abstract class InputStreamWorker(
     workerParams: WorkerParameters,
@@ -39,23 +40,34 @@ abstract class InputStreamWorker(
         try {
             pass = parsePassEntityFromDisk() ?: return null
 
-            val logoFile = findLargestImageFile("logo")
-            val stripFile = findLargestImageFile("strip")
-
-            attemptImageCopy(
-                imageFile = logoFile,
-                entity = pass,
-                type = "logo",
-            ) {
-                pass.logoPath = it
+            findLargestImageFile("logo")?.let { logoFile ->
+                attemptImageCopy(
+                    imageFile = logoFile,
+                    entity = pass,
+                    type = "logo",
+                ) {
+                    pass.logoPath = it
+                }
             }
 
-            attemptImageCopy(
-                imageFile = stripFile,
-                entity = pass,
-                type = "strip",
-            ) {
-                pass.stripPath = it
+            findLargestImageFile("strip")?.let { stripFile ->
+                attemptImageCopy(
+                    imageFile = stripFile,
+                    entity = pass,
+                    type = "strip",
+                ) {
+                    pass.stripPath = it
+                }
+            }
+
+            findLargestImageFile("footer")?.let { footerFile ->
+                attemptImageCopy(
+                    imageFile = footerFile,
+                    entity = pass,
+                    type = "strip",
+                ) {
+                    pass.footerPath = it
+                }
             }
 
             val translation = parsePassTranslation("en.lproj")
@@ -188,7 +200,7 @@ abstract class InputStreamWorker(
         return out
     }
 
-    private fun findLargestImageFile(name: String): File {
+    private fun findLargestImageFile(name: String): File? {
         val x3 = File(context.filesDir.absolutePath + "${WORKING_DIR}/$name@3x.png")
         val x2 = File(context.filesDir.absolutePath + "${WORKING_DIR}/$name@2x.png")
         val x1 = File(context.filesDir.absolutePath + "${WORKING_DIR}/$name.png")
@@ -196,7 +208,8 @@ abstract class InputStreamWorker(
         return when {
             x3.exists() -> x3
             x2.exists() -> x2
-            else -> x1
+            x1.exists() -> x1
+            else -> null
         }
     }
 

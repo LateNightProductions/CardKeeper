@@ -68,6 +68,8 @@ class PkPassDetailFragment : BaseFragment(), Toolbar.OnMenuItemClickListener {
     private lateinit var auxFieldsView: FlexboxLayout
     private lateinit var secondaryFieldsView: FlexboxLayout
     private lateinit var barcodeImage: ImageView
+    private lateinit var footerImage: ImageView
+    private lateinit var expiredText: TextView
     private lateinit var lastUpdated: TextView
 
     private val refreshing = AtomicBoolean(false)
@@ -91,7 +93,9 @@ class PkPassDetailFragment : BaseFragment(), Toolbar.OnMenuItemClickListener {
         auxFieldsView = view.findViewById(R.id.pass_detail_auxiliary)
         secondaryFieldsView = view.findViewById(R.id.pass_detail_secondary)
         barcodeImage = view.findViewById(R.id.pass_detail_barcode)
+        footerImage = view.findViewById(R.id.pass_detail_footer)
         lastUpdated = view.findViewById(R.id.pass_last_updated)
+        expiredText = view.findViewById(R.id.pass_detail_expired)
 
         toolbar.inflateMenu(R.menu.menu_pass_detail)
         toolbar.setOnMenuItemClickListener(this)
@@ -104,6 +108,12 @@ class PkPassDetailFragment : BaseFragment(), Toolbar.OnMenuItemClickListener {
                 auxFieldsView.removeAllViews()
                 secondaryFieldsView.removeAllViews()
 
+                if (pass.expirationDate?.before(Date()) == true) {
+                    expiredText.visibility = View.VISIBLE
+                } else {
+                    expiredText.visibility = View.GONE
+                }
+
                 card.setCardBackgroundColor(pass.backgroundColor.parseHexColor())
                 header.pass = pass
 
@@ -114,6 +124,15 @@ class PkPassDetailFragment : BaseFragment(), Toolbar.OnMenuItemClickListener {
                     Glide.with(this)
                         .load(pass.stripPath)
                         .into(strip)
+                }
+
+                if (pass.footerPath == null) {
+                    footerImage.visibility = View.GONE
+                } else {
+                    footerImage.visibility = View.VISIBLE
+                    Glide.with(this)
+                        .load(pass.footerPath)
+                        .into(footerImage)
                 }
 
                 pass.barcode?.let { barcode ->
@@ -226,7 +245,8 @@ class PkPassDetailFragment : BaseFragment(), Toolbar.OnMenuItemClickListener {
     private suspend fun refreshPass() {
         val pass = viewModel.pass.firstOrNull() ?: return
         if (pass.canBeUpdated() && refreshing.compareAndSet(false, true)) {
-            refreshItem?.isVisible = false
+            refreshItem?.setIcon(R.drawable.ic_downloading)
+            refreshItem?.isEnabled = false
             val req = OneTimeWorkRequestBuilder<UpdatePassWorker>()
                 .setInputData(
                     workDataOf(
@@ -243,6 +263,8 @@ class PkPassDetailFragment : BaseFragment(), Toolbar.OnMenuItemClickListener {
                 .observe(viewLifecycleOwner) {
                     if (it.state == WorkInfo.State.SUCCEEDED) {
                         refreshing.set(false)
+                        refreshItem?.isEnabled = true
+                        refreshItem?.setIcon(R.drawable.ic_refresh)
                         refreshItem?.isVisible = true
                         lastUpdated.visibility = View.VISIBLE
                         lastUpdated.text = getString(

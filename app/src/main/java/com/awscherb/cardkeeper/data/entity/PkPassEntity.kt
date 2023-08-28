@@ -7,6 +7,7 @@ import com.awscherb.cardkeeper.data.model.Barcode
 import com.awscherb.cardkeeper.data.model.PassInfo
 import com.awscherb.cardkeeper.data.model.FieldObject
 import com.awscherb.cardkeeper.data.model.PkPassModel
+import java.util.Date
 
 @Entity
 data class PkPassEntity(
@@ -20,6 +21,8 @@ data class PkPassEntity(
     override val passTypeIdentifier: String,
     override val serialNumber: String,
     override val logoText: String?,
+    override val expirationDate: Date?,
+
     // ex rgb(23, 187, 82)
     override val backgroundColor: String?,
     override val foregroundColor: String?,
@@ -32,6 +35,7 @@ data class PkPassEntity(
 
     override var logoPath: String?,
     override var stripPath: String?,
+    override var footerPath: String?,
 
     override var translation: Map<String, String>?,
     override val webServiceURL: String?,
