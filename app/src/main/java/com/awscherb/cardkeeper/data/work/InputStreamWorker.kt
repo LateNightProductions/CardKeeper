@@ -40,16 +40,18 @@ abstract class InputStreamWorker(
         try {
             pass = parsePassEntityFromDisk() ?: return null
 
-            findLargestImageFile("logo")
-                ?: findLargestImageFile("$DEFAULT_TRANSLATION/logo")?.let { logoFile ->
-                    attemptImageCopy(
-                        imageFile = logoFile,
-                        entity = pass,
-                        type = "logo",
-                    ) {
-                        pass.logoPath = it
-                    }
-                } ?: findLargestImageFile("$DEFAULT_TRANSLATION/logo")
+            val logo = findLargestImageFile("logo") ?: findLargestImageFile("$DEFAULT_TRANSLATION/logo")
+
+            logo?.let { logoFile ->
+                attemptImageCopy(
+                    imageFile = logoFile,
+                    entity = pass,
+                    type = "logo",
+                ) {
+                    pass.logoPath = it
+                }
+            }
+
 
             findLargestImageFile("strip")?.let { stripFile ->
                 attemptImageCopy(
@@ -217,12 +219,16 @@ abstract class InputStreamWorker(
         val x2 = File(context.filesDir.absolutePath + "${WORKING_DIR}/$name@2x.png")
         val x1 = File(context.filesDir.absolutePath + "${WORKING_DIR}/$name.png")
 
-        return when {
+        val out = when {
             x3.exists() -> x3
             x2.exists() -> x2
             x1.exists() -> x1
             else -> null
         }
+
+        Log.i("ImageInput", "Found $name $out")
+
+        return out
     }
 
     private fun attemptImageCopy(

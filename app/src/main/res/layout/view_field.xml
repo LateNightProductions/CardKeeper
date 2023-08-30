@@ -11,9 +11,11 @@
       app:layout_constraintTop_toTopOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       tools:text="SEAT"
+      android:textAllCaps="true"
       android:layout_width="wrap_content"
       android:textColor="@color/colorPrimary"
       android:textStyle="bold"
+      android:textSize="10sp"
       android:layout_height="wrap_content"
       />
 

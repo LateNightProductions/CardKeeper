@@ -34,6 +34,7 @@ class PkPassHeaderView @JvmOverloads constructor(
             field = value
             value?.let { pass ->
                 val labelColor = pass.labelColor.parseHexColor()
+                val valueColor = pass.foregroundColor.parseHexColor()
 
                 if (!pass.logoText.isNullOrEmpty()) {
                     logoText.visibility = View.VISIBLE
@@ -50,7 +51,8 @@ class PkPassHeaderView @JvmOverloads constructor(
                     headerField1.fieldConfig = FieldConfig(
                         label = pass.getTranslatedLabel(firstPass.label),
                         value = pass.getTranslatedValue(firstPass.value),
-                        labelColor = labelColor
+                        labelColor = labelColor,
+                        valueColor = valueColor
                     )
 
                     if (headers.size > 1) {
@@ -59,7 +61,9 @@ class PkPassHeaderView @JvmOverloads constructor(
                         headerField2.fieldConfig = FieldConfig(
                             label = pass.getTranslatedLabel(secondPass.label),
                             value = pass.getTranslatedValue(secondPass.value),
-                            labelColor = labelColor
+                            labelColor = labelColor,
+                            valueColor = valueColor
+
                         )
                     } else {
                         headerField2.visibility = View.GONE
