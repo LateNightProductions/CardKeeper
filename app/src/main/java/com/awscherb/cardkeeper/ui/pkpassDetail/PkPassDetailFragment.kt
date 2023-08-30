@@ -2,7 +2,6 @@ package com.awscherb.cardkeeper.ui.pkpassDetail
 
 import android.os.Bundle
 import android.util.DisplayMetrics
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -29,6 +28,7 @@ import com.awscherb.cardkeeper.R
 import com.awscherb.cardkeeper.data.model.canBeUpdated
 import com.awscherb.cardkeeper.data.model.findPassInfo
 import com.awscherb.cardkeeper.data.model.getTranslatedLabel
+import com.awscherb.cardkeeper.data.model.getTranslatedValue
 import com.awscherb.cardkeeper.data.model.parseHexColor
 import com.awscherb.cardkeeper.data.model.toBarcodeFormat
 import com.awscherb.cardkeeper.data.work.UpdatePassWorker
@@ -188,7 +188,7 @@ class PkPassDetailFragment : BaseFragment(), Toolbar.OnMenuItemClickListener {
                                     .apply {
                                         fieldConfig = FieldConfig(
                                             label = pass.getTranslatedLabel(field.label),
-                                            value = field.value,
+                                            value = pass.getTranslatedValue(field.value),
                                             labelColor = pass.labelColor.parseHexColor(),
                                             valueColor = pass.foregroundColor.parseHexColor()
                                         )
@@ -203,7 +203,7 @@ class PkPassDetailFragment : BaseFragment(), Toolbar.OnMenuItemClickListener {
                                 FieldView(ctx, null).apply {
                                     fieldConfig = FieldConfig(
                                         label = pass.getTranslatedLabel(field.label),
-                                        value = field.value,
+                                        value = pass.getTranslatedValue(field.value),
                                         labelColor = pass.labelColor.parseHexColor(),
                                         valueColor = pass.foregroundColor.parseHexColor()
                                     )
@@ -218,8 +218,10 @@ class PkPassDetailFragment : BaseFragment(), Toolbar.OnMenuItemClickListener {
                                 FieldView(ctx, null).apply {
                                     fieldConfig = FieldConfig(
                                         label = pass.getTranslatedLabel(field.label),
-                                        value = field.value,
-                                        labelColor = pass.labelColor.parseHexColor()
+                                        value = pass.getTranslatedValue(field.value),
+                                        labelColor = pass.labelColor.parseHexColor(),
+                                        valueColor = pass.foregroundColor.parseHexColor()
+
                                     )
                                 }
                             )

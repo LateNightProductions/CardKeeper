@@ -10,12 +10,10 @@ import java.io.BufferedReader
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
-import java.io.FileReader
 import java.io.InputStream
 import java.io.InputStreamReader
 import java.util.zip.ZipEntry
 import java.util.zip.ZipInputStream
-import kotlin.math.log
 
 abstract class InputStreamWorker(
     workerParams: WorkerParameters,
@@ -26,7 +24,9 @@ abstract class InputStreamWorker(
 ) {
 
     companion object {
-        private val WORKING_DIR = "/current"
+        private const val WORKING_DIR = "/current"
+
+        private const val DEFAULT_TRANSLATION = "en.lproj"
     }
 
     /**
@@ -40,15 +40,16 @@ abstract class InputStreamWorker(
         try {
             pass = parsePassEntityFromDisk() ?: return null
 
-            findLargestImageFile("logo")?.let { logoFile ->
-                attemptImageCopy(
-                    imageFile = logoFile,
-                    entity = pass,
-                    type = "logo",
-                ) {
-                    pass.logoPath = it
-                }
-            }
+            findLargestImageFile("logo")
+                ?: findLargestImageFile("$DEFAULT_TRANSLATION/logo")?.let { logoFile ->
+                    attemptImageCopy(
+                        imageFile = logoFile,
+                        entity = pass,
+                        type = "logo",
+                    ) {
+                        pass.logoPath = it
+                    }
+                } ?: findLargestImageFile("$DEFAULT_TRANSLATION/logo")
 
             findLargestImageFile("strip")?.let { stripFile ->
                 attemptImageCopy(
@@ -70,7 +71,7 @@ abstract class InputStreamWorker(
                 }
             }
 
-            val translation = parsePassTranslation("en.lproj")
+            val translation = parsePassTranslation(DEFAULT_TRANSLATION)
             if (translation.isNotEmpty()) {
                 pass.translation = translation
             }
@@ -166,11 +167,17 @@ abstract class InputStreamWorker(
         }
     }
 
-    private fun parsePassTranslation(lang: String): HashMap<String, String> {
+    private fun parsePassTranslation(
+        lang: String,
+    ): HashMap<String, String> {
         fun split(str: String): Pair<String, String> {
-            val parts = str.split("=")
-            if (parts.size != 2) {
+            val parts = str.split("=").toMutableList()
+            if (parts.size < 2) {
+                // Probably malformed
                 return "" to ""
+            } else if (parts.size > 2) {
+                // value probably has an `=` in it somewhere, join all parts
+                parts[1] = parts.subList(1, parts.size).joinToString { it }
             }
             return parts[0].replace("\"", "").trim() to
                     parts[1].replace("\"", "").trim()
@@ -180,7 +187,12 @@ abstract class InputStreamWorker(
         val languageFile =
             File(context.filesDir.absolutePath + WORKING_DIR + "/$lang", "pass.strings")
         if (languageFile.exists()) {
-            BufferedReader(FileReader(languageFile)).use { br ->
+            // TODO assumes UTF-8, I have seen some UTF-16 encoded strings files, figure that out
+            BufferedReader(
+                InputStreamReader(
+                    FileInputStream(languageFile),
+                )
+            ).use { br ->
                 br.lines().forEach { line ->
                     if (!line.startsWith("/*")) {
                         line.split(";").forEach {

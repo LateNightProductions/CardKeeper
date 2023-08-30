@@ -13,6 +13,7 @@ interface PkPassModel : SavedItem {
     val barcodes: List<Barcode>?
     val passTypeIdentifier: String
     val logoText: String?
+
     @Nullable
     val expirationDate: Date?
 
@@ -74,6 +75,14 @@ enum class TransitType {
 }
 
 fun PkPassModel.getTranslatedLabel(label: String?): String? {
+    val tr = translation
+    return when {
+        tr != null -> tr[label] ?: label
+        else -> label
+    }
+}
+
+fun PkPassModel.getTranslatedValue(label: String): String {
     val tr = translation
     return when {
         tr != null -> tr[label] ?: label

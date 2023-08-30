@@ -1,7 +1,6 @@
 package com.awscherb.cardkeeper.ui.view
 
 import android.content.Context
-import android.graphics.Color
 import android.util.AttributeSet
 import android.view.View
 import android.widget.FrameLayout
@@ -11,6 +10,7 @@ import com.awscherb.cardkeeper.R
 import com.awscherb.cardkeeper.data.model.PkPassModel
 import com.awscherb.cardkeeper.data.model.findPassInfo
 import com.awscherb.cardkeeper.data.model.getTranslatedLabel
+import com.awscherb.cardkeeper.data.model.getTranslatedValue
 import com.awscherb.cardkeeper.data.model.parseHexColor
 import com.bumptech.glide.Glide
 import java.io.File
@@ -49,7 +49,7 @@ class PkPassHeaderView @JvmOverloads constructor(
                     val firstPass = headers[0]
                     headerField1.fieldConfig = FieldConfig(
                         label = pass.getTranslatedLabel(firstPass.label),
-                        value = firstPass.value,
+                        value = pass.getTranslatedValue(firstPass.value),
                         labelColor = labelColor
                     )
 
@@ -58,7 +58,7 @@ class PkPassHeaderView @JvmOverloads constructor(
                         val secondPass = headers[1]
                         headerField2.fieldConfig = FieldConfig(
                             label = pass.getTranslatedLabel(secondPass.label),
-                            value = secondPass.value,
+                            value = pass.getTranslatedValue(secondPass.value),
                             labelColor = labelColor
                         )
                     } else {
