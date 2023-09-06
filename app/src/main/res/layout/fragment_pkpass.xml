@@ -147,9 +147,25 @@
                 app:layout_constraintTop_toBottomOf="@id/pass_detail_footer"
                 tools:src="@mipmap/ic_launcher" />
 
+            <TextView
+                android:id="@+id/pass_detail_barcode_alt"
+                android:layout_width="wrap_content"
+                android:visibility="gone"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="@id/pass_detail_barcode"
+                app:layout_constraintEnd_toEndOf="@id/pass_detail_barcode"
+                app:layout_constraintBottom_toBottomOf="@id/pass_detail_barcode"
+                android:layout_marginBottom="4dp"
+                android:paddingStart="4dp"
+                android:paddingEnd="4dp"
+                tools:text="Loyalty Number: 1234"
+                android:textColor="#000000"
+                android:background="#ffffff"/>
+
             <ImageView
                 android:id="@+id/pass_detail_info"
                 android:visibility="gone"
+                tools:visibility="visible"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:src="@drawable/ic_info"

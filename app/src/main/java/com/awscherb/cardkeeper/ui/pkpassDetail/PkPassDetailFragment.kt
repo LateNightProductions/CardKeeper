@@ -75,6 +75,7 @@ class PkPassDetailFragment : BaseFragment(), Toolbar.OnMenuItemClickListener {
     private lateinit var auxFieldsView: FlexboxLayout
     private lateinit var secondaryFieldsView: FlexboxLayout
     private lateinit var barcodeImage: ImageView
+    private lateinit var altText: TextView
     private lateinit var footerImage: ImageView
     private lateinit var infoButton: ImageView
     private lateinit var expiredText: TextView
@@ -106,6 +107,7 @@ class PkPassDetailFragment : BaseFragment(), Toolbar.OnMenuItemClickListener {
         auxFieldsView = view.findViewById(R.id.pass_detail_auxiliary)
         secondaryFieldsView = view.findViewById(R.id.pass_detail_secondary)
         barcodeImage = view.findViewById(R.id.pass_detail_barcode)
+        altText = view.findViewById(R.id.pass_detail_barcode_alt)
         footerImage = view.findViewById(R.id.pass_detail_footer)
         infoButton = view.findViewById(R.id.pass_detail_info)
         lastUpdated = view.findViewById(R.id.pass_last_updated)
@@ -177,6 +179,11 @@ class PkPassDetailFragment : BaseFragment(), Toolbar.OnMenuItemClickListener {
                         )
                     } catch (e: WriterException) {
                         e.printStackTrace()
+                    }
+
+                    if (barcode.altText?.isNotEmpty() == true) {
+                        altText.visibility = View.VISIBLE
+                        altText.text = barcode.altText
                     }
                 }
 
