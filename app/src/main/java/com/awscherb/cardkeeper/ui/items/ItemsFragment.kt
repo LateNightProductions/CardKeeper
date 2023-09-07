@@ -1,5 +1,6 @@
 package com.awscherb.cardkeeper.ui.items
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -23,6 +24,7 @@ import com.awscherb.cardkeeper.ui.card_detail.CardDetailViewModel
 import com.awscherb.cardkeeper.ui.card_detail.CardDetailViewModelFactory
 import com.awscherb.cardkeeper.ui.pkpassDetail.PkPassViewModel
 import com.awscherb.cardkeeper.ui.pkpassDetail.PkPassViewModelFactory
+import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.coroutines.flow.launchIn
@@ -126,6 +128,10 @@ class ItemsFragment : BaseFragment() {
                     toolbar.visibility = View.GONE
                     searchBox.requestFocusAndShowKeyboard()
                     searchLayout.visibility = View.VISIBLE
+                    true
+                }
+                R.id.about -> {
+                    startActivity(Intent(requireContext(), OssLicensesMenuActivity::class.java))
                     true
                 }
                 else -> false

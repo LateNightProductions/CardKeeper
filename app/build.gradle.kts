@@ -4,6 +4,7 @@ plugins {
     id("kotlin-kapt")
     id("kotlin-parcelize")
     id("androidx.navigation.safeargs.kotlin")
+    id("com.google.android.gms.oss-licenses-plugin")
 }
 
 android {
@@ -65,6 +66,8 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-extensions:2.2.0")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.1")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1")
+
+    implementation("com.google.android.gms:play-services-oss-licenses:17.0.1")
 
     // Room
     implementation("androidx.room:room-runtime:2.5.2")

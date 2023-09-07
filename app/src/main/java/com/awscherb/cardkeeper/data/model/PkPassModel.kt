@@ -3,7 +3,6 @@ package com.awscherb.cardkeeper.data.model
 import android.graphics.Color
 import com.google.zxing.BarcodeFormat
 import java.util.Date
-import javax.annotation.Nullable
 
 interface PkPassModel : SavedItem {
     val id: String
@@ -14,7 +13,6 @@ interface PkPassModel : SavedItem {
     val passTypeIdentifier: String
     val logoText: String?
 
-    @Nullable
     val expirationDate: Date?
 
     // rgb(0, 187, 82)
