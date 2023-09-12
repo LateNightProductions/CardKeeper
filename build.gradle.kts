@@ -4,10 +4,10 @@ buildscript {
         google()
     }
     dependencies {
-        classpath("com.android.tools.build:gradle:8.1.0")
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.8.10")
-        classpath("androidx.navigation:navigation-safe-args-gradle-plugin:2.5.3")
-        classpath("com.google.android.gms:oss-licenses-plugin:0.10.6")
+        classpath(libs.gradle)
+        classpath(libs.kotlin.gradle.plugin)
+        classpath(libs.androidx.navigation.safe.args.gradle.plugin)
+        classpath(libs.oss.licenses.plugin)
     }
 }
 
