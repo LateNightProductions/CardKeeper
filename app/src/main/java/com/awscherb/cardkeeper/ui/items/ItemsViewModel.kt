@@ -2,9 +2,8 @@ package com.awscherb.cardkeeper.ui.items
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.awscherb.cardkeeper.data.model.PkPassModel
-import com.awscherb.cardkeeper.data.model.SavedItem
-import com.awscherb.cardkeeper.data.model.ScannedCodeModel
+import com.awscherb.cardkeeper.pkpass.model.PkPassModel
+import com.awscherb.cardkeeper.core.SavedItem
 import com.awscherb.cardkeeper.data.repository.SavedItemRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow

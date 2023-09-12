@@ -1,7 +1,6 @@
 package com.awscherb.cardkeeper.ui.items
 
 import android.content.Context
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,22 +9,16 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.awscherb.cardkeeper.R
-import com.awscherb.cardkeeper.data.CardKeeperDatabase
-import com.awscherb.cardkeeper.data.model.PkPassModel
-import com.awscherb.cardkeeper.data.model.SavedItem
-import com.awscherb.cardkeeper.data.model.ScannedCodeModel
-import com.awscherb.cardkeeper.data.model.parseHexColor
-import com.awscherb.cardkeeper.ui.view.FieldConfig
-import com.awscherb.cardkeeper.ui.view.FieldView
+import com.awscherb.cardkeeper.barcode.model.ScannedCodeModel
+import com.awscherb.cardkeeper.core.SavedItem
+import com.awscherb.cardkeeper.pkpass.model.PkPassModel
+import com.awscherb.cardkeeper.pkpass.model.parseHexColor
 import com.awscherb.cardkeeper.ui.view.PkPassHeaderView
-import com.bumptech.glide.Glide
 import com.google.zxing.BarcodeFormat.AZTEC
 import com.google.zxing.BarcodeFormat.DATA_MATRIX
 import com.google.zxing.BarcodeFormat.QR_CODE
 import com.google.zxing.WriterException
 import com.journeyapps.barcodescanner.BarcodeEncoder
-import java.io.File
-import kotlin.math.log
 
 class ItemsAdapter constructor(
     private val context: Context,
@@ -55,6 +48,7 @@ class ItemsAdapter constructor(
         return when (items[position]) {
             is ScannedCodeModel -> TYPE_SCANNED_CODE
             is PkPassModel -> TYPE_PKPASS
+            else -> throw IllegalArgumentException("Unknown type")
         }
     }
 
@@ -67,6 +61,7 @@ class ItemsAdapter constructor(
                     false
                 )
             )
+
             TYPE_PKPASS -> return PkPassViewHolder(
                 LayoutInflater.from(context).inflate(
                     R.layout.adapter_pkpass,
@@ -74,13 +69,18 @@ class ItemsAdapter constructor(
                     false
                 )
             )
+
             else -> throw IllegalArgumentException("No such viewtype $viewType")
         }
     }
 
     override fun onBindViewHolder(holder: SavedItemViewHolder, position: Int) {
         when (holder) {
-            is ScannedCodeViewHolder -> bindCardViewHolder(holder, items[position] as ScannedCodeModel)
+            is ScannedCodeViewHolder -> bindCardViewHolder(
+                holder,
+                items[position] as ScannedCodeModel
+            )
+
             is PkPassViewHolder -> bindPkPassViewHolder(holder, items[position] as PkPassModel)
         }
     }

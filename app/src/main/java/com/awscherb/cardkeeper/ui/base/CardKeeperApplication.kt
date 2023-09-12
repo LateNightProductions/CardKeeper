@@ -2,12 +2,11 @@ package com.awscherb.cardkeeper.ui.base
 
 import android.app.Application
 import androidx.work.Configuration
-import com.awscherb.cardkeeper.data.api.PkPassApi
-import com.awscherb.cardkeeper.data.dao.PkPassDao
 import com.awscherb.cardkeeper.data.work.CardKeeperWorkerFactory
 import com.awscherb.cardkeeper.di.component.DaggerViewComponent
 import com.awscherb.cardkeeper.di.module.AppModule
-import com.awscherb.cardkeeper.di.module.DaoModule
+import com.awscherb.cardkeeper.pkpass.api.PkPassApi
+import com.awscherb.cardkeeper.pkpass.db.PkPassDao
 import com.google.gson.Gson
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector
@@ -34,7 +33,6 @@ class CardKeeperApplication : Application(), HasAndroidInjector, Configuration.P
 
         DaggerViewComponent.builder()
             .appModule(AppModule(this))
-            .daoModule(DaoModule())
             .build()
             .inject(this)
     }

@@ -2,8 +2,8 @@ package com.awscherb.cardkeeper.di.module
 
 import android.content.Context
 import androidx.room.Room
-import com.awscherb.cardkeeper.data.CardKeeperDatabase
-import com.awscherb.cardkeeper.data.DatabaseMigrations
+import com.awscherb.cardkeeper.BuildConfig
+import com.awscherb.cardkeeper.core.BuildInfo
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -15,12 +15,6 @@ class AppModule(private val context: Context) {
     fun provideContext() = context
 
     @Provides
-    @Singleton
-    fun provideDatabase(context: Context): CardKeeperDatabase {
-        return Room.databaseBuilder(
-            context.applicationContext, CardKeeperDatabase::class.java, "cardkeeper.db"
-        )
-            .fallbackToDestructiveMigration()
-            .build()
-    }
+    fun provideBuildInfo() = BuildInfo(debug = BuildConfig.DEBUG)
+
 }

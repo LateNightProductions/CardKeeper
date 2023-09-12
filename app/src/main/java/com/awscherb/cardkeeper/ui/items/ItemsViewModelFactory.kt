@@ -3,7 +3,6 @@ package com.awscherb.cardkeeper.ui.items
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.awscherb.cardkeeper.data.repository.SavedItemRepository
-import com.awscherb.cardkeeper.data.service.ScannedCodeService
 import javax.inject.Inject
 
 class ItemsViewModelFactory @Inject constructor(

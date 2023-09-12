@@ -4,8 +4,10 @@ import android.content.Context
 import androidx.work.ListenableWorker
 import androidx.work.WorkerFactory
 import androidx.work.WorkerParameters
-import com.awscherb.cardkeeper.data.api.PkPassApi
-import com.awscherb.cardkeeper.data.dao.PkPassDao
+import com.awscherb.cardkeeper.pkpass.api.PkPassApi
+import com.awscherb.cardkeeper.pkpass.db.PkPassDao
+import com.awscherb.cardkeeper.pkpass.work.ImportPassWorker
+import com.awscherb.cardkeeper.pkpass.work.UpdatePassWorker
 import com.google.gson.Gson
 
 class CardKeeperWorkerFactory constructor(

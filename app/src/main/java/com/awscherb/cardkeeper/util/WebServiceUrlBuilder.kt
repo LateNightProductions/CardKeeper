@@ -1,7 +1,7 @@
 package com.awscherb.cardkeeper.util
 
-import com.awscherb.cardkeeper.data.model.PkPassModel
-import com.awscherb.cardkeeper.data.model.canBeUpdated
+import com.awscherb.cardkeeper.pkpass.model.PkPassModel
+import com.awscherb.cardkeeper.pkpass.model.canBeUpdated
 
 object WebServiceUrlBuilder {
 

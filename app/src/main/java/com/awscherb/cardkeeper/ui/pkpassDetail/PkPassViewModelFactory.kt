@@ -2,8 +2,7 @@ package com.awscherb.cardkeeper.ui.pkpassDetail
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.awscherb.cardkeeper.data.model.PkPassModel
-import com.awscherb.cardkeeper.data.service.PkPassService
+import com.awscherb.cardkeeper.pkpass.service.PkPassService
 import javax.inject.Inject
 
 class PkPassViewModelFactory @Inject constructor(

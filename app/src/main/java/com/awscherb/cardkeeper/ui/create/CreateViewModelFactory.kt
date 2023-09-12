@@ -2,7 +2,7 @@ package com.awscherb.cardkeeper.ui.create
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.awscherb.cardkeeper.data.service.ScannedCodeService
+import com.awscherb.cardkeeper.barcode.service.ScannedCodeService
 import javax.inject.Inject
 
 class CreateViewModelFactory @Inject constructor(

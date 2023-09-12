@@ -7,11 +7,11 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
 import com.awscherb.cardkeeper.R
-import com.awscherb.cardkeeper.data.model.PkPassModel
-import com.awscherb.cardkeeper.data.model.findPassInfo
-import com.awscherb.cardkeeper.data.model.getTranslatedLabel
-import com.awscherb.cardkeeper.data.model.getTranslatedValue
-import com.awscherb.cardkeeper.data.model.parseHexColor
+import com.awscherb.cardkeeper.pkpass.model.PkPassModel
+import com.awscherb.cardkeeper.pkpass.model.findPassInfo
+import com.awscherb.cardkeeper.pkpass.model.getTranslatedLabel
+import com.awscherb.cardkeeper.pkpass.model.getTranslatedValue
+import com.awscherb.cardkeeper.pkpass.model.parseHexColor
 import com.bumptech.glide.Glide
 import java.io.File
 

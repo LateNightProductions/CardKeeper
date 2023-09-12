@@ -1,8 +1,8 @@
 package com.awscherb.cardkeeper.ui.card_detail
 
 import androidx.lifecycle.*
-import com.awscherb.cardkeeper.data.entity.ScannedCodeEntity
-import com.awscherb.cardkeeper.data.service.ScannedCodeService
+import com.awscherb.cardkeeper.barcode.entity.ScannedCodeEntity
+import com.awscherb.cardkeeper.barcode.service.ScannedCodeService
 import com.awscherb.cardkeeper.ui.create.*
 import kotlinx.coroutines.flow.*
 

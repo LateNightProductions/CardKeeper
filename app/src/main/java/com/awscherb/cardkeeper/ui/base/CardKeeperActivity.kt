@@ -7,8 +7,8 @@ import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.workDataOf
 import com.awscherb.cardkeeper.R
-import com.awscherb.cardkeeper.data.dao.PkPassDao
-import com.awscherb.cardkeeper.data.work.ImportPassWorker
+import com.awscherb.cardkeeper.pkpass.db.PkPassDao
+import com.awscherb.cardkeeper.pkpass.work.ImportPassWorker
 import dagger.android.AndroidInjection
 import javax.inject.Inject
 

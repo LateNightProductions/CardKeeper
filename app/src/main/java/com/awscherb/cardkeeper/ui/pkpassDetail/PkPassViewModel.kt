@@ -2,10 +2,10 @@ package com.awscherb.cardkeeper.ui.pkpassDetail
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.awscherb.cardkeeper.data.model.findPassInfo
-import com.awscherb.cardkeeper.data.model.getTranslatedLabel
-import com.awscherb.cardkeeper.data.model.getTranslatedValue
-import com.awscherb.cardkeeper.data.service.PkPassService
+import com.awscherb.cardkeeper.pkpass.model.findPassInfo
+import com.awscherb.cardkeeper.pkpass.model.getTranslatedLabel
+import com.awscherb.cardkeeper.pkpass.model.getTranslatedValue
+import com.awscherb.cardkeeper.pkpass.service.PkPassService
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.filterNotNull

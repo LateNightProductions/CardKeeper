@@ -2,8 +2,8 @@ package com.awscherb.cardkeeper.ui.create
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.awscherb.cardkeeper.data.entity.ScannedCodeEntity
-import com.awscherb.cardkeeper.data.service.ScannedCodeService
+import com.awscherb.cardkeeper.barcode.entity.ScannedCodeEntity
+import com.awscherb.cardkeeper.barcode.service.ScannedCodeService
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
