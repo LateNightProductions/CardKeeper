@@ -48,6 +48,12 @@ android {
     kotlinOptions {
         jvmTarget = "17"
     }
+    buildFeatures {
+        compose = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.4.3"
+    }
 
     namespace = "com.awscherb.cardkeeper"
 
@@ -59,6 +65,7 @@ dependencies {
     implementation(project(":data:barcode"))
     implementation(project(":data:pkpass"))
 
+    implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.cardview)
     implementation(libs.androidx.constraintlayout)
@@ -71,6 +78,10 @@ dependencies {
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
     implementation(libs.androidx.work.runtime.ktx)
+    implementation(platform(libs.compose.bom))
+    implementation(libs.compose.constraint)
+    implementation(libs.compose.material3)
+    implementation(libs.compose.ui.tooling.preview)
     implementation(libs.dagger)
     implementation(libs.dagger.android.support)
     implementation(libs.flexbox)
@@ -84,7 +95,7 @@ dependencies {
     implementation(libs.retrofit.converter.gson)
     implementation(libs.zxing.android.embedded)
     implementation(libs.zxing.core)
-
+    debugImplementation(libs.compose.ui.tooling)
 
     kapt(libs.androidx.room.compiler)
     kapt(libs.dagger.android.processor)

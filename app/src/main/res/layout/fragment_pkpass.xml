@@ -69,9 +69,19 @@
                 app:layout_constraintEnd_toStartOf="@id/guideline_end"
                 android:layout_width="0dp"
                 android:scaleType="center"
+                tools:visibility="gone"
                 app:layout_constraintDimensionRatio="2.36"
                 app:layout_constraintTop_toBottomOf="@id/pass_detail_header"
                 android:layout_height="0dp" />
+
+            <androidx.compose.ui.platform.ComposeView
+                android:id="@+id/pass_compose_primary"
+                app:layout_constraintTop_toBottomOf="@id/pass_detail_header"
+                app:layout_constraintStart_toEndOf="@id/guideline_start"
+                app:layout_constraintEnd_toStartOf="@id/guideline_end"
+                android:layout_width="0dp"
+                tools:layout_height="100dp"
+                android:layout_height="wrap_content"/>
 
             <com.google.android.flexbox.FlexboxLayout
                 android:id="@+id/pass_detail_primary"
@@ -89,7 +99,7 @@
             <androidx.constraintlayout.widget.Barrier
                 app:barrierDirection="bottom"
                 android:id="@+id/pass_detail_header_barrier"
-                app:constraint_referenced_ids="pass_detail_strip,pass_detail_primary"
+                app:constraint_referenced_ids="pass_compose_primary,pass_detail_strip,pass_detail_primary"
                 android:layout_width="match_parent"
                 android:layout_height="0dp" />
 

@@ -74,6 +74,20 @@ enum class TransitType {
     AIR
 }
 
+fun PassInfo.isTransit() = transitType != null
+fun PassInfo.getTransitType() = transitType?.getTransitType()
+
+fun PassInfo.findOriginDestination(): Pair<FieldObject, FieldObject> {
+    val origin = primaryFields?.find { it.key.equals("origin", true) }
+        ?: throw IllegalArgumentException("cannot find origin")
+
+    val dest = primaryFields?.find { it.key.equals("destination", true) }
+        ?: throw IllegalArgumentException("cannot find destination")
+
+    return origin to dest
+}
+
+
 fun PkPassModel.getTranslatedLabel(label: String?): String? {
     val tr = translation
     return when {
@@ -90,7 +104,7 @@ fun PkPassModel.getTranslatedValue(label: String): String {
     }
 }
 
-fun String?.toTransitType(): TransitType? =
+fun String?.getTransitType(): TransitType? =
     when (this) {
         "PKTransitTypeAir" -> TransitType.AIR
         else -> null
@@ -104,7 +118,7 @@ fun String?.parseHexColor(): Int {
                 this
             } else {
                 val parse = subSequence(indexOf("(") + 1, indexOf(")"))
-                
+
                 val numbers = parse.split(",")
 
                 val ints = numbers.subList(0, 3).map { it.trim().toInt() }

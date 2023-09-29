@@ -6,12 +6,14 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.Toolbar
 import androidx.cardview.widget.CardView
+import androidx.compose.ui.platform.ComposeView
 import androidx.core.view.marginEnd
 import androidx.core.view.marginStart
 import androidx.fragment.app.activityViewModels
@@ -25,10 +27,14 @@ import androidx.work.WorkInfo
 import androidx.work.WorkManager
 import androidx.work.workDataOf
 import com.awscherb.cardkeeper.R
+import com.awscherb.cardkeeper.pkpass.model.TransitType
 import com.awscherb.cardkeeper.pkpass.model.canBeUpdated
+import com.awscherb.cardkeeper.pkpass.model.findOriginDestination
 import com.awscherb.cardkeeper.pkpass.model.findPassInfo
+import com.awscherb.cardkeeper.pkpass.model.getTransitType
 import com.awscherb.cardkeeper.pkpass.model.getTranslatedLabel
 import com.awscherb.cardkeeper.pkpass.model.getTranslatedValue
+import com.awscherb.cardkeeper.pkpass.model.isTransit
 import com.awscherb.cardkeeper.pkpass.model.parseHexColor
 import com.awscherb.cardkeeper.pkpass.model.toBarcodeFormat
 import com.awscherb.cardkeeper.pkpass.work.UpdatePassWorker
@@ -51,6 +57,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.launch
+import java.lang.IllegalStateException
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.concurrent.atomic.AtomicBoolean
@@ -71,6 +78,7 @@ class PkPassDetailFragment : BaseFragment(), Toolbar.OnMenuItemClickListener {
     private lateinit var card: CardView
     private lateinit var header: PkPassHeaderView
     private lateinit var strip: ImageView
+    private lateinit var primaryComposeHolder: ComposeView
     private lateinit var primaryFieldsView: FlexboxLayout
     private lateinit var auxFieldsView: FlexboxLayout
     private lateinit var secondaryFieldsView: FlexboxLayout
@@ -103,6 +111,7 @@ class PkPassDetailFragment : BaseFragment(), Toolbar.OnMenuItemClickListener {
         card = view.findViewById(R.id.pass_detail_card)
         header = view.findViewById(R.id.pass_detail_header)
         strip = view.findViewById(R.id.pass_detail_strip)
+        primaryComposeHolder = view.findViewById(R.id.pass_compose_primary)
         primaryFieldsView = view.findViewById(R.id.pass_detail_primary)
         auxFieldsView = view.findViewById(R.id.pass_detail_auxiliary)
         secondaryFieldsView = view.findViewById(R.id.pass_detail_secondary)
@@ -187,22 +196,47 @@ class PkPassDetailFragment : BaseFragment(), Toolbar.OnMenuItemClickListener {
                     }
                 }
 
+
                 pass.findPassInfo()?.let { passInfo ->
-                    passInfo.primaryFields?.forEach { field ->
-                        context?.let { ctx ->
-                            primaryFieldsView.addView(
-                                PrimaryFieldView(ctx, null)
-                                    .apply {
-                                        fieldConfig = FieldConfig(
-                                            label = pass.getTranslatedLabel(field.label),
-                                            value = pass.getTranslatedValue(field.value),
-                                            labelColor = pass.labelColor.parseHexColor(),
-                                            valueColor = pass.foregroundColor.parseHexColor()
-                                        )
-                                    }
-                            )
+
+                    if (passInfo.isTransit() && passInfo.transitType.getTransitType() == TransitType.AIR) {
+                        primaryFieldsView.visibility = View.GONE
+                        primaryComposeHolder.visibility = View.VISIBLE
+
+                        val (origin, destination) = passInfo.findOriginDestination()
+
+                        primaryComposeHolder.apply {
+                            setContent {
+                                AirPrimarySection(
+                                    fromAirport = origin.label ?: "",
+                                    fromCode = origin.value,
+                                    toAirport = destination.label ?: "",
+                                    toCode = destination.value,
+                                    tint = pass.foregroundColor.parseHexColor()
+                                )
+                            }
+                        }
+                    } else {
+                        primaryFieldsView.visibility = View.VISIBLE
+                        primaryComposeHolder.visibility = View.GONE
+                        passInfo.primaryFields?.forEach { field ->
+                            context?.let { ctx ->
+                                primaryFieldsView.addView(
+                                    PrimaryFieldView(ctx, null)
+                                        .apply {
+                                            fieldConfig = FieldConfig(
+                                                label = pass.getTranslatedLabel(field.label),
+                                                value = pass.getTranslatedValue(field.value),
+                                                labelColor = pass.labelColor.parseHexColor(),
+                                                valueColor = pass.foregroundColor.parseHexColor()
+                                            )
+                                        }
+                                )
+                            }
                         }
                     }
+
+
 
                     passInfo.auxiliaryFields?.forEach { field ->
                         context?.let { ctx ->
