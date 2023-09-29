@@ -3,6 +3,7 @@ package com.awscherb.cardkeeper.pkpass.model
 import android.graphics.Color
 import com.awscherb.cardkeeper.core.SavedItem
 import com.google.zxing.BarcodeFormat
+import okhttp3.internal.toHexString
 import java.util.Date
 
 interface PkPassModel : SavedItem {
@@ -103,13 +104,24 @@ fun String?.parseHexColor(): Int {
                 this
             } else {
                 val parse = subSequence(indexOf("(") + 1, indexOf(")"))
+                
                 val numbers = parse.split(",")
-                val ints = numbers.map { it.trim().toInt() }
+
+                val ints = numbers.subList(0, 3).map { it.trim().toInt() }
                 val hex = ints.map { Integer.toHexString(it) }
                 val padded = hex.map { if (it.length == 1) "0$it" else it }
+
+                // Check for alpha - format rgba(r, g, b, a), or just use full opacity
+                val alpha = if (numbers.size == 4) {
+                    val alphaPercent = numbers[3].toFloat()
+                    (255 * alphaPercent).toInt().toHexString()
+                } else {
+                    "FF"
+                }
+
                 val sb = StringBuilder()
                 padded.forEach { sb.append(it) }
-                "#$sb"
+                "#$alpha$sb"
             }
         }
     })

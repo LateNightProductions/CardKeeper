@@ -226,8 +226,6 @@ abstract class InputStreamWorker(
             else -> null
         }
 
-        Log.i("ImageInput", "Found $name $out")
-
         return out
     }
 
@@ -240,7 +238,11 @@ abstract class InputStreamWorker(
         if (!imageFile.exists()) {
             return
         }
-        val newOutputFile = File(context.filesDir.absolutePath + "/${entity.serialNumber}-$type")
+
+        // Some serial numbers have slashes, can probably sanitize better here
+        val cleanedPath = entity.serialNumber.replace("/", "-")
+
+        val newOutputFile = File(context.filesDir.absolutePath + "/${cleanedPath}-$type")
 
         val imageInputStream = FileInputStream(imageFile)
         val out = FileOutputStream(newOutputFile)
