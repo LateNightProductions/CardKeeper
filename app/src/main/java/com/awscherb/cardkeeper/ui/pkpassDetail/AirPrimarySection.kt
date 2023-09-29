@@ -11,11 +11,14 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.core.graphics.rotationMatrix
 import com.awscherb.cardkeeper.R
 import com.awscherb.cardkeeper.ui.theme.CardKeeperTheme
 import com.awscherb.cardkeeper.ui.theme.Typography
@@ -71,6 +74,7 @@ fun AirPrimarySection(
                 Image(
                     modifier = Modifier
                         .size(42.dp)
+                        .rotate(90f)
                         .constrainAs(image) {
                             start.linkTo(parent.start)
                             end.linkTo(parent.end)
@@ -78,7 +82,8 @@ fun AirPrimarySection(
                             bottom.linkTo(parent.bottom)
                         },
                     painter = painterResource(id = R.drawable.ic_airplane),
-                    contentDescription = "Pass"
+                    contentDescription = "Pass",
+                    colorFilter = ColorFilter.tint(tintColor)
                 )
 
                 Text(
@@ -106,7 +111,7 @@ fun AirPrimaryPreview() {
             "EWR",
             "Ithaca",
             "ITH",
-            GraphicsColor.parseColor("#FFFFFF")
+            GraphicsColor.parseColor("#00aa00")
         )
     }
 }

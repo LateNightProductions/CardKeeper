@@ -78,11 +78,11 @@ fun PassInfo.isTransit() = transitType != null
 fun PassInfo.getTransitType() = transitType?.getTransitType()
 
 fun PassInfo.findOriginDestination(): Pair<FieldObject, FieldObject> {
-    val origin = primaryFields?.find { it.key.equals("origin", true) }
-        ?: throw IllegalArgumentException("cannot find origin")
+    val origin = primaryFields?.find { it.key.equals("origin", true) } ?: primaryFields?.get(0)
+    ?: throw IllegalArgumentException("cannot find origin $primaryFields")
 
-    val dest = primaryFields?.find { it.key.equals("destination", true) }
-        ?: throw IllegalArgumentException("cannot find destination")
+    val dest = primaryFields?.find { it.key.equals("destination", true) } ?: primaryFields?.get(1)
+    ?: throw IllegalArgumentException("cannot find destination $primaryFields")
 
     return origin to dest
 }
