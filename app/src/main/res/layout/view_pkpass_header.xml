@@ -44,6 +44,15 @@
           android:layout_height="wrap_content"
           />
 
+        <androidx.compose.ui.platform.ComposeView
+            android:id="@+id/header_compose_view"
+            android:layout_width="wrap_content"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_height="wrap_content"/>
+
       <com.awscherb.cardkeeper.ui.view.FieldView
           android:id="@+id/header_pkpass_field1"
           android:layout_width="wrap_content"

@@ -6,12 +6,18 @@ import android.view.View
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.padding
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.unit.dp
 import com.awscherb.cardkeeper.R
 import com.awscherb.cardkeeper.pkpass.model.PkPassModel
 import com.awscherb.cardkeeper.pkpass.model.findPassInfo
 import com.awscherb.cardkeeper.pkpass.model.getTranslatedLabel
 import com.awscherb.cardkeeper.pkpass.model.getTranslatedValue
 import com.awscherb.cardkeeper.pkpass.model.parseHexColor
+import com.awscherb.cardkeeper.ui.pkpassDetail.FieldTextView
 import com.bumptech.glide.Glide
 import java.io.File
 
@@ -26,8 +32,9 @@ class PkPassHeaderView @JvmOverloads constructor(
     private val image: ImageView = findViewById(R.id.header_pkpass_icon)
     private val logoText: TextView = findViewById(R.id.header_pkpass_logo_text)
 
-    private val headerField1: FieldView = findViewById(R.id.header_pkpass_field1)
-    private val headerField2: FieldView = findViewById(R.id.header_pkpass_field2)
+    private val composeHeader: ComposeView = findViewById(R.id.header_compose_view)
+//    private val headerField1: FieldView = findViewById(R.id.header_pkpass_field1)
+//    private val headerField2: FieldView = findViewById(R.id.header_pkpass_field2)
 
     var pass: PkPassModel? = null
         set(value) {
@@ -46,27 +53,34 @@ class PkPassHeaderView @JvmOverloads constructor(
 
                 val headers = pass.findPassInfo()?.headerFields
                 if (headers?.isNotEmpty() == true) {
-                    headerField1.visibility = View.VISIBLE
-                    val firstPass = headers[0]
-                    headerField1.fieldConfig = FieldConfig(
-                        label = pass.getTranslatedLabel(firstPass.label),
-                        value = pass.getTranslatedValue(firstPass.value),
-                        labelColor = labelColor,
-                        valueColor = valueColor
-                    )
+                    composeHeader.apply {
 
-                    if (headers.size > 1) {
-                        headerField2.visibility = View.VISIBLE
-                        val secondPass = headers[1]
-                        headerField2.fieldConfig = FieldConfig(
-                            label = pass.getTranslatedLabel(secondPass.label),
-                            value = pass.getTranslatedValue(secondPass.value),
-                            labelColor = labelColor,
-                            valueColor = valueColor
 
-                        )
-                    } else {
-                        headerField2.visibility = View.GONE
+                        setContent {
+                            Row {
+                                val firstPass = headers[0]
+                                FieldTextView(
+                                    fieldConfig = FieldConfig(
+                                        label = pass.getTranslatedLabel(firstPass.label),
+                                        value = pass.getTranslatedValue(firstPass.value),
+                                        labelColor = labelColor,
+                                        valueColor = valueColor
+                                    )
+                                )
+                                if (headers.size > 1) {
+                                    val secondPass = headers[1]
+                                    FieldTextView(
+                                        modifier = Modifier.padding(start = 8.dp),
+                                        fieldConfig = FieldConfig(
+                                            label = pass.getTranslatedLabel(secondPass.label),
+                                            value = pass.getTranslatedValue(secondPass.value),
+                                            labelColor = labelColor,
+                                            valueColor = valueColor
+                                        )
+                                    )
+                                }
+                            }
+                        }
                     }
                 }
 
