@@ -53,25 +53,6 @@
             app:layout_constraintTop_toTopOf="parent"
             android:layout_height="wrap_content"/>
 
-      <com.awscherb.cardkeeper.ui.view.FieldView
-          android:id="@+id/header_pkpass_field1"
-          android:layout_width="wrap_content"
-          app:layout_constraintEnd_toStartOf="@id/header_pkpass_field2"
-          android:layout_marginEnd="8dp"
-          app:layout_constraintBottom_toBottomOf="parent"
-          app:layout_constraintTop_toTopOf="parent"
-          android:layout_height="wrap_content"
-          />
-
-      <com.awscherb.cardkeeper.ui.view.FieldView
-          app:layout_constraintBottom_toBottomOf="parent"
-          app:layout_constraintEnd_toEndOf="parent"
-          app:layout_constraintTop_toTopOf="parent"
-          android:layout_marginEnd="8dp"
-          android:id="@+id/header_pkpass_field2"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

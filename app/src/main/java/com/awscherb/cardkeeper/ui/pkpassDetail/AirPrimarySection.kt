@@ -9,16 +9,17 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
-import androidx.core.graphics.rotationMatrix
+import androidx.constraintlayout.compose.Dimension
+import androidx.constraintlayout.compose.atMostWrapContent
 import com.awscherb.cardkeeper.R
 import com.awscherb.cardkeeper.ui.theme.CardKeeperTheme
 import com.awscherb.cardkeeper.ui.theme.Typography
@@ -58,16 +59,21 @@ fun AirPrimarySection(
                 .fillMaxWidth()
                 .padding(horizontal = 8.dp)
         ) {
-            ConstraintLayout(modifier =
-            Modifier.fillMaxWidth()) {
+            ConstraintLayout(
+                modifier =
+                Modifier.fillMaxWidth()
+            ) {
                 val (from, image, to) = createRefs()
 
                 Text(
                     text = fromCode,
                     color = tintColor,
                     style = Typography.displayMedium,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
                     modifier = Modifier.constrainAs(from) {
-                        start.linkTo(parent.start)
+                        linkTo(start = parent.start, end = image.start, bias = 0f)
+                        width = Dimension.fillToConstraints.atMostWrapContent
                     }
                 )
 
@@ -87,9 +93,13 @@ fun AirPrimarySection(
                 )
 
                 Text(
-                    modifier = Modifier.constrainAs(to) {
-                        end.linkTo(parent.end)
-                    },
+                    modifier = Modifier
+                        .constrainAs(to) {
+                            linkTo(start = image.end, end = parent.end, bias = 1f)
+                            width = Dimension.fillToConstraints.atMostWrapContent
+                        },
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
                     text = toCode,
                     color = tintColor,
                     style = Typography.displayMedium
@@ -111,6 +121,20 @@ fun AirPrimaryPreview() {
             "EWR",
             "Ithaca",
             "ITH",
+            GraphicsColor.parseColor("#00aa00")
+        )
+    }
+}
+
+@Composable
+@Preview(showSystemUi = true)
+fun AirPrimaryTruncateName() {
+    CardKeeperTheme {
+        AirPrimarySection(
+            "Newark-Liberty Intl",
+            "EWR LONG NAME",
+            "Ithaca",
+            "ITH REALLY LONG NAME",
             GraphicsColor.parseColor("#00aa00")
         )
     }

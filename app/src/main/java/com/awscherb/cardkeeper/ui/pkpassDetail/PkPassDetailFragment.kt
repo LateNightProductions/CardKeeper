@@ -27,6 +27,9 @@ import androidx.work.WorkInfo
 import androidx.work.WorkManager
 import androidx.work.workDataOf
 import com.awscherb.cardkeeper.R
+import com.awscherb.cardkeeper.pkpass.model.Barcode
+import com.awscherb.cardkeeper.pkpass.model.PassInfo
+import com.awscherb.cardkeeper.pkpass.model.PkPassModel
 import com.awscherb.cardkeeper.pkpass.model.TransitType
 import com.awscherb.cardkeeper.pkpass.model.canBeUpdated
 import com.awscherb.cardkeeper.pkpass.model.findOriginDestination
@@ -140,134 +143,14 @@ class PkPassDetailFragment : BaseFragment(), Toolbar.OnMenuItemClickListener {
 
         viewModel.pass
             .onEach { pass ->
-
-                primaryFieldsView.removeAllViews()
-                auxFieldsView.removeAllViews()
-                secondaryFieldsView.removeAllViews()
-
-                if (pass.expirationDate?.before(Date()) == true) {
-                    expiredText.visibility = View.VISIBLE
-                } else {
-                    expiredText.visibility = View.GONE
-                }
-
-                card.setCardBackgroundColor(pass.backgroundColor.parseHexColor())
-                header.pass = pass
-
-                if (pass.stripPath == null) {
-                    strip.visibility = View.GONE
-                } else {
-                    strip.visibility = View.VISIBLE
-                    Glide.with(this)
-                        .load(pass.stripPath)
-                        .into(strip)
-                }
-
-                if (pass.footerPath == null) {
-                    footerImage.visibility = View.GONE
-                } else {
-                    footerImage.visibility = View.VISIBLE
-                    Glide.with(this)
-                        .load(pass.footerPath)
-                        .into(footerImage)
-                }
-
+                setupMainPassInfo(pass)
                 pass.barcode?.let { barcode ->
-                    val format = barcode.format.toBarcodeFormat()
-                    // Set image scaleType according to barcode type
-                    val scaleType = when (format) {
-                        BarcodeFormat.QR_CODE, BarcodeFormat.AZTEC, BarcodeFormat.DATA_MATRIX -> ImageView.ScaleType.FIT_CENTER
-                        else -> ImageView.ScaleType.FIT_XY
-                    }
-                    barcodeImage.scaleType = scaleType
-
-                    // Load image
-                    try {
-                        barcodeImage.setImageBitmap(
-                            encoder.encodeBitmap(barcode.message, format, 400, 400)
-                        )
-                    } catch (e: WriterException) {
-                        e.printStackTrace()
-                    }
-
-                    if (barcode.altText?.isNotEmpty() == true) {
-                        altText.visibility = View.VISIBLE
-                        altText.text = barcode.altText
-                    }
+                    setupBarcode(barcode)
                 }
-
-
                 pass.findPassInfo()?.let { passInfo ->
-
-                    if (passInfo.isTransit() && passInfo.transitType.getTransitType() == TransitType.AIR) {
-                        primaryFieldsView.visibility = View.GONE
-                        primaryComposeHolder.visibility = View.VISIBLE
-
-                        val (origin, destination) = passInfo.findOriginDestination()
-
-                        primaryComposeHolder.apply {
-                            setContent {
-                                AirPrimarySection(
-                                    fromAirport = origin.label ?: "",
-                                    fromCode = origin.value,
-                                    toAirport = destination.label ?: "",
-                                    toCode = destination.value,
-                                    tint = pass.foregroundColor.parseHexColor()
-                                )
-                            }
-                        }
-                    } else {
-                        primaryFieldsView.visibility = View.VISIBLE
-                        primaryComposeHolder.visibility = View.GONE
-                        passInfo.primaryFields?.forEach { field ->
-                            context?.let { ctx ->
-                                primaryFieldsView.addView(
-                                    PrimaryFieldView(ctx, null)
-                                        .apply {
-                                            fieldConfig = FieldConfig(
-                                                label = pass.getTranslatedLabel(field.label),
-                                                value = pass.getTranslatedValue(field.value),
-                                                labelColor = pass.labelColor.parseHexColor(),
-                                                valueColor = pass.foregroundColor.parseHexColor()
-                                            )
-                                        }
-                                )
-                            }
-                        }
-                    }
-
-
-
-                    passInfo.auxiliaryFields?.forEach { field ->
-                        context?.let { ctx ->
-                            auxFieldsView.addView(
-                                FieldView(ctx, null).apply {
-                                    fieldConfig = FieldConfig(
-                                        label = pass.getTranslatedLabel(field.label),
-                                        value = pass.getTranslatedValue(field.value),
-                                        labelColor = pass.labelColor.parseHexColor(),
-                                        valueColor = pass.foregroundColor.parseHexColor()
-                                    )
-                                }
-                            )
-                        }
-                    }
-
-                    passInfo.secondaryFields?.forEach { field ->
-                        context?.let { ctx ->
-                            secondaryFieldsView.addView(
-                                FieldView(ctx, null).apply {
-                                    fieldConfig = FieldConfig(
-                                        label = pass.getTranslatedLabel(field.label),
-                                        value = pass.getTranslatedValue(field.value),
-                                        labelColor = pass.labelColor.parseHexColor(),
-                                        valueColor = pass.foregroundColor.parseHexColor()
-
-                                    )
-                                }
-                            )
-                        }
-                    }
+                    setupPrimaryFields(pass, passInfo)
+                    setupAuxiliaryFields(pass, passInfo)
+                    setupSecondaryFields(pass, passInfo)
 
                 }
             }.launchIn(lifecycleScope)
@@ -295,6 +178,139 @@ class PkPassDetailFragment : BaseFragment(), Toolbar.OnMenuItemClickListener {
                 }
             }.launchIn(lifecycleScope)
 
+    }
+
+    private fun setupMainPassInfo(pass: PkPassModel) {
+        if (pass.expirationDate?.before(Date()) == true) {
+            expiredText.visibility = View.VISIBLE
+        } else {
+            expiredText.visibility = View.GONE
+        }
+
+        card.setCardBackgroundColor(pass.backgroundColor.parseHexColor())
+        header.pass = pass
+
+        if (pass.stripPath == null) {
+            strip.visibility = View.GONE
+        } else {
+            strip.visibility = View.VISIBLE
+            Glide.with(this)
+                .load(pass.stripPath)
+                .into(strip)
+        }
+
+        if (pass.footerPath == null) {
+            footerImage.visibility = View.GONE
+        } else {
+            footerImage.visibility = View.VISIBLE
+            Glide.with(this)
+                .load(pass.footerPath)
+                .into(footerImage)
+        }
+    }
+
+    private fun setupPrimaryFields(pass: PkPassModel, passInfo: PassInfo) {
+        primaryFieldsView.removeAllViews()
+
+        if (passInfo.isTransit() && passInfo.transitType.getTransitType() == TransitType.AIR) {
+            primaryFieldsView.visibility = View.GONE
+            primaryComposeHolder.visibility = View.VISIBLE
+
+            val (origin, destination) = passInfo.findOriginDestination()
+
+            primaryComposeHolder.apply {
+                setContent {
+                    AirPrimarySection(
+                        fromAirport = origin.label ?: "",
+                        fromCode = origin.value,
+                        toAirport = destination.label ?: "",
+                        toCode = destination.value,
+                        tint = pass.foregroundColor.parseHexColor()
+                    )
+                }
+            }
+        } else {
+            primaryFieldsView.visibility = View.VISIBLE
+            primaryComposeHolder.visibility = View.GONE
+            passInfo.primaryFields?.forEach { field ->
+                context?.let { ctx ->
+                    primaryFieldsView.addView(
+                        PrimaryFieldView(ctx, null)
+                            .apply {
+                                fieldConfig = FieldConfig(
+                                    label = pass.getTranslatedLabel(field.label),
+                                    value = pass.getTranslatedValue(field.value),
+                                    labelColor = pass.labelColor.parseHexColor(),
+                                    valueColor = pass.foregroundColor.parseHexColor()
+                                )
+                            }
+                    )
+                }
+            }
+        }
+    }
+
+    private fun setupAuxiliaryFields(pass: PkPassModel, passInfo: PassInfo) {
+        auxFieldsView.removeAllViews()
+
+        passInfo.auxiliaryFields?.forEach { field ->
+            context?.let { ctx ->
+                auxFieldsView.addView(
+                    FieldView(ctx, null).apply {
+                        fieldConfig = FieldConfig(
+                            label = pass.getTranslatedLabel(field.label),
+                            value = pass.getTranslatedValue(field.value),
+                            labelColor = pass.labelColor.parseHexColor(),
+                            valueColor = pass.foregroundColor.parseHexColor()
+                        )
+                    }
+                )
+            }
+        }
+    }
+
+    private fun setupSecondaryFields(pass: PkPassModel, passInfo: PassInfo) {
+        secondaryFieldsView.removeAllViews()
+
+        passInfo.secondaryFields?.forEach { field ->
+            context?.let { ctx ->
+                secondaryFieldsView.addView(
+                    FieldView(ctx, null).apply {
+                        fieldConfig = FieldConfig(
+                            label = pass.getTranslatedLabel(field.label),
+                            value = pass.getTranslatedValue(field.value),
+                            labelColor = pass.labelColor.parseHexColor(),
+                            valueColor = pass.foregroundColor.parseHexColor()
+
+                        )
+                    }
+                )
+            }
+        }
+    }
+
+    private fun setupBarcode(barcode: Barcode) {
+        val format = barcode.format.toBarcodeFormat()
+        // Set image scaleType according to barcode type
+        val scaleType = when (format) {
+            BarcodeFormat.QR_CODE, BarcodeFormat.AZTEC, BarcodeFormat.DATA_MATRIX -> ImageView.ScaleType.FIT_CENTER
+            else -> ImageView.ScaleType.FIT_XY
+        }
+        barcodeImage.scaleType = scaleType
+
+        // Load image
+        try {
+            barcodeImage.setImageBitmap(
+                encoder.encodeBitmap(barcode.message, format, 400, 400)
+            )
+        } catch (e: WriterException) {
+            e.printStackTrace()
+        }
+
+        if (barcode.altText?.isNotEmpty() == true) {
+            altText.visibility = View.VISIBLE
+            altText.text = barcode.altText
+        }
     }
 
     override fun onMenuItemClick(item: MenuItem?): Boolean {
@@ -359,13 +375,4 @@ class PkPassDetailFragment : BaseFragment(), Toolbar.OnMenuItemClickListener {
                 }
         }
     }
-}
-
-private fun FlexboxLayout.getMaximumWidthForChild(columns: Int): Int {
-    val displayMetrics = this.resources.displayMetrics
-    val widthInPixels = displayMetrics.widthPixels - marginStart - marginEnd
-    val maxWidthForChildInPixels = widthInPixels / columns
-    val childWidthInDp =
-        (maxWidthForChildInPixels * DisplayMetrics.DENSITY_DEFAULT) / displayMetrics.densityDpi
-    return maxWidthForChildInPixels
 }

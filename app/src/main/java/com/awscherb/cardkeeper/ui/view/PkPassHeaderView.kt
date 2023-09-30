@@ -33,8 +33,6 @@ class PkPassHeaderView @JvmOverloads constructor(
     private val logoText: TextView = findViewById(R.id.header_pkpass_logo_text)
 
     private val composeHeader: ComposeView = findViewById(R.id.header_compose_view)
-//    private val headerField1: FieldView = findViewById(R.id.header_pkpass_field1)
-//    private val headerField2: FieldView = findViewById(R.id.header_pkpass_field2)
 
     var pass: PkPassModel? = null
         set(value) {
@@ -54,8 +52,6 @@ class PkPassHeaderView @JvmOverloads constructor(
                 val headers = pass.findPassInfo()?.headerFields
                 if (headers?.isNotEmpty() == true) {
                     composeHeader.apply {
-
-
                         setContent {
                             Row {
                                 val firstPass = headers[0]
