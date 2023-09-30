@@ -78,6 +78,8 @@ class PkPassHeaderView @JvmOverloads constructor(
                             }
                         }
                     }
+                } else {
+                    composeHeader.removeAllViews()
                 }
 
                 pass.logoPath?.let {
