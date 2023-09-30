@@ -1,21 +1,21 @@
 package com.awscherb.cardkeeper.ui.pkpassDetail
 
 import android.os.Bundle
-import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.Toolbar
 import androidx.cardview.widget.CardView
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
-import androidx.core.view.marginEnd
-import androidx.core.view.marginStart
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -42,8 +42,8 @@ import com.awscherb.cardkeeper.pkpass.model.parseHexColor
 import com.awscherb.cardkeeper.pkpass.model.toBarcodeFormat
 import com.awscherb.cardkeeper.pkpass.work.UpdatePassWorker
 import com.awscherb.cardkeeper.ui.base.BaseFragment
+import com.awscherb.cardkeeper.ui.common.getAlignmentForFieldText
 import com.awscherb.cardkeeper.ui.view.FieldConfig
-import com.awscherb.cardkeeper.ui.view.FieldView
 import com.awscherb.cardkeeper.ui.view.PkPassHeaderView
 import com.awscherb.cardkeeper.ui.view.PrimaryFieldView
 import com.awscherb.cardkeeper.util.WebServiceUrlBuilder
@@ -60,7 +60,6 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.launch
-import java.lang.IllegalStateException
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.concurrent.atomic.AtomicBoolean
@@ -83,8 +82,8 @@ class PkPassDetailFragment : BaseFragment(), Toolbar.OnMenuItemClickListener {
     private lateinit var strip: ImageView
     private lateinit var primaryComposeHolder: ComposeView
     private lateinit var primaryFieldsView: FlexboxLayout
-    private lateinit var auxFieldsView: FlexboxLayout
-    private lateinit var secondaryFieldsView: FlexboxLayout
+    private lateinit var auxFieldsView: ComposeView
+    private lateinit var secondaryFieldsView: ComposeView
     private lateinit var barcodeImage: ImageView
     private lateinit var altText: TextView
     private lateinit var footerImage: ImageView
@@ -251,40 +250,49 @@ class PkPassDetailFragment : BaseFragment(), Toolbar.OnMenuItemClickListener {
     }
 
     private fun setupAuxiliaryFields(pass: PkPassModel, passInfo: PassInfo) {
-        auxFieldsView.removeAllViews()
-
-        passInfo.auxiliaryFields?.forEach { field ->
-            context?.let { ctx ->
-                auxFieldsView.addView(
-                    FieldView(ctx, null).apply {
-                        fieldConfig = FieldConfig(
-                            label = pass.getTranslatedLabel(field.label),
-                            value = pass.getTranslatedValue(field.value),
-                            labelColor = pass.labelColor.parseHexColor(),
-                            valueColor = pass.foregroundColor.parseHexColor()
+        auxFieldsView.apply {
+            setContent {
+                Row(
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    passInfo.auxiliaryFields?.forEachIndexed { index, field ->
+                        val align =
+                            getAlignmentForFieldText(index, passInfo.auxiliaryFields?.size ?: 0)
+                        FieldTextView(
+                            alignment = align,
+                            fieldConfig = FieldConfig(
+                                label = pass.getTranslatedLabel(field.label),
+                                value = pass.getTranslatedValue(field.value),
+                                labelColor = pass.labelColor.parseHexColor(),
+                                valueColor = pass.foregroundColor.parseHexColor()
+                            )
                         )
                     }
-                )
+                }
             }
         }
     }
 
     private fun setupSecondaryFields(pass: PkPassModel, passInfo: PassInfo) {
-        secondaryFieldsView.removeAllViews()
-
-        passInfo.secondaryFields?.forEach { field ->
-            context?.let { ctx ->
-                secondaryFieldsView.addView(
-                    FieldView(ctx, null).apply {
-                        fieldConfig = FieldConfig(
-                            label = pass.getTranslatedLabel(field.label),
-                            value = pass.getTranslatedValue(field.value),
-                            labelColor = pass.labelColor.parseHexColor(),
-                            valueColor = pass.foregroundColor.parseHexColor()
-
+        secondaryFieldsView.apply {
+            setContent {
+                Row(
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    passInfo.secondaryFields?.forEachIndexed { index, field ->
+                        val align =
+                            getAlignmentForFieldText(index, passInfo.secondaryFields?.size ?: 0)
+                        FieldTextView(
+                            alignment = align,
+                            fieldConfig = FieldConfig(
+                                label = pass.getTranslatedLabel(field.label),
+                                value = pass.getTranslatedValue(field.value),
+                                labelColor = pass.labelColor.parseHexColor(),
+                                valueColor = pass.foregroundColor.parseHexColor()
+                            )
                         )
                     }
-                )
+                }
             }
         }
     }

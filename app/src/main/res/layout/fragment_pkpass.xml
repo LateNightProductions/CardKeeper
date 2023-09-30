@@ -103,32 +103,25 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp" />
 
-            <com.google.android.flexbox.FlexboxLayout
+            <androidx.compose.ui.platform.ComposeView
                 android:id="@+id/pass_detail_auxiliary"
                 android:layout_width="0dp"
                 android:paddingTop="16dp"
                 android:layout_height="wrap_content"
-                app:flexWrap="wrap"
                 android:foregroundGravity="center"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
-                app:justifyContent="space_between"
-                app:flexDirection="row"
                 app:layout_constraintTop_toBottomOf="@id/pass_detail_header_barrier"
                 app:layout_constraintStart_toEndOf="@id/guideline_start"
                 app:layout_constraintEnd_toStartOf="@id/guideline_end" />
 
-            <com.google.android.flexbox.FlexboxLayout
+            <androidx.compose.ui.platform.ComposeView
                 android:id="@+id/pass_detail_secondary"
                 android:layout_width="0dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
                 android:paddingTop="16dp"
                 android:layout_height="wrap_content"
-                app:flexWrap="wrap"
-                android:foregroundGravity="center"
-                app:justifyContent="space_between"
-                app:flexDirection="row"
                 app:layout_constraintTop_toBottomOf="@id/pass_detail_auxiliary"
                 app:layout_constraintStart_toEndOf="@id/guideline_start"
                 app:layout_constraintEnd_toStartOf="@id/guideline_end" />
