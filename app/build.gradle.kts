@@ -82,6 +82,7 @@ dependencies {
     implementation(platform(libs.compose.bom))
     implementation(libs.compose.constraint)
     implementation(libs.compose.material3)
+    implementation(libs.compose.navigation)
     implementation(libs.compose.ui.tooling.preview)
     implementation(libs.dagger)
     implementation(libs.dagger.android.support)

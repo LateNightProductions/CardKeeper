@@ -7,7 +7,7 @@ import okhttp3.internal.toHexString
 import java.util.Date
 
 interface PkPassModel : SavedItem {
-    val id: String
+    override val id: String
     val description: String
     val organizationName: String
     val barcode: Barcode?

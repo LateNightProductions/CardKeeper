@@ -9,6 +9,11 @@ import android.widget.EditText
 import android.widget.ImageView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.Toolbar
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.unit.dp
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -27,6 +32,7 @@ import com.awscherb.cardkeeper.ui.pkpassDetail.PkPassViewModelFactory
 import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import dagger.android.support.AndroidSupportInjection
+import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
@@ -39,8 +45,10 @@ class ItemsFragment : BaseFragment() {
 
     @Inject
     lateinit var viewModelFactory: ItemsViewModelFactory
+
     @Inject
     lateinit var detailFactory: CardDetailViewModelFactory
+
     @Inject
     lateinit var pkPassFactory: PkPassViewModelFactory
 
@@ -50,7 +58,7 @@ class ItemsFragment : BaseFragment() {
     private lateinit var searchLayout: View
     private lateinit var searchBox: EditText
     private lateinit var searchClose: ImageView
-    private lateinit var recyclerView: RecyclerView
+    private lateinit var composeView: ComposeView
     private lateinit var fab: FloatingActionButton
 
     private lateinit var layoutManager: LinearLayoutManager
@@ -71,8 +79,10 @@ class ItemsFragment : BaseFragment() {
 
         AndroidSupportInjection.inject(this)
 
+
+
         toolbar = view.findViewById(R.id.fragment_cards_toolbar)
-        recyclerView = view.findViewById(R.id.fragment_cards_recylcer)
+        composeView = view.findViewById(R.id.fragment_cards_compose)
         searchLayout = view.findViewById(R.id.fragment_cards_search_layout)
         searchBox = view.findViewById(R.id.fragment_cards_search)
         searchClose = view.findViewById(R.id.fragment_cards_search_close)
@@ -88,8 +98,22 @@ class ItemsFragment : BaseFragment() {
             )
         }
 
-        viewModel.items.onEach {
-            scannedCodeAdapter.items = it
+        viewModel.items.onEach { items ->
+            composeView.setContent {
+                LazyColumn(
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    items(items) {
+                        when (it) {
+                            is ScannedCodeModel -> ScannedCodeItem(item = it) {}
+                            is PkPassModel -> PassItem(pass = it) {}
+                        }
+
+                    }
+                }
+            }
+
+
         }.launchIn(lifecycleScope)
 
         searchClose.setOnClickListener {
@@ -124,52 +148,55 @@ class ItemsFragment : BaseFragment() {
                     findNavController().navigate(R.id.action_cardsFragment_to_createFragment)
                     true
                 }
+
                 R.id.search -> {
                     toolbar.visibility = View.GONE
                     searchBox.requestFocusAndShowKeyboard()
                     searchLayout.visibility = View.VISIBLE
                     true
                 }
+
                 R.id.about -> {
                     startActivity(Intent(requireContext(), OssLicensesMenuActivity::class.java))
                     true
                 }
+
                 else -> false
             }
         }
     }
 
     private fun setupRecycler() {
-        layoutManager = GridLayoutManager(activity, resources.getInteger(R.integer.cards_columns))
-        scannedCodeAdapter = ItemsAdapter(requireActivity(), {
-            when (it) {
-                is PkPassModel -> {
-                    pkPassViewModel.passId.value = it.id
-                    navigator.navigateToPkPass(this)
-                }
-                is ScannedCodeModel -> {
-                    detailViewModel.cardId.value = it.id
-                    navigator.navigateToDetail(this, it.id)
-                }
-            }
-        }) { code ->
-            AlertDialog.Builder(requireContext())
-                .setTitle(R.string.adapter_scanned_code_delete_message)
-                .setPositiveButton(R.string.action_delete) { _, _ ->
-                    when (code) {
-                        is PkPassModel -> {
-                            viewModel.deletePass(code)
-                        }
-                        is ScannedCodeModel -> {
-                            viewModel.deleteCard(code)
-                            onCardDeleted()
-                        }
-                    }
-                }
-                .setNegativeButton(R.string.action_cancel, null)
-                .show()
-        }
-        recyclerView.layoutManager = layoutManager
-        recyclerView.adapter = scannedCodeAdapter
+//        layoutManager = GridLayoutManager(activity, resources.getInteger(R.integer.cards_columns))
+//        scannedCodeAdapter = ItemsAdapter(requireActivity(), {
+//            when (it) {
+//                is PkPassModel -> {
+//                    pkPassViewModel.passId.value = it.id
+//                    navigator.navigateToPkPass(this)
+//                }
+//                is ScannedCodeModel -> {
+//                    detailViewModel.cardId.value = it.id
+//                    navigator.navigateToDetail(this, it.id)
+//                }
+//            }
+//        }) { code ->
+//            AlertDialog.Builder(requireContext())
+//                .setTitle(R.string.adapter_scanned_code_delete_message)
+//                .setPositiveButton(R.string.action_delete) { _, _ ->
+//                    when (code) {
+//                        is PkPassModel -> {
+//                            viewModel.deletePass(code)
+//                        }
+//                        is ScannedCodeModel -> {
+//                            viewModel.deleteCard(code)
+//                            onCardDeleted()
+//                        }
+//                    }
+//                }
+//                .setNegativeButton(R.string.action_cancel, null)
+//                .show()
+//        }
+//        recyclerView.layoutManager = layoutManager
+//        recyclerView.adapter = scannedCodeAdapter
     }
 }

@@ -1,9 +1,11 @@
 package com.awscherb.cardkeeper.util
 
+import com.awscherb.cardkeeper.barcode.model.ScannedCodeModel
 import com.awscherb.cardkeeper.pkpass.model.Barcode
 import com.awscherb.cardkeeper.pkpass.model.FieldObject
 import com.awscherb.cardkeeper.pkpass.model.PassInfo
 import com.awscherb.cardkeeper.pkpass.model.PkPassModel
+import com.google.zxing.BarcodeFormat
 import java.util.Date
 
 
@@ -71,5 +73,20 @@ fun createPassInfo(
     override val secondaryFields: List<FieldObject>? = secondaryFields
     override val auxiliaryFields: List<FieldObject>? = auxiliaryFields
     override val backFields: List<FieldObject>? = backFields
+
+}
+
+fun createScannedCode(
+    id: Int = 0,
+    format: BarcodeFormat= BarcodeFormat.QR_CODE,
+    text: String = "text",
+    title: String = "title",
+    created: Long = 0L
+)  = object :ScannedCodeModel {
+    override val id: Int = id
+    override val format: BarcodeFormat = format
+    override val text: String = text
+    override val title: String = title
+    override val created: Long = created
 
 }

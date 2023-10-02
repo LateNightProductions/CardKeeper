@@ -9,6 +9,7 @@ coil = "2.4.0"
 constraintlayout = "2.1.4"
 compose-bom = "2023.09.01"
 compose-constraint = "1.0.1"
+compose-navigation = "2.7.3"
 dagger-android-support = "2.45"
 dagger = "2.45"
 glide = "4.14.2"
@@ -48,6 +49,7 @@ compose-material3 = { group = "androidx.compose.material3", name = "material3" }
 compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
 compose-constraint = { group = "androidx.constraintlayout", name = "constraintlayout-compose", version.ref = "compose-constraint" }
+compose-navigation = { group = "androidx.navigation", name = "navigation-compose", version.ref = "compose-navigation" }
 androidx-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "ktx" }
 androidx-lifecycle-lifecycle-common-java8 = { module = "androidx.lifecycle:lifecycle-common-java8", version.ref = "lifecycle-livedata-ktx" }
 androidx-lifecycle-livedata-ktx = { module = "androidx.lifecycle:lifecycle-livedata-ktx", version.ref = "lifecycle-livedata-ktx" }
