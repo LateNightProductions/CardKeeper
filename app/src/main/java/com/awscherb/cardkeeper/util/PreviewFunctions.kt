@@ -1,0 +1,75 @@
+package com.awscherb.cardkeeper.util
+
+import com.awscherb.cardkeeper.pkpass.model.Barcode
+import com.awscherb.cardkeeper.pkpass.model.FieldObject
+import com.awscherb.cardkeeper.pkpass.model.PassInfo
+import com.awscherb.cardkeeper.pkpass.model.PkPassModel
+import java.util.Date
+
+
+fun createPassModel(
+    id: String = "",
+    description: String = "",
+    orgName: String = "",
+    barcode: Barcode? = null,
+    barcodes: List<Barcode>? = null,
+    passTypeId: String = "",
+    logoText: String? = null,
+    expirationDate: Date? = null,
+    backgroundColor: String? = null,
+    foregroundColor: String? = null,
+    labelColor: String? = null,
+    boardingPass: PassInfo? = null,
+    storeCard: PassInfo? = null,
+    generic: PassInfo? = null,
+    eventTicket: PassInfo? = null,
+    logoPath: String? = "",
+    stripPath: String? = "",
+    footerPath: String? = "",
+    serialNumber: String? = "",
+    webServiceURL: String? = "",
+    authenticationToken: String? = "",
+    translation: Map<String, String>? = null,
+    created: Long = 0L
+) = object : PkPassModel {
+    override val id: String = id
+    override val description: String = description
+    override val organizationName: String = orgName
+    override val barcode: Barcode? = barcode
+    override val barcodes: List<Barcode>? = barcodes
+    override val passTypeIdentifier: String = passTypeId
+    override val logoText: String? = logoText
+    override val expirationDate: Date? = expirationDate
+    override val backgroundColor: String? = backgroundColor
+    override val foregroundColor: String? = foregroundColor
+    override val labelColor: String? = labelColor
+    override val boardingPass: PassInfo? = boardingPass
+    override val storeCard: PassInfo? = storeCard
+    override val generic: PassInfo? = generic
+    override val eventTicket: PassInfo? = eventTicket
+    override val logoPath: String? = logoPath
+    override val stripPath: String? = stripPath
+    override val footerPath: String? = footerPath
+    override val serialNumber: String? = serialNumber
+    override val webServiceURL: String? = webServiceURL
+    override val authenticationToken: String? = authenticationToken
+    override val translation: Map<String, String>? = translation
+    override val created: Long = created
+}
+
+fun createPassInfo(
+    transitType: String? = null,
+    headerFields: List<FieldObject>? = emptyList(),
+    primaryFields: List<FieldObject>? = emptyList(),
+    secondaryFields: List<FieldObject>? = emptyList(),
+    auxiliaryFields: List<FieldObject>? = emptyList(),
+    backFields: List<FieldObject>? = emptyList(),
+) = object : PassInfo {
+    override val transitType: String? = transitType
+    override val headerFields: List<FieldObject>? = headerFields
+    override val primaryFields: List<FieldObject>? = primaryFields
+    override val secondaryFields: List<FieldObject>? = secondaryFields
+    override val auxiliaryFields: List<FieldObject>? = auxiliaryFields
+    override val backFields: List<FieldObject>? = backFields
+
+}

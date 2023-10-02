@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
+import androidx.compose.ui.platform.ComposeView
 import androidx.recyclerview.widget.RecyclerView
 import com.awscherb.cardkeeper.R
 import com.awscherb.cardkeeper.barcode.model.ScannedCodeModel
@@ -123,7 +124,11 @@ class ItemsAdapter constructor(
                 true
             }
             headerCard.setCardBackgroundColor(pass.backgroundColor.parseHexColor())
-            headerView.pass = pass
+            headerView.apply { 
+                setContent { 
+                    PkPassHeaderView(pass = pass)
+                }
+            } 
         }
     }
 }
@@ -137,5 +142,5 @@ class ScannedCodeViewHolder(itemView: View) : SavedItemViewHolder(itemView) {
 
 class PkPassViewHolder(itemView: View) : SavedItemViewHolder(itemView) {
     val headerCard: CardView = itemView.findViewById(R.id.adapter_pkpass_card)
-    val headerView: PkPassHeaderView = itemView.findViewById(R.id.adapter_pkpass_header)
+    val headerView: ComposeView = itemView.findViewById(R.id.adapter_pkpass_header)
 }

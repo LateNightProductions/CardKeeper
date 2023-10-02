@@ -78,7 +78,7 @@ class PkPassDetailFragment : BaseFragment(), Toolbar.OnMenuItemClickListener {
 
     private lateinit var toolbar: Toolbar
     private lateinit var card: CardView
-    private lateinit var header: PkPassHeaderView
+    private lateinit var header: ComposeView
     private lateinit var strip: ImageView
     private lateinit var primaryComposeHolder: ComposeView
     private lateinit var primaryFieldsView: FlexboxLayout
@@ -187,7 +187,11 @@ class PkPassDetailFragment : BaseFragment(), Toolbar.OnMenuItemClickListener {
         }
 
         card.setCardBackgroundColor(pass.backgroundColor.parseHexColor())
-        header.pass = pass
+        header.apply {
+            setContent {
+                PkPassHeaderView(pass = pass)
+            }
+        }
 
         if (pass.stripPath == null) {
             strip.visibility = View.GONE

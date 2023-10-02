@@ -54,7 +54,7 @@
                 android:layout_height="wrap_content" />
 
 
-            <com.awscherb.cardkeeper.ui.view.PkPassHeaderView
+            <androidx.compose.ui.platform.ComposeView
                 android:id="@+id/pass_detail_header"
                 android:layout_marginTop="16dp"
                 app:layout_constraintStart_toEndOf="@id/guideline_start"

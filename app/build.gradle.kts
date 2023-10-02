@@ -78,6 +78,7 @@ dependencies {
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
     implementation(libs.androidx.work.runtime.ktx)
+    implementation(libs.coil)
     implementation(platform(libs.compose.bom))
     implementation(libs.compose.constraint)
     implementation(libs.compose.material3)

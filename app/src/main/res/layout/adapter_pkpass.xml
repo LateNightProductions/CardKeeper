@@ -19,7 +19,7 @@
       card_view:cardCornerRadius="8dp"
       >
 
-    <com.awscherb.cardkeeper.ui.view.PkPassHeaderView
+    <androidx.compose.ui.platform.ComposeView
         android:id="@+id/adapter_pkpass_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
