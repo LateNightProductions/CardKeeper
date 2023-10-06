@@ -3,6 +3,7 @@ package com.awscherb.cardkeeper.ui.items
 import androidx.compose.foundation.clickable
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ElevatedCard
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -20,7 +21,7 @@ fun PassItem(
     pass: PkPassModel,
     onClick: (PkPassModel) -> Unit
 ) {
-    Card(
+    ElevatedCard(
         modifier = Modifier.clickable { onClick(pass) },
         colors = CardDefaults.cardColors(
             containerColor = Color(pass.backgroundColor.parseHexColor())
