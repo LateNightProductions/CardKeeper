@@ -6,14 +6,13 @@ import com.awscherb.cardkeeper.BuildConfig
 import com.awscherb.cardkeeper.core.BuildInfo
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
 @Module
-class AppModule(private val context: Context) {
-    @Provides
-    @Singleton
-    fun provideContext() = context
-
+@InstallIn(SingletonComponent::class)
+class AppModule {
     @Provides
     fun provideBuildInfo() = BuildInfo(debug = BuildConfig.DEBUG)
 

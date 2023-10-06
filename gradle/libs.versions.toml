@@ -15,6 +15,7 @@ dagger = "2.45"
 glide = "4.14.2"
 gradle = "8.1.1"
 gson = "2.10.1"
+hilt-viewmodel = "1.0.0"
 kotlin-gradle-plugin = "1.8.10"
 kotlinx-coroutines = "1.7.2"
 ktx = "1.12.0"
@@ -64,6 +65,8 @@ androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "
 androidx-work-runtime-ktx = { module = "androidx.work:work-runtime-ktx", version.ref = "work-runtime-ktx" }
 dagger-android-support = { module = "com.google.dagger:dagger-android-support", version.ref = "dagger-android-support" }
 dagger = { module = "com.google.dagger:dagger", version.ref = "dagger" }
+dagger-hilt = { group = "com.google.dagger", name = "hilt-android", version.ref = "dagger" }
+dagger-hilt-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "dagger" }
 flexbox = { module = "com.google.android.flexbox:flexbox", version.ref = "flexbox" }
 gradle = { module = "com.android.tools.build:gradle", version.ref = "gradle" }
 gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
@@ -71,6 +74,7 @@ dagger-android-processor = { module = "com.google.dagger:dagger-android-processo
 dagger-compiler = { module = "com.google.dagger:dagger-compiler", version.ref = "dagger" }
 glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
 glide-compiler = { module = "com.github.bumptech.glide:compiler", version.ref = "glide-compiler" }
+hilt-navigation = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hilt-viewmodel" }
 kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin-gradle-plugin" }
 kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
 material = { module = "com.google.android.material:material", version.ref = "material" }

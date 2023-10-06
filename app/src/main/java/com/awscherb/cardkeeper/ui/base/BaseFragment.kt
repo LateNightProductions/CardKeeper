@@ -4,8 +4,6 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
-import com.awscherb.cardkeeper.di.component.ViewComponent
 import com.awscherb.cardkeeper.util.extensions.addLifecycleTextChangedListener
 import com.google.android.material.snackbar.Snackbar
 

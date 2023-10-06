@@ -2,7 +2,6 @@ package com.awscherb.cardkeeper.ui.items
 
 import androidx.compose.foundation.clickable
 import androidx.compose.material3.Card
-import androidx.compose.material3.CardColors
 import androidx.compose.material3.CardDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier

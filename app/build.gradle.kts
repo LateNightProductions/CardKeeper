@@ -4,6 +4,7 @@ plugins {
     id("kotlin-kapt")
     id("kotlin-parcelize")
     id("androidx.navigation.safeargs.kotlin")
+    id("com.google.dagger.hilt.android")
     id("com.google.android.gms.oss-licenses-plugin")
 }
 
@@ -86,9 +87,11 @@ dependencies {
     implementation(libs.compose.ui.tooling.preview)
     implementation(libs.dagger)
     implementation(libs.dagger.android.support)
+    implementation(libs.dagger.hilt)
     implementation(libs.flexbox)
     implementation(libs.glide)
     implementation(libs.gson)
+    implementation(libs.hilt.navigation)
     implementation(libs.material)
     implementation(libs.okhttp)
     implementation(libs.okhttp.logging.interceptor)
@@ -102,6 +105,7 @@ dependencies {
     kapt(libs.androidx.room.compiler)
     kapt(libs.dagger.android.processor)
     kapt(libs.dagger.compiler)
+    kapt(libs.dagger.hilt.compiler)
     kapt(libs.glide.compiler)
 
 

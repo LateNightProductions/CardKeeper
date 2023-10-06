@@ -2,6 +2,7 @@ package com.awscherb.cardkeeper.ui.base
 
 import android.content.ContentResolver
 import android.os.Bundle
+import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -20,17 +21,16 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import androidx.fragment.app.activityViewModels
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.workDataOf
 import com.awscherb.cardkeeper.R
-import com.awscherb.cardkeeper.barcode.model.ScannedCodeModel
 import com.awscherb.cardkeeper.pkpass.db.PkPassDao
-import com.awscherb.cardkeeper.pkpass.model.PkPassModel
 import com.awscherb.cardkeeper.pkpass.work.ImportPassWorker
 import com.awscherb.cardkeeper.ui.card_detail.CardDetailViewModel
 import com.awscherb.cardkeeper.ui.card_detail.CardDetailViewModelFactory
@@ -38,18 +38,18 @@ import com.awscherb.cardkeeper.ui.items.ItemsFragmentDirections
 import com.awscherb.cardkeeper.ui.items.ItemsScreen
 import com.awscherb.cardkeeper.ui.items.ItemsViewModel
 import com.awscherb.cardkeeper.ui.items.ItemsViewModelFactory
+import com.awscherb.cardkeeper.ui.pkpassDetail.PassDetailScreen
 import com.awscherb.cardkeeper.ui.pkpassDetail.PkPassViewModel
-import com.awscherb.cardkeeper.ui.pkpassDetail.PkPassViewModelFactory
 import com.awscherb.cardkeeper.ui.theme.Typography
 import dagger.android.AndroidInjection
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class CardKeeperActivity : AppCompatActivity() {
+@AndroidEntryPoint
+class CardKeeperActivity : ComponentActivity() {
 
     private val viewModel by viewModels<ItemsViewModel> { viewModelFactory }
-    private val detailViewModel by viewModels<CardDetailViewModel> { detailFactory }
-    private val pkPassViewModel by viewModels<PkPassViewModel> { pkPassFactory }
 
     @Inject
     lateinit var viewModelFactory: ItemsViewModelFactory
@@ -57,19 +57,15 @@ class CardKeeperActivity : AppCompatActivity() {
     @Inject
     lateinit var detailFactory: CardDetailViewModelFactory
 
-    @Inject
-    lateinit var pkPassFactory: PkPassViewModelFactory
 
     @Inject
     lateinit var pkPassDao: PkPassDao
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        AndroidInjection.inject(this)
 
 
         setContent {
-            val items by viewModel.items.collectAsState(initial = emptyList())
             val navController = rememberNavController()
 
             val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
@@ -110,7 +106,19 @@ class CardKeeperActivity : AppCompatActivity() {
                 }) {
                 NavHost(navController = navController, startDestination = "items") {
                     composable("items") {
-                        ItemsScreen(items) {
+                        ItemsScreen(navOnClick = {
+                            scope.launch { drawerState.open() }
+                        }) {
+                            navController.navigate("pass/${it.id}")
+                        }
+                    }
+                    composable(
+                        "pass/{passId}", arguments =
+                        listOf(navArgument("passId") {
+                            type = NavType.StringType
+                        })
+                    ) {
+                        PassDetailScreen {
                             scope.launch { drawerState.open() }
                         }
                     }

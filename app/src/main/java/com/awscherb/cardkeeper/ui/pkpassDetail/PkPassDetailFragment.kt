@@ -67,10 +67,8 @@ import javax.inject.Inject
 
 class PkPassDetailFragment : BaseFragment(), Toolbar.OnMenuItemClickListener {
 
-    private val viewModel by activityViewModels<PkPassViewModel> { factory }
+    private val viewModel by activityViewModels<PkPassViewModel>()
 
-    @Inject
-    lateinit var factory: PkPassViewModelFactory
 
     private val encoder: BarcodeEncoder = BarcodeEncoder()
 

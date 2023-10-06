@@ -5,12 +5,15 @@ import androidx.lifecycle.viewModelScope
 import com.awscherb.cardkeeper.pkpass.model.PkPassModel
 import com.awscherb.cardkeeper.core.SavedItem
 import com.awscherb.cardkeeper.data.repository.SavedItemRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class ItemsViewModel(
+@HiltViewModel
+class ItemsViewModel @Inject constructor(
     private val savedItemRepository: SavedItemRepository
 ) : ViewModel() {
 

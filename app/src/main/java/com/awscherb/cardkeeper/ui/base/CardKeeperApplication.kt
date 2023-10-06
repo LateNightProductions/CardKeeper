@@ -3,19 +3,17 @@ package com.awscherb.cardkeeper.ui.base
 import android.app.Application
 import androidx.work.Configuration
 import com.awscherb.cardkeeper.data.work.CardKeeperWorkerFactory
-import com.awscherb.cardkeeper.di.component.DaggerViewComponent
 import com.awscherb.cardkeeper.di.module.AppModule
 import com.awscherb.cardkeeper.pkpass.api.PkPassApi
 import com.awscherb.cardkeeper.pkpass.db.PkPassDao
 import com.google.gson.Gson
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector
+import dagger.hilt.android.HiltAndroidApp
 import javax.inject.Inject
 
-class CardKeeperApplication : Application(), HasAndroidInjector, Configuration.Provider {
-
-    @Inject
-    lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Any>
+@HiltAndroidApp
+class CardKeeperApplication : Application(), Configuration.Provider {
 
     @Inject
     lateinit var gson: Gson
@@ -25,17 +23,6 @@ class CardKeeperApplication : Application(), HasAndroidInjector, Configuration.P
 
     @Inject
     lateinit var pkPassApi: PkPassApi
-
-    override fun androidInjector() = dispatchingAndroidInjector
-
-    override fun onCreate() {
-        super.onCreate()
-
-        DaggerViewComponent.builder()
-            .appModule(AppModule(this))
-            .build()
-            .inject(this)
-    }
 
     override fun getWorkManagerConfiguration(): Configuration {
         return Configuration.Builder()

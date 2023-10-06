@@ -1,4 +1,4 @@
-package com.awscherb.cardkeeper.pkpass.di
+package com.awscherb.cardkeeper.di.module
 
 import android.content.Context
 import androidx.room.Room
@@ -12,6 +12,9 @@ import com.google.gson.GsonBuilder
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -19,6 +22,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
 @Module
+@InstallIn(SingletonComponent::class)
 interface PkPassModule {
 
     companion object {
@@ -55,7 +59,7 @@ interface PkPassModule {
 
         @Provides
         @Singleton
-        fun provideDatabase(context: Context): PkPassDatabase {
+        fun provideDatabase(@ApplicationContext context: Context): PkPassDatabase {
             return Room.databaseBuilder(
                 context.applicationContext, PkPassDatabase::class.java, "pkpass.db"
             )
