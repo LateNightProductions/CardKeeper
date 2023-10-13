@@ -15,16 +15,12 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.awscherb.cardkeeper.barcode.model.ScannedCodeModel
-import com.awscherb.cardkeeper.ui.items.EncoderHolder.encoder
 import com.awscherb.cardkeeper.ui.theme.CardKeeperTheme
 import com.awscherb.cardkeeper.ui.theme.Typography
+import com.awscherb.cardkeeper.util.EncoderHolder.encoder
 import com.awscherb.cardkeeper.util.createScannedCode
-import com.journeyapps.barcodescanner.BarcodeEncoder
 
 
-private object EncoderHolder {
-    val encoder: BarcodeEncoder = BarcodeEncoder()
-}
 
 @Composable
 fun ScannedCodeItem(

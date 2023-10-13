@@ -18,20 +18,17 @@ import com.awscherb.cardkeeper.pkpass.model.Barcode
 import com.awscherb.cardkeeper.pkpass.model.PkPassModel
 import com.awscherb.cardkeeper.pkpass.model.parseHexColor
 import com.awscherb.cardkeeper.pkpass.model.toBarcodeFormat
-import com.awscherb.cardkeeper.ui.pkpassDetail.EncoderHolder.encoder
 import com.awscherb.cardkeeper.ui.theme.CardKeeperTheme
+import com.awscherb.cardkeeper.util.EncoderHolder.encoder
 import com.awscherb.cardkeeper.util.createPassModel
 import com.journeyapps.barcodescanner.BarcodeEncoder
-
-private object EncoderHolder {
-    val encoder: BarcodeEncoder = BarcodeEncoder()
-}
 
 @Composable
 fun BarcodeSection(
     pass: PkPassModel,
     barcode: Barcode,
-    size: Size
+    size: Size,
+    modifier: Modifier = Modifier,
 ) {
     val bitmap = encoder.encodeBitmap(
         barcode.message,
@@ -44,13 +41,12 @@ fun BarcodeSection(
         Image(
             bitmap = bitmap.asImageBitmap(),
             contentDescription = "",
-            modifier = Modifier
+            modifier = modifier
                 .align(Alignment.CenterHorizontally)
                 .padding(
                     start = 8.dp,
                     end = 8.dp,
                     bottom = if (barcode.altText.isNullOrEmpty()) 8.dp else 0.dp,
-                    top = 16.dp
                 )
         )
 

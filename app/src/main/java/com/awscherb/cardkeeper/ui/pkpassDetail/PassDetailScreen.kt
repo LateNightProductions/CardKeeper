@@ -59,7 +59,14 @@ fun PassDetailScreen(
                 }
 
                 pass.barcode?.let { barcode ->
-                    BarcodeSection(pass = pass, barcode = barcode, size = size)
+                    BarcodeSection(
+                        modifier = Modifier.padding(
+                            top = if (pass.footerPath != null) 0.dp else 16.dp
+                        ),
+                        pass = pass,
+                        barcode = barcode,
+                        size = size
+                    )
                 }
             }
         }

@@ -1,12 +1,19 @@
 package com.awscherb.cardkeeper.ui.pkpassDetail
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import com.awscherb.cardkeeper.pkpass.model.PassInfo
 import com.awscherb.cardkeeper.pkpass.model.PkPassModel
 import com.awscherb.cardkeeper.pkpass.model.TransitType
@@ -16,6 +23,7 @@ import com.awscherb.cardkeeper.pkpass.model.getTranslatedLabel
 import com.awscherb.cardkeeper.pkpass.model.getTranslatedValue
 import com.awscherb.cardkeeper.pkpass.model.parseHexColor
 import com.awscherb.cardkeeper.ui.common.getAlignmentForFieldText
+import com.awscherb.cardkeeper.ui.theme.CardKeeperTheme
 import com.awscherb.cardkeeper.ui.view.FieldConfig
 
 /**
@@ -23,10 +31,12 @@ import com.awscherb.cardkeeper.ui.view.FieldConfig
  * |        Aux fields      |
  * |    Secondary Fields    |
  * |                        |
- * |         Barcode        |
+ * |         Footer         |
+ *
+ * Header (top) and barcode (bottom) are assumed to be rendered in the parent
  */
 @Composable
-fun BoardingPass(pass: PkPassModel, passInfo: PassInfo) {
+fun ColumnScope.BoardingPass(pass: PkPassModel, passInfo: PassInfo) {
     if (passInfo.transitType.getTransitType() == TransitType.AIR) {
         val (origin, destination) = passInfo.findOriginDestination()
         AirPrimarySection(
@@ -82,5 +92,17 @@ fun BoardingPass(pass: PkPassModel, passInfo: PassInfo) {
                 )
             )
         }
+    }
+
+    pass.footerPath?.let { footer ->
+        AsyncImage(
+            model = ImageRequest.Builder(LocalContext.current)
+                .data(footer)
+                .build(),
+            modifier = Modifier
+                .align(CenterHorizontally)
+                .padding(top = 16.dp),
+            contentDescription = "Pass Footer",
+        )
     }
 }
