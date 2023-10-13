@@ -16,6 +16,7 @@ import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toSize
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.awscherb.cardkeeper.pkpass.model.findFirstBarcode
 import com.awscherb.cardkeeper.pkpass.model.findPassInfo
 import com.awscherb.cardkeeper.pkpass.model.isTransit
 import com.awscherb.cardkeeper.pkpass.model.parseHexColor
@@ -58,7 +59,7 @@ fun PassDetailScreen(
                     }
                 }
 
-                pass.barcode?.let { barcode ->
+                pass.findFirstBarcode()?.let { barcode ->
                     BarcodeSection(
                         modifier = Modifier.padding(
                             top = if (pass.footerPath != null) 0.dp else 16.dp

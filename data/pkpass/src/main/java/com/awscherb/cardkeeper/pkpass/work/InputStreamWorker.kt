@@ -241,7 +241,7 @@ abstract class InputStreamWorker(
             return
         }
 
-        val cleanedPath = entity.serialNumber
+        val cleanedPath = entity.id
 
         val newOutputFile = File(context.filesDir.absolutePath + "/${cleanedPath}-$type")
 

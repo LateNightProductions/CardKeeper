@@ -61,6 +61,10 @@ data class FieldObject(
     val value: String,
 )
 
+fun PkPassModel.findFirstBarcode(): Barcode? {
+    return barcode ?: barcodes?.first()
+}
+
 fun String.toBarcodeFormat() =
     when (this) {
         "PKBarcodeFormatQR" -> BarcodeFormat.QR_CODE
