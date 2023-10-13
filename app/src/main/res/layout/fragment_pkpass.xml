@@ -161,6 +161,7 @@
                 android:layout_marginBottom="4dp"
                 android:paddingStart="4dp"
                 android:paddingEnd="4dp"
+                tools:visibility="visible"
                 tools:text="Loyalty Number: 1234"
                 android:textColor="#000000"
                 android:background="#ffffff"/>

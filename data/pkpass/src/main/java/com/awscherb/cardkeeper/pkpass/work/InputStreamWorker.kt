@@ -159,7 +159,9 @@ abstract class InputStreamWorker(
                 sb.append(line).append("\n")
             }
             val pass = gson.fromJson(sb.toString(), PkPassEntity::class.java)
-            pass.id = pass.serialNumber
+            // Some serial numbers have slashes, can probably sanitize better here
+            // Serial is used for both in-app navigation and image paths
+            pass.id = pass.serialNumber.replace("/", "-")
             pass
         } catch (e: Exception) {
             e.printStackTrace()
@@ -239,8 +241,7 @@ abstract class InputStreamWorker(
             return
         }
 
-        // Some serial numbers have slashes, can probably sanitize better here
-        val cleanedPath = entity.serialNumber.replace("/", "-")
+        val cleanedPath = entity.serialNumber
 
         val newOutputFile = File(context.filesDir.absolutePath + "/${cleanedPath}-$type")
 

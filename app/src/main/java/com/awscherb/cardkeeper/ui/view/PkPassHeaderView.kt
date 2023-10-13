@@ -32,11 +32,12 @@ import com.awscherb.cardkeeper.util.createPassModel
 
 @Composable
 fun PkPassHeaderView(
+    modifier: Modifier = Modifier,
     pass: PkPassModel,
     placeholder: Painter? = null
 ) {
     ConstraintLayout(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .height(56.dp)
     ) {
@@ -122,6 +123,7 @@ fun PkPassHeaderView(
 fun PassHeaderTextSingleHeader() {
     CardKeeperTheme {
         PkPassHeaderView(
+            pass =
             createPassModel(
                 logoText = "Loyalty Card",
                 boardingPass = createPassInfo(
@@ -140,6 +142,7 @@ fun PassHeaderTextSingleHeader() {
 fun PassHeaderMultipleHeaders() {
     CardKeeperTheme {
         PkPassHeaderView(
+            pass =
             createPassModel(
                 boardingPass = createPassInfo(
                     headerFields = listOf(
@@ -158,6 +161,7 @@ fun PassHeaderMultipleHeaders() {
 fun PassHeaderLongNameNoHeaders() {
     CardKeeperTheme {
         PkPassHeaderView(
+            pass =
             createPassModel(
                 logoText = "Header Field With A Super Long Name Should Be Ellipsized",
                 boardingPass = createPassInfo()
@@ -172,6 +176,7 @@ fun PassHeaderLongNameNoHeaders() {
 fun PassHeaderLongTextMultipleHeaders() {
     CardKeeperTheme {
         PkPassHeaderView(
+            pass =
             createPassModel(
                 logoText = "Header Field With A Super Long Name Should Be Ellipsized",
                 boardingPass = createPassInfo(

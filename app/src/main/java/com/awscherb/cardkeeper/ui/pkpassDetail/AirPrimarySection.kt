@@ -28,6 +28,7 @@ import android.graphics.Color as GraphicsColor
 
 @Composable
 fun AirPrimarySection(
+    modifier: Modifier = Modifier,
     fromAirport: String,
     fromCode: String,
     toAirport: String,
@@ -35,7 +36,7 @@ fun AirPrimarySection(
     tint: Int
 ) {
     val tintColor = Color(tint)
-    Column {
+    Column(modifier) {
         Row(
             horizontalArrangement = Arrangement.SpaceBetween,
             modifier = Modifier
@@ -117,6 +118,7 @@ fun AirPrimarySection(
 fun AirPrimaryPreview() {
     CardKeeperTheme {
         AirPrimarySection(
+            modifier = Modifier,
             "Newark-Liberty Intl",
             "EWR",
             "Ithaca",
@@ -131,6 +133,7 @@ fun AirPrimaryPreview() {
 fun AirPrimaryTruncateName() {
     CardKeeperTheme {
         AirPrimarySection(
+            modifier = Modifier,
             "Newark-Liberty Intl",
             "EWR LONG NAME",
             "Ithaca",

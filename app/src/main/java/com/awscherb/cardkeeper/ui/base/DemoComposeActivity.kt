@@ -4,6 +4,7 @@ import android.graphics.Color
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.ui.Modifier
 import com.awscherb.cardkeeper.ui.common.TextInfo
 import com.awscherb.cardkeeper.ui.pkpassDetail.AirPrimarySection
 
@@ -14,6 +15,7 @@ class DemoComposeActivity : AppCompatActivity() {
 
         setContent {
             AirPrimarySection(
+                modifier = Modifier,
                 "Newark-Liberty Intl",
                 "EWR",
                 "Ithaca Airport",
