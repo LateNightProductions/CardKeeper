@@ -1,6 +1,7 @@
 package com.awscherb.cardkeeper.pkpass.model
 
 import android.graphics.Color
+import com.awscherb.cardkeeper.core.Barcode
 import com.awscherb.cardkeeper.core.SavedItem
 import com.awscherb.cardkeeper.pkpass.util.BarcodeConstants
 import com.awscherb.cardkeeper.pkpass.util.TransitConstants
@@ -50,12 +51,6 @@ interface PassInfo {
     val backFields: List<FieldObject>?
 }
 
-interface Barcode {
-    val altText: String?
-    val format: String
-    val message: String
-    val messageEncoding: String
-}
 
 data class FieldObject(
     val key: String,

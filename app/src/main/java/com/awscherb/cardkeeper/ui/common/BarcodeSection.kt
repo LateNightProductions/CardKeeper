@@ -1,4 +1,4 @@
-package com.awscherb.cardkeeper.ui.pkpassDetail
+package com.awscherb.cardkeeper.ui.common
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
@@ -14,7 +14,7 @@ import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.awscherb.cardkeeper.pkpass.model.Barcode
+import com.awscherb.cardkeeper.core.Barcode
 import com.awscherb.cardkeeper.pkpass.model.PkPassModel
 import com.awscherb.cardkeeper.pkpass.model.parseHexColor
 import com.awscherb.cardkeeper.pkpass.model.toBarcodeFormat
@@ -23,20 +23,29 @@ import com.awscherb.cardkeeper.ui.theme.CardKeeperTheme
 import com.awscherb.cardkeeper.util.EncoderHolder.encoder
 import com.awscherb.cardkeeper.util.createBarcode
 import com.awscherb.cardkeeper.util.createPassModel
-import com.journeyapps.barcodescanner.BarcodeEncoder
+import com.google.zxing.BarcodeFormat
 
 @Composable
 fun BarcodeSection(
-    pass: PkPassModel,
-    barcode: Barcode,
+    barcodeFormat: BarcodeFormat,
+    message: String,
     size: Size,
     modifier: Modifier = Modifier,
+    altText: String? = null,
+    altColor: Color = Color.Black,
 ) {
+
+    val (width, height) = when (barcodeFormat) {
+        // these will just be unlimited height so make them look nice
+        BarcodeFormat.CODE_128 -> (size.width * .85 ).toInt() to size.width.toInt() / 6
+        else -> size.width.toInt() / 2 to size.width.toInt() / 2
+    }
+
     val bitmap = encoder.encodeBitmap(
-        barcode.message,
-        barcode.format.toBarcodeFormat(),
-        size.width.toInt() / 2,
-        size.width.toInt() / 2
+        message,
+        barcodeFormat,
+        width,
+        height
     )
 
     Column(modifier = Modifier.fillMaxWidth()) {
@@ -48,11 +57,11 @@ fun BarcodeSection(
                 .padding(
                     start = 8.dp,
                     end = 8.dp,
-                    bottom = if (barcode.altText.isNullOrEmpty()) 8.dp else 0.dp,
+                    bottom = if (altText.isNullOrEmpty()) 8.dp else 0.dp,
                 )
         )
 
-        barcode.altText?.let { alt ->
+        altText?.let { alt ->
             Text(
                 modifier = Modifier
                     .padding(
@@ -63,7 +72,7 @@ fun BarcodeSection(
                     .align(Alignment.CenterHorizontally),
                 text = alt,
                 textAlign = TextAlign.Center,
-                color = Color(pass.foregroundColor.parseHexColor()),
+                color = altColor,
             )
 
         }
@@ -75,14 +84,9 @@ fun BarcodeSection(
 fun QrCodePreview() {
     CardKeeperTheme {
         BarcodeSection(
-            barcode = createBarcode(
-                altText = null,
-                format = BarcodeConstants.FORMAT_QR,
-                message = "message",
-                messageEncoding = "UTF-8",
-            ),
+            barcodeFormat = BarcodeFormat.QR_CODE,
+            message = "something",
             size = Size(500f, 500f),
-            pass = createPassModel(foregroundColor = "rgb(255,255,255)")
         )
     }
 }
@@ -92,14 +96,11 @@ fun QrCodePreview() {
 fun QrCodeAltPreview() {
     CardKeeperTheme {
         BarcodeSection(
-            barcode = createBarcode(
-                altText = "message",
-                format = BarcodeConstants.FORMAT_QR,
-                message = "message",
-                messageEncoding = "UTF-8",
-            ),
+            barcodeFormat = BarcodeFormat.QR_CODE,
+            message = "something",
             size = Size(500f, 500f),
-            pass = createPassModel(foregroundColor = "rgb(0,0,255)")
+            altText = "something",
+            altColor = Color.Green
         )
     }
 }
@@ -109,14 +110,11 @@ fun QrCodeAltPreview() {
 fun Pdf417Preview() {
     CardKeeperTheme {
         BarcodeSection(
-            barcode = createBarcode(
-                altText = "message",
-                format = BarcodeConstants.FORMAT_PDF_417,
-                message = "message",
-                messageEncoding = "UTF-8",
-            ),
-            size = Size(1000f, 500f),
-            pass = createPassModel(foregroundColor = "rgb(0,0,255)")
+            barcodeFormat = BarcodeFormat.PDF_417,
+            message = "something",
+            size = Size(500f, 500f),
+            altText = "something",
+            altColor = Color.Cyan
         )
     }
 }
@@ -126,14 +124,11 @@ fun Pdf417Preview() {
 fun AztecPreview() {
     CardKeeperTheme {
         BarcodeSection(
-            barcode = createBarcode(
-                altText = "message",
-                format = BarcodeConstants.FORMAT_AZTEC,
-                message = "message",
-                messageEncoding = "UTF-8",
-            ),
-            size = Size(1000f, 500f),
-            pass = createPassModel(foregroundColor = "rgb(0,0,255)")
+            barcodeFormat = BarcodeFormat.AZTEC,
+            message = "something",
+            size = Size(500f, 500f),
+            altText = "something",
+            altColor = Color.Magenta
         )
     }
 }
@@ -143,14 +138,11 @@ fun AztecPreview() {
 fun Code128Preview() {
     CardKeeperTheme {
         BarcodeSection(
-            barcode = createBarcode(
-                altText = "message",
-                format = BarcodeConstants.FORMAT_CODE_128,
-                message = "message",
-                messageEncoding = "UTF-8",
-            ),
-            size = Size(1000f, 500f),
-            pass = createPassModel(foregroundColor = "rgb(0,0,255)")
+            barcodeFormat = BarcodeFormat.CODE_128,
+            message = "123",
+            size = Size(500f, 500f),
+            altText = "something",
+            altColor = Color.Yellow
         )
     }
 }

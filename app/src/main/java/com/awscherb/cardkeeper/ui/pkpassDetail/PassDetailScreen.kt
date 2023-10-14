@@ -16,12 +16,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toSize
+import androidx.core.graphics.toColorInt
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.awscherb.cardkeeper.pkpass.model.PkPassModel
 import com.awscherb.cardkeeper.pkpass.model.findFirstBarcode
 import com.awscherb.cardkeeper.pkpass.model.findPassInfo
 import com.awscherb.cardkeeper.pkpass.model.isTransit
 import com.awscherb.cardkeeper.pkpass.model.parseHexColor
+import com.awscherb.cardkeeper.pkpass.model.toBarcodeFormat
+import com.awscherb.cardkeeper.ui.common.BarcodeSection
 import com.awscherb.cardkeeper.ui.view.PkPassHeaderView
 import com.awscherb.cardkeeper.ui.view.ScaffoldScreen
 
@@ -83,12 +86,12 @@ fun PassDetail(
                 modifier = Modifier.padding(
                     top = if (pass.footerPath != null) 0.dp else 16.dp
                 ),
-                pass = pass,
-                barcode = barcode,
-                size = size
+                message = barcode.message,
+                barcodeFormat = barcode.format.toBarcodeFormat(),
+                altText = barcode.altText,
+                size = size,
+                altColor = Color(pass.foregroundColor.parseHexColor())
             )
         }
-
     }
-
 }

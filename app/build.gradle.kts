@@ -63,6 +63,7 @@ android {
 dependencies {
 
     implementation(project(":data:core"))
+    implementation(project(":data:common"))
     implementation(project(":data:barcode"))
     implementation(project(":data:pkpass"))
 

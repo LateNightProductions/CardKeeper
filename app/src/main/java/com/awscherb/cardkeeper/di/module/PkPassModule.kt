@@ -2,7 +2,7 @@ package com.awscherb.cardkeeper.di.module
 
 import android.content.Context
 import androidx.room.Room
-import com.awscherb.cardkeeper.core.BuildInfo
+import com.awscherb.cardkeeper.common.BuildInfo
 import com.awscherb.cardkeeper.pkpass.api.PkPassApi
 import com.awscherb.cardkeeper.pkpass.db.PkPassDatabase
 import com.awscherb.cardkeeper.pkpass.handler.PkPassHandler
@@ -28,7 +28,7 @@ interface PkPassModule {
     companion object {
 
         @Provides
-        fun provideLevel(buildInfo: BuildInfo) =
+        fun provideLevel(buildInfo: com.awscherb.cardkeeper.common.BuildInfo) =
             if (buildInfo.debug) HttpLoggingInterceptor.Level.HEADERS
             else HttpLoggingInterceptor.Level.NONE
 

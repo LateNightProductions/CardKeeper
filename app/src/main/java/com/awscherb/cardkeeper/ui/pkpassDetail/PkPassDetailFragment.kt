@@ -25,7 +25,7 @@ import androidx.work.WorkInfo
 import androidx.work.WorkManager
 import androidx.work.workDataOf
 import com.awscherb.cardkeeper.R
-import com.awscherb.cardkeeper.pkpass.model.Barcode
+import com.awscherb.cardkeeper.core.Barcode
 import com.awscherb.cardkeeper.pkpass.model.PassInfo
 import com.awscherb.cardkeeper.pkpass.model.PkPassModel
 import com.awscherb.cardkeeper.pkpass.model.TransitType

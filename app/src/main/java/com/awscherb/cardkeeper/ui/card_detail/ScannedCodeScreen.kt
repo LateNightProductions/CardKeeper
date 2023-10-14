@@ -10,15 +10,22 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.toSize
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.awscherb.cardkeeper.barcode.model.ScannedCodeModel
 import com.awscherb.cardkeeper.pkpass.model.parseHexColor
+import com.awscherb.cardkeeper.ui.common.BarcodeSection
 import com.awscherb.cardkeeper.ui.theme.Typography
 import com.awscherb.cardkeeper.ui.view.ScaffoldScreen
 import com.awscherb.cardkeeper.util.EncoderHolder
@@ -30,12 +37,19 @@ fun ScannedCodeScreen(
 ) {
 
     val code by scannedCodeViewModel.card.collectAsState(initial = null)
+    var size by remember {
+        mutableStateOf(Size.Zero)
+    }
 
     ScaffoldScreen(title = "Code", navOnClick = navOnClick) {
         code?.let { code ->
             ScannedCodeDetail(
                 code = code,
-                paddingValues = it
+                paddingValues = it,
+                size = size,
+                modifier = Modifier.onGloballyPositioned {
+                    size = it.size.toSize()
+                }
             )
         }
     }
@@ -44,10 +58,12 @@ fun ScannedCodeScreen(
 @Composable
 fun ScannedCodeDetail(
     code: ScannedCodeModel,
-    paddingValues: PaddingValues
+    size: Size,
+    paddingValues: PaddingValues,
+    modifier: Modifier = Modifier
 ) {
     Card(
-        modifier = Modifier
+        modifier = modifier
             .padding(paddingValues)
             .padding(horizontal = 8.dp, vertical = 8.dp),
     ) {
@@ -62,24 +78,11 @@ fun ScannedCodeDetail(
         )
 
         // Load image
-        val bitmap =
-            EncoderHolder.encoder.encodeBitmap(code.text, code.format, 200, 200)
-
-        Image(
-            bitmap = bitmap.asImageBitmap(),
-            contentDescription = "",
-            modifier = Modifier
-                .align(Alignment.CenterHorizontally)
-                .padding(start = 8.dp, end = 8.dp, bottom = 8.dp)
-        )
-
-        Text(
-            text = code.text,
-            style = Typography.bodyMedium,
-            overflow = TextOverflow.Ellipsis,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 8.dp, vertical = 8.dp)
+        BarcodeSection(
+            barcodeFormat = code.format,
+            message = code.text,
+            size = size,
+            altText = code.text
         )
     }
 }

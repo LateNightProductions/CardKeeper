@@ -10,4 +10,5 @@ java {
 
 dependencies {
     implementation(libs.kotlinx.coroutines)
+    implementation(libs.zxing.core)
 }

@@ -8,8 +8,14 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.toSize
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.awscherb.cardkeeper.barcode.model.ScannedCodeModel
 import com.awscherb.cardkeeper.core.SavedItem
@@ -24,29 +30,47 @@ fun ItemsScreen(
 ) {
     val items by viewModel.items.collectAsState(initial = emptyList())
 
-    ScaffoldScreen(title = "Items", navOnClick =  navOnClick ) {
-        LazyColumn(
-            modifier = Modifier.padding(it),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
-            contentPadding = PaddingValues(
-                top = 8.dp,
-                start = 8.dp,
-                end = 8.dp,
-                bottom = 64.dp
-            )
-        ) {
-            items(items, key = { it.id }) { item ->
-                when (item) {
-                    is ScannedCodeModel -> ScannedCodeItem(
-                        item = item,
-                    ) { onClick(it) }
+    ScaffoldScreen(title = "Items", navOnClick = navOnClick) {
+        ItemsList(items, it, onClick)
 
-                    is PkPassModel -> PassItem(pass = item) {
-                        onClick(it)
-                    }
+    }
+}
+
+@Composable
+fun ItemsList(
+    items: List<SavedItem>,
+    paddingValues: PaddingValues,
+    onClick: (SavedItem) -> Unit
+) {
+    var size by remember {
+        mutableStateOf(Size.Zero)
+    }
+
+    LazyColumn(
+        modifier = Modifier
+            .padding(paddingValues)
+            .onGloballyPositioned { size = it.size.toSize() },
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+        contentPadding = PaddingValues(
+            top = 8.dp,
+            start = 8.dp,
+            end = 8.dp,
+            bottom = 64.dp
+        )
+    ) {
+        items(items, key = { it.id }) { item ->
+            when (item) {
+                is ScannedCodeModel -> ScannedCodeItem(
+                    item = item,
+                    size = size,
+                ) { onClick(it) }
+
+                is PkPassModel -> PassItem(pass = item) {
+                    onClick(it)
                 }
-
             }
+
         }
     }
 }
+
