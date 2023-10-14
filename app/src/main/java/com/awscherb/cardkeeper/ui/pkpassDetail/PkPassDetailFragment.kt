@@ -46,6 +46,7 @@ import com.awscherb.cardkeeper.ui.view.PkPassHeaderView
 import com.awscherb.cardkeeper.ui.view.PrimaryFieldView
 import com.awscherb.cardkeeper.util.WebServiceUrlBuilder
 import com.awscherb.cardkeeper.util.extensions.expand
+import com.awscherb.cardkeeper.util.extensions.getForegroundColor
 import com.bumptech.glide.Glide
 import com.google.android.flexbox.FlexboxLayout
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -223,7 +224,7 @@ class PkPassDetailFragment : BaseFragment(), Toolbar.OnMenuItemClickListener {
                         fromCode = origin.value,
                         toAirport = destination.label ?: "",
                         toCode = destination.value,
-                        tint = pass.foregroundColor.parseHexColor()
+                        tint = pass.getForegroundColor()
                     )
                 }
             }

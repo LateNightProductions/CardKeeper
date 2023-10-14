@@ -73,7 +73,10 @@ fun String.toBarcodeFormat() =
 
 enum class TransitType {
     AIR,
-    GENERIC
+    BOAT,
+    BUS,
+    GENERIC,
+    TRAIN
 }
 
 fun PassInfo.isTransit() = transitType != null
@@ -109,6 +112,9 @@ fun PkPassModel.getTranslatedValue(label: String): String {
 fun String?.getTransitType(): TransitType =
     when (this) {
         TransitConstants.TYPE_AIR -> TransitType.AIR
+        TransitConstants.TYPE_BOAT -> TransitType.BOAT
+        TransitConstants.TYPE_BUS -> TransitType.BUS
+        TransitConstants.TYPE_TRAIN -> TransitType.TRAIN
         else -> TransitType.GENERIC
     }
 
@@ -142,6 +148,7 @@ fun String?.parseHexColor(): Int {
         }
     })
 }
+
 
 fun PkPassModel.findPassInfo(): PassInfo? = when {
     boardingPass != null -> boardingPass

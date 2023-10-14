@@ -34,10 +34,9 @@ fun TransitPrimarySection(
     fromCode: String,
     toAirport: String,
     toCode: String,
-    tint: Int,
+    tint: Color,
     transitType: TransitType = TransitType.GENERIC
 ) {
-    val tintColor = Color(tint)
     Column(modifier) {
         Row(
             horizontalArrangement = Arrangement.SpaceBetween,
@@ -47,12 +46,12 @@ fun TransitPrimarySection(
         ) {
             Text(
                 text = fromAirport.uppercase(),
-                color = tintColor,
+                color = tint,
                 style = Typography.labelMedium
             )
             Text(
                 text = toAirport.uppercase(),
-                color = tintColor,
+                color = tint,
                 style = Typography.labelMedium
             )
         }
@@ -70,7 +69,7 @@ fun TransitPrimarySection(
 
                 Text(
                     text = fromCode,
-                    color = tintColor,
+                    color = tint,
                     style = Typography.displayMedium,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
@@ -82,13 +81,20 @@ fun TransitPrimarySection(
 
                 val transitIcon = when (transitType) {
                     TransitType.AIR -> R.drawable.ic_airplane
+                    TransitType.BOAT -> R.drawable.ic_boat
+                    TransitType.BUS -> R.drawable.ic_bus
                     TransitType.GENERIC -> R.drawable.ic_up
+                    TransitType.TRAIN -> R.drawable.ic_train
                 }
+
+                val rotation = if (transitType == TransitType.AIR ||
+                    transitType == TransitType.GENERIC
+                ) 90f else 0f
 
                 Image(
                     modifier = Modifier
                         .size(42.dp)
-                        .rotate(90f)
+                        .rotate(rotation)
                         .constrainAs(image) {
                             start.linkTo(parent.start)
                             end.linkTo(parent.end)
@@ -97,7 +103,7 @@ fun TransitPrimarySection(
                         },
                     painter = painterResource(id = transitIcon),
                     contentDescription = "Pass",
-                    colorFilter = ColorFilter.tint(tintColor)
+                    colorFilter = ColorFilter.tint(tint)
                 )
 
                 Text(
@@ -109,7 +115,7 @@ fun TransitPrimarySection(
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                     text = toCode,
-                    color = tintColor,
+                    color = tint,
                     style = Typography.displayMedium
 
                 )
@@ -130,7 +136,7 @@ fun TransitPrimaryAir() {
             "EWR",
             "Ithaca",
             "ITH",
-            GraphicsColor.parseColor("#00aa00"),
+            Color.Cyan,
             transitType = TransitType.AIR
         )
     }
@@ -146,8 +152,56 @@ fun TransitPrimaryAirTruncated() {
             "EWR LONG NAME",
             "Ithaca",
             "ITH REALLY LONG NAME",
-            GraphicsColor.parseColor("#00aa00"),
+            Color.Magenta,
             transitType = TransitType.AIR
+        )
+    }
+}
+
+@Composable
+@Preview
+fun TransitPrimaryTrain() {
+    CardKeeperTheme {
+        TransitPrimarySection(
+            modifier = Modifier,
+            "New York Penn",
+            "PENN",
+            "Boston South Station",
+            "BOS",
+            Color.Yellow,
+            transitType = TransitType.TRAIN
+        )
+    }
+}
+
+@Composable
+@Preview
+fun TransitPrimaryBoat() {
+    CardKeeperTheme {
+        TransitPrimarySection(
+            modifier = Modifier,
+            "Southampton",
+            "STH",
+            "New York",
+            "NYC",
+            Color.Green,
+            transitType = TransitType.BOAT
+        )
+    }
+}
+
+@Composable
+@Preview
+fun TransitPrimaryBus() {
+    CardKeeperTheme {
+        TransitPrimarySection(
+            modifier = Modifier,
+            "Boston",
+            "BOS",
+            "New York",
+            "NYC",
+            Color.Blue,
+            transitType = TransitType.BUS
         )
     }
 }
@@ -158,11 +212,11 @@ fun TransitPrimaryGeneric() {
     CardKeeperTheme {
         TransitPrimarySection(
             modifier = Modifier,
-            "New York Penn",
-            "PENN",
-            "Boston South Station",
-            "BOS",
-            GraphicsColor.parseColor("#00aa00"),
+            "Somewhere",
+            "SOM",
+            "Nowhere",
+            "NOW",
+            Color.Red,
             transitType = TransitType.GENERIC
         )
     }

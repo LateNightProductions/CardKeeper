@@ -12,15 +12,6 @@ class DemoComposeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setContent {
-            TransitPrimarySection(
-                modifier = Modifier,
-                "Newark-Liberty Intl",
-                "EWR",
-                "Ithaca Airport",
-                "ITH",
-                Color.parseColor("#FFFFFF")
-            )
-        }
+
     }
 }

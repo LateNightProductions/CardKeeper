@@ -9,4 +9,8 @@ object BarcodeConstants {
 
 object TransitConstants {
     const val TYPE_AIR = "PKTransitTypeAir"
+    const val TYPE_BOAT = "PKTransitTypeBoat"
+    const val TYPE_BUS = "PKTransitTypeBus"
+    const val TYPE_GENERIC = "PKTransitTypeGeneric"
+    const val TYPE_TRAIN = "PKTransitTypeTrain"
 }

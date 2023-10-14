@@ -22,6 +22,7 @@ import com.awscherb.cardkeeper.pkpass.model.getTranslatedValue
 import com.awscherb.cardkeeper.pkpass.model.parseHexColor
 import com.awscherb.cardkeeper.ui.common.getAlignmentForFieldText
 import com.awscherb.cardkeeper.ui.view.FieldConfig
+import com.awscherb.cardkeeper.util.extensions.getForegroundColor
 
 /**
  * |Primary| |Icon| |Primary|
@@ -42,7 +43,7 @@ fun ColumnScope.BoardingPass(pass: PkPassModel, passInfo: PassInfo) {
         fromCode = origin.value,
         toAirport = destination.label ?: "",
         toCode = destination.value,
-        tint = pass.foregroundColor.parseHexColor(),
+        tint = pass.getForegroundColor(),
         transitType = passInfo.getTransitType()
     )
 
