@@ -21,19 +21,21 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.constraintlayout.compose.atMostWrapContent
 import com.awscherb.cardkeeper.R
+import com.awscherb.cardkeeper.pkpass.model.TransitType
 import com.awscherb.cardkeeper.ui.theme.CardKeeperTheme
 import com.awscherb.cardkeeper.ui.theme.Typography
 import android.graphics.Color as GraphicsColor
 
 
 @Composable
-fun AirPrimarySection(
+fun TransitPrimarySection(
     modifier: Modifier = Modifier,
     fromAirport: String,
     fromCode: String,
     toAirport: String,
     toCode: String,
-    tint: Int
+    tint: Int,
+    transitType: TransitType = TransitType.GENERIC
 ) {
     val tintColor = Color(tint)
     Column(modifier) {
@@ -78,6 +80,11 @@ fun AirPrimarySection(
                     }
                 )
 
+                val transitIcon = when (transitType) {
+                    TransitType.AIR -> R.drawable.ic_airplane
+                    TransitType.GENERIC -> R.drawable.ic_up
+                }
+
                 Image(
                     modifier = Modifier
                         .size(42.dp)
@@ -88,7 +95,7 @@ fun AirPrimarySection(
                             top.linkTo(parent.top)
                             bottom.linkTo(parent.bottom)
                         },
-                    painter = painterResource(id = R.drawable.ic_airplane),
+                    painter = painterResource(id = transitIcon),
                     contentDescription = "Pass",
                     colorFilter = ColorFilter.tint(tintColor)
                 )
@@ -114,31 +121,49 @@ fun AirPrimarySection(
 }
 
 @Composable
-@Preview(showSystemUi = true)
-fun AirPrimaryPreview() {
+@Preview
+fun TransitPrimaryAir() {
     CardKeeperTheme {
-        AirPrimarySection(
+        TransitPrimarySection(
             modifier = Modifier,
             "Newark-Liberty Intl",
             "EWR",
             "Ithaca",
             "ITH",
-            GraphicsColor.parseColor("#00aa00")
+            GraphicsColor.parseColor("#00aa00"),
+            transitType = TransitType.AIR
         )
     }
 }
 
 @Composable
-@Preview(showSystemUi = true)
-fun AirPrimaryTruncateName() {
+@Preview
+fun TransitPrimaryAirTruncated() {
     CardKeeperTheme {
-        AirPrimarySection(
+        TransitPrimarySection(
             modifier = Modifier,
             "Newark-Liberty Intl",
             "EWR LONG NAME",
             "Ithaca",
             "ITH REALLY LONG NAME",
-            GraphicsColor.parseColor("#00aa00")
+            GraphicsColor.parseColor("#00aa00"),
+            transitType = TransitType.AIR
+        )
+    }
+}
+
+@Composable
+@Preview
+fun TransitPrimaryGeneric() {
+    CardKeeperTheme {
+        TransitPrimarySection(
+            modifier = Modifier,
+            "New York Penn",
+            "PENN",
+            "Boston South Station",
+            "BOS",
+            GraphicsColor.parseColor("#00aa00"),
+            transitType = TransitType.GENERIC
         )
     }
 }

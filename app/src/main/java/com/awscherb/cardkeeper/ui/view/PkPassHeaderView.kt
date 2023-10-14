@@ -1,12 +1,19 @@
 package com.awscherb.cardkeeper.ui.view
 
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.requiredWidth
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
@@ -34,7 +41,7 @@ import com.awscherb.cardkeeper.util.createPassModel
 fun PkPassHeaderView(
     modifier: Modifier = Modifier,
     pass: PkPassModel,
-    placeholder: Painter? = null
+    showPlaceholder: Boolean = false
 ) {
     ConstraintLayout(
         modifier = modifier
@@ -45,7 +52,7 @@ fun PkPassHeaderView(
 
         AsyncImage(
             model = pass.logoPath,
-            placeholder = placeholder,
+            placeholder = if (showPlaceholder) painterResource(id = R.drawable.ic_image_placeholder) else null,
             contentDescription = pass.description,
             modifier = Modifier
                 .padding(start = 8.dp)
@@ -123,16 +130,15 @@ fun PkPassHeaderView(
 fun PassHeaderTextSingleHeader() {
     CardKeeperTheme {
         PkPassHeaderView(
-            pass =
-            createPassModel(
+            pass = createPassModel(
                 logoText = "Loyalty Card",
                 boardingPass = createPassInfo(
                     headerFields = listOf(
                         FieldObject("key", "label", "value")
                     )
-                )
+                ),
             ),
-            placeholder = painterResource(id = R.mipmap.ic_launcher)
+            showPlaceholder = true
         )
     }
 }
@@ -142,16 +148,15 @@ fun PassHeaderTextSingleHeader() {
 fun PassHeaderMultipleHeaders() {
     CardKeeperTheme {
         PkPassHeaderView(
-            pass =
-            createPassModel(
+            pass = createPassModel(
                 boardingPass = createPassInfo(
                     headerFields = listOf(
                         FieldObject("key", "label", "value"),
                         FieldObject("key", "label", "value")
                     )
-                )
+                ),
             ),
-            placeholder = painterResource(id = R.mipmap.ic_launcher)
+            showPlaceholder = true
         )
     }
 }
@@ -161,12 +166,11 @@ fun PassHeaderMultipleHeaders() {
 fun PassHeaderLongNameNoHeaders() {
     CardKeeperTheme {
         PkPassHeaderView(
-            pass =
-            createPassModel(
+            pass = createPassModel(
                 logoText = "Header Field With A Super Long Name Should Be Ellipsized",
                 boardingPass = createPassInfo()
             ),
-            placeholder = painterResource(id = R.mipmap.ic_launcher)
+            showPlaceholder = true
         )
     }
 }
@@ -176,8 +180,7 @@ fun PassHeaderLongNameNoHeaders() {
 fun PassHeaderLongTextMultipleHeaders() {
     CardKeeperTheme {
         PkPassHeaderView(
-            pass =
-            createPassModel(
+            pass = createPassModel(
                 logoText = "Header Field With A Super Long Name Should Be Ellipsized",
                 boardingPass = createPassInfo(
                     headerFields = listOf(
@@ -186,7 +189,7 @@ fun PassHeaderLongTextMultipleHeaders() {
                     )
                 )
             ),
-            placeholder = painterResource(id = R.mipmap.ic_launcher)
+            showPlaceholder = true
         )
     }
 }

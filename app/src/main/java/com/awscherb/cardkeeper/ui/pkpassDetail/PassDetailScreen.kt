@@ -1,8 +1,10 @@
 package com.awscherb.cardkeeper.ui.pkpassDetail
 
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -16,6 +18,8 @@ import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toSize
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.awscherb.cardkeeper.pkpass.entity.PkPassEntity
+import com.awscherb.cardkeeper.pkpass.model.PkPassModel
 import com.awscherb.cardkeeper.pkpass.model.findFirstBarcode
 import com.awscherb.cardkeeper.pkpass.model.findPassInfo
 import com.awscherb.cardkeeper.pkpass.model.isTransit
@@ -37,40 +41,56 @@ fun PassDetailScreen(
 
     ScaffoldScreen(title = "Pass", navOnClick = navOnClick) {
         pass?.let { pass ->
-            Card(
-                modifier = Modifier
-                    .padding(it)
-                    .padding(horizontal = 8.dp, vertical = 8.dp)
-                    .onGloballyPositioned {
-                        size = it.size.toSize()
-                    },
-
-                colors = CardDefaults.cardColors(
-                    containerColor = Color(pass.backgroundColor.parseHexColor())
-                )
-            ) {
-                PkPassHeaderView(
-                    pass = pass
-                )
-
-                pass.findPassInfo()?.let { passInfo ->
-                    if (passInfo.isTransit()) {
-                        BoardingPass(pass = pass, passInfo = passInfo)
-                    }
-                }
-
-                pass.findFirstBarcode()?.let { barcode ->
-                    BarcodeSection(
-                        modifier = Modifier.padding(
-                            top = if (pass.footerPath != null) 0.dp else 16.dp
-                        ),
-                        pass = pass,
-                        barcode = barcode,
-                        size = size
-                    )
-                }
-            }
+            PassDetail(
+                modifier = Modifier.onGloballyPositioned {
+                    size = it.size.toSize()
+                },
+                padding = it,
+                pass = pass,
+                size = size
+            )
         }
     }
 }
 
+@Composable
+fun PassDetail(
+    modifier: Modifier = Modifier,
+    padding: PaddingValues,
+    pass: PkPassModel,
+    size: Size,
+) {
+
+    Card(
+        modifier = modifier
+            .padding(padding)
+            .padding(horizontal = 8.dp, vertical = 8.dp),
+
+        colors = CardDefaults.cardColors(
+            containerColor = Color(pass.backgroundColor.parseHexColor())
+        )
+    ) {
+        PkPassHeaderView(
+            pass = pass
+        )
+
+        pass.findPassInfo()?.let { passInfo ->
+            if (passInfo.isTransit()) {
+                BoardingPass(pass = pass, passInfo = passInfo)
+            }
+        }
+
+        pass.findFirstBarcode()?.let { barcode ->
+            BarcodeSection(
+                modifier = Modifier.padding(
+                    top = if (pass.footerPath != null) 0.dp else 16.dp
+                ),
+                pass = pass,
+                barcode = barcode,
+                size = size
+            )
+        }
+
+    }
+
+}

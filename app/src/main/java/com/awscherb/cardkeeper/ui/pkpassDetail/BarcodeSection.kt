@@ -20,6 +20,7 @@ import com.awscherb.cardkeeper.pkpass.model.parseHexColor
 import com.awscherb.cardkeeper.pkpass.model.toBarcodeFormat
 import com.awscherb.cardkeeper.ui.theme.CardKeeperTheme
 import com.awscherb.cardkeeper.util.EncoderHolder.encoder
+import com.awscherb.cardkeeper.util.createBarcode
 import com.awscherb.cardkeeper.util.createPassModel
 import com.journeyapps.barcodescanner.BarcodeEncoder
 
@@ -73,12 +74,12 @@ fun BarcodeSection(
 fun QrCodePreview() {
     CardKeeperTheme {
         BarcodeSection(
-            barcode = object : Barcode {
-                override val altText = null
-                override val format = "PKBarcodeFormatQR"
-                override val message = "message"
-                override val messageEncoding = "UTF-8"
-            },
+            barcode = createBarcode(
+                altText = null,
+                format = "PKBarcodeFormatQR",
+                message = "message",
+                messageEncoding = "UTF-8",
+            ),
             size = Size(500f, 500f),
             pass = createPassModel(foregroundColor = "rgb(255,255,255)")
         )
@@ -90,12 +91,12 @@ fun QrCodePreview() {
 fun QrCodeAltPreview() {
     CardKeeperTheme {
         BarcodeSection(
-            barcode = object : Barcode {
-                override val altText = "message"
-                override val format = "PKBarcodeFormatQR"
-                override val message = "message"
-                override val messageEncoding = "UTF-8"
-            },
+            barcode = createBarcode(
+                altText = "message",
+                format = "PKBarcodeFormatQR",
+                message = "message",
+                messageEncoding = "UTF-8",
+            ),
             size = Size(500f, 500f),
             pass = createPassModel(foregroundColor = "rgb(0,0,255)")
         )

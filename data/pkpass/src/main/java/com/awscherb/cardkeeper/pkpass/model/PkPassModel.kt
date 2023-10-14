@@ -75,11 +75,12 @@ fun String.toBarcodeFormat() =
     }
 
 enum class TransitType {
-    AIR
+    AIR,
+    GENERIC
 }
 
 fun PassInfo.isTransit() = transitType != null
-fun PassInfo.getTransitType() = transitType?.getTransitType()
+fun PassInfo.getTransitType() = transitType?.getTransitType() ?: TransitType.GENERIC
 
 fun PassInfo.findOriginDestination(): Pair<FieldObject, FieldObject> {
     val origin = primaryFields?.find { it.key.equals("origin", true) } ?: primaryFields?.get(0)
@@ -108,10 +109,10 @@ fun PkPassModel.getTranslatedValue(label: String): String {
     }
 }
 
-fun String?.getTransitType(): TransitType? =
+fun String?.getTransitType(): TransitType =
     when (this) {
         "PKTransitTypeAir" -> TransitType.AIR
-        else -> null
+        else -> TransitType.GENERIC
     }
 
 fun String?.parseHexColor(): Int {

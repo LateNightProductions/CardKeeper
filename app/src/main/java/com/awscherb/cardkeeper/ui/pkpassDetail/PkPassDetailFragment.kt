@@ -13,8 +13,6 @@ import androidx.appcompat.widget.Toolbar
 import androidx.cardview.widget.CardView
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
@@ -63,7 +61,6 @@ import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.concurrent.atomic.AtomicBoolean
-import javax.inject.Inject
 
 class PkPassDetailFragment : BaseFragment(), Toolbar.OnMenuItemClickListener {
 
@@ -221,7 +218,7 @@ class PkPassDetailFragment : BaseFragment(), Toolbar.OnMenuItemClickListener {
 
             primaryComposeHolder.apply {
                 setContent {
-                    AirPrimarySection(
+                    TransitPrimarySection(
                         fromAirport = origin.label ?: "",
                         fromCode = origin.value,
                         toAirport = destination.label ?: "",

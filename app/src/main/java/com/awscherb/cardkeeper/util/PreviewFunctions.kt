@@ -25,9 +25,9 @@ fun createPassModel(
     storeCard: PassInfo? = null,
     generic: PassInfo? = null,
     eventTicket: PassInfo? = null,
-    logoPath: String? = "",
+    logoPath: String? = null,
     stripPath: String? = "",
-    footerPath: String? = "",
+    footerPath: String? = null,
     serialNumber: String? = "",
     webServiceURL: String? = "",
     authenticationToken: String? = "",
@@ -78,15 +78,26 @@ fun createPassInfo(
 
 fun createScannedCode(
     id: Int = 0,
-    format: BarcodeFormat= BarcodeFormat.QR_CODE,
+    format: BarcodeFormat = BarcodeFormat.QR_CODE,
     text: String = "text",
     title: String = "title",
     created: Long = 0L
-)  = object :ScannedCodeModel {
+) = object : ScannedCodeModel {
     override val id: Int = id
     override val format: BarcodeFormat = format
     override val text: String = text
     override val title: String = title
     override val created: Long = created
+}
 
+fun createBarcode(
+    altText: String? = null,
+    format: String = "PKBarcodeFormatQR",
+    message: String = "message",
+    messageEncoding: String = "UTF-8"
+) = object : Barcode {
+    override val altText = altText
+    override val format = format
+    override val message = message
+    override val messageEncoding = messageEncoding
 }
