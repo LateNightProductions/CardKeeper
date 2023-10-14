@@ -62,6 +62,7 @@ fun PkPassModel.findFirstBarcode(): Barcode? {
     return barcode ?: barcodes?.first()
 }
 
+
 fun String.toBarcodeFormat() =
     when (this) {
         BarcodeConstants.FORMAT_QR -> BarcodeFormat.QR_CODE
@@ -156,6 +157,22 @@ fun PkPassModel.findPassInfo(): PassInfo? = when {
     generic != null -> generic
     eventTicket != null -> eventTicket
     else -> null
+}
+
+val PkPassModel.passInfoType: PassInfoType?
+    get() = when {
+        boardingPass != null -> PassInfoType.BOARDING_PASS
+        storeCard != null -> PassInfoType.STORE_CARD
+        generic != null -> PassInfoType.GENERIC
+        eventTicket != null -> PassInfoType.EVENT_TICKET
+        else -> null
+    }
+
+enum class PassInfoType {
+    BOARDING_PASS,
+    STORE_CARD,
+    GENERIC,
+    EVENT_TICKET
 }
 
 fun PkPassModel.canBeUpdated() = !this.webServiceURL.isNullOrEmpty()

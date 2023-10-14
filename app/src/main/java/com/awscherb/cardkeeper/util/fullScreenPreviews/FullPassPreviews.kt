@@ -89,3 +89,70 @@ fun GenericPreview() {
         )
     }
 }
+
+@Composable
+@Preview
+fun StorePassQrPreview() {
+    CardKeeperTheme {
+        PassDetail(
+            size = Size(1000f, 1000f),
+            padding = PaddingValues(),
+            pass = createPassModel(
+                backgroundColor = "rgb(219, 235, 52)",
+                foregroundColor = "rgb(0,0,0)",
+                labelColor = "rgb(0,0,0)",
+                barcode = createBarcode(
+                    altText = "1234",
+                    format = BarcodeConstants.FORMAT_QR
+                ),
+                storeCard = createPassInfo(
+                    primaryFields = listOf(
+                        FieldObject(
+                            "balance","remaining balance", "21.75"
+                        )
+                    ),
+                    headerFields = listOf(
+                        FieldObject("key", null, "Loyalty")
+                    ),
+                    auxiliaryFields = listOf(
+                        FieldObject("accountNumber", "Account Number", "1234"),
+                    ),
+                    secondaryFields = listOf(
+                        FieldObject("expiresOn", "Expires On", "12/31/23"),
+                    )
+                )
+            )
+        )
+    }
+}
+
+@Composable
+@Preview
+fun StorePassPdfPreview() {
+    CardKeeperTheme {
+        PassDetail(
+            size = Size(1000f, 1000f),
+            padding = PaddingValues(),
+            pass = createPassModel(
+                backgroundColor = "rgb(219, 235, 52)",
+                foregroundColor = "rgb(0,0,0)",
+                labelColor = "rgb(0,0,0)",
+                barcode = createBarcode(
+                    altText = "1234",
+                    format = BarcodeConstants.FORMAT_PDF_417
+                ),
+                storeCard = createPassInfo(
+                    headerFields = listOf(
+                        FieldObject("key", null, "Loyalty")
+                    ),
+                    auxiliaryFields = listOf(
+                        FieldObject("accountNumber", "Account Number", "1234"),
+                    ),
+                    secondaryFields = listOf(
+                        FieldObject("expiresOn", "Expires On", "12/31/23"),
+                    )
+                )
+            )
+        )
+    }
+}

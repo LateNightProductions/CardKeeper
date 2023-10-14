@@ -94,9 +94,7 @@ fun ColumnScope.BoardingPass(pass: PkPassModel, passInfo: PassInfo) {
 
     pass.footerPath?.let { footer ->
         AsyncImage(
-            model = ImageRequest.Builder(LocalContext.current)
-                .data(footer)
-                .build(),
+            model = footer,
             modifier = Modifier
                 .align(CenterHorizontally)
                 .padding(top = 16.dp),

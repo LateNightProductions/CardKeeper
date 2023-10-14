@@ -52,7 +52,7 @@ fun PkPassHeaderView(
 
         AsyncImage(
             model = pass.logoPath,
-            placeholder = if (showPlaceholder) painterResource(id = R.drawable.ic_image_placeholder) else null,
+            placeholder = painterResource(id = R.drawable.logo_placeholder),
             contentDescription = pass.description,
             modifier = Modifier
                 .padding(start = 8.dp)

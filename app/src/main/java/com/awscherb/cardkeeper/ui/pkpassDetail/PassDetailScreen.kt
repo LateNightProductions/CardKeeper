@@ -18,11 +18,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toSize
 import androidx.core.graphics.toColorInt
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.awscherb.cardkeeper.pkpass.model.PassInfoType
 import com.awscherb.cardkeeper.pkpass.model.PkPassModel
 import com.awscherb.cardkeeper.pkpass.model.findFirstBarcode
 import com.awscherb.cardkeeper.pkpass.model.findPassInfo
 import com.awscherb.cardkeeper.pkpass.model.isTransit
 import com.awscherb.cardkeeper.pkpass.model.parseHexColor
+import com.awscherb.cardkeeper.pkpass.model.passInfoType
 import com.awscherb.cardkeeper.pkpass.model.toBarcodeFormat
 import com.awscherb.cardkeeper.ui.common.BarcodeSection
 import com.awscherb.cardkeeper.ui.view.PkPassHeaderView
@@ -76,8 +78,12 @@ fun PassDetail(
         )
 
         pass.findPassInfo()?.let { passInfo ->
-            if (passInfo.isTransit()) {
-                BoardingPass(pass = pass, passInfo = passInfo)
+            when (pass.passInfoType) {
+                PassInfoType.BOARDING_PASS -> BoardingPass(pass, passInfo)
+                PassInfoType.STORE_CARD -> StoreCard(pass, passInfo)
+                PassInfoType.GENERIC -> {}
+                PassInfoType.EVENT_TICKET -> {}
+                null -> {}
             }
         }
 
