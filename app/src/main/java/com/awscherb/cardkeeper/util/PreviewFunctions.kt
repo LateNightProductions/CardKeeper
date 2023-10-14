@@ -5,6 +5,7 @@ import com.awscherb.cardkeeper.pkpass.model.Barcode
 import com.awscherb.cardkeeper.pkpass.model.FieldObject
 import com.awscherb.cardkeeper.pkpass.model.PassInfo
 import com.awscherb.cardkeeper.pkpass.model.PkPassModel
+import com.awscherb.cardkeeper.pkpass.util.BarcodeConstants
 import com.google.zxing.BarcodeFormat
 import java.util.Date
 
@@ -92,7 +93,7 @@ fun createScannedCode(
 
 fun createBarcode(
     altText: String? = null,
-    format: String = "PKBarcodeFormatQR",
+    format: String = BarcodeConstants.FORMAT_QR,
     message: String = "message",
     messageEncoding: String = "UTF-8"
 ) = object : Barcode {

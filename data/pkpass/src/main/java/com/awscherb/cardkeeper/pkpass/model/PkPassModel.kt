@@ -2,6 +2,8 @@ package com.awscherb.cardkeeper.pkpass.model
 
 import android.graphics.Color
 import com.awscherb.cardkeeper.core.SavedItem
+import com.awscherb.cardkeeper.pkpass.util.BarcodeConstants
+import com.awscherb.cardkeeper.pkpass.util.TransitConstants
 import com.google.zxing.BarcodeFormat
 import okhttp3.internal.toHexString
 import java.util.Date
@@ -67,10 +69,10 @@ fun PkPassModel.findFirstBarcode(): Barcode? {
 
 fun String.toBarcodeFormat() =
     when (this) {
-        "PKBarcodeFormatQR" -> BarcodeFormat.QR_CODE
-        "PKBarcodeFormatPDF417" -> BarcodeFormat.PDF_417
-        "PKBarcodeFormatAztec" -> BarcodeFormat.AZTEC
-        "PKBarcodeFormatCode128" -> BarcodeFormat.CODE_128
+        BarcodeConstants.FORMAT_QR -> BarcodeFormat.QR_CODE
+        BarcodeConstants.FORMAT_PDF_417 -> BarcodeFormat.PDF_417
+        BarcodeConstants.FORMAT_AZTEC -> BarcodeFormat.AZTEC
+        BarcodeConstants.FORMAT_CODE_128 -> BarcodeFormat.CODE_128
         else -> throw IllegalArgumentException("Unknown type $this")
     }
 
@@ -111,7 +113,7 @@ fun PkPassModel.getTranslatedValue(label: String): String {
 
 fun String?.getTransitType(): TransitType =
     when (this) {
-        "PKTransitTypeAir" -> TransitType.AIR
+        TransitConstants.TYPE_AIR -> TransitType.AIR
         else -> TransitType.GENERIC
     }
 

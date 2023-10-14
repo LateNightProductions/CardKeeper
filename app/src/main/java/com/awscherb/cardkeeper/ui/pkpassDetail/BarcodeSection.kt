@@ -18,6 +18,7 @@ import com.awscherb.cardkeeper.pkpass.model.Barcode
 import com.awscherb.cardkeeper.pkpass.model.PkPassModel
 import com.awscherb.cardkeeper.pkpass.model.parseHexColor
 import com.awscherb.cardkeeper.pkpass.model.toBarcodeFormat
+import com.awscherb.cardkeeper.pkpass.util.BarcodeConstants
 import com.awscherb.cardkeeper.ui.theme.CardKeeperTheme
 import com.awscherb.cardkeeper.util.EncoderHolder.encoder
 import com.awscherb.cardkeeper.util.createBarcode
@@ -76,7 +77,7 @@ fun QrCodePreview() {
         BarcodeSection(
             barcode = createBarcode(
                 altText = null,
-                format = "PKBarcodeFormatQR",
+                format = BarcodeConstants.FORMAT_QR,
                 message = "message",
                 messageEncoding = "UTF-8",
             ),
@@ -93,11 +94,62 @@ fun QrCodeAltPreview() {
         BarcodeSection(
             barcode = createBarcode(
                 altText = "message",
-                format = "PKBarcodeFormatQR",
+                format = BarcodeConstants.FORMAT_QR,
                 message = "message",
                 messageEncoding = "UTF-8",
             ),
             size = Size(500f, 500f),
+            pass = createPassModel(foregroundColor = "rgb(0,0,255)")
+        )
+    }
+}
+
+@Composable
+@Preview
+fun Pdf417Preview() {
+    CardKeeperTheme {
+        BarcodeSection(
+            barcode = createBarcode(
+                altText = "message",
+                format = BarcodeConstants.FORMAT_PDF_417,
+                message = "message",
+                messageEncoding = "UTF-8",
+            ),
+            size = Size(1000f, 500f),
+            pass = createPassModel(foregroundColor = "rgb(0,0,255)")
+        )
+    }
+}
+
+@Composable
+@Preview
+fun AztecPreview() {
+    CardKeeperTheme {
+        BarcodeSection(
+            barcode = createBarcode(
+                altText = "message",
+                format = BarcodeConstants.FORMAT_AZTEC,
+                message = "message",
+                messageEncoding = "UTF-8",
+            ),
+            size = Size(1000f, 500f),
+            pass = createPassModel(foregroundColor = "rgb(0,0,255)")
+        )
+    }
+}
+
+@Composable
+@Preview
+fun Code128Preview() {
+    CardKeeperTheme {
+        BarcodeSection(
+            barcode = createBarcode(
+                altText = "message",
+                format = BarcodeConstants.FORMAT_CODE_128,
+                message = "message",
+                messageEncoding = "UTF-8",
+            ),
+            size = Size(1000f, 500f),
             pass = createPassModel(foregroundColor = "rgb(0,0,255)")
         )
     }

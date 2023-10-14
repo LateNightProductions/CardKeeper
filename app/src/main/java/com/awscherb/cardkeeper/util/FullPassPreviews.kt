@@ -5,6 +5,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.tooling.preview.Preview
 import com.awscherb.cardkeeper.pkpass.model.FieldObject
+import com.awscherb.cardkeeper.pkpass.util.BarcodeConstants
+import com.awscherb.cardkeeper.pkpass.util.TransitConstants
 import com.awscherb.cardkeeper.ui.pkpassDetail.PassDetail
 import com.awscherb.cardkeeper.ui.theme.CardKeeperTheme
 
@@ -24,7 +26,7 @@ fun AirlinePreview() {
                     altText = "Alt Text"
                 ),
                 boardingPass = createPassInfo(
-                    transitType = "PKTransitTypeAir",
+                    transitType = TransitConstants.TYPE_AIR,
                     headerFields = listOf(
                         FieldObject("key", "FLIGHT", "DL123"),
                         FieldObject("key", "GATE", "50")
@@ -62,7 +64,7 @@ fun GenericPreview() {
                 labelColor = "rgb(255,255,255)",
                 barcode = createBarcode(
                     altText = "Alt Text",
-                    format = "PKBarcodeFormatPDF417"
+                    format = BarcodeConstants.FORMAT_PDF_417
                 ),
                 boardingPass = createPassInfo(
                     transitType = "other",
