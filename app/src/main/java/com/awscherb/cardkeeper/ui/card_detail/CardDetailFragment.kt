@@ -33,13 +33,6 @@ import javax.inject.Inject
 
 class CardDetailFragment : BaseFragment() {
 
-    private val viewModel by activityViewModels<CardDetailViewModel> {
-        factory
-    }
-
-    @Inject
-    lateinit var factory: CardDetailViewModelFactory
-
     private val encoder: BarcodeEncoder = BarcodeEncoder()
 
     private lateinit var toolbar: Toolbar
@@ -71,19 +64,8 @@ class CardDetailFragment : BaseFragment() {
         toolbar.setNavigationIcon(R.drawable.ic_baseline_arrow_back_24)
         toolbar.setNavigationOnClickListener { activity?.onBackPressed() }
 
-        save.setOnClickListener { viewModel.save() }
 
-        viewModel.card.onEach {
-            showCard(it)
-        }.launchIn(lifecycleScope)
 
-        viewModel.saveResult
-            .filterNotNull()
-            .onEach {
-                onSaveResult(it)
-                viewModel.saveResult.value = null
-            }
-            .launchIn(lifecycleScope)
     }
 
     //================================================================================
@@ -114,7 +96,6 @@ class CardDetailFragment : BaseFragment() {
         }
 
         title.addLifecycleTextWatcher {
-            viewModel.title.value = it
         }
     }
 

@@ -21,7 +21,6 @@ import com.awscherb.cardkeeper.util.EncoderHolder.encoder
 import com.awscherb.cardkeeper.util.createScannedCode
 
 
-
 @Composable
 fun ScannedCodeItem(
     item: ScannedCodeModel,
@@ -38,22 +37,7 @@ fun ScannedCodeItem(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 8.dp, vertical = 8.dp)
-//            modifier = Modifier.constrainAs(description) {
-//                linkTo(
-//                    top = parent.top, bottom = parent.bottom,
-//                    start = image.end, end = headers.start,
-//                    startMargin = 8.dp,
-//                    endMargin = 8.dp,
-//                    horizontalBias = 0f
-//                )
-//                width = Dimension.fillToConstraints.atMostWrapContent
-//            }
         )
-
-//        when (item.format) {
-//            BarcodeFormat.QR_CODE, BarcodeFormat.AZTEC, BarcodeFormat.DATA_MATRIX -> codeImage.scaleType = ImageView.ScaleType.FIT_CENTER
-//            else -> codeImage.scaleType = ImageView.ScaleType.FIT_XY
-//        }
 
         // Load image
         val bitmap =
@@ -66,10 +50,7 @@ fun ScannedCodeItem(
                 .align(CenterHorizontally)
                 .padding(start = 8.dp, end = 8.dp, bottom = 8.dp)
         )
-
-
     }
-
 }
 
 @Composable

@@ -4,8 +4,6 @@ import android.content.ContentResolver
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Divider
@@ -15,8 +13,6 @@ import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.NavigationDrawerItem
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDrawerState
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -30,32 +26,20 @@ import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.workDataOf
 import com.awscherb.cardkeeper.R
+import com.awscherb.cardkeeper.barcode.model.ScannedCodeModel
 import com.awscherb.cardkeeper.pkpass.db.PkPassDao
+import com.awscherb.cardkeeper.pkpass.model.PkPassModel
 import com.awscherb.cardkeeper.pkpass.work.ImportPassWorker
-import com.awscherb.cardkeeper.ui.card_detail.CardDetailViewModel
-import com.awscherb.cardkeeper.ui.card_detail.CardDetailViewModelFactory
-import com.awscherb.cardkeeper.ui.items.ItemsFragmentDirections
+import com.awscherb.cardkeeper.ui.card_detail.ScannedCodeScreen
 import com.awscherb.cardkeeper.ui.items.ItemsScreen
-import com.awscherb.cardkeeper.ui.items.ItemsViewModel
-import com.awscherb.cardkeeper.ui.items.ItemsViewModelFactory
 import com.awscherb.cardkeeper.ui.pkpassDetail.PassDetailScreen
-import com.awscherb.cardkeeper.ui.pkpassDetail.PkPassViewModel
 import com.awscherb.cardkeeper.ui.theme.Typography
-import dagger.android.AndroidInjection
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class CardKeeperActivity : ComponentActivity() {
-
-    private val viewModel by viewModels<ItemsViewModel> { viewModelFactory }
-
-    @Inject
-    lateinit var viewModelFactory: ItemsViewModelFactory
-
-    @Inject
-    lateinit var detailFactory: CardDetailViewModelFactory
 
 
     @Inject
@@ -109,7 +93,13 @@ class CardKeeperActivity : ComponentActivity() {
                         ItemsScreen(navOnClick = {
                             scope.launch { drawerState.open() }
                         }) {
-                            navController.navigate("pass/${it.id}")
+                            when (it) {
+                                is PkPassModel ->
+                                    navController.navigate("pass/${it.id}")
+                                is ScannedCodeModel ->
+                                    navController.navigate("code/${it.id}")
+                            }
+
                         }
                     }
                     composable(
@@ -119,6 +109,16 @@ class CardKeeperActivity : ComponentActivity() {
                         })
                     ) {
                         PassDetailScreen {
+                            scope.launch { drawerState.open() }
+                        }
+                    }
+                    composable(
+                        "code/{codeId}", arguments =
+                        listOf(navArgument("codeId") {
+                            type = NavType.IntType
+                        })
+                    ) {
+                        ScannedCodeScreen {
                             scope.launch { drawerState.open() }
                         }
                     }
