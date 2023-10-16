@@ -33,13 +33,14 @@ class CreateViewModel(
                     title = titleValue,
                     text = textValue,
                     format = formatValue.format,
-                    created = System.currentTimeMillis()
+                    created = System.currentTimeMillis(),
+                    id = 0
                 )
 
-                scannedCodeService.addScannedCode(scannedCode)
-                    .onEach {
-                        saveResult.value = SaveSuccess(it.id)
-                    }.launchIn(viewModelScope)
+                // scannedCodeService.addScannedCode(scannedCode)
+                //     .onEach {
+                //         saveResult.value = SaveSuccess(it.id)
+                //     }.launchIn(viewModelScope)
             }
         }
     }

@@ -11,6 +11,7 @@ import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.NavigationDrawerItem
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.rememberCoroutineScope
@@ -33,6 +34,7 @@ import com.awscherb.cardkeeper.pkpass.work.ImportPassWorker
 import com.awscherb.cardkeeper.ui.card_detail.ScannedCodeScreen
 import com.awscherb.cardkeeper.ui.items.ItemsScreen
 import com.awscherb.cardkeeper.ui.pkpassDetail.PassDetailScreen
+import com.awscherb.cardkeeper.ui.scan.ScanScreen
 import com.awscherb.cardkeeper.ui.theme.Typography
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -51,7 +53,6 @@ class CardKeeperActivity : ComponentActivity() {
 
         setContent {
             val navController = rememberNavController()
-
             val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
             val scope = rememberCoroutineScope()
 
@@ -83,9 +84,14 @@ class CardKeeperActivity : ComponentActivity() {
                 }) {
                 NavHost(navController = navController, startDestination = "items") {
                     composable("items") {
-                        ItemsScreen(navOnClick = {
-                            scope.launch { drawerState.open() }
-                        }) {
+                        ItemsScreen(
+                            scanOnClick = {
+                                navController.navigate("scan")
+                            },
+                            navOnClick = {
+                                scope.launch { drawerState.open() }
+                            }) {
+
                             when (it) {
                                 is PkPassModel ->
                                     navController.navigate("pass/${it.id}")
@@ -113,6 +119,13 @@ class CardKeeperActivity : ComponentActivity() {
                         })
                     ) {
                         ScannedCodeScreen {
+                            scope.launch { drawerState.open() }
+                        }
+                    }
+                    composable("scan") {
+                        ScanScreen(completion = {
+                            navController.navigate("items")
+                        }) {
                             scope.launch { drawerState.open() }
                         }
                     }

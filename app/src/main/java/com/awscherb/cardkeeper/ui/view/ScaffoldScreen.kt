@@ -21,11 +21,13 @@ import com.awscherb.cardkeeper.R
 fun ScaffoldScreen(
     title: String,
     navOnClick: () -> Unit,
+    floatingActionButton: @Composable () -> Unit = {},
     content: @Composable (PaddingValues) -> Unit
 ) {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+        floatingActionButton = floatingActionButton,
         topBar = {
             CenterAlignedTopAppBar(
                 title = {

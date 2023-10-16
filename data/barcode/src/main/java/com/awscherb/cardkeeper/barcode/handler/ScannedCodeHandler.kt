@@ -7,6 +7,7 @@ import com.awscherb.cardkeeper.barcode.service.ScannedCodeService
 import com.awscherb.cardkeeper.core.filterOne
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
@@ -29,16 +30,8 @@ class ScannedCodeHandler @Inject constructor(
         )
     }
 
-
-    override fun addScannedCode(scannedCode: ScannedCodeEntity): Flow<ScannedCodeEntity> {
-        return flow {
-            val id = scannedCodeDao.insertCode(scannedCode)
-            emit(id)
-        }
-            .flatMapLatest {
-                scannedCodeDao.getScannedCode(it.toInt())
-                    .filterOne()
-            }
+    override suspend fun addScannedCode(scannedCode: ScannedCodeEntity) {
+        scannedCodeDao.insertCode(scannedCode)
     }
 
     override fun update(item: ScannedCodeModel): Flow<Result<ScannedCodeModel>> {
@@ -62,8 +55,6 @@ class ScannedCodeHandler @Inject constructor(
                     flowOf(it)
                 }
             }
-
-
     }
 
     override suspend fun delete(item: ScannedCodeModel) {

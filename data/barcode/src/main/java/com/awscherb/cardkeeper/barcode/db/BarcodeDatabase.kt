@@ -9,7 +9,7 @@ import com.awscherb.cardkeeper.barcode.entity.ScannedCodeEntity
     entities = [
         ScannedCodeEntity::class,
     ],
-    version = 11, exportSchema = false
+    version = 13, exportSchema = false
 )
 @TypeConverters(
     com.awscherb.cardkeeper.common.TypeConverters::class,

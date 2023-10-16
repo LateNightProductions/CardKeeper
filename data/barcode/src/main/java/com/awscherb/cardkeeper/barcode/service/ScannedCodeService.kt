@@ -9,6 +9,6 @@ interface ScannedCodeService : SavedItemService<ScannedCodeModel> {
 
     fun getScannedCode(codeId: Int): Flow<ScannedCodeEntity>
 
-    fun addScannedCode(scannedCode: ScannedCodeEntity): Flow<ScannedCodeEntity>
+    suspend fun addScannedCode(scannedCode: ScannedCodeEntity)
 
 }

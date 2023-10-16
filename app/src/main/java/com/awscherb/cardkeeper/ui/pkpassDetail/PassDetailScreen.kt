@@ -82,64 +82,41 @@ fun PassDetail(
     pass: PkPassModel,
     size: Size,
 ) {
-    Box {
-        Card(
-            modifier = modifier
-                .padding(padding)
-                .padding(horizontal = 8.dp, vertical = 8.dp),
+    Card(
+        modifier = modifier
+            .padding(padding)
+            .padding(horizontal = 8.dp, vertical = 8.dp),
 
-            colors = CardDefaults.cardColors(
-                containerColor = Color(pass.backgroundColor.parseHexColor())
-            )
-        ) {
-            PkPassHeaderView(
-                pass = pass
-            )
+        colors = CardDefaults.cardColors(
+            containerColor = Color(pass.backgroundColor.parseHexColor())
+        )
+    ) {
+        PkPassHeaderView(
+            pass = pass
+        )
 
-            pass.findPassInfo()?.let { passInfo ->
-                when (pass.passInfoType) {
-                    PassInfoType.BOARDING_PASS -> BoardingPass(pass, passInfo)
-                    PassInfoType.STORE_CARD -> StoreCard(pass, passInfo)
-                    PassInfoType.GENERIC -> {}
-                    PassInfoType.EVENT_TICKET -> {}
-                    null -> {}
-                }
-            }
-
-            pass.findFirstBarcode()?.let { barcode ->
-                BarcodeSection(
-                    modifier = Modifier.padding(
-                        top = if (pass.footerPath != null) 0.dp else 16.dp
-                    ),
-                    message = barcode.message,
-                    barcodeFormat = barcode.format.toBarcodeFormat(),
-                    altText = barcode.altText,
-                    size = size,
-                    altColor = Color(pass.foregroundColor.parseHexColor())
-                )
+        pass.findPassInfo()?.let { passInfo ->
+            when (pass.passInfoType) {
+                PassInfoType.BOARDING_PASS -> BoardingPass(pass, passInfo)
+                PassInfoType.STORE_CARD -> StoreCard(pass, passInfo)
+                PassInfoType.GENERIC -> {}
+                PassInfoType.EVENT_TICKET -> {}
+                null -> {}
             }
         }
-        Box(
-            modifier = Modifier
-                .rotate(-45f)
-                .absoluteOffset(x = -170.dp, y = -70.dp)
-        ) {
-                Box(
-                    modifier = Modifier
-                        .size(width = 2000.dp, height=50.dp)
-                        .clip(RectangleShape)
-                        .background(Color.Red)
-                )
 
-            Text(
-                text = "BETA",
-                color = Color.White,
-                modifier = Modifier
-                    .align(Alignment.Center)
-                    .padding(horizontal = 8.dp, vertical = 4.dp)
+        pass.findFirstBarcode()?.let { barcode ->
+            BarcodeSection(
+                modifier = Modifier.padding(
+                    top = if (pass.footerPath != null) 0.dp else 16.dp
+                ),
+                message = barcode.message,
+                barcodeFormat = barcode.format.toBarcodeFormat(),
+                altText = barcode.altText,
+                size = size,
+                altColor = Color(pass.foregroundColor.parseHexColor())
             )
         }
-
     }
 }
 

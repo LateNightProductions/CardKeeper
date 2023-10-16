@@ -4,30 +4,35 @@ import androidx.lifecycle.ViewModel
 import com.awscherb.cardkeeper.barcode.entity.ScannedCodeEntity
 import com.awscherb.cardkeeper.barcode.service.ScannedCodeService
 import com.google.zxing.BarcodeFormat
-import kotlinx.coroutines.flow.Flow
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.filterNotNull
-import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.map
+import javax.inject.Inject
+import kotlin.random.Random
 
-class ScanViewModel(
-    scannedCodeService: ScannedCodeService
+@HiltViewModel
+class ScanViewModel @Inject constructor(
+    private val scannedCodeService: ScannedCodeService
 ) : ViewModel() {
 
-    val createData = MutableStateFlow<CreateCodeData?>(null)
+    val pendingCreateData = MutableStateFlow<CreateCodeData?>(null)
+    val createResult = MutableStateFlow(false)
 
-    val createResult: Flow<Unit> = createData
-        .filterNotNull()
-        .flatMapLatest {
+    private val adding = MutableStateFlow(false)
+
+    suspend fun createCode(data: CreateCodeData) {
+        if (adding.compareAndSet(expect = false, update = true)) {
             scannedCodeService.addScannedCode(
                 ScannedCodeEntity(
-                    format = it.format,
-                    text = it.text,
-                    title = it.title,
+                    id = Random.nextInt(),
+                    format = data.format,
+                    text = data.text,
+                    title = data.title,
                     created = System.currentTimeMillis()
                 )
             )
-        }.map { }
+            createResult.value = true
+        }
+    }
 }
 
 data class CreateCodeData(
