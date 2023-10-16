@@ -24,8 +24,6 @@ import com.awscherb.cardkeeper.R
 import com.awscherb.cardkeeper.pkpass.model.TransitType
 import com.awscherb.cardkeeper.ui.theme.CardKeeperTheme
 import com.awscherb.cardkeeper.ui.theme.Typography
-import android.graphics.Color as GraphicsColor
-
 
 @Composable
 fun TransitPrimarySection(

@@ -4,19 +4,16 @@ import android.content.ContentResolver
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Divider
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.NavigationDrawerItem
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -26,7 +23,6 @@ import androidx.navigation.navArgument
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.workDataOf
-import com.awscherb.cardkeeper.R
 import com.awscherb.cardkeeper.barcode.model.ScannedCodeModel
 import com.awscherb.cardkeeper.pkpass.db.PkPassDao
 import com.awscherb.cardkeeper.pkpass.model.PkPassModel
@@ -49,7 +45,6 @@ class CardKeeperActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
 
         setContent {
             val navController = rememberNavController()
@@ -75,7 +70,24 @@ class CardKeeperActivity : ComponentActivity() {
                             label = { Text("Items") },
                             selected = false,
                             onClick = {
-                                navController.navigate("Items")
+                                navController.navigate("items") {
+                                    popUpTo("items") {
+                                        inclusive = true
+                                    }
+                                }
+                                scope.launch {
+                                    drawerState.close()
+                                }
+                            })
+                        NavigationDrawerItem(
+                            label = { Text("Scan") },
+                            selected = false,
+                            onClick = {
+                                navController.navigate("scan") {
+                                    popUpTo("items") {
+                                        inclusive = false
+                                    }
+                                }
                                 scope.launch {
                                     drawerState.close()
                                 }

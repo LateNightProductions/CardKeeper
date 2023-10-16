@@ -8,13 +8,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import coil.request.ImageRequest
 import com.awscherb.cardkeeper.pkpass.model.PassInfo
 import com.awscherb.cardkeeper.pkpass.model.PkPassModel
-import com.awscherb.cardkeeper.pkpass.model.TransitType
 import com.awscherb.cardkeeper.pkpass.model.findOriginDestination
 import com.awscherb.cardkeeper.pkpass.model.getTransitType
 import com.awscherb.cardkeeper.pkpass.model.getTranslatedLabel

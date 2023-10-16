@@ -1,9 +1,7 @@
 package com.awscherb.cardkeeper.ui.pkpassDetail
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -32,8 +30,6 @@ fun StoreCard(pass: PkPassModel, passInfo: PassInfo) {
     pass.stripPath?.let {
 
         Box {
-
-
             AsyncImage(
                 model = it,
                 placeholder = painterResource(id = R.drawable.strip_placeholder),
@@ -44,18 +40,18 @@ fun StoreCard(pass: PkPassModel, passInfo: PassInfo) {
             passInfo.primaryFields?.firstOrNull()?.let { primary ->
                 PrimaryTextView(
                     modifier = Modifier.padding(horizontal = 8.dp),
-                    fieldConfig =  FieldConfig(
-                    label = pass.getTranslatedLabel(primary.label),
-                    value = pass.getTranslatedValue(primary.value),
-                    labelColor = pass.labelColor.parseHexColor(),
-                    valueColor = pass.foregroundColor.parseHexColor()
-                ))
+                    fieldConfig = FieldConfig(
+                        label = pass.getTranslatedLabel(primary.label),
+                        value = pass.getTranslatedValue(primary.value),
+                        labelColor = pass.labelColor.parseHexColor(),
+                        valueColor = pass.foregroundColor.parseHexColor()
+                    )
+                )
             }
-
         }
 
         val allFields = (passInfo.auxiliaryFields ?: emptyList()) +
-                (passInfo.secondaryFields ?: emptyList())
+            (passInfo.secondaryFields ?: emptyList())
         Row(
             modifier = Modifier
                 .fillMaxWidth()
