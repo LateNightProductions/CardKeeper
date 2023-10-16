@@ -9,7 +9,7 @@ import com.awscherb.cardkeeper.pkpass.entity.PkPassEntity
     entities = [
         PkPassEntity::class,
     ],
-    version = 3, exportSchema = false
+    version = 4, exportSchema = false
 )
 @TypeConverters(
     com.awscherb.cardkeeper.common.TypeConverters::class,

@@ -33,6 +33,7 @@ interface PkPassModel : SavedItem {
     val logoPath: String?
     val stripPath: String?
     val footerPath: String?
+    val backgroundPath: String?
 
     // WebService -related fields
     val serialNumber: String?

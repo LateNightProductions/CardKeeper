@@ -40,7 +40,8 @@ abstract class InputStreamWorker(
         try {
             pass = parsePassEntityFromDisk() ?: return null
 
-            val logo = findLargestImageFile("logo") ?: findLargestImageFile("$DEFAULT_TRANSLATION/logo")
+            val logo =
+                findLargestImageFile("logo") ?: findLargestImageFile("$DEFAULT_TRANSLATION/logo")
 
             logo?.let { logoFile ->
                 attemptImageCopy(
@@ -52,8 +53,17 @@ abstract class InputStreamWorker(
                 }
             }
 
-
             findLargestImageFile("strip")?.let { stripFile ->
+                attemptImageCopy(
+                    imageFile = stripFile,
+                    entity = pass,
+                    type = "strip",
+                ) {
+                    pass.stripPath = it
+                }
+            }
+
+            findLargestImageFile("background")?.let { stripFile ->
                 attemptImageCopy(
                     imageFile = stripFile,
                     entity = pass,

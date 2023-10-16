@@ -29,6 +29,7 @@ fun createPassModel(
     logoPath: String? = null,
     stripPath: String? = "",
     footerPath: String? = null,
+    backgroundPath: String? = null,
     serialNumber: String? = "",
     webServiceURL: String? = "",
     authenticationToken: String? = "",
@@ -53,6 +54,7 @@ fun createPassModel(
     override val logoPath: String? = logoPath
     override val stripPath: String? = stripPath
     override val footerPath: String? = footerPath
+    override val backgroundPath: String? = backgroundPath
     override val serialNumber: String? = serialNumber
     override val webServiceURL: String? = webServiceURL
     override val authenticationToken: String? = authenticationToken
