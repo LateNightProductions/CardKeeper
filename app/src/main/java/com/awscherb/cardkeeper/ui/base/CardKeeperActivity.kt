@@ -73,13 +73,6 @@ class CardKeeperActivity : ComponentActivity() {
                         NavigationDrawerItem(
                             label = { Text("Items") },
                             selected = false,
-                            icon = {
-                                Image(
-                                    painter = painterResource(id = R.mipmap.ic_launcher),
-                                    contentDescription = "Items"
-                                )
-
-                            },
                             onClick = {
                                 navController.navigate("Items")
                                 scope.launch {
@@ -96,6 +89,7 @@ class CardKeeperActivity : ComponentActivity() {
                             when (it) {
                                 is PkPassModel ->
                                     navController.navigate("pass/${it.id}")
+
                                 is ScannedCodeModel ->
                                     navController.navigate("code/${it.id}")
                             }
@@ -158,7 +152,5 @@ class CardKeeperActivity : ComponentActivity() {
             WorkManager.getInstance(this)
                 .enqueue(req)
         }
-
     }
-
 }

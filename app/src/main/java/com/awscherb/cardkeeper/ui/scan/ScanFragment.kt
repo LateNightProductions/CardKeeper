@@ -2,7 +2,6 @@ package com.awscherb.cardkeeper.ui.scan
 
 import android.Manifest
 import android.content.pm.PackageManager
-import android.os.Build
 import android.os.Bundle
 import android.text.InputType
 import android.view.LayoutInflater
@@ -12,7 +11,6 @@ import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
 import com.awscherb.cardkeeper.R
 import com.awscherb.cardkeeper.ui.base.BaseFragment
 import com.google.zxing.ResultPoint
@@ -82,9 +80,6 @@ class ScanFragment : BaseFragment() {
     }
 
     private fun onCodeAdded() {
-        findNavController().navigate(
-            ScanFragmentDirections.actionScanFragmentToCardsFragment()
-        )
     }
 
     // ========================================================================

@@ -134,7 +134,7 @@ fun StorePassPdfPreview() {
             size = Size(1000f, 1000f),
             padding = PaddingValues(),
             pass = createPassModel(
-                backgroundColor = "rgb(219, 235, 52)",
+                backgroundColor = "rgb(200, 50, 43)",
                 foregroundColor = "rgb(0,0,0)",
                 labelColor = "rgb(0,0,0)",
                 barcode = createBarcode(
