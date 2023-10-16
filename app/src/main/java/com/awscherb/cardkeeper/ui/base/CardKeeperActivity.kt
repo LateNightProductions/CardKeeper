@@ -130,7 +130,13 @@ class CardKeeperActivity : ComponentActivity() {
                             type = NavType.IntType
                         })
                     ) {
-                        ScannedCodeScreen {
+                        ScannedCodeScreen(onDelete = {
+                            navController.navigate("items") {
+                                popUpTo("items") {
+                                    inclusive = false
+                                }
+                            }
+                        }) {
                             scope.launch { drawerState.open() }
                         }
                     }

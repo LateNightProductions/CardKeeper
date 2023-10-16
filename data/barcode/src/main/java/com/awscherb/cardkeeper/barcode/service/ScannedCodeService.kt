@@ -11,4 +11,5 @@ interface ScannedCodeService : SavedItemService<ScannedCodeModel> {
 
     suspend fun addScannedCode(scannedCode: ScannedCodeEntity)
 
+    suspend fun deleteCode(id: Int)
 }

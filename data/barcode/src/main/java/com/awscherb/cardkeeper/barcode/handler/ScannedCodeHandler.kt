@@ -34,6 +34,10 @@ class ScannedCodeHandler @Inject constructor(
         scannedCodeDao.insertCode(scannedCode)
     }
 
+    override suspend fun deleteCode(id: Int) {
+        scannedCodeDao.deleteCode(id)
+    }
+
     override fun update(item: ScannedCodeModel): Flow<Result<ScannedCodeModel>> {
         return flow<Result<ScannedCodeModel>> {
             withContext(Dispatchers.IO) {

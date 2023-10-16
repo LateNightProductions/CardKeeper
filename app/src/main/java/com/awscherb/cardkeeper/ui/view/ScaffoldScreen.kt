@@ -3,6 +3,7 @@
 package com.awscherb.cardkeeper.ui.view
 
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -21,6 +22,7 @@ import com.awscherb.cardkeeper.R
 fun ScaffoldScreen(
     title: String,
     navOnClick: () -> Unit,
+    topBarActions: @Composable RowScope.() -> Unit = {},
     floatingActionButton: @Composable () -> Unit = {},
     content: @Composable (PaddingValues) -> Unit
 ) {
@@ -33,6 +35,7 @@ fun ScaffoldScreen(
                 title = {
                     Text(text = title)
                 },
+                actions = topBarActions,
                 navigationIcon = {
                     IconButton(onClick = { navOnClick() }) {
                         Icon(
