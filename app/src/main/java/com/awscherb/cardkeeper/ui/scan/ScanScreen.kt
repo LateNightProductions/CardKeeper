@@ -31,7 +31,7 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.awscherb.cardkeeper.ui.theme.CardKeeperTheme
-import com.awscherb.cardkeeper.ui.view.ScaffoldScreen
+import com.awscherb.cardkeeper.ui.common.ScaffoldScreen
 import com.journeyapps.barcodescanner.CaptureManager
 import com.journeyapps.barcodescanner.CompoundBarcodeView
 import kotlinx.coroutines.launch

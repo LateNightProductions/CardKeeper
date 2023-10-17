@@ -1,9 +1,8 @@
-package com.awscherb.cardkeeper.ui.card_detail
+package com.awscherb.cardkeeper.ui.scannedCode
 
 import androidx.lifecycle.*
 import com.awscherb.cardkeeper.barcode.service.ScannedCodeService
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.first
 import javax.inject.Inject
 
 @HiltViewModel

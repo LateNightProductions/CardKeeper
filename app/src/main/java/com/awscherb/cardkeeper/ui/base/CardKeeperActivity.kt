@@ -27,7 +27,7 @@ import com.awscherb.cardkeeper.barcode.model.ScannedCodeModel
 import com.awscherb.cardkeeper.pkpass.db.PkPassDao
 import com.awscherb.cardkeeper.pkpass.model.PkPassModel
 import com.awscherb.cardkeeper.pkpass.work.ImportPassWorker
-import com.awscherb.cardkeeper.ui.card_detail.ScannedCodeScreen
+import com.awscherb.cardkeeper.ui.scannedCode.ScannedCodeScreen
 import com.awscherb.cardkeeper.ui.items.ItemsScreen
 import com.awscherb.cardkeeper.ui.pkpassDetail.PassDetailScreen
 import com.awscherb.cardkeeper.ui.scan.ScanScreen

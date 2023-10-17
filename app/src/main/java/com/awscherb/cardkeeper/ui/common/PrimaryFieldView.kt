@@ -1,4 +1,4 @@
-package com.awscherb.cardkeeper.ui.view
+package com.awscherb.cardkeeper.ui.common
 
 import android.content.Context
 import android.util.AttributeSet

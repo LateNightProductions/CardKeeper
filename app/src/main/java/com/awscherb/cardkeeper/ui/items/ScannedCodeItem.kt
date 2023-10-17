@@ -28,6 +28,8 @@ import com.google.zxing.BarcodeFormat
 fun ScannedCodeItem(
     item: ScannedCodeModel,
     size: Size,
+    /** Set text length to one line and ellipsize */
+    preview: Boolean = false,
     onClick: (ScannedCodeModel) -> Unit
 ) {
     ElevatedCard(
@@ -47,7 +49,8 @@ fun ScannedCodeItem(
             barcodeFormat = item.format,
             message = item.text,
             size = size,
-            altText = item.text
+            altText = item.text,
+            altTextIsPreview = preview,
         )
     }
 }

@@ -1,7 +1,6 @@
 package com.awscherb.cardkeeper.ui.pkpassDetail
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -11,7 +10,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.awscherb.cardkeeper.pkpass.model.parseHexColor
 import com.awscherb.cardkeeper.ui.theme.CardKeeperTheme
 import com.awscherb.cardkeeper.ui.theme.Typography
-import com.awscherb.cardkeeper.ui.view.FieldConfig
+import com.awscherb.cardkeeper.ui.common.FieldConfig
 
 @Composable
 fun FieldTextView(

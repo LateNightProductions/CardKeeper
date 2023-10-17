@@ -12,6 +12,7 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.awscherb.cardkeeper.core.Barcode
@@ -33,11 +34,12 @@ fun BarcodeSection(
     modifier: Modifier = Modifier,
     altText: String? = null,
     altColor: Color = Color.Black,
+    altTextIsPreview: Boolean = false
 ) {
 
     val (width, height) = when (barcodeFormat) {
         // these will just be unlimited height so make them look nice
-        BarcodeFormat.CODE_128 -> (size.width * .85 ).toInt() to size.width.toInt() / 6
+        BarcodeFormat.CODE_128 -> (size.width * .85).toInt() to size.width.toInt() / 6
         else -> size.width.toInt() / 2 to size.width.toInt() / 2
     }
 
@@ -71,6 +73,8 @@ fun BarcodeSection(
                     .fillMaxWidth()
                     .align(Alignment.CenterHorizontally),
                 text = alt,
+                overflow = TextOverflow.Ellipsis,
+                maxLines = if (altTextIsPreview) 1 else Int.MAX_VALUE,
                 textAlign = TextAlign.Center,
                 color = altColor,
             )
@@ -143,6 +147,21 @@ fun Code128Preview() {
             size = Size(500f, 500f),
             altText = "something",
             altColor = Color.Yellow
+        )
+    }
+}
+
+@Composable
+@Preview
+fun TruncateLongAltTExt() {
+    CardKeeperTheme {
+        BarcodeSection(
+            barcodeFormat = BarcodeFormat.PDF_417,
+            message = "something",
+            size = Size(500f, 500f),
+            altText = "super long text super long text super long text super long text",
+            altColor = Color.Cyan,
+            altTextIsPreview = true
         )
     }
 }

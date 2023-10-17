@@ -24,7 +24,7 @@ import com.awscherb.cardkeeper.R
 import com.awscherb.cardkeeper.barcode.model.ScannedCodeModel
 import com.awscherb.cardkeeper.core.SavedItem
 import com.awscherb.cardkeeper.pkpass.model.PkPassModel
-import com.awscherb.cardkeeper.ui.view.ScaffoldScreen
+import com.awscherb.cardkeeper.ui.common.ScaffoldScreen
 
 @Composable
 fun ItemsScreen(
@@ -77,6 +77,7 @@ fun ItemsList(
                 is ScannedCodeModel -> ScannedCodeItem(
                     item = item,
                     size = size,
+                    preview = true
                 ) { onClick(it) }
 
                 is PkPassModel -> PassItem(pass = item) {

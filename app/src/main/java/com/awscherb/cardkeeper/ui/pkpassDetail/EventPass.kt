@@ -1,9 +1,7 @@
 package com.awscherb.cardkeeper.ui.pkpassDetail
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -19,7 +17,7 @@ import com.awscherb.cardkeeper.pkpass.model.getTranslatedLabel
 import com.awscherb.cardkeeper.pkpass.model.getTranslatedValue
 import com.awscherb.cardkeeper.pkpass.model.parseHexColor
 import com.awscherb.cardkeeper.ui.common.getAlignmentForFieldText
-import com.awscherb.cardkeeper.ui.view.FieldConfig
+import com.awscherb.cardkeeper.ui.common.FieldConfig
 
 /**
  * |        Primary         |
@@ -47,7 +45,8 @@ fun EventPass(pass: PkPassModel, passInfo: PassInfo) {
                     value = pass.getTranslatedValue(primary.value),
                     labelColor = pass.labelColor.parseHexColor(),
                     valueColor = pass.foregroundColor.parseHexColor()
-                ))
+                )
+                )
             }
 
         }

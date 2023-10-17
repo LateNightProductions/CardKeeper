@@ -1,4 +1,4 @@
-package com.awscherb.cardkeeper.ui.card_detail
+package com.awscherb.cardkeeper.ui.scannedCode
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -30,7 +30,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.awscherb.cardkeeper.barcode.model.ScannedCodeModel
 import com.awscherb.cardkeeper.ui.common.BarcodeSection
 import com.awscherb.cardkeeper.ui.theme.Typography
-import com.awscherb.cardkeeper.ui.view.ScaffoldScreen
+import com.awscherb.cardkeeper.ui.common.ScaffoldScreen
 import kotlinx.coroutines.launch
 
 @Composable

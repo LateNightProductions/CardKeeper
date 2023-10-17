@@ -1,7 +1,6 @@
 package com.awscherb.cardkeeper.ui.items
 
 import androidx.compose.foundation.clickable
-import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.runtime.Composable
@@ -12,7 +11,7 @@ import com.awscherb.cardkeeper.pkpass.model.FieldObject
 import com.awscherb.cardkeeper.pkpass.model.PkPassModel
 import com.awscherb.cardkeeper.pkpass.model.parseHexColor
 import com.awscherb.cardkeeper.ui.theme.CardKeeperTheme
-import com.awscherb.cardkeeper.ui.view.PkPassHeaderView
+import com.awscherb.cardkeeper.ui.common.PkPassHeaderView
 import com.awscherb.cardkeeper.util.createPassInfo
 import com.awscherb.cardkeeper.util.createPassModel
 

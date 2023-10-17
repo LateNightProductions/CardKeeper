@@ -17,7 +17,7 @@ import com.awscherb.cardkeeper.pkpass.model.getTranslatedLabel
 import com.awscherb.cardkeeper.pkpass.model.getTranslatedValue
 import com.awscherb.cardkeeper.pkpass.model.parseHexColor
 import com.awscherb.cardkeeper.ui.common.getAlignmentForFieldText
-import com.awscherb.cardkeeper.ui.view.FieldConfig
+import com.awscherb.cardkeeper.ui.common.FieldConfig
 
 /**
  * |        Primary         |
