@@ -10,15 +10,9 @@ import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Size
-import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.toSize
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.awscherb.cardkeeper.R
 import com.awscherb.cardkeeper.barcode.model.ScannedCodeModel
@@ -56,14 +50,10 @@ fun ItemsList(
     paddingValues: PaddingValues,
     onClick: (SavedItem) -> Unit
 ) {
-    var size by remember {
-        mutableStateOf(Size.Zero)
-    }
 
     LazyColumn(
         modifier = Modifier
-            .padding(paddingValues)
-            .onGloballyPositioned { size = it.size.toSize() },
+            .padding(paddingValues),
         verticalArrangement = Arrangement.spacedBy(8.dp),
         contentPadding = PaddingValues(
             top = 8.dp,
@@ -76,7 +66,6 @@ fun ItemsList(
             when (item) {
                 is ScannedCodeModel -> ScannedCodeItem(
                     item = item,
-                    size = size,
                     preview = true
                 ) { onClick(it) }
 

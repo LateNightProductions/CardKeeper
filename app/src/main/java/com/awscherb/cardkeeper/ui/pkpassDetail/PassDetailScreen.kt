@@ -7,16 +7,11 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.toSize
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.awscherb.cardkeeper.pkpass.model.FieldObject
 import com.awscherb.cardkeeper.pkpass.model.PassInfoType
@@ -28,9 +23,9 @@ import com.awscherb.cardkeeper.pkpass.model.passInfoType
 import com.awscherb.cardkeeper.pkpass.model.toBarcodeFormat
 import com.awscherb.cardkeeper.pkpass.util.BarcodeConstants
 import com.awscherb.cardkeeper.ui.common.BarcodeSection
-import com.awscherb.cardkeeper.ui.theme.CardKeeperTheme
 import com.awscherb.cardkeeper.ui.common.PkPassHeaderView
 import com.awscherb.cardkeeper.ui.common.ScaffoldScreen
+import com.awscherb.cardkeeper.ui.theme.CardKeeperTheme
 import com.awscherb.cardkeeper.util.createBarcode
 import com.awscherb.cardkeeper.util.createPassInfo
 import com.awscherb.cardkeeper.util.createPassModel
@@ -42,19 +37,11 @@ fun PassDetailScreen(
 ) {
     val pass by passDetailViewModel.pass.collectAsState(initial = null)
 
-    var size by remember {
-        mutableStateOf(Size.Zero)
-    }
-
     ScaffoldScreen(title = "Pass", navOnClick = navOnClick) {
         pass?.let { pass ->
             PassDetail(
-                modifier = Modifier.onGloballyPositioned {
-                    size = it.size.toSize()
-                },
                 padding = it,
                 pass = pass,
-                size = size
             )
         }
     }
@@ -65,7 +52,6 @@ fun PassDetail(
     modifier: Modifier = Modifier,
     padding: PaddingValues,
     pass: PkPassModel,
-    size: Size,
 ) {
     Card(
         modifier = modifier
@@ -98,7 +84,6 @@ fun PassDetail(
                 message = barcode.message,
                 barcodeFormat = barcode.format.toBarcodeFormat(),
                 altText = barcode.altText,
-                size = size,
                 altColor = Color(pass.foregroundColor.parseHexColor())
             )
         }
@@ -110,7 +95,6 @@ fun PassDetail(
 fun GenericPreview() {
     CardKeeperTheme {
         PassDetail(
-            size = Size(1000f, 1000f),
             padding = PaddingValues(),
             pass = createPassModel(
                 backgroundColor = "rgb(87,28,220)",

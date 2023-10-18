@@ -18,7 +18,6 @@ import com.awscherb.cardkeeper.util.createPassModel
 fun AirlinePreview() {
     CardKeeperTheme {
         PassDetail(
-            size = Size(1000f, 1000f),
             padding = PaddingValues(),
             pass = createPassModel(
                 backgroundColor = "rgb(50,168,96)",
@@ -59,7 +58,6 @@ fun AirlinePreview() {
 fun GenericPreview() {
     CardKeeperTheme {
         PassDetail(
-            size = Size(1000f, 1000f),
             padding = PaddingValues(),
             pass = createPassModel(
                 backgroundColor = "rgb(87,28,220)",
@@ -95,7 +93,6 @@ fun GenericPreview() {
 fun StorePassQrPreview() {
     CardKeeperTheme {
         PassDetail(
-            size = Size(1000f, 1000f),
             padding = PaddingValues(),
             pass = createPassModel(
                 backgroundColor = "rgb(219, 235, 52)",
@@ -131,7 +128,6 @@ fun StorePassQrPreview() {
 fun StorePassPdfPreview() {
     CardKeeperTheme {
         PassDetail(
-            size = Size(1000f, 1000f),
             padding = PaddingValues(),
             pass = createPassModel(
                 backgroundColor = "rgb(200, 50, 43)",

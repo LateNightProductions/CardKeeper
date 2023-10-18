@@ -18,7 +18,6 @@ fun QrCodePreview() {
                 text = "Something stored in a QR code"
             ),
             paddingValues = PaddingValues(),
-            size = Size(500f, 500f)
         )
     }
 }
@@ -33,7 +32,6 @@ fun CodePreview() {
                 text = "2345234525634243"
             ),
             paddingValues = PaddingValues(),
-            size = Size(500f, 500f)
         )
     }
 }

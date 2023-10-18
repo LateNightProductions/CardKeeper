@@ -27,7 +27,6 @@ import com.google.zxing.BarcodeFormat
 @Composable
 fun ScannedCodeItem(
     item: ScannedCodeModel,
-    size: Size,
     /** Set text length to one line and ellipsize */
     preview: Boolean = false,
     onClick: (ScannedCodeModel) -> Unit
@@ -48,7 +47,6 @@ fun ScannedCodeItem(
         BarcodeSection(
             barcodeFormat = item.format,
             message = item.text,
-            size = size,
             altText = item.text,
             altTextIsPreview = preview,
         )
@@ -61,7 +59,6 @@ fun ScannedCodePreview() {
     CardKeeperTheme {
         ScannedCodeItem(
             item = createScannedCode(),
-            size = Size(500f, 500f),
             onClick = {})
     }
 }
