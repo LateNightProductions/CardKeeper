@@ -25,10 +25,6 @@ import javax.inject.Inject
 
 class CreateFragment : BaseFragment() {
 
-    private val viewModel by viewModels<CreateViewModel> { viewModelFactory }
-
-    @Inject
-    lateinit var viewModelFactory: CreateViewModelFactory
 
 
     private lateinit var title: TextInputEditText
@@ -64,27 +60,13 @@ class CreateFragment : BaseFragment() {
         bottomSheetBehavior = BottomSheetBehavior.from(bottomSheetLayout)
 
         setupRecycler()
-        setupTextListeners()
 
         codeType.setOnClickListener {
             dismissKeyboard()
             bottomSheetBehavior.expand()
         }
 
-        viewModel.format.onEach {
-            if (it != null) {
-                codeType.text = it.title
-            }
-        }.launchIn(lifecycleScope)
 
-        viewModel.saveResult
-            .filterNotNull()
-            .onEach {
-                viewModel.saveResult.value = null
-                onSaveResult(it)
-            }.launchIn(lifecycleScope)
-
-        createFab.setOnClickListener { viewModel.save() }
     }
 
     //================================================================================
@@ -93,15 +75,7 @@ class CreateFragment : BaseFragment() {
 
 
     private fun onSaveResult(result: SaveResult) {
-        when (result) {
-            InvalidTitle -> showSnackbar(R.string.fragment_create_invalid_title)
-            InvalidText -> showSnackbar(R.string.fragment_create_invalid_text)
-            InvalidFormat -> showSnackbar(R.string.fragment_create_invalid_format)
-            is SaveSuccess -> onSaveComplete(result.codeId)
-            is Failure -> showSnackbar(
-                result.e.message ?: getString(R.string.fragment_create_error_generic)
-            )
-        }
+
     }
 
     private fun onSaveComplete(id: Int) {
@@ -116,15 +90,8 @@ class CreateFragment : BaseFragment() {
         typesRecyler.layoutManager = LinearLayoutManager(requireContext())
         typesRecyler.adapter = CodeTypesAdapter(requireContext()) {
             codeType.text = it.title
-            viewModel.format.value = it
-            bottomSheetBehavior.collapse()
         }
     }
 
-    private fun setupTextListeners() {
-        title.addLifecycleTextWatcher { viewModel.title.value = it }
-
-        text.addLifecycleTextWatcher { viewModel.text.value = it }
-    }
 
 }

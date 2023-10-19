@@ -27,6 +27,7 @@ import com.awscherb.cardkeeper.barcode.model.ScannedCodeModel
 import com.awscherb.cardkeeper.pkpass.db.PkPassDao
 import com.awscherb.cardkeeper.pkpass.model.PkPassModel
 import com.awscherb.cardkeeper.pkpass.work.ImportPassWorker
+import com.awscherb.cardkeeper.ui.create.CreateScreen
 import com.awscherb.cardkeeper.ui.scannedCode.ScannedCodeScreen
 import com.awscherb.cardkeeper.ui.items.ItemsScreen
 import com.awscherb.cardkeeper.ui.pkpassDetail.PassDetailScreen
@@ -92,6 +93,19 @@ class CardKeeperActivity : ComponentActivity() {
                                     drawerState.close()
                                 }
                             })
+                        NavigationDrawerItem(
+                            label = { Text("Create") },
+                            selected = false,
+                            onClick = {
+                                navController.navigate("create") {
+                                    popUpTo("items") {
+                                        inclusive = false
+                                    }
+                                }
+                                scope.launch {
+                                    drawerState.close()
+                                }
+                            })
                     }
                 }) {
                 NavHost(navController = navController, startDestination = "items") {
@@ -144,6 +158,18 @@ class CardKeeperActivity : ComponentActivity() {
                         ScanScreen(completion = {
                             navController.navigate("items")
                         }) {
+                            scope.launch { drawerState.open() }
+                        }
+                    }
+                    composable("create") {
+                        CreateScreen(completion = {
+                            navController.navigate("items") {
+                                popUpTo("items") {
+                                    inclusive = false
+                                }
+                            }
+                        }
+                        ) {
                             scope.launch { drawerState.open() }
                         }
                     }
