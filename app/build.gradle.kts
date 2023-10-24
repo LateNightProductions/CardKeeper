@@ -16,8 +16,8 @@ android {
         minSdk = 24
         targetSdk = 34
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        versionCode = 92
-        versionName = "1.1"
+        versionCode = 168
+        versionName = "2.0"
     }
 
     flavorDimensions += "env"
@@ -67,6 +67,7 @@ dependencies {
     implementation(project(":data:barcode"))
     implementation(project(":data:pkpass"))
 
+    implementation(libs.accompanist.permissions)
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.cardview)

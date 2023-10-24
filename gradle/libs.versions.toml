@@ -1,4 +1,5 @@
 [versions]
+accompanist = "0.32.0"
 activity-compose = "1.7.2"
 appcompat = "1.6.1"
 cardview = "1.0.0"
@@ -40,6 +41,7 @@ zxing-core = "3.5.0"
 zxing-android-embedded = "4.3.0"
 
 [libraries]
+accompanist-permissions = { module = "com.google.accompanist:accompanist-permissions", version.ref = "accompanist" }
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activity-compose" }
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
 androidx-cardview = { module = "androidx.cardview:cardview", version.ref = "cardview" }

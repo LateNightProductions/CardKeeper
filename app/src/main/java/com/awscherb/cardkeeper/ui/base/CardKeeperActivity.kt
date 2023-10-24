@@ -1,5 +1,8 @@
+@file:OptIn(ExperimentalPermissionsApi::class)
+
 package com.awscherb.cardkeeper.ui.base
 
+import android.Manifest
 import android.content.ContentResolver
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -31,8 +34,12 @@ import com.awscherb.cardkeeper.ui.create.CreateScreen
 import com.awscherb.cardkeeper.ui.scannedCode.ScannedCodeScreen
 import com.awscherb.cardkeeper.ui.items.ItemsScreen
 import com.awscherb.cardkeeper.ui.pkpassDetail.PassDetailScreen
+import com.awscherb.cardkeeper.ui.scan.PermissionsScreen
 import com.awscherb.cardkeeper.ui.scan.ScanScreen
 import com.awscherb.cardkeeper.ui.theme.Typography
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import com.google.accompanist.permissions.isGranted
+import com.google.accompanist.permissions.rememberPermissionState
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -48,6 +55,7 @@ class CardKeeperActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
+            val cameraPermissionState = rememberPermissionState(Manifest.permission.CAMERA)
             val navController = rememberNavController()
             val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
             val scope = rememberCoroutineScope()
@@ -155,10 +163,17 @@ class CardKeeperActivity : ComponentActivity() {
                         }
                     }
                     composable("scan") {
-                        ScanScreen(completion = {
-                            navController.navigate("items")
-                        }) {
-                            scope.launch { drawerState.open() }
+                        if (cameraPermissionState.status.isGranted) {
+
+                            ScanScreen(completion = {
+                                navController.navigate("items")
+                            }) {
+                                scope.launch { drawerState.open() }
+                            }
+                        } else {
+                            PermissionsScreen {
+                                scope.launch { drawerState.open() }
+                            }
                         }
                     }
                     composable("create") {
