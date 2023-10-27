@@ -1,8 +1,7 @@
-package com.awscherb.cardkeeper.di.module
+package com.awscherb.cardkeeper.di
 
 import android.content.Context
 import androidx.room.Room
-import com.awscherb.cardkeeper.common.BuildInfo
 import com.awscherb.cardkeeper.pkpass.api.PkPassApi
 import com.awscherb.cardkeeper.pkpass.db.PkPassDatabase
 import com.awscherb.cardkeeper.pkpass.handler.PkPassHandler

@@ -1,4 +1,4 @@
-package com.awscherb.cardkeeper.di.module
+package com.awscherb.cardkeeper.di
 
 import com.awscherb.cardkeeper.ui.base.CardKeeperActivity
 import dagger.Module

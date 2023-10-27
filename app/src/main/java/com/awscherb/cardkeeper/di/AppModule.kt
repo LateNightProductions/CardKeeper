@@ -1,4 +1,4 @@
-package com.awscherb.cardkeeper.di.module
+package com.awscherb.cardkeeper.di
 
 import com.awscherb.cardkeeper.BuildConfig
 import com.awscherb.cardkeeper.common.BuildInfo
