@@ -60,6 +60,16 @@ class CardKeeperActivity : ComponentActivity() {
             val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
             val scope = rememberCoroutineScope()
 
+            val openDrawer: () -> Unit = { scope.launch { drawerState.open() } }
+            val topLevelNav: (String, Boolean) -> Unit = { dest, pop ->
+                navController.navigate(dest) {
+                    popUpTo("items") {
+                        inclusive = pop
+                    }
+                }
+                scope.launch { drawerState.close() }
+            }
+
             ModalNavigationDrawer(
                 drawerState = drawerState,
                 drawerContent = {
@@ -79,40 +89,19 @@ class CardKeeperActivity : ComponentActivity() {
                             label = { Text("Items") },
                             selected = false,
                             onClick = {
-                                navController.navigate("items") {
-                                    popUpTo("items") {
-                                        inclusive = true
-                                    }
-                                }
-                                scope.launch {
-                                    drawerState.close()
-                                }
+                                topLevelNav("items", true)
                             })
                         NavigationDrawerItem(
                             label = { Text("Scan") },
                             selected = false,
                             onClick = {
-                                navController.navigate("scan") {
-                                    popUpTo("items") {
-                                        inclusive = false
-                                    }
-                                }
-                                scope.launch {
-                                    drawerState.close()
-                                }
+                                topLevelNav("scan", false)
                             })
                         NavigationDrawerItem(
                             label = { Text("Create") },
                             selected = false,
                             onClick = {
-                                navController.navigate("create") {
-                                    popUpTo("items") {
-                                        inclusive = false
-                                    }
-                                }
-                                scope.launch {
-                                    drawerState.close()
-                                }
+                                topLevelNav("create", false)
                             })
                     }
                 }) {
@@ -122,9 +111,8 @@ class CardKeeperActivity : ComponentActivity() {
                             scanOnClick = {
                                 navController.navigate("scan")
                             },
-                            navOnClick = {
-                                scope.launch { drawerState.open() }
-                            }) {
+                            navOnClick = openDrawer
+                        ) {
 
                             when (it) {
                                 is PkPassModel ->
@@ -142,9 +130,7 @@ class CardKeeperActivity : ComponentActivity() {
                             type = NavType.StringType
                         })
                     ) {
-                        PassDetailScreen {
-                            scope.launch { drawerState.open() }
-                        }
+                        PassDetailScreen(navOnClick = openDrawer)
                     }
                     composable(
                         "code/{codeId}", arguments =
@@ -153,42 +139,24 @@ class CardKeeperActivity : ComponentActivity() {
                         })
                     ) {
                         ScannedCodeScreen(onDelete = {
-                            navController.navigate("items") {
-                                popUpTo("items") {
-                                    inclusive = false
-                                }
-                            }
-                        }) {
-                            scope.launch { drawerState.open() }
-                        }
+                            topLevelNav("items", false)
+                        }, navOnClick = openDrawer)
                     }
                     composable("scan") {
                         if (cameraPermissionState.status.isGranted) {
-
                             ScanScreen(completion = {
-                                navController.navigate("items")
-                            }) {
-                                scope.launch { drawerState.open() }
-                            }
+                                topLevelNav("items", true)
+                            }, navOnClick = openDrawer)
                         } else {
-                            PermissionsScreen {
-                                scope.launch { drawerState.open() }
-                            }
+                            PermissionsScreen(navOnClick = openDrawer)
                         }
                     }
                     composable("create") {
-                        CreateScreen(completion = {
-                            navController.navigate("items") {
-                                popUpTo("items") {
-                                    inclusive = false
-                                }
-                            }
-                        }
-                        ) {
-                            scope.launch { drawerState.open() }
-                        }
+                        CreateScreen(
+                            completion = { topLevelNav("items", true) },
+                            navOnClick = openDrawer
+                        )
                     }
-
                 }
             }
         }

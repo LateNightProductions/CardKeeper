@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.awscherb.cardkeeper.ui.common.ScaffoldScreen
 import com.awscherb.cardkeeper.ui.theme.CardKeeperTheme
+import com.awscherb.cardkeeper.util.CapWords
 import com.google.zxing.BarcodeFormat
 
 @Composable
@@ -86,6 +87,7 @@ fun CreateScreenInner(
             placeholder = {
                 Text("Title")
             },
+            keyboardOptions = CapWords,
             value = title,
             onValueChange = { title = it },
             modifier = Modifier
