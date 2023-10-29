@@ -15,7 +15,11 @@ import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.NavigationDrawerItem
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDrawerState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavType
@@ -57,13 +61,17 @@ class CardKeeperActivity : ComponentActivity() {
         setContent {
             val cameraPermissionState = rememberPermissionState(Manifest.permission.CAMERA)
             val navController = rememberNavController()
+            var selectedItem by remember {
+                mutableStateOf<Destination>(Destination.Items)
+            }
             val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
             val scope = rememberCoroutineScope()
 
             val openDrawer: () -> Unit = { scope.launch { drawerState.open() } }
-            val topLevelNav: (String, Boolean) -> Unit = { dest, pop ->
-                navController.navigate(dest) {
-                    popUpTo("items") {
+            val topLevelNav: (Destination, Boolean) -> Unit = { dest, pop ->
+                selectedItem = dest
+                navController.navigate(dest.dest) {
+                    popUpTo(Destination.Items.dest) {
                         inclusive = pop
                     }
                 }
@@ -86,22 +94,22 @@ class CardKeeperActivity : ComponentActivity() {
                         )
                         Divider()
                         NavigationDrawerItem(
-                            label = { Text("Items") },
-                            selected = false,
+                            label = { Text(Destination.Items.label) },
+                            selected = selectedItem == Destination.Items,
                             onClick = {
-                                topLevelNav("items", true)
+                                topLevelNav(Destination.Items, true)
                             })
                         NavigationDrawerItem(
-                            label = { Text("Scan") },
-                            selected = false,
+                            label = { Text(Destination.Scan.label) },
+                            selected = selectedItem == Destination.Scan,
                             onClick = {
-                                topLevelNav("scan", false)
+                                topLevelNav(Destination.Scan, false)
                             })
                         NavigationDrawerItem(
-                            label = { Text("Create") },
-                            selected = false,
+                            label = { Text(Destination.Create.label) },
+                            selected = selectedItem == Destination.Create,
                             onClick = {
-                                topLevelNav("create", false)
+                                topLevelNav(Destination.Create, false)
                             })
                     }
                 }) {
@@ -139,13 +147,13 @@ class CardKeeperActivity : ComponentActivity() {
                         })
                     ) {
                         ScannedCodeScreen(onDelete = {
-                            topLevelNav("items", false)
+                            topLevelNav(Destination.Items, false)
                         }, navOnClick = openDrawer)
                     }
                     composable("scan") {
                         if (cameraPermissionState.status.isGranted) {
                             ScanScreen(completion = {
-                                topLevelNav("items", true)
+                                topLevelNav(Destination.Items, true)
                             }, navOnClick = openDrawer)
                         } else {
                             PermissionsScreen(navOnClick = openDrawer)
@@ -153,7 +161,7 @@ class CardKeeperActivity : ComponentActivity() {
                     }
                     composable("create") {
                         CreateScreen(
-                            completion = { topLevelNav("items", true) },
+                            completion = { topLevelNav(Destination.Items, true) },
                             navOnClick = openDrawer
                         )
                     }
