@@ -3,6 +3,7 @@ package com.awscherb.cardkeeper.ui.pkpassDetail
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.awscherb.cardkeeper.pkpass.model.canBeUpdated
 import com.awscherb.cardkeeper.pkpass.model.findPassInfo
 import com.awscherb.cardkeeper.pkpass.model.getTranslatedLabel
 import com.awscherb.cardkeeper.pkpass.model.getTranslatedValue
@@ -10,6 +11,7 @@ import com.awscherb.cardkeeper.pkpass.service.PkPassService
 import com.awscherb.cardkeeper.util.PassWorkManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
@@ -32,6 +34,7 @@ class PkPassViewModel @Inject constructor(
     init {
         pass
             .take(1)
+            .filter { it.canBeUpdated() }
             .onEach {
                 passWorkManager.enqueuePassUpdate(it)
             }

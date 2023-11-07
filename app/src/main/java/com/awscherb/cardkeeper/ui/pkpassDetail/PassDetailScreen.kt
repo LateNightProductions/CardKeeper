@@ -2,11 +2,18 @@ package com.awscherb.cardkeeper.ui.pkpassDetail
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
@@ -35,9 +42,26 @@ fun PassDetailScreen(
     navOnClick: () -> Unit
 ) {
     val pass by passDetailViewModel.pass.collectAsState(initial = null)
+    val backItems by passDetailViewModel.backItems.collectAsState(initial = emptyList())
+    var showBackInfo by remember {
+        mutableStateOf(false)
+    }
 
-    ScaffoldScreen(title = "Pass", navOnClick = navOnClick) {
+    ScaffoldScreen(title = "Pass", navOnClick = navOnClick,
+        topBarActions = {
+            if (backItems.isNotEmpty()) {
+                IconButton(onClick = { showBackInfo = true }) {
+                    Icon(Icons.Default.Info, "Info")
+                }
+            }
+        }) {
         pass?.let { pass ->
+            if (showBackInfo) {
+                PassInfoDialog(items = backItems) {
+                    showBackInfo = false
+                }
+            }
+
             PassDetail(
                 padding = it,
                 pass = pass,

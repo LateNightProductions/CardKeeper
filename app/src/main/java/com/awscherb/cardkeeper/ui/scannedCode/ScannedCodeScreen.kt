@@ -20,7 +20,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -40,9 +39,6 @@ fun ScannedCodeScreen(
 
     val code by scannedCodeViewModel.card.collectAsState(initial = null)
     val scope = rememberCoroutineScope()
-    var size by remember {
-        mutableStateOf(Size.Zero)
-    }
     var showDeleteMenu by remember {
         mutableStateOf(false)
     }
