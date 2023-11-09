@@ -31,6 +31,8 @@ class PkPassViewModel @Inject constructor(
 
     val pass = pkPassService.getPass(passId)
 
+    val shouldUpdate = pkPassService.shouldAutoUpdatePass(passId)
+
     init {
         pass
             .take(1)

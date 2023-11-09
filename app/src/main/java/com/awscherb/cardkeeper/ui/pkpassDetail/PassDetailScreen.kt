@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -22,6 +23,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.awscherb.cardkeeper.pkpass.model.FieldObject
 import com.awscherb.cardkeeper.pkpass.model.PassInfoType
 import com.awscherb.cardkeeper.pkpass.model.PkPassModel
+import com.awscherb.cardkeeper.pkpass.model.canBeUpdated
 import com.awscherb.cardkeeper.pkpass.model.findFirstBarcode
 import com.awscherb.cardkeeper.pkpass.model.findPassInfo
 import com.awscherb.cardkeeper.pkpass.model.parseHexColor
@@ -46,12 +48,21 @@ fun PassDetailScreen(
     var showBackInfo by remember {
         mutableStateOf(false)
     }
+    var showSettings by remember {
+        mutableStateOf(false)
+    }
 
     ScaffoldScreen(title = "Pass", navOnClick = navOnClick,
         topBarActions = {
             if (backItems.isNotEmpty()) {
                 IconButton(onClick = { showBackInfo = true }) {
                     Icon(Icons.Default.Info, "Info")
+                }
+            }
+
+            if (pass?.canBeUpdated() == true) {
+                IconButton(onClick = { }) {
+                    Icon(Icons.Default.Settings, "Settings")
                 }
             }
         }) {
@@ -110,41 +121,6 @@ fun PassDetail(
                 altColor = Color(pass.foregroundColor.parseHexColor())
             )
         }
-    }
-}
-
-@Composable
-@Preview
-fun GenericPreview() {
-    CardKeeperTheme {
-        PassDetail(
-            padding = PaddingValues(),
-            pass = createPassModel(
-                backgroundColor = "rgb(87,28,220)",
-                foregroundColor = "rgb(255,255,255)",
-                labelColor = "rgb(255,255,255)",
-                barcode = createBarcode(
-                    altText = "Alt Text",
-                    format = BarcodeConstants.FORMAT_PDF_417
-                ),
-                boardingPass = createPassInfo(
-                    transitType = "other",
-                    headerFields = listOf(
-                        FieldObject("key", "TRACK", "4")
-                    ),
-                    primaryFields = listOf(
-                        FieldObject("origin", "NYP", "PENN"),
-                        FieldObject("destination", "EWR", "EWR")
-                    ),
-                    auxiliaryFields = listOf(
-                        FieldObject("terminal", "TRACK", "4"),
-                    ),
-                    secondaryFields = listOf(
-                        FieldObject("boardingTime", "BOARDING", "12:00 PM"),
-                    )
-                )
-            )
-        )
     }
 }
 

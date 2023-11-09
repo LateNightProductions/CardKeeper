@@ -8,6 +8,10 @@ interface PkPassService : SavedItemService<PkPassModel> {
 
     fun getPass(passId: String): Flow<PkPassModel>
 
+    fun shouldAutoUpdatePass(passId: String): Flow<Boolean>
+
+    suspend fun setAutoUpdatePass(passId: String, autoUpdate: Boolean)
+
 }
 
 

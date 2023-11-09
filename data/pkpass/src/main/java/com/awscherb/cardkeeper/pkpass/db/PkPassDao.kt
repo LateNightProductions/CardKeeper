@@ -5,6 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
+import com.awscherb.cardkeeper.pkpass.entity.PassUpdateEntity
 import com.awscherb.cardkeeper.pkpass.entity.PkPassEntity
 import kotlinx.coroutines.flow.Flow
 
@@ -28,4 +29,10 @@ interface PkPassDao {
 
     @Query("DELETE FROM PkPassEntity WHERE id = :id")
     suspend fun delete(id: String): Int
+
+    @Query("SELECT * FRom PassUpdateEntity WHERE passId = :passId LIMIT 1")
+    fun getUpdateSettingsForPass(passId: String): Flow<List<PassUpdateEntity>>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun setAutoUpdateSettings(settings: PassUpdateEntity)
 }

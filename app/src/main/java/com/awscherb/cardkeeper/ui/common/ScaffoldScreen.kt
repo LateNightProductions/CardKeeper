@@ -4,6 +4,9 @@ package com.awscherb.cardkeeper.ui.common
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.RowScope
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -16,7 +19,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import com.awscherb.cardkeeper.R
+import com.awscherb.cardkeeper.ui.theme.CardKeeperTheme
 
 @Composable
 fun ScaffoldScreen(
@@ -58,4 +63,49 @@ fun ScaffoldScreen(
             content(padding)
         }
     )
+}
+
+@Preview
+@Composable
+fun ScaffoldScreenSimplePreview() {
+    CardKeeperTheme {
+        ScaffoldScreen(title = "Title", navOnClick = { }) {
+
+        }
+    }
+}
+
+@Preview
+@Composable
+fun ScaffoldScreenSingleMenuItem() {
+    CardKeeperTheme {
+        ScaffoldScreen(title = "Title",
+            topBarActions = {
+                IconButton(onClick = { }) {
+                    Icon(Icons.Default.Info, "Info")
+                }
+            },
+            navOnClick = { }) {
+
+        }
+    }
+}
+
+@Preview
+@Composable
+fun ScaffoldScreenSingleDoubleItem() {
+    CardKeeperTheme {
+        ScaffoldScreen(title = "Title",
+            topBarActions = {
+                IconButton(onClick = { }) {
+                    Icon(Icons.Default.Info, "Info")
+                }
+                IconButton(onClick = { }) {
+                    Icon(Icons.Default.Settings, "Settings")
+                }
+            },
+            navOnClick = { }) {
+
+        }
+    }
 }
