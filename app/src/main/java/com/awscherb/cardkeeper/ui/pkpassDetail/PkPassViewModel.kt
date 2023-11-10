@@ -11,6 +11,7 @@ import com.awscherb.cardkeeper.pkpass.service.PkPassService
 import com.awscherb.cardkeeper.util.PassWorkManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.launchIn
@@ -35,10 +36,11 @@ class PkPassViewModel @Inject constructor(
 
     init {
         pass
+            .combine(shouldUpdate) { pass, update -> pass.canBeUpdated() && update }
+            .filter { it }
             .take(1)
-            .filter { it.canBeUpdated() }
             .onEach {
-                passWorkManager.enqueuePassUpdate(it)
+                passWorkManager.enqueuePassUpdate(pass.first())
             }
             .launchIn(viewModelScope)
     }

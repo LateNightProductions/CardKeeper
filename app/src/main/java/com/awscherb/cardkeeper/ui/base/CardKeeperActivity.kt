@@ -31,29 +31,23 @@ import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.workDataOf
 import com.awscherb.cardkeeper.barcode.model.ScannedCodeModel
-import com.awscherb.cardkeeper.pkpass.db.PkPassDao
 import com.awscherb.cardkeeper.pkpass.model.PkPassModel
 import com.awscherb.cardkeeper.pkpass.work.ImportPassWorker
 import com.awscherb.cardkeeper.ui.create.CreateScreen
-import com.awscherb.cardkeeper.ui.scannedCode.ScannedCodeScreen
 import com.awscherb.cardkeeper.ui.items.ItemsScreen
 import com.awscherb.cardkeeper.ui.pkpassDetail.PassDetailScreen
 import com.awscherb.cardkeeper.ui.scan.PermissionsScreen
 import com.awscherb.cardkeeper.ui.scan.ScanScreen
+import com.awscherb.cardkeeper.ui.scannedCode.ScannedCodeScreen
 import com.awscherb.cardkeeper.ui.theme.Typography
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class CardKeeperActivity : ComponentActivity() {
-
-
-    @Inject
-    lateinit var pkPassDao: PkPassDao
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

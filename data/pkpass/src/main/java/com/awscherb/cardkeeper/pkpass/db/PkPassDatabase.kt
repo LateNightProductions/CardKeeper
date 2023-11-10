@@ -11,7 +11,7 @@ import com.awscherb.cardkeeper.pkpass.entity.PkPassEntity
         PkPassEntity::class,
         PassUpdateEntity::class
     ],
-    version = 5, exportSchema = false
+    version = 6, exportSchema = false
 )
 @TypeConverters(
     com.awscherb.cardkeeper.common.TypeConverters::class,
