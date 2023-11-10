@@ -18,7 +18,6 @@ import com.awscherb.cardkeeper.R
 import com.awscherb.cardkeeper.barcode.model.ScannedCodeModel
 import com.awscherb.cardkeeper.core.SavedItem
 import com.awscherb.cardkeeper.pkpass.model.PkPassModel
-import com.awscherb.cardkeeper.ui.common.ScaffoldScreen
 import com.awscherb.cardkeeper.ui.common.SearchableScaffoldScreen
 
 @Composable

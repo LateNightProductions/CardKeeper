@@ -44,24 +44,31 @@ fun PassDetailScreen(
     navOnClick: () -> Unit
 ) {
     val pass by passDetailViewModel.pass.collectAsState(initial = null)
+    val isAutoUpdateOn by passDetailViewModel.shouldUpdate.collectAsState(initial = false)
     val backItems by passDetailViewModel.backItems.collectAsState(initial = emptyList())
     var showBackInfo by remember {
         mutableStateOf(false)
     }
-    var showSettings by remember {
+    var showUpdateSettings by remember {
         mutableStateOf(false)
     }
 
     ScaffoldScreen(title = "Pass", navOnClick = navOnClick,
         topBarActions = {
             if (backItems.isNotEmpty()) {
-                IconButton(onClick = { showBackInfo = true }) {
+                IconButton(onClick = {
+                    showBackInfo = true
+                    showUpdateSettings = false
+                }) {
                     Icon(Icons.Default.Info, "Info")
                 }
             }
 
             if (pass?.canBeUpdated() == true) {
-                IconButton(onClick = { }) {
+                IconButton(onClick = {
+                    showBackInfo = false
+                    showUpdateSettings = true
+                }) {
                     Icon(Icons.Default.Settings, "Settings")
                 }
             }
@@ -71,6 +78,16 @@ fun PassDetailScreen(
                 PassInfoDialog(items = backItems) {
                     showBackInfo = false
                 }
+            }
+
+            if (showUpdateSettings) {
+                PassUpdateSettingsDialog(
+                    isAutoUpdateOn = isAutoUpdateOn,
+                    onDismissRequest = { showUpdateSettings = false },
+                    onUpdateSettingsChanged = {
+                        passDetailViewModel.setAutoUpdate(it)
+                    }
+                )
             }
 
             PassDetail(

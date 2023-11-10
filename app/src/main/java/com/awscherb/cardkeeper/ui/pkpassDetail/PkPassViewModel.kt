@@ -57,6 +57,12 @@ class PkPassViewModel @Inject constructor(
         }
     }
 
+    fun setAutoUpdate(autoUpdate: Boolean) {
+        viewModelScope.launch {
+            pkPassService.setAutoUpdatePass(passId, autoUpdate)
+        }
+    }
+
     fun deletePass() {
         viewModelScope.launch {
             pkPassService.delete(pass.first())
