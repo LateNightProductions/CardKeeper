@@ -25,7 +25,7 @@ class ScannedCodeHandler @Inject constructor(
     }
 
     override fun listAll(query: String?): Flow<List<ScannedCodeEntity>> {
-        return if (query == null) scannedCodeDao.listScannedCodes() else scannedCodeDao.listScannedCodes(
+        return if (query.isNullOrEmpty()) scannedCodeDao.listScannedCodes() else scannedCodeDao.listScannedCodes(
             query
         )
     }

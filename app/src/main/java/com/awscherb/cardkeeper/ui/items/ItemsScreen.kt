@@ -19,6 +19,7 @@ import com.awscherb.cardkeeper.barcode.model.ScannedCodeModel
 import com.awscherb.cardkeeper.core.SavedItem
 import com.awscherb.cardkeeper.pkpass.model.PkPassModel
 import com.awscherb.cardkeeper.ui.common.ScaffoldScreen
+import com.awscherb.cardkeeper.ui.common.SearchableScaffoldScreen
 
 @Composable
 fun ItemsScreen(
@@ -29,7 +30,7 @@ fun ItemsScreen(
 ) {
     val items by viewModel.items.collectAsState(initial = emptyList())
 
-    ScaffoldScreen(
+    SearchableScaffoldScreen(
         title = "Items",
         navOnClick = navOnClick,
         floatingActionButton = {
@@ -38,6 +39,12 @@ fun ItemsScreen(
             }) {
                 Icon(painterResource(id = R.drawable.ic_scan), contentDescription = null)
             }
+        },
+        onQueryChanged = {
+            viewModel.searchQuery.value = it
+        },
+        onSearchCleared = {
+            viewModel.searchQuery.value = ""
         }
     ) {
         ItemsList(items, it, onClick)

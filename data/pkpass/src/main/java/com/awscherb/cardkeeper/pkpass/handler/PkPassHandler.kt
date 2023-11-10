@@ -18,7 +18,7 @@ class PkPassHandler @Inject constructor(
     }
 
     override fun listAll(query: String?): Flow<List<PkPassModel>> {
-        return if (query == null) dao.listPkPasses() else dao.listPkPasses(query)
+        return if (query.isNullOrEmpty()) dao.listPkPasses() else dao.listPkPasses(query)
     }
 
     override suspend fun delete(item: PkPassModel) {
