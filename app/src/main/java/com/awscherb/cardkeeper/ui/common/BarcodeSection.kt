@@ -4,6 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -61,20 +62,22 @@ fun BarcodeSection(
         )
 
         altText?.let { alt ->
-            Text(
-                modifier = Modifier
-                    .padding(
-                        vertical = 4.dp,
-                        horizontal = 4.dp
-                    )
-                    .fillMaxWidth()
-                    .align(Alignment.CenterHorizontally),
-                text = alt,
-                overflow = TextOverflow.Ellipsis,
-                maxLines = if (altTextIsPreview) 1 else Int.MAX_VALUE,
-                textAlign = TextAlign.Center,
-                color = altColor,
-            )
+            SelectionContainer {
+                Text(
+                    modifier = Modifier
+                        .padding(
+                            vertical = 4.dp,
+                            horizontal = 4.dp
+                        )
+                        .fillMaxWidth()
+                        .align(Alignment.CenterHorizontally),
+                    text = alt,
+                    overflow = TextOverflow.Ellipsis,
+                    maxLines = if (altTextIsPreview) 1 else Int.MAX_VALUE,
+                    textAlign = TextAlign.Center,
+                    color = altColor,
+                )
+            }
 
         }
     }

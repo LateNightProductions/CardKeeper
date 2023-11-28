@@ -3,6 +3,7 @@ package com.awscherb.cardkeeper.ui.scannedCode
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Warning
@@ -110,15 +111,17 @@ fun ScannedCodeDetail(
             .padding(paddingValues)
             .padding(horizontal = 8.dp, vertical = 8.dp),
     ) {
-        Text(
-            text = code.title,
-            style = Typography.bodyLarge,
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 8.dp, vertical = 8.dp)
-        )
+        SelectionContainer {
+            Text(
+                text = code.title,
+                style = Typography.bodyLarge,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 8.dp, vertical = 8.dp)
+            )
+        }
 
         // Load image
         BarcodeSection(
