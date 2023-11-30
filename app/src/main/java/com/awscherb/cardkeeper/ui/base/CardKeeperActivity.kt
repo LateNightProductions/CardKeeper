@@ -107,11 +107,11 @@ class CardKeeperActivity : ComponentActivity() {
                             })
                     }
                 }) {
-                NavHost(navController = navController, startDestination = "items") {
-                    composable("items") {
+                NavHost(navController = navController, startDestination = Destination.Items.dest) {
+                    composable(Destination.Items.dest) {
                         ItemsScreen(
                             scanOnClick = {
-                                navController.navigate("scan")
+                                navController.navigate(Destination.Scan.dest)
                             },
                             navOnClick = openDrawer
                         ) {
@@ -127,7 +127,7 @@ class CardKeeperActivity : ComponentActivity() {
                         }
                     }
                     composable(
-                        "pass/{passId}", arguments =
+                        Destination.Pass.dest, arguments =
                         listOf(navArgument("passId") {
                             type = NavType.StringType
                         })
@@ -135,7 +135,7 @@ class CardKeeperActivity : ComponentActivity() {
                         PassDetailScreen(navOnClick = openDrawer)
                     }
                     composable(
-                        "code/{codeId}", arguments =
+                        Destination.Code.dest, arguments =
                         listOf(navArgument("codeId") {
                             type = NavType.IntType
                         })
@@ -144,7 +144,7 @@ class CardKeeperActivity : ComponentActivity() {
                             topLevelNav(Destination.Items, false)
                         }, navOnClick = openDrawer)
                     }
-                    composable("scan") {
+                    composable(Destination.Scan.dest) {
                         if (cameraPermissionState.status.isGranted) {
                             ScanScreen(completion = {
                                 topLevelNav(Destination.Items, true)
@@ -153,7 +153,7 @@ class CardKeeperActivity : ComponentActivity() {
                             PermissionsScreen(navOnClick = openDrawer)
                         }
                     }
-                    composable("create") {
+                    composable(Destination.Create.dest) {
                         CreateScreen(
                             completion = { topLevelNav(Destination.Items, true) },
                             navOnClick = openDrawer

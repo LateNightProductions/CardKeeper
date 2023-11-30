@@ -21,8 +21,8 @@ class CardKeeperApplication : Application(), Configuration.Provider {
     @Inject
     lateinit var pkPassApi: PkPassApi
 
-    override fun getWorkManagerConfiguration(): Configuration {
-        return Configuration.Builder()
+    override val workManagerConfiguration: Configuration
+        get() = Configuration.Builder()
             .setMinimumLoggingLevel(android.util.Log.INFO)
             .setWorkerFactory(
                 CardKeeperWorkerFactory(
@@ -32,6 +32,4 @@ class CardKeeperApplication : Application(), Configuration.Provider {
                 )
             )
             .build()
-
-    }
 }
