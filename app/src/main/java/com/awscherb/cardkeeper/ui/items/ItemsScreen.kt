@@ -68,7 +68,10 @@ fun ItemsList(
             bottom = 64.dp
         )
     ) {
-        items(items, key = { it.id }) { item ->
+        items(items,
+            key = { it.id },
+            contentType = { it::class }
+        ) { item ->
             when (item) {
                 is ScannedCodeModel -> ScannedCodeItem(
                     item = item,
@@ -79,7 +82,6 @@ fun ItemsList(
                     onClick(it)
                 }
             }
-
         }
     }
 }

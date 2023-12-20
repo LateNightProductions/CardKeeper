@@ -53,6 +53,7 @@ class CardKeeperActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
+
             val cameraPermissionState = rememberPermissionState(Manifest.permission.CAMERA)
             val navController = rememberNavController()
             var selectedItem by remember {
