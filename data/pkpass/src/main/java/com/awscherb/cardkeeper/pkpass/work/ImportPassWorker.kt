@@ -3,6 +3,7 @@ package com.awscherb.cardkeeper.pkpass.work
 import android.content.Context
 import android.net.Uri
 import androidx.work.WorkerParameters
+import androidx.work.workDataOf
 import com.awscherb.cardkeeper.pkpass.db.PkPassDao
 import com.google.gson.Gson
 import java.io.FileInputStream
@@ -23,6 +24,8 @@ class ImportPassWorker(
         const val TYPE_URI = "type_uri"
         const val TYPE_FILE = "type_file"
         const val URI = "uri"
+
+        const val KEY_PASS_ID = "pass_id"
 
     }
 
@@ -51,13 +54,20 @@ class ImportPassWorker(
             }
         }
 
-        inputStream?.use {
+        val passId = inputStream?.use {
             createPassFromZipInput(it)?.let { pass ->
                 pkPassDao.insertPass(pass)
+                pass.id
             }
         }
 
-        return Result.success()
+        return if (passId == null) {
+            Result.failure()
+        } else {
+            Result.success(
+                workDataOf(KEY_PASS_ID to passId)
+            )
+        }
     }
 
 }

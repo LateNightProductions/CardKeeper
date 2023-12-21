@@ -22,12 +22,15 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkInfo
 import androidx.work.WorkManager
 import androidx.work.workDataOf
 import com.awscherb.cardkeeper.barcode.model.ScannedCodeModel
@@ -43,19 +46,23 @@ import com.awscherb.cardkeeper.ui.theme.Typography
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class CardKeeperActivity : ComponentActivity() {
 
+    lateinit var navController: NavHostController
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setContent {
 
+        setContent {
             val cameraPermissionState = rememberPermissionState(Manifest.permission.CAMERA)
-            val navController = rememberNavController()
+            navController = rememberNavController()
             var selectedItem by remember {
                 mutableStateOf<Destination>(Destination.Items)
             }
@@ -72,6 +79,7 @@ class CardKeeperActivity : ComponentActivity() {
                 }
                 scope.launch { drawerState.close() }
             }
+
 
             ModalNavigationDrawer(
                 drawerState = drawerState,
@@ -192,8 +200,30 @@ class CardKeeperActivity : ComponentActivity() {
                 )
                 .build()
 
-            WorkManager.getInstance(this)
-                .enqueue(req)
+            with(WorkManager.getInstance(this)) {
+                enqueue(req)
+
+                getWorkInfoByIdFlow(req.id)
+                    .onEach {
+                        when (it.state) {
+                            WorkInfo.State.SUCCEEDED -> {
+                                it.outputData.getString(ImportPassWorker.KEY_PASS_ID)?.let { passId ->
+                                    navController.navigate("pass/$passId")
+                                }
+                            }
+                            WorkInfo.State.FAILED -> {
+                                Snackbar.make(
+                                    findViewById(android.R.id.content),
+                                    "There was an error opening your pass",
+                                    Snackbar.LENGTH_LONG
+                                ).show()
+                            }
+
+                            else -> {
+                            }
+                        }
+                    }.launchIn(lifecycleScope)
+            }
         }
     }
 }
