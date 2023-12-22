@@ -36,7 +36,7 @@ fun ScannedCodeItem(
     ) {
         Text(
             text = item.title,
-            style = Typography.bodyLarge,
+            style = Typography.titleMedium,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
             modifier = Modifier
