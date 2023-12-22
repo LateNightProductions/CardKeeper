@@ -54,7 +54,7 @@ class PkPassViewModel @Inject constructor(
                 ?.filter { it.label != null }
                 ?.map { field ->
                     pass.getTranslatedLabel(field.label)!! to
-                            pass.getTranslatedValue(field.value)
+                            pass.getTranslatedValue(field.typedValue)
                 } ?: emptyList()
         }
     }

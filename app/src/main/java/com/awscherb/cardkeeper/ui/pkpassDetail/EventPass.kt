@@ -40,12 +40,8 @@ fun EventPass(pass: PkPassModel, passInfo: PassInfo) {
             passInfo.primaryFields?.firstOrNull()?.let { primary ->
                 PrimaryTextView(
                     modifier = Modifier.padding(horizontal = 8.dp),
-                    fieldConfig =  FieldConfig(
-                    label = pass.getTranslatedLabel(primary.label),
-                    value = pass.getTranslatedValue(primary.value),
-                    labelColor = pass.labelColor.parseHexColor(),
-                    valueColor = pass.foregroundColor.parseHexColor()
-                )
+                    pass = pass,
+                    primary = primary
                 )
             }
 
@@ -69,7 +65,7 @@ fun EventPass(pass: PkPassModel, passInfo: PassInfo) {
                     alignment = align,
                     fieldConfig = FieldConfig(
                         label = pass.getTranslatedLabel(field.label),
-                        value = pass.getTranslatedValue(field.value),
+                        value = pass.getTranslatedValue(field.typedValue),
                         labelColor = pass.labelColor.parseHexColor(),
                         valueColor = pass.foregroundColor.parseHexColor()
                     )

@@ -121,6 +121,7 @@ fun PassDetail(
             when (pass.passInfoType) {
                 PassInfoType.BOARDING_PASS -> BoardingPass(pass, passInfo)
                 PassInfoType.STORE_CARD -> StoreCard(pass, passInfo)
+                PassInfoType.COUPON -> Coupon(pass, passInfo)
                 PassInfoType.GENERIC -> {}
                 PassInfoType.EVENT_TICKET -> {}
                 null -> {}

@@ -26,6 +26,7 @@ fun createPassModel(
     storeCard: PassInfo? = null,
     generic: PassInfo? = null,
     eventTicket: PassInfo? = null,
+    coupon: PassInfo? = null,
     logoPath: String? = null,
     stripPath: String? = "",
     footerPath: String? = null,
@@ -51,6 +52,7 @@ fun createPassModel(
     override val storeCard: PassInfo? = storeCard
     override val generic: PassInfo? = generic
     override val eventTicket: PassInfo? = eventTicket
+    override val coupon: PassInfo? = coupon
     override val logoPath: String? = logoPath
     override val stripPath: String? = stripPath
     override val footerPath: String? = footerPath

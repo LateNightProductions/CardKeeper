@@ -1,9 +1,11 @@
 package com.awscherb.cardkeeper.pkpass.model
 
 import android.graphics.Color
+import android.text.format.DateUtils
 import com.awscherb.cardkeeper.core.Barcode
 import com.awscherb.cardkeeper.core.SavedItem
 import com.awscherb.cardkeeper.pkpass.util.BarcodeConstants
+import com.awscherb.cardkeeper.pkpass.util.PassDateUtils
 import com.awscherb.cardkeeper.pkpass.util.TransitConstants
 import com.google.zxing.BarcodeFormat
 import okhttp3.internal.toHexString
@@ -29,6 +31,7 @@ interface PkPassModel : SavedItem {
     val storeCard: PassInfo?
     val generic: PassInfo?
     val eventTicket: PassInfo?
+    val coupon: PassInfo?
 
     val logoPath: String?
     val stripPath: String?
@@ -57,7 +60,20 @@ data class FieldObject(
     val key: String,
     val label: String?,
     val value: String,
-)
+    val dateStyle: String? = null
+) {
+    val hasDate get() = dateStyle != null
+
+    val typedValue: String
+        get() = when {
+            hasDate -> {
+                val date = PassDateUtils.timezoneFormat.parse(value) ?: Date()
+                PassDateUtils.shortDateFormat.format(date)
+            }
+            else -> value
+        }
+
+}
 
 fun PkPassModel.findFirstBarcode(): Barcode? {
     return barcode ?: barcodes?.first()
@@ -157,6 +173,7 @@ fun PkPassModel.findPassInfo(): PassInfo? = when {
     storeCard != null -> storeCard
     generic != null -> generic
     eventTicket != null -> eventTicket
+    coupon != null -> coupon
     else -> null
 }
 
@@ -166,14 +183,16 @@ val PkPassModel.passInfoType: PassInfoType?
         storeCard != null -> PassInfoType.STORE_CARD
         generic != null -> PassInfoType.GENERIC
         eventTicket != null -> PassInfoType.EVENT_TICKET
+        coupon != null -> PassInfoType.COUPON
         else -> null
     }
 
 enum class PassInfoType {
     BOARDING_PASS,
-    STORE_CARD,
+    COUPON,
+    EVENT_TICKET,
     GENERIC,
-    EVENT_TICKET
+    STORE_CARD,
 }
 
 fun PkPassModel.canBeUpdated() = !this.webServiceURL.isNullOrEmpty()

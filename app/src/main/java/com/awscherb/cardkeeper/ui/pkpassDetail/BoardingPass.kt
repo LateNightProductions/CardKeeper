@@ -60,7 +60,7 @@ fun ColumnScope.BoardingPass(pass: PkPassModel, passInfo: PassInfo) {
                 alignment = align,
                 fieldConfig = FieldConfig(
                     label = pass.getTranslatedLabel(field.label),
-                    value = pass.getTranslatedValue(field.value),
+                    value = pass.getTranslatedValue(field.typedValue),
                     labelColor = pass.labelColor.parseHexColor(),
                     valueColor = pass.foregroundColor.parseHexColor()
                 )
@@ -81,7 +81,7 @@ fun ColumnScope.BoardingPass(pass: PkPassModel, passInfo: PassInfo) {
                 alignment = align,
                 fieldConfig = FieldConfig(
                     label = pass.getTranslatedLabel(field.label),
-                    value = pass.getTranslatedValue(field.value),
+                    value = pass.getTranslatedValue(field.typedValue),
                     labelColor = pass.labelColor.parseHexColor(),
                     valueColor = pass.foregroundColor.parseHexColor()
                 )

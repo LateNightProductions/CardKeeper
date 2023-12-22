@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -70,7 +71,8 @@ fun PkPassHeaderView(
                     horizontalBias = 0f
                 )
                 width = Dimension.fillToConstraints.atMostWrapContent
-            }
+            },
+            color = Color(pass.foregroundColor.parseHexColor())
         )
 
         Row(
@@ -95,7 +97,7 @@ fun PkPassHeaderView(
                 FieldTextView(
                     fieldConfig = FieldConfig(
                         label = pass.getTranslatedLabel(firstPass.label),
-                        value = pass.getTranslatedValue(firstPass.value),
+                        value = pass.getTranslatedValue(firstPass.typedValue),
                         labelColor = labelColor,
                         valueColor = valueColor
                     )
@@ -106,7 +108,7 @@ fun PkPassHeaderView(
                         modifier = Modifier.padding(start = 8.dp),
                         fieldConfig = FieldConfig(
                             label = pass.getTranslatedLabel(secondPass.label),
-                            value = pass.getTranslatedValue(secondPass.value),
+                            value = pass.getTranslatedValue(secondPass.typedValue),
                             labelColor = labelColor,
                             valueColor = valueColor
                         )
