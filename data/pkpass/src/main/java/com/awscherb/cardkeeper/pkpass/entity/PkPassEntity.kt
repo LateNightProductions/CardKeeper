@@ -28,7 +28,7 @@ data class PkPassEntity(
     override val foregroundColor: String?,
     override val labelColor: String?,
     // local attr
-    override val created: Long,
+    override var created: Long,
     override val boardingPass: PassInfoStruct?,
     override val storeCard: PassInfoStruct?,
     override val generic: PassInfoStruct?,

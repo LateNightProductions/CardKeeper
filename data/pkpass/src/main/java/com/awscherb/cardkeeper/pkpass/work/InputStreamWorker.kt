@@ -172,6 +172,7 @@ abstract class InputStreamWorker(
             // Some serial numbers have slashes, can probably sanitize better here
             // Serial is used for both in-app navigation and image paths
             pass.id = pass.serialNumber.replace("/", "-")
+            pass.created = System.currentTimeMillis()
             pass
         } catch (e: Exception) {
             e.printStackTrace()

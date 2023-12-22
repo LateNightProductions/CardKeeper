@@ -14,12 +14,14 @@ class SavedItemRepository @Inject constructor(
     private val pkPassService: PkPassService
 ) {
 
-    fun listSavedItems(query: String? = null): Flow<List<SavedItem>> {
+    fun listSavedItems(
+        query: String? = null,
+    ): Flow<List<SavedItem>> {
         return combine(
             scannedCodeService.listAll(query),
             pkPassService.listAll(query)
         ) { codes, passes ->
-            (codes + passes).sortedBy { -it.created }
+            (codes + passes)
         }
     }
 

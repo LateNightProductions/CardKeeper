@@ -9,7 +9,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.flatMapLatest
 import javax.inject.Inject
 
@@ -29,10 +28,15 @@ class ItemsViewModel @Inject constructor(
 
     val filter = MutableStateFlow<FilterOptions>(FilterOptions.All)
 
+    val sort = MutableStateFlow<SortOptions>(SortOptions.Date(ascending = false))
+
     val searchQuery = MutableStateFlow("")
 
     val items: Flow<List<SavedItem>> = searchQuery
         .flatMapLatest { savedItemRepository.listSavedItems(it) }
         .combine(filter) { items, filter -> items.filter(filterForOptions(filter)) }
+        .combine(sort) { items, sort ->
+            items.sortedWith(sort.sort)
+        }
 
 }
