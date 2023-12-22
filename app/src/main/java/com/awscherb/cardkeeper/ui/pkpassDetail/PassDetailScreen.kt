@@ -3,6 +3,7 @@ package com.awscherb.cardkeeper.ui.pkpassDetail
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Card
@@ -53,7 +54,9 @@ fun PassDetailScreen(
         mutableStateOf(false)
     }
 
-    ScaffoldScreen(title = "Pass", navOnClick = navOnClick,
+    ScaffoldScreen(title = "Pass",
+        navIcon = Icons.Default.ArrowBack,
+        navOnClick = navOnClick,
         topBarActions = {
             if (backItems.isNotEmpty()) {
                 IconButton(onClick = {

@@ -70,6 +70,7 @@ class CardKeeperActivity : ComponentActivity() {
             val scope = rememberCoroutineScope()
 
             val openDrawer: () -> Unit = { scope.launch { drawerState.open() } }
+            val popBack: () -> Unit = { navController.popBackStack() }
             val topLevelNav: (Destination, Boolean) -> Unit = { dest, pop ->
                 selectedItem = dest
                 navController.navigate(dest.dest) {
@@ -141,7 +142,7 @@ class CardKeeperActivity : ComponentActivity() {
                             type = NavType.StringType
                         })
                     ) {
-                        PassDetailScreen(navOnClick = openDrawer)
+                        PassDetailScreen(navOnClick = popBack)
                     }
                     composable(
                         Destination.Code.dest, arguments =
@@ -151,7 +152,7 @@ class CardKeeperActivity : ComponentActivity() {
                     ) {
                         ScannedCodeScreen(onDelete = {
                             topLevelNav(Destination.Items, false)
-                        }, navOnClick = openDrawer)
+                        }, navOnClick = popBack)
                     }
                     composable(Destination.Scan.dest) {
                         if (cameraPermissionState.status.isGranted) {
@@ -207,10 +208,12 @@ class CardKeeperActivity : ComponentActivity() {
                     .onEach {
                         when (it.state) {
                             WorkInfo.State.SUCCEEDED -> {
-                                it.outputData.getString(ImportPassWorker.KEY_PASS_ID)?.let { passId ->
-                                    navController.navigate("pass/$passId")
-                                }
+                                it.outputData.getString(ImportPassWorker.KEY_PASS_ID)
+                                    ?.let { passId ->
+                                        navController.navigate("pass/$passId")
+                                    }
                             }
+
                             WorkInfo.State.FAILED -> {
                                 Snackbar.make(
                                     findViewById(android.R.id.content),

@@ -5,8 +5,10 @@ package com.awscherb.cardkeeper.ui.common
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -26,6 +28,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -36,6 +39,7 @@ import com.awscherb.cardkeeper.ui.theme.CardKeeperTheme
 fun ScaffoldScreen(
     title: String,
     navOnClick: () -> Unit,
+    navIcon: ImageVector = Icons.Default.Menu,
     topBarActions: @Composable RowScope.() -> Unit = {},
     floatingActionButton: @Composable () -> Unit = {},
     content: @Composable (PaddingValues) -> Unit
@@ -53,9 +57,7 @@ fun ScaffoldScreen(
                 navigationIcon = {
                     IconButton(onClick = { navOnClick() }) {
                         Icon(
-                            painter = painterResource(
-                                id = R.drawable.ic_menu
-                            ),
+                            navIcon,
                             contentDescription = "Menu",
                         )
                     }
@@ -163,6 +165,19 @@ fun SearchableScaffoldScreen(
 fun ScaffoldScreenSimplePreview() {
     CardKeeperTheme {
         ScaffoldScreen(title = "Title", navOnClick = { }) {
+
+        }
+    }
+}
+
+@Preview
+@Composable
+fun ScaffoldScreenSimplePreviewCustomBack() {
+    CardKeeperTheme {
+        ScaffoldScreen(
+            title = "Title", navOnClick = { },
+            navIcon = Icons.Default.ArrowBack
+        ) {
 
         }
     }
