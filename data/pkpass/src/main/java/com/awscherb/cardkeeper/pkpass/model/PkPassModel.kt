@@ -1,7 +1,6 @@
 package com.awscherb.cardkeeper.pkpass.model
 
 import android.graphics.Color
-import android.text.format.DateUtils
 import com.awscherb.cardkeeper.core.Barcode
 import com.awscherb.cardkeeper.core.SavedItem
 import com.awscherb.cardkeeper.pkpass.util.BarcodeConstants
@@ -37,6 +36,7 @@ interface PkPassModel : SavedItem {
     val stripPath: String?
     val footerPath: String?
     val backgroundPath: String?
+    val thumbnailPath: String?
 
     // WebService -related fields
     val serialNumber: String?
@@ -70,6 +70,7 @@ data class FieldObject(
                 val date = PassDateUtils.timezoneFormat.parse(value) ?: Date()
                 PassDateUtils.shortDateFormat.format(date)
             }
+
             else -> value
         }
 
@@ -88,6 +89,14 @@ fun String.toBarcodeFormat() =
         BarcodeConstants.FORMAT_CODE_128 -> BarcodeFormat.CODE_128
         else -> throw IllegalArgumentException("Unknown type $this")
     }
+
+fun PkPassModel.isBarcodeSquare(): Boolean {
+    return when (findFirstBarcode()?.format?.toBarcodeFormat()) {
+        BarcodeFormat.AZTEC,
+        BarcodeFormat.QR_CODE -> true
+        else -> false
+    }
+}
 
 enum class TransitType {
     AIR,

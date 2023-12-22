@@ -18,10 +18,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.awscherb.cardkeeper.pkpass.model.FieldObject
 import com.awscherb.cardkeeper.pkpass.model.PassInfoType
 import com.awscherb.cardkeeper.pkpass.model.PkPassModel
 import com.awscherb.cardkeeper.pkpass.model.canBeUpdated
@@ -30,14 +28,9 @@ import com.awscherb.cardkeeper.pkpass.model.findPassInfo
 import com.awscherb.cardkeeper.pkpass.model.parseHexColor
 import com.awscherb.cardkeeper.pkpass.model.passInfoType
 import com.awscherb.cardkeeper.pkpass.model.toBarcodeFormat
-import com.awscherb.cardkeeper.pkpass.util.BarcodeConstants
 import com.awscherb.cardkeeper.ui.common.BarcodeSection
 import com.awscherb.cardkeeper.ui.common.PkPassHeaderView
 import com.awscherb.cardkeeper.ui.common.ScaffoldScreen
-import com.awscherb.cardkeeper.ui.theme.CardKeeperTheme
-import com.awscherb.cardkeeper.util.createBarcode
-import com.awscherb.cardkeeper.util.createPassInfo
-import com.awscherb.cardkeeper.util.createPassModel
 
 @Composable
 fun PassDetailScreen(
@@ -125,7 +118,7 @@ fun PassDetail(
                 PassInfoType.BOARDING_PASS -> BoardingPass(pass, passInfo)
                 PassInfoType.STORE_CARD -> StoreCard(pass, passInfo)
                 PassInfoType.COUPON -> Coupon(pass, passInfo)
-                PassInfoType.GENERIC -> {}
+                PassInfoType.GENERIC -> Generic(pass, passInfo)
                 PassInfoType.EVENT_TICKET -> {}
                 null -> {}
             }

@@ -4,8 +4,8 @@ import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.awscherb.cardkeeper.core.Barcode
-import com.awscherb.cardkeeper.pkpass.model.PassInfo
 import com.awscherb.cardkeeper.pkpass.model.FieldObject
+import com.awscherb.cardkeeper.pkpass.model.PassInfo
 import com.awscherb.cardkeeper.pkpass.model.PkPassModel
 import java.util.Date
 
@@ -38,7 +38,8 @@ data class PkPassEntity(
     override var logoPath: String?,
     override var stripPath: String?,
     override var footerPath: String?,
-    override val backgroundPath: String?,
+    override var backgroundPath: String?,
+    override var thumbnailPath: String?,
 
     override var translation: Map<String, String>?,
     override val webServiceURL: String?,

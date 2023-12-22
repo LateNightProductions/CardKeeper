@@ -59,7 +59,7 @@ fun PkPassHeaderView(
 
         Text(
             text = pass.logoText ?: "",
-            style = Typography.bodyLarge,
+            style = Typography.titleMedium,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
             modifier = Modifier.constrainAs(description) {

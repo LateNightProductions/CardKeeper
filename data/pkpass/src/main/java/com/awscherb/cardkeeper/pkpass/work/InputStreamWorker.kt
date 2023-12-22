@@ -69,7 +69,7 @@ abstract class InputStreamWorker(
                     entity = pass,
                     type = "strip",
                 ) {
-                    pass.stripPath = it
+                    pass.backgroundPath = it
                 }
             }
 
@@ -80,6 +80,16 @@ abstract class InputStreamWorker(
                     type = "strip",
                 ) {
                     pass.footerPath = it
+                }
+            }
+
+            findLargestImageFile("thumbnail")?.let { footerFile ->
+                attemptImageCopy(
+                    imageFile = footerFile,
+                    entity = pass,
+                    type = "thumbnail",
+                ) {
+                    pass.thumbnailPath = it
                 }
             }
 
