@@ -91,9 +91,15 @@ fun String.toBarcodeFormat() =
     }
 
 fun PkPassModel.isBarcodeSquare(): Boolean {
-    return when (findFirstBarcode()?.format?.toBarcodeFormat()) {
-        BarcodeFormat.AZTEC,
-        BarcodeFormat.QR_CODE -> true
+    return findFirstBarcode()?.format?.toBarcodeFormat()?.isSquare() == true
+}
+
+fun BarcodeFormat.isSquare(): Boolean {
+    return when (this) {
+        BarcodeFormat.DATA_MATRIX,
+        BarcodeFormat.QR_CODE,
+        BarcodeFormat.AZTEC -> true
+
         else -> false
     }
 }

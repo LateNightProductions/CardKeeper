@@ -105,7 +105,7 @@ fun StorePassQrPreview() {
                 storeCard = createPassInfo(
                     primaryFields = listOf(
                         FieldObject(
-                            "balance","remaining balance", "21.75"
+                            "balance", "remaining balance", "21.75"
                         )
                     ),
                     headerFields = listOf(
@@ -140,6 +140,39 @@ fun StorePassPdfPreview() {
                 storeCard = createPassInfo(
                     headerFields = listOf(
                         FieldObject("key", null, "Loyalty")
+                    ),
+                    auxiliaryFields = listOf(
+                        FieldObject("accountNumber", "Account Number", "1234"),
+                    ),
+                    secondaryFields = listOf(
+                        FieldObject("expiresOn", "Expires On", "12/31/23"),
+                    )
+                )
+            )
+        )
+    }
+}
+
+@Composable
+@Preview
+fun GenericPassPreview() {
+    CardKeeperTheme {
+        PassDetail(
+            padding = PaddingValues(),
+            pass = createPassModel(
+                backgroundColor = "rgb(128, 200, 45)",
+                foregroundColor = "rgb(0,0,0)",
+                labelColor = "rgb(0,0,0)",
+                barcode = createBarcode(
+                    altText = "1234",
+                    format = BarcodeConstants.FORMAT_PDF_417
+                ),
+                generic = createPassInfo(
+                    headerFields = listOf(
+                        FieldObject("key", null, "Card Keeper Giant Card")
+                    ),
+                    primaryFields = listOf(
+                        FieldObject("key", null, "Card Keeper Giant Card")
                     ),
                     auxiliaryFields = listOf(
                         FieldObject("accountNumber", "Account Number", "1234"),

@@ -132,7 +132,8 @@ fun PassDetail(
                 message = barcode.message,
                 barcodeFormat = barcode.format.toBarcodeFormat(),
                 altText = barcode.altText,
-                altColor = Color(pass.foregroundColor.parseHexColor())
+                altColor = Color(pass.foregroundColor.parseHexColor()),
+                backgroundColor = Color.White
             )
         }
     }

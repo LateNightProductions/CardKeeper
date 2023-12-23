@@ -48,7 +48,7 @@ fun PrimaryTextViewInner(
             text = fieldConfig.value,
             modifier = Modifier.align(alignment),
             color = Color(fieldConfig.valueColor),
-            style = Typography.displayLarge
+            style = Typography.displaySmall
         )
         if (fieldConfig.label != null) {
             Text(
