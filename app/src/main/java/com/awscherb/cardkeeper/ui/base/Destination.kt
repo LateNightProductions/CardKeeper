@@ -6,4 +6,5 @@ sealed class Destination(val label: String, val dest: String) {
     object Code : Destination("Code", "code/{codeId}")
     object Scan : Destination("Scan", "scan")
     object Create : Destination("Create", "create")
+    object About : Destination("About", "about")
 }

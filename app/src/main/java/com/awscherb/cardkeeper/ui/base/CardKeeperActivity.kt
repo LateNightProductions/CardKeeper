@@ -5,6 +5,7 @@ package com.awscherb.cardkeeper.ui.base
 import android.Manifest
 import android.content.ContentResolver
 import android.os.Bundle
+import android.text.style.TtsSpan.DigitsBuilder
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.padding
@@ -36,6 +37,7 @@ import androidx.work.workDataOf
 import com.awscherb.cardkeeper.barcode.model.ScannedCodeModel
 import com.awscherb.cardkeeper.pkpass.model.PkPassModel
 import com.awscherb.cardkeeper.pkpass.work.ImportPassWorker
+import com.awscherb.cardkeeper.ui.about.AboutScreen
 import com.awscherb.cardkeeper.ui.create.CreateScreen
 import com.awscherb.cardkeeper.ui.items.ItemsScreen
 import com.awscherb.cardkeeper.ui.pkpassDetail.PassDetailScreen
@@ -43,6 +45,7 @@ import com.awscherb.cardkeeper.ui.scan.PermissionsScreen
 import com.awscherb.cardkeeper.ui.scan.ScanScreen
 import com.awscherb.cardkeeper.ui.scannedCode.ScannedCodeScreen
 import com.awscherb.cardkeeper.ui.theme.Typography
+import com.awscherb.cardkeeper.util.getAppVersion
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
@@ -115,6 +118,11 @@ class CardKeeperActivity : ComponentActivity() {
                             onClick = {
                                 topLevelNav(Destination.Create, false)
                             })
+                        Divider()
+                        NavigationDrawerItem(
+                            label = { Text(Destination.About.label) },
+                            selected = selectedItem == Destination.About,
+                            onClick = { topLevelNav(Destination.About, false) })
                     }
                 }) {
                 NavHost(navController = navController, startDestination = Destination.Items.dest) {
@@ -166,6 +174,12 @@ class CardKeeperActivity : ComponentActivity() {
                     composable(Destination.Create.dest) {
                         CreateScreen(
                             completion = { topLevelNav(Destination.Items, true) },
+                            navOnClick = openDrawer
+                        )
+                    }
+                    composable(Destination.About.dest) {
+                        AboutScreen(
+                            appVersion = getAppVersion(this@CardKeeperActivity),
                             navOnClick = openDrawer
                         )
                     }
