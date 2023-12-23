@@ -6,6 +6,7 @@ plugins {
     id("androidx.navigation.safeargs.kotlin")
     id("com.google.dagger.hilt.android")
     id("com.google.android.gms.oss-licenses-plugin")
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -104,11 +105,11 @@ dependencies {
     implementation(libs.zxing.core)
     debugImplementation(libs.compose.ui.tooling)
 
-    kapt(libs.androidx.room.compiler)
+    ksp(libs.androidx.room.compiler)
     kapt(libs.dagger.android.processor)
     kapt(libs.dagger.compiler)
     kapt(libs.dagger.hilt.compiler)
-    kapt(libs.glide.compiler)
+    ksp(libs.glide.compiler)
 
 
 }

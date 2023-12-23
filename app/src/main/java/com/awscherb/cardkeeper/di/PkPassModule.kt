@@ -38,10 +38,6 @@ interface PkPassModule {
 
         @Provides
         @Singleton
-        fun provideGson() = GsonBuilder().create()
-
-        @Provides
-        @Singleton
         fun provideRetrofit(
             okHttpClient: OkHttpClient,
             gson: Gson

@@ -22,6 +22,7 @@ data class PkPassEntity(
     override val serialNumber: String,
     override val logoText: String?,
     override val expirationDate: Date?,
+    override val relevantDate: Date?,
 
     // ex rgb(23, 187, 82)
     override val backgroundColor: String?,

@@ -2,6 +2,7 @@ plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
     id("kotlin-kapt")
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -46,6 +47,6 @@ dependencies {
     implementation(libs.material)
     implementation(libs.zxing.core)
 
-    kapt(libs.androidx.room.compiler)
+    ksp(libs.androidx.room.compiler)
     kapt(libs.dagger.compiler)
 }

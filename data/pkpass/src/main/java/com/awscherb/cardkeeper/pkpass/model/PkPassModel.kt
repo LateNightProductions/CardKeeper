@@ -20,6 +20,7 @@ interface PkPassModel : SavedItem {
     val logoText: String?
 
     val expirationDate: Date?
+    val relevantDate: Date?
 
     // rgb(0, 187, 82)
     val backgroundColor: String?

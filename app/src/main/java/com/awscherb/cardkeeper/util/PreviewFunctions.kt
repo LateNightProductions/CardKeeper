@@ -19,6 +19,7 @@ fun createPassModel(
     passTypeId: String = "",
     logoText: String? = null,
     expirationDate: Date? = null,
+    relevantDate: Date? = null,
     backgroundColor: String? = null,
     foregroundColor: String? = null,
     labelColor: String? = null,
@@ -46,6 +47,7 @@ fun createPassModel(
     override val passTypeIdentifier: String = passTypeId
     override val logoText: String? = logoText
     override val expirationDate: Date? = expirationDate
+    override val relevantDate: Date? = relevantDate
     override val backgroundColor: String? = backgroundColor
     override val foregroundColor: String? = foregroundColor
     override val labelColor: String? = labelColor

@@ -1,5 +1,6 @@
 package com.awscherb.cardkeeper.pkpass.db
 
+import androidx.room.AutoMigration
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
@@ -11,7 +12,11 @@ import com.awscherb.cardkeeper.pkpass.entity.PkPassEntity
         PkPassEntity::class,
         PassUpdateEntity::class
     ],
-    version = 8, exportSchema = false
+    version = 9,
+    exportSchema = true,
+    autoMigrations = [
+        AutoMigration(from = 8, to = 9)
+    ]
 )
 @TypeConverters(
     com.awscherb.cardkeeper.common.TypeConverters::class,
