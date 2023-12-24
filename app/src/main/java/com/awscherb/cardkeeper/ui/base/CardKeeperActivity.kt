@@ -5,24 +5,16 @@ package com.awscherb.cardkeeper.ui.base
 import android.Manifest
 import android.content.ContentResolver
 import android.os.Bundle
-import android.text.style.TtsSpan.DigitsBuilder
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Divider
 import androidx.compose.material3.DrawerValue
-import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
-import androidx.compose.material3.NavigationDrawerItem
-import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -44,7 +36,6 @@ import com.awscherb.cardkeeper.ui.pkpassDetail.PassDetailScreen
 import com.awscherb.cardkeeper.ui.scan.PermissionsScreen
 import com.awscherb.cardkeeper.ui.scan.ScanScreen
 import com.awscherb.cardkeeper.ui.scannedCode.ScannedCodeScreen
-import com.awscherb.cardkeeper.ui.theme.Typography
 import com.awscherb.cardkeeper.util.getAppVersion
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
@@ -84,46 +75,13 @@ class CardKeeperActivity : ComponentActivity() {
                 scope.launch { drawerState.close() }
             }
 
-
             ModalNavigationDrawer(
                 drawerState = drawerState,
                 drawerContent = {
-                    ModalDrawerSheet {
-                        Text(
-                            text = "CardKeeper",
-                            modifier = Modifier.padding(
-                                top = 36.dp,
-                                start = 16.dp,
-                                end = 16.dp,
-                                bottom = 24.dp
-                            ),
-                            style = Typography.headlineLarge
-                        )
-                        Divider()
-                        NavigationDrawerItem(
-                            label = { Text(Destination.Items.label) },
-                            selected = selectedItem == Destination.Items,
-                            onClick = {
-                                topLevelNav(Destination.Items, true)
-                            })
-                        NavigationDrawerItem(
-                            label = { Text(Destination.Scan.label) },
-                            selected = selectedItem == Destination.Scan,
-                            onClick = {
-                                topLevelNav(Destination.Scan, false)
-                            })
-                        NavigationDrawerItem(
-                            label = { Text(Destination.Create.label) },
-                            selected = selectedItem == Destination.Create,
-                            onClick = {
-                                topLevelNav(Destination.Create, false)
-                            })
-                        Divider()
-                        NavigationDrawerItem(
-                            label = { Text(Destination.About.label) },
-                            selected = selectedItem == Destination.About,
-                            onClick = { topLevelNav(Destination.About, false) })
-                    }
+                    NavDrawerContent(
+                        selectedItem = selectedItem,
+                        topLevelNav = topLevelNav
+                    )
                 }) {
                 NavHost(navController = navController, startDestination = Destination.Items.dest) {
                     composable(Destination.Items.dest) {

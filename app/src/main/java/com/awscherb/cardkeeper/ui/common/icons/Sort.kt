@@ -15,11 +15,9 @@
  */
 
 
-import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.materialIcon
 import androidx.compose.material.icons.materialPath
 import androidx.compose.ui.graphics.vector.ImageVector
-import kotlin.Deprecated
 
 @Deprecated(
     "Use the AutoMirrored version at Icons.AutoMirrored.Filled.Sort",
