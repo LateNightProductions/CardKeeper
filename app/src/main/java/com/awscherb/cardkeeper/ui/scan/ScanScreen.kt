@@ -35,6 +35,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.awscherb.cardkeeper.ui.common.ScaffoldScreen
 import com.awscherb.cardkeeper.ui.theme.CardKeeperTheme
 import com.awscherb.cardkeeper.util.CapWords
+import com.google.zxing.client.result.ResultParser
 import com.journeyapps.barcodescanner.CaptureManager
 import com.journeyapps.barcodescanner.CompoundBarcodeView
 import kotlinx.coroutines.launch
@@ -64,6 +65,7 @@ fun ScanScreen(
                 if (scanFlag || openDialog) {
                     return@decodeContinuous
                 }
+                val res = ResultParser.parseResult(result.result)
                 scanFlag = true
                 result.text?.let { text ->
                     scope.launch {
@@ -72,7 +74,8 @@ fun ScanScreen(
                             CreateCodeData(
                                 format = result.barcodeFormat,
                                 text = text,
-                                title = ""
+                                title = "",
+                                parsedResultType = res.type
                             )
 
                     }

@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.awscherb.cardkeeper.barcode.entity.ScannedCodeEntity
 import com.awscherb.cardkeeper.barcode.service.ScannedCodeService
 import com.google.zxing.BarcodeFormat
+import com.google.zxing.client.result.ParsedResultType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
@@ -32,7 +33,8 @@ class CreateViewModel @Inject constructor(
                     text = text,
                     format = format,
                     created = System.currentTimeMillis(),
-                    id = Random.nextInt()
+                    id = Random.nextInt(),
+                    parsedType = ParsedResultType.TEXT
                 )
 
                 viewModelScope.launch {

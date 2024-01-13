@@ -1,7 +1,9 @@
 package com.awscherb.cardkeeper.ui.scannedCode
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material.icons.Icons
@@ -10,6 +12,7 @@ import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Card
+import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -21,15 +24,26 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.awscherb.cardkeeper.barcode.entity.ScannedCodeEntity
 import com.awscherb.cardkeeper.barcode.model.ScannedCodeModel
+import com.awscherb.cardkeeper.ui.common.BarcodeImage
 import com.awscherb.cardkeeper.ui.common.BarcodeSection
+import com.awscherb.cardkeeper.ui.common.ContactView
 import com.awscherb.cardkeeper.ui.common.ScaffoldScreen
+import com.awscherb.cardkeeper.ui.common.WifiView
+import com.awscherb.cardkeeper.ui.theme.CardKeeperTheme
 import com.awscherb.cardkeeper.ui.theme.Typography
+import com.awscherb.cardkeeper.util.SampleContact
+import com.google.zxing.BarcodeFormat
+import com.google.zxing.client.result.ParsedResultType
 import kotlinx.coroutines.launch
 
 @Composable
@@ -91,7 +105,6 @@ fun ScannedCodeScreen(
                     }
                 }
             )
-
         }
         code?.let { code ->
             ScannedCodeDetail(
@@ -108,15 +121,17 @@ fun ScannedCodeDetail(
     paddingValues: PaddingValues,
     modifier: Modifier = Modifier
 ) {
-    Card(
+    ElevatedCard(
         modifier = modifier
             .padding(paddingValues)
             .padding(horizontal = 8.dp, vertical = 8.dp),
     ) {
+        Box(modifier = Modifier.height(8.dp))
+
         SelectionContainer {
             Text(
                 text = code.title,
-                style = Typography.bodyLarge,
+                style = Typography.titleMedium,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
                 modifier = Modifier
@@ -126,10 +141,49 @@ fun ScannedCodeDetail(
         }
 
         // Load image
-        BarcodeSection(
+        BarcodeImage(
             barcodeFormat = code.format,
             message = code.text,
-            altText = code.text
         )
+
+        when (code.parsedType) {
+           ParsedResultType.ADDRESSBOOK -> {
+               ContactView(text = code.text)
+           }
+            ParsedResultType.WIFI ->{
+                WifiView(text = code.text)
+            }
+            else -> {
+                Text(
+                    modifier = Modifier
+                        .padding(
+                            vertical = 4.dp,
+                            horizontal = 4.dp
+                        )
+                        .fillMaxWidth()
+                        .align(Alignment.CenterHorizontally),
+                    text = code.text,
+                    overflow = TextOverflow.Ellipsis,
+                    textAlign = TextAlign.Center,
+                )
+            }
+        }
+
+        Box(modifier = Modifier.height(16.dp))
+
+    }
+}
+
+@Composable
+@Preview(showSystemUi = true)
+fun ScannedCodeContactPreview() {
+    CardKeeperTheme {
+        ScannedCodeDetail(code = ScannedCodeEntity(
+            format = BarcodeFormat.QR_CODE,
+            created = 0L,
+            text = SampleContact,
+            parsedType = ParsedResultType.ADDRESSBOOK,
+            title = "Contact"
+        ), paddingValues = PaddingValues())
     }
 }

@@ -47,7 +47,8 @@ class ScannedCodeHandler @Inject constructor(
                         format = item.format,
                         title = item.title,
                         text = item.text,
-                        created = item.created
+                        created = item.created,
+                        parsedType = item.parsedType
                     )
                 )
             }

@@ -45,7 +45,6 @@ fun ItemsList(
             when (item) {
                 is ScannedCodeModel -> ScannedCodeItem(
                     item = item,
-                    preview = true
                 ) { onClick(it) }
 
                 is PkPassModel -> PassItem(pass = item) {

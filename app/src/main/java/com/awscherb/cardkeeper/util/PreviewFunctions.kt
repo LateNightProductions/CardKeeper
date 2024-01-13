@@ -7,8 +7,8 @@ import com.awscherb.cardkeeper.pkpass.model.PassInfo
 import com.awscherb.cardkeeper.pkpass.model.PkPassModel
 import com.awscherb.cardkeeper.pkpass.util.BarcodeConstants
 import com.google.zxing.BarcodeFormat
+import com.google.zxing.client.result.ParsedResultType
 import java.util.Date
-
 
 fun createPassModel(
     id: String = "",
@@ -82,7 +82,6 @@ fun createPassInfo(
     override val secondaryFields: List<FieldObject>? = secondaryFields
     override val auxiliaryFields: List<FieldObject>? = auxiliaryFields
     override val backFields: List<FieldObject>? = backFields
-
 }
 
 fun createScannedCode(
@@ -90,13 +89,15 @@ fun createScannedCode(
     format: BarcodeFormat = BarcodeFormat.QR_CODE,
     text: String = "text",
     title: String = "title",
-    created: Long = 0L
+    created: Long = 0L,
+    parsedType: ParsedResultType = ParsedResultType.TEXT
 ) = object : ScannedCodeModel {
     override val id: Int = id
     override val format: BarcodeFormat = format
     override val text: String = text
     override val title: String = title
     override val created: Long = created
+    override val parsedType: ParsedResultType = ParsedResultType.TEXT
 }
 
 fun createBarcode(
@@ -110,3 +111,21 @@ fun createBarcode(
     override val message = message
     override val messageEncoding = messageEncoding
 }
+
+val SampleContact = """
+            BEGIN:VCARD
+            VERSION:3.0
+            N:Lastname;Firstname
+            FN:Firstname Lastname
+            ORG:CompanyName
+            TITLE:JobTitle
+            ADR:;;123 Sesame St;SomeCity;CA;12345;USA
+            TEL;WORK;VOICE:1234567890
+            TEL;CELL:Mobile
+            TEL;FAX:
+            EMAIL;WORK;INTERNET:foo@email.com
+            URL:http://website.com
+            END:VCARD
+            """.trimIndent()
+
+val SampleWifi = "WIFI:T:WPA;S:network_name;P:passsw0rd;H:;"

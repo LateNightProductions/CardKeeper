@@ -16,6 +16,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.awscherb.cardkeeper.barcode.model.ScannedCodeModel
+import com.awscherb.cardkeeper.ui.common.BarcodeImage
 import com.awscherb.cardkeeper.ui.common.BarcodeSection
 import com.awscherb.cardkeeper.ui.theme.CardKeeperTheme
 import com.awscherb.cardkeeper.ui.theme.Typography
@@ -23,12 +24,10 @@ import com.awscherb.cardkeeper.util.EncoderHolder.encoder
 import com.awscherb.cardkeeper.util.createScannedCode
 import com.google.zxing.BarcodeFormat
 
-
 @Composable
 fun ScannedCodeItem(
     item: ScannedCodeModel,
     /** Set text length to one line and ellipsize */
-    preview: Boolean = false,
     onClick: (ScannedCodeModel) -> Unit
 ) {
     ElevatedCard(
@@ -41,17 +40,21 @@ fun ScannedCodeItem(
             overflow = TextOverflow.Ellipsis,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 8.dp, vertical = 8.dp)
+                .padding(horizontal = 8.dp, vertical = 16.dp)
         )
 
-        BarcodeSection(
+        BarcodeImage(
             barcodeFormat = item.format,
             message = item.text,
-            altText = item.text,
-            altTextIsPreview = preview,
+        )
+
+        ScannedCodeTextPreview(
+            text = item.text,
+            parsedResultType = item.parsedType
         )
     }
 }
+
 
 @Composable
 @Preview

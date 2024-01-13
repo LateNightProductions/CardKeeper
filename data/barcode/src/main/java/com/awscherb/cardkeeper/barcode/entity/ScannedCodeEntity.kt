@@ -4,6 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.awscherb.cardkeeper.barcode.model.ScannedCodeModel
 import com.google.zxing.BarcodeFormat
+import com.google.zxing.client.result.ParsedResultType
 
 /**
  * User scanned code, QR, barcode, etc
@@ -15,5 +16,6 @@ data class ScannedCodeEntity(
     override val format: BarcodeFormat,
     override val text: String,
     override val title: String,
-    override val created: Long
+    override val created: Long,
+    override val parsedType: ParsedResultType
 ) : ScannedCodeModel

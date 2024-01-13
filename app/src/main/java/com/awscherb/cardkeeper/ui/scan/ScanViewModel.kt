@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import com.awscherb.cardkeeper.barcode.entity.ScannedCodeEntity
 import com.awscherb.cardkeeper.barcode.service.ScannedCodeService
 import com.google.zxing.BarcodeFormat
+import com.google.zxing.client.result.ParsedResultType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import javax.inject.Inject
@@ -27,7 +28,8 @@ class ScanViewModel @Inject constructor(
                     format = data.format,
                     text = data.text,
                     title = data.title,
-                    created = System.currentTimeMillis()
+                    created = System.currentTimeMillis(),
+                    parsedType = data.parsedResultType
                 )
             )
             createResult.value = true
@@ -38,5 +40,6 @@ class ScanViewModel @Inject constructor(
 data class CreateCodeData(
     val format: BarcodeFormat,
     val text: String,
-    val title: String
+    val title: String,
+    val parsedResultType: ParsedResultType
 )

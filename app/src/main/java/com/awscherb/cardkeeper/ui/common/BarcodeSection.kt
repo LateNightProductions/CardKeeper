@@ -45,47 +45,26 @@ fun BarcodeSection(
         false -> width / 6
     }
 
-
-    val bitmap = remember {
-        encoder.encodeBitmap(
-            message,
-            barcodeFormat,
-            (width / 1.75).toInt(),
-            height
-        )
-    }
-
     Column(
         modifier = Modifier
             .fillMaxWidth()
     ) {
 
-        Box(
-            modifier = Modifier
-                .align(
-                    Alignment.CenterHorizontally
-                )
-                .padding(
-                    start = 8.dp,
-                    end = 8.dp,
-                    bottom = if (altText.isNullOrEmpty()) 8.dp else 0.dp,
-                )
-        ) {
-            Image(
-                bitmap = bitmap.asImageBitmap(),
-                contentDescription = "",
-                modifier = modifier
-                    .background(backgroundColor ?: Color.Transparent)
-            )
-        }
+        BarcodeImage(
+            barcodeFormat = barcodeFormat,
+            message = message,
+            backgroundColor = backgroundColor,
+            modifier = modifier
+        )
 
         altText?.let { alt ->
             SelectionContainer {
                 Text(
                     modifier = Modifier
                         .padding(
-                            vertical = 4.dp,
-                            horizontal = 4.dp
+                            start = 4.dp,
+                            end = 4.dp,
+                            bottom = 8.dp
                         )
                         .fillMaxWidth()
                         .align(Alignment.CenterHorizontally),
