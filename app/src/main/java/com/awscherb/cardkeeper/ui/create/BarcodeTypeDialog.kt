@@ -109,7 +109,6 @@ fun BarcodeRow(
             .fillMaxWidth()
     ) {
         if (selected) {
-
             Image(
                 modifier = Modifier
                     .align(Alignment.CenterVertically)

@@ -35,7 +35,7 @@ fun ScannedCodeTextPreview(
     ) {
         when (parsedResultType) {
             ParsedResultType.ADDRESSBOOK -> {
-                val contact = text.toAddressBook() ?: throw IllegalArgumentException()
+                val contact = text.toAddressBook() ?: return
                 IconRow(
                     icon = Icons.Default.Person, text =
                     contact.names.firstOrNull() ?: ""
@@ -43,7 +43,7 @@ fun ScannedCodeTextPreview(
             }
 
             ParsedResultType.WIFI -> {
-                val wifi = text.toWifi() ?: throw IllegalArgumentException()
+                val wifi = text.toWifi() ?: return
                 IconRow(NetworkWifi, text = wifi.ssid)
             }
 

@@ -40,7 +40,7 @@ fun ScannedCodeItem(
             overflow = TextOverflow.Ellipsis,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 8.dp, vertical = 16.dp)
+                .padding(start = 8.dp, end = 8.dp, top = 16.dp, bottom = 8.dp)
         )
 
         BarcodeImage(
