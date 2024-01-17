@@ -129,3 +129,7 @@ val SampleContact = """
             """.trimIndent()
 
 val SampleWifi = "WIFI:T:WPA;S:network_name;P:passsw0rd;H:;"
+
+val SampleTel = "TEL:3125550690"
+
+val SampleEmail = "mailto:recip@example.com?cc=other@example.com&subject=hello&body=email body"

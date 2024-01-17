@@ -27,6 +27,14 @@ fun CodeRichDataSection(
             WifiView(text = data)
         }
 
+        ParsedResultType.TEL -> {
+            TelView(text = data)
+        }
+
+        ParsedResultType.EMAIL_ADDRESS -> {
+            EmailView(text = data)
+        }
+
         else -> {
             Text(
                 modifier = Modifier

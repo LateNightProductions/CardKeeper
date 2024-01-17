@@ -6,7 +6,10 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Call
+import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Phone
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -22,6 +25,8 @@ import com.awscherb.cardkeeper.ui.common.icons.NetworkWifi
 import com.awscherb.cardkeeper.ui.theme.CardKeeperTheme
 import com.awscherb.cardkeeper.util.SampleContact
 import com.awscherb.cardkeeper.util.extensions.toAddressBook
+import com.awscherb.cardkeeper.util.extensions.toEmail
+import com.awscherb.cardkeeper.util.extensions.toTel
 import com.awscherb.cardkeeper.util.extensions.toWifi
 import com.google.zxing.client.result.ParsedResultType
 
@@ -45,6 +50,16 @@ fun ScannedCodeTextPreview(
             ParsedResultType.WIFI -> {
                 val wifi = text.toWifi() ?: return
                 IconRow(NetworkWifi, text = wifi.ssid)
+            }
+
+            ParsedResultType.TEL -> {
+                val tel = text.toTel() ?: return
+                IconRow(Icons.Default.Phone, text = tel.number)
+            }
+            
+            ParsedResultType.EMAIL_ADDRESS -> {
+                val email = text.toEmail() ?: return
+                IconRow(icon = Icons.Default.Email, text = email.subject ?: "")
             }
 
             else -> {
