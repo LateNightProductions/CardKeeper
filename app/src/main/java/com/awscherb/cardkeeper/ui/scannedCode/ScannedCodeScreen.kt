@@ -36,6 +36,7 @@ import com.awscherb.cardkeeper.barcode.entity.ScannedCodeEntity
 import com.awscherb.cardkeeper.barcode.model.ScannedCodeModel
 import com.awscherb.cardkeeper.ui.common.BarcodeImage
 import com.awscherb.cardkeeper.ui.common.BarcodeSection
+import com.awscherb.cardkeeper.ui.common.CodeRichDataSection
 import com.awscherb.cardkeeper.ui.common.ContactView
 import com.awscherb.cardkeeper.ui.common.ScaffoldScreen
 import com.awscherb.cardkeeper.ui.common.WifiView
@@ -146,28 +147,7 @@ fun ScannedCodeDetail(
             message = code.text,
         )
 
-        when (code.parsedType) {
-           ParsedResultType.ADDRESSBOOK -> {
-               ContactView(text = code.text)
-           }
-            ParsedResultType.WIFI ->{
-                WifiView(text = code.text)
-            }
-            else -> {
-                Text(
-                    modifier = Modifier
-                        .padding(
-                            vertical = 4.dp,
-                            horizontal = 4.dp
-                        )
-                        .fillMaxWidth()
-                        .align(Alignment.CenterHorizontally),
-                    text = code.text,
-                    overflow = TextOverflow.Ellipsis,
-                    textAlign = TextAlign.Center,
-                )
-            }
-        }
+        CodeRichDataSection(data = code.text, parsedType = code.parsedType)
 
         Box(modifier = Modifier.height(16.dp))
 
@@ -183,6 +163,20 @@ fun ScannedCodeContactPreview() {
             created = 0L,
             text = SampleContact,
             parsedType = ParsedResultType.ADDRESSBOOK,
+            title = "Contact"
+        ), paddingValues = PaddingValues())
+    }
+}
+
+@Composable
+@Preview(showSystemUi = true)
+fun ScannedCodeTextPreview() {
+    CardKeeperTheme {
+        ScannedCodeDetail(code = ScannedCodeEntity(
+            format = BarcodeFormat.QR_CODE,
+            created = 0L,
+            text = SampleContact,
+            parsedType = ParsedResultType.TEXT,
             title = "Contact"
         ), paddingValues = PaddingValues())
     }

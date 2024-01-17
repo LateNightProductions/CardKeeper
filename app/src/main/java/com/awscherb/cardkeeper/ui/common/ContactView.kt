@@ -37,14 +37,14 @@ fun ContactView(
             )
         }
 
-        contact.phoneNumbers.firstOrNull()?.let { phone ->
+        contact.phoneNumbers?.firstOrNull()?.let { phone ->
             LinkableRow(
                 icon = Icons.Default.Phone, text = phone,
                 modifier = Modifier.padding(top = 8.dp)
             )
         }
 
-        contact.emails.firstOrNull()?.let { email ->
+        contact.emails?.firstOrNull()?.let { email ->
             LinkableRow(icon = Icons.Default.Email, text = email)
         }
     }

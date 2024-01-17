@@ -2,6 +2,7 @@ package com.awscherb.cardkeeper.ui.scan
 
 import android.app.Activity
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -10,6 +11,7 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Card
+import androidx.compose.material3.Divider
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
@@ -32,9 +34,15 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.awscherb.cardkeeper.ui.common.CodeRichDataSection
 import com.awscherb.cardkeeper.ui.common.ScaffoldScreen
 import com.awscherb.cardkeeper.ui.theme.CardKeeperTheme
 import com.awscherb.cardkeeper.util.CapWords
+import com.awscherb.cardkeeper.util.ParsedTypeUtils
+import com.awscherb.cardkeeper.util.SampleContact
+import com.awscherb.cardkeeper.util.SampleWifi
+import com.google.zxing.BarcodeFormat
+import com.google.zxing.client.result.ParsedResultType
 import com.google.zxing.client.result.ResultParser
 import com.journeyapps.barcodescanner.CaptureManager
 import com.journeyapps.barcodescanner.CompoundBarcodeView
@@ -103,7 +111,7 @@ fun ScanScreen(
         pendingData?.let { pendingData ->
             if (openDialog) {
                 SaveScanDialog(
-                    startWith = "",
+                    data = pendingData,
                     onDismissRequest = { openDialog = false },
                     onConfirmation = { title ->
                         scope.launch {
@@ -128,12 +136,12 @@ fun ScanScreen(
 
 @Composable
 fun SaveScanDialog(
-    startWith: String,
     onDismissRequest: () -> Unit,
     onConfirmation: (String) -> Unit,
+    data: CreateCodeData
 ) {
     var title by remember {
-        mutableStateOf(startWith)
+        mutableStateOf(ParsedTypeUtils.suggestTitle(data.text, data.parsedResultType))
     }
     Dialog(onDismissRequest = onDismissRequest) {
         Card(
@@ -147,20 +155,24 @@ fun SaveScanDialog(
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                Text(
-                    text = "Enter a name:",
-                    modifier = Modifier.padding(
-                        start = 16.dp,
-                        end = 16.dp,
-                        top = 24.dp,
-                        bottom = 16.dp
-                    ),
+
+                Box(modifier = Modifier.padding(top = 8.dp))
+
+                CodeRichDataSection(
+                    data = data.text,
+                    parsedType = data.parsedResultType
                 )
+
+                Divider(
+                    modifier = Modifier.padding(top = 8.dp)
+                )
+
                 TextField(
                     value = title,
                     keyboardOptions = CapWords,
                     onValueChange = { title = it },
-                    modifier = Modifier.padding(horizontal = 16.dp),
+                    modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 8.dp),
+                    placeholder = { Text(text = "Enter a name") }
                 )
                 Row(
                     modifier = Modifier
@@ -187,12 +199,42 @@ fun SaveScanDialog(
 
 @Composable
 @Preview
-fun SaveScanDialogPreview() {
+fun SaveScanDialogContactPreview() {
     CardKeeperTheme {
         SaveScanDialog(
-            startWith = "something I scanned but for some reason want a very long name",
             onDismissRequest = { },
-            onConfirmation = {}
+            onConfirmation = {},
+            data = CreateCodeData(
+                BarcodeFormat.QR_CODE, SampleContact, "title", ParsedResultType.ADDRESSBOOK
+            )
+        )
+    }
+}
+
+@Composable
+@Preview
+fun SaveScanDialogWifiPreview() {
+    CardKeeperTheme {
+        SaveScanDialog(
+            onDismissRequest = { },
+            onConfirmation = {},
+            data = CreateCodeData(
+                BarcodeFormat.QR_CODE, SampleWifi, "title", ParsedResultType.WIFI
+            )
+        )
+    }
+}
+
+@Composable
+@Preview
+fun SaveScanDialogTextPreview() {
+    CardKeeperTheme {
+        SaveScanDialog(
+            onDismissRequest = { },
+            onConfirmation = {},
+            data = CreateCodeData(
+                BarcodeFormat.QR_CODE, SampleWifi, "", ParsedResultType.TEXT
+            )
         )
     }
 }
