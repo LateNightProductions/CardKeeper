@@ -2,6 +2,7 @@ package com.awscherb.cardkeeper.util
 
 import com.awscherb.cardkeeper.util.extensions.toAddressBook
 import com.awscherb.cardkeeper.util.extensions.toEmail
+import com.awscherb.cardkeeper.util.extensions.toParsedUri
 import com.awscherb.cardkeeper.util.extensions.toTel
 import com.awscherb.cardkeeper.util.extensions.toWifi
 import com.google.zxing.client.result.ParsedResultType
@@ -18,8 +19,12 @@ object ParsedTypeUtils {
                     "Email to $first"
                 } ?: "Email"
             }
+            ParsedResultType.URI -> {
+                data.toParsedUri()?.let { parsed ->
+                    parsed.title ?: parsed.title
+                } ?: "Link"
+            }
             ParsedResultType.PRODUCT,
-            ParsedResultType.URI,
             ParsedResultType.TEXT,
             ParsedResultType.GEO,
             ParsedResultType.SMS,

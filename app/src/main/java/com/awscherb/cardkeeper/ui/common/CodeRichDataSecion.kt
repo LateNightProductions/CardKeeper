@@ -35,6 +35,10 @@ fun CodeRichDataSection(
             EmailView(text = data)
         }
 
+        ParsedResultType.URI -> {
+            UriView(text = data)
+        }
+
         else -> {
             Text(
                 modifier = Modifier

@@ -13,6 +13,8 @@ import com.google.zxing.client.result.SMSMMSResultParser
 import com.google.zxing.client.result.SMSParsedResult
 import com.google.zxing.client.result.TelParsedResult
 import com.google.zxing.client.result.TelResultParser
+import com.google.zxing.client.result.URIParsedResult
+import com.google.zxing.client.result.URIResultParser
 import com.google.zxing.client.result.VCardResultParser
 import com.google.zxing.client.result.WifiParsedResult
 import com.google.zxing.client.result.WifiResultParser
@@ -38,6 +40,10 @@ fun String.toWifi(): WifiParsedResult? {
 
 fun String.toTel(): TelParsedResult? {
     return TelResultParser().parse(emptyResult(this))
+}
+
+fun String.toParsedUri(): URIParsedResult? {
+    return URIResultParser().parse(emptyResult(this))
 }
 
 fun String.toEmail(): EmailAddressParsedResult? {

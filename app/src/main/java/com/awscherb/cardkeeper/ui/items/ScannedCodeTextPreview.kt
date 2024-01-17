@@ -22,10 +22,12 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.awscherb.cardkeeper.ui.common.icons.NetworkWifi
+import com.awscherb.cardkeeper.ui.common.icons.Public
 import com.awscherb.cardkeeper.ui.theme.CardKeeperTheme
 import com.awscherb.cardkeeper.util.SampleContact
 import com.awscherb.cardkeeper.util.extensions.toAddressBook
 import com.awscherb.cardkeeper.util.extensions.toEmail
+import com.awscherb.cardkeeper.util.extensions.toParsedUri
 import com.awscherb.cardkeeper.util.extensions.toTel
 import com.awscherb.cardkeeper.util.extensions.toWifi
 import com.google.zxing.client.result.ParsedResultType
@@ -56,10 +58,15 @@ fun ScannedCodeTextPreview(
                 val tel = text.toTel() ?: return
                 IconRow(Icons.Default.Phone, text = tel.number)
             }
-            
+
             ParsedResultType.EMAIL_ADDRESS -> {
                 val email = text.toEmail() ?: return
                 IconRow(icon = Icons.Default.Email, text = email.subject ?: "")
+            }
+
+            ParsedResultType.URI -> {
+                val uri = text.toParsedUri() ?: return
+                IconRow(icon = Public, text = uri.title ?: uri.uri)
             }
 
             else -> {
