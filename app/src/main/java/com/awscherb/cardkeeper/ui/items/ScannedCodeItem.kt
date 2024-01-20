@@ -12,6 +12,7 @@ import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -28,7 +29,7 @@ import com.google.zxing.BarcodeFormat
 fun ScannedCodeItem(
     item: ScannedCodeModel,
     /** Set text length to one line and ellipsize */
-    onClick: (ScannedCodeModel) -> Unit
+    onClick: (ScannedCodeModel) -> Unit,
 ) {
     ElevatedCard(
         modifier = Modifier.clickable { onClick(item) }
@@ -49,6 +50,7 @@ fun ScannedCodeItem(
         )
 
         ScannedCodeTextPreview(
+            modifier = Modifier.padding(top = 16.dp),
             text = item.text,
             parsedResultType = item.parsedType
         )

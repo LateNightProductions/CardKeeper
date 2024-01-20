@@ -36,6 +36,7 @@ import com.awscherb.cardkeeper.ui.pkpassDetail.PassDetailScreen
 import com.awscherb.cardkeeper.ui.scan.PermissionsScreen
 import com.awscherb.cardkeeper.ui.scan.ScanScreen
 import com.awscherb.cardkeeper.ui.scannedCode.ScannedCodeScreen
+import com.awscherb.cardkeeper.ui.theme.CardKeeperTheme
 import com.awscherb.cardkeeper.util.getAppVersion
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
@@ -61,148 +62,151 @@ class CardKeeperActivity : ComponentActivity() {
         val startDest = if (startScan) Destination.Scan else Destination.Items
 
         setContent {
-            val cameraPermissionState = rememberPermissionState(Manifest.permission.CAMERA)
-            navController = rememberNavController()
-            var selectedItem by remember {
-                mutableStateOf<Destination>(startDest)
-            }
-            val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
-            val scope = rememberCoroutineScope()
+            CardKeeperTheme {
 
-            val openDrawer: () -> Unit = { scope.launch { drawerState.open() } }
-            val popBack: () -> Unit = { navController.popBackStack() }
-            val topLevelNav: (Destination) -> Unit = { dest ->
-                selectedItem = dest
-                navController.popBackStack()
-                navController.navigate(dest.dest)
-                scope.launch { drawerState.close() }
-            }
+                val cameraPermissionState = rememberPermissionState(Manifest.permission.CAMERA)
+                navController = rememberNavController()
+                var selectedItem by remember {
+                    mutableStateOf<Destination>(startDest)
+                }
+                val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+                val scope = rememberCoroutineScope()
 
-            ModalNavigationDrawer(
-                drawerState = drawerState,
-                drawerContent = {
-                    NavDrawerContent(
-                        selectedItem = selectedItem,
-                        topLevelNav = topLevelNav
-                    )
-                }) {
-                NavHost(
-                    navController = navController, startDestination = startDest.dest
-                ) {
-                    composable(Destination.Items.dest) {
-                        ItemsScreen(
-                            scanOnClick = {
-                                navController.navigate(Destination.Scan.dest)
-                            },
-                            navOnClick = openDrawer
+                val openDrawer: () -> Unit = { scope.launch { drawerState.open() } }
+                val popBack: () -> Unit = { navController.popBackStack() }
+                val topLevelNav: (Destination) -> Unit = { dest ->
+                    selectedItem = dest
+                    navController.popBackStack()
+                    navController.navigate(dest.dest)
+                    scope.launch { drawerState.close() }
+                }
+
+                ModalNavigationDrawer(
+                    drawerState = drawerState,
+                    drawerContent = {
+                        NavDrawerContent(
+                            selectedItem = selectedItem,
+                            topLevelNav = topLevelNav
+                        )
+                    }) {
+                    NavHost(
+                        navController = navController, startDestination = startDest.dest
+                    ) {
+                        composable(Destination.Items.dest) {
+                            ItemsScreen(
+                                scanOnClick = {
+                                    navController.navigate(Destination.Scan.dest)
+                                },
+                                navOnClick = openDrawer
+                            ) {
+
+                                when (it) {
+                                    is PkPassModel ->
+                                        navController.navigate("pass/${it.id}")
+
+                                    is ScannedCodeModel ->
+                                        navController.navigate("code/${it.id}")
+                                }
+
+                            }
+                        }
+                        composable(
+                            Destination.Pass.dest, arguments =
+                            listOf(navArgument("passId") {
+                                type = NavType.StringType
+                            })
                         ) {
-
-                            when (it) {
-                                is PkPassModel ->
-                                    navController.navigate("pass/${it.id}")
-
-                                is ScannedCodeModel ->
-                                    navController.navigate("code/${it.id}")
-                            }
-
+                            PassDetailScreen(navOnClick = popBack)
                         }
-                    }
-                    composable(
-                        Destination.Pass.dest, arguments =
-                        listOf(navArgument("passId") {
-                            type = NavType.StringType
-                        })
-                    ) {
-                        PassDetailScreen(navOnClick = popBack)
-                    }
-                    composable(
-                        Destination.Code.dest, arguments =
-                        listOf(navArgument("codeId") {
-                            type = NavType.IntType
-                        })
-                    ) {
-                        ScannedCodeScreen(onDelete = {
-                            topLevelNav(Destination.Items)
-                        }, navOnClick = popBack)
-                    }
-                    composable(Destination.Scan.dest) {
-                        if (cameraPermissionState.status.isGranted) {
-                            ScanScreen(completion = {
+                        composable(
+                            Destination.Code.dest, arguments =
+                            listOf(navArgument("codeId") {
+                                type = NavType.IntType
+                            })
+                        ) {
+                            ScannedCodeScreen(onDelete = {
                                 topLevelNav(Destination.Items)
-                            }, navOnClick = openDrawer)
-                        } else {
-                            PermissionsScreen(navOnClick = openDrawer)
+                            }, navOnClick = popBack)
+                        }
+                        composable(Destination.Scan.dest) {
+                            if (cameraPermissionState.status.isGranted) {
+                                ScanScreen(completion = {
+                                    topLevelNav(Destination.Items)
+                                }, navOnClick = openDrawer)
+                            } else {
+                                PermissionsScreen(navOnClick = openDrawer)
+                            }
+                        }
+                        composable(Destination.Create.dest) {
+                            CreateScreen(
+                                completion = { topLevelNav(Destination.Items) },
+                                navOnClick = openDrawer
+                            )
+                        }
+                        composable(Destination.About.dest) {
+                            AboutScreen(
+                                appVersion = getAppVersion(this@CardKeeperActivity),
+                                navOnClick = openDrawer
+                            )
                         }
                     }
-                    composable(Destination.Create.dest) {
-                        CreateScreen(
-                            completion = { topLevelNav(Destination.Items) },
-                            navOnClick = openDrawer
-                        )
-                    }
-                    composable(Destination.About.dest) {
-                        AboutScreen(
-                            appVersion = getAppVersion(this@CardKeeperActivity),
-                            navOnClick = openDrawer
-                        )
-                    }
                 }
             }
-        }
 
-        val uri = intent.data
-        val scheme = uri?.scheme
+            val uri = intent.data
+            val scheme = uri?.scheme
 
-        if (scheme != null) {
-            val type: String
-            val passUri: String
-            when (ContentResolver.SCHEME_CONTENT == scheme) {
-                true -> {
-                    type = ImportPassWorker.TYPE_URI
-                    passUri = uri.toString()
+            if (scheme != null) {
+                val type: String
+                val passUri: String
+                when (ContentResolver.SCHEME_CONTENT == scheme) {
+                    true -> {
+                        type = ImportPassWorker.TYPE_URI
+                        passUri = uri.toString()
+                    }
+
+                    false -> {
+                        type = ImportPassWorker.TYPE_FILE
+                        passUri = uri.encodedPath ?: ""
+                    }
+
                 }
 
-                false -> {
-                    type = ImportPassWorker.TYPE_FILE
-                    passUri = uri.encodedPath ?: ""
-                }
-
-            }
-
-            val req = OneTimeWorkRequestBuilder<ImportPassWorker>()
-                .setInputData(
-                    workDataOf(
-                        ImportPassWorker.INPUT_TYPE to type,
-                        ImportPassWorker.URI to passUri
+                val req = OneTimeWorkRequestBuilder<ImportPassWorker>()
+                    .setInputData(
+                        workDataOf(
+                            ImportPassWorker.INPUT_TYPE to type,
+                            ImportPassWorker.URI to passUri
+                        )
                     )
-                )
-                .build()
+                    .build()
 
-            with(WorkManager.getInstance(this)) {
-                enqueue(req)
+                with(WorkManager.getInstance(this)) {
+                    enqueue(req)
 
-                getWorkInfoByIdFlow(req.id)
-                    .onEach {
-                        when (it.state) {
-                            WorkInfo.State.SUCCEEDED -> {
-                                it.outputData.getString(ImportPassWorker.KEY_PASS_ID)
-                                    ?.let { passId ->
-                                        navController.navigate("pass/$passId")
-                                    }
+                    getWorkInfoByIdFlow(req.id)
+                        .onEach {
+                            when (it.state) {
+                                WorkInfo.State.SUCCEEDED -> {
+                                    it.outputData.getString(ImportPassWorker.KEY_PASS_ID)
+                                        ?.let { passId ->
+                                            navController.navigate("pass/$passId")
+                                        }
+                                }
+
+                                WorkInfo.State.FAILED -> {
+                                    Snackbar.make(
+                                        findViewById(android.R.id.content),
+                                        "There was an error opening your pass",
+                                        Snackbar.LENGTH_LONG
+                                    ).show()
+                                }
+
+                                else -> {
+                                }
                             }
-
-                            WorkInfo.State.FAILED -> {
-                                Snackbar.make(
-                                    findViewById(android.R.id.content),
-                                    "There was an error opening your pass",
-                                    Snackbar.LENGTH_LONG
-                                ).show()
-                            }
-
-                            else -> {
-                            }
-                        }
-                    }.launchIn(lifecycleScope)
+                        }.launchIn(lifecycleScope)
+                }
             }
         }
     }

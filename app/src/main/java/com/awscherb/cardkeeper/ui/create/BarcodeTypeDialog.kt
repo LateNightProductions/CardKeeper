@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -29,7 +30,7 @@ import com.google.zxing.BarcodeFormat
 
 data class SelectionType(
     val barcodeFormat: BarcodeFormat,
-    val label: String
+    val label: String,
 )
 
 private val SelectableTypes = listOf(
@@ -44,7 +45,7 @@ private val SelectableTypes = listOf(
 fun BarcodeTypeDialog(
     onDismissRequest: () -> Unit,
     onTypeSelected: (SelectionType) -> Unit,
-    initialSelectedType: BarcodeFormat? = null
+    initialSelectedType: BarcodeFormat? = null,
 ) {
     Dialog(onDismissRequest = { onDismissRequest() }) {
         Card(
@@ -98,7 +99,7 @@ fun BarcodeTypeDialog(
 fun BarcodeRow(
     selectionType: SelectionType,
     selected: Boolean,
-    onTypeSelected: (SelectionType) -> Unit = {}
+    onTypeSelected: (SelectionType) -> Unit = {},
 ) {
     Row(
         Modifier
@@ -117,7 +118,7 @@ fun BarcodeRow(
                     .padding(start = 4.dp),
                 painter = painterResource(id = R.drawable.ic_check),
                 contentDescription = "Selected",
-                colorFilter = ColorFilter.tint(Color.Blue)
+                colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.inversePrimary)
             )
         }
         Text(
@@ -128,7 +129,7 @@ fun BarcodeRow(
                 )
                 .align(Alignment.CenterVertically),
             text = selectionType.label,
-            color = if (selected) Color.Blue else Color.DarkGray
+            color = if (selected) MaterialTheme.colorScheme.inversePrimary else Color.Unspecified
         )
     }
 

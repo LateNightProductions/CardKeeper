@@ -2,6 +2,7 @@ package com.awscherb.cardkeeper.ui.common
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -37,13 +38,14 @@ fun BarcodeImage(
         false -> width / 6
     }
 
-
+    val darkMode = isSystemInDarkTheme()
     val bitmap = remember {
         EncoderHolder.encoder.encodeBitmap(
             message,
             barcodeFormat,
             (width / 1.75).toInt(),
-            height
+            height,
+            inDarkMode = darkMode
         )
     }
 

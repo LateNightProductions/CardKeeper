@@ -141,7 +141,9 @@ fun ScannedCodeDetail(
             message = code.text,
         )
 
-        CodeRichDataSection(data = code.text, parsedType = code.parsedType)
+        CodeRichDataSection(
+            data = code.text,
+            parsedType = code.parsedType)
 
         Box(modifier = Modifier.height(16.dp))
 

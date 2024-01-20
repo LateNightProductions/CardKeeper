@@ -18,7 +18,7 @@ import com.google.zxing.common.BitMatrix
  */
 class BarcodeEncoder {
 
-    fun createBitmap(matrix: BitMatrix): Bitmap {
+    private fun createBitmap(matrix: BitMatrix, darkMode: Boolean): Bitmap {
         val width = matrix.width
         val height = matrix.height
         val pixels = IntArray(width * height)
@@ -26,7 +26,7 @@ class BarcodeEncoder {
             val offset = y * width
             for (x in 0 until width) {
                 pixels[offset + x] =
-                    if (matrix[x, y]) BLACK else WHITE
+                    if (matrix[x, y]) BLACK else if (darkMode) DARK_BACKGROUND else TRANSPARENT
             }
         }
         val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
@@ -35,7 +35,12 @@ class BarcodeEncoder {
     }
 
     @Throws(WriterException::class)
-    fun encode(contents: String?, format: BarcodeFormat?, width: Int, height: Int): BitMatrix {
+    private fun encode(
+        contents: String?,
+        format: BarcodeFormat?,
+        width: Int,
+        height: Int,
+    ): BitMatrix {
         return try {
             MultiFormatWriter().encode(contents, format, width, height)
         } catch (e: WriterException) {
@@ -48,13 +53,19 @@ class BarcodeEncoder {
 
 
     @Throws(WriterException::class)
-    fun encodeBitmap(contents: String?, format: BarcodeFormat?, width: Int, height: Int): Bitmap {
-        return createBitmap(encode(contents, format, width, height))
+    fun encodeBitmap(
+        contents: String?,
+        format: BarcodeFormat?,
+        width: Int,
+        height: Int,
+        inDarkMode: Boolean,
+    ): Bitmap {
+        return createBitmap(encode(contents, format, width, height), inDarkMode)
     }
 
     companion object {
-        private const val WHITE = (0x00FFFFFF).toInt()
-
+        private const val TRANSPARENT = (0x00FFFFFF).toInt()
         private const val BLACK = (0xFF000000).toInt()
+        private const val DARK_BACKGROUND = (0xddFFFFFF).toInt()
     }
 }

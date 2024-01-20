@@ -34,11 +34,12 @@ import com.google.zxing.client.result.ParsedResultType
 
 @Composable
 fun ScannedCodeTextPreview(
+    modifier: Modifier = Modifier,
     text: String,
     parsedResultType: ParsedResultType
 ) {
     Column(
-        modifier = Modifier.fillMaxWidth()
+        modifier = modifier.fillMaxWidth()
     ) {
         when (parsedResultType) {
             ParsedResultType.ADDRESSBOOK -> {
