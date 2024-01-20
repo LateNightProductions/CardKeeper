@@ -44,5 +44,6 @@
     <string name="fragment_pass_detail_delete_prompt">Delete this pass?</string>
     <string name="fragment_pass_detail_last_updated">Last updated %1$s</string>
     <string name="fragment_pass_detail_expired">This pass has expired</string>
+    <string name="quick_tile_label">Scan QR Code</string>
 
 </resources>

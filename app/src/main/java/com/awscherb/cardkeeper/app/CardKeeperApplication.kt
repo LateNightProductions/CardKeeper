@@ -1,4 +1,4 @@
-package com.awscherb.cardkeeper.ui.base
+package com.awscherb.cardkeeper.app
 
 import android.app.Application
 import androidx.work.Configuration

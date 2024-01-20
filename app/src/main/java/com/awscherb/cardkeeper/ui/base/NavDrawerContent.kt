@@ -20,7 +20,7 @@ import com.awscherb.cardkeeper.ui.theme.Typography
 @Composable
 fun NavDrawerContent(
     selectedItem: Destination,
-    topLevelNav: (Destination, Boolean) -> Unit
+    topLevelNav: (Destination) -> Unit
 ) {
     ModalDrawerSheet {
         Text(
@@ -62,7 +62,7 @@ fun NavDrawerContent(
 fun NavDrawerRow(
     selectedItem: Destination,
     destination: Destination,
-    topLevelNav: (Destination, Boolean) -> Unit
+    topLevelNav: (Destination) -> Unit
 ) {
     NavigationDrawerItem(
         label = {
@@ -78,7 +78,7 @@ fun NavDrawerRow(
         },
         selected = selectedItem == destination,
         onClick = {
-            topLevelNav(destination, true)
+            topLevelNav(destination)
         })
 }
 
@@ -86,6 +86,6 @@ fun NavDrawerRow(
 @Preview
 fun DrawerPreview() {
     CardKeeperTheme {
-        NavDrawerContent(selectedItem = Destination.Scan, topLevelNav = { _, _ -> })
+        NavDrawerContent(selectedItem = Destination.Scan, topLevelNav = { _ -> })
     }
 }

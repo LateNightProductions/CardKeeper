@@ -1,4 +1,4 @@
-@file:OptIn(ExperimentalPermissionsApi::class)
+@file:OptIn(ExperimentalPermissionsApi::class, ExperimentalPermissionsApi::class)
 
 package com.awscherb.cardkeeper.ui.base
 
@@ -49,29 +49,32 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class CardKeeperActivity : ComponentActivity() {
 
-    lateinit var navController: NavHostController
+    companion object {
+        const val EXTRA_START_SCAN = "extra_start_scan"
+    }
+
+    private lateinit var navController: NavHostController
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        val startScan = intent.getBooleanExtra(EXTRA_START_SCAN, false)
+        val startDest = if (startScan) Destination.Scan else Destination.Items
 
         setContent {
             val cameraPermissionState = rememberPermissionState(Manifest.permission.CAMERA)
             navController = rememberNavController()
             var selectedItem by remember {
-                mutableStateOf<Destination>(Destination.Items)
+                mutableStateOf<Destination>(startDest)
             }
             val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
             val scope = rememberCoroutineScope()
 
             val openDrawer: () -> Unit = { scope.launch { drawerState.open() } }
             val popBack: () -> Unit = { navController.popBackStack() }
-            val topLevelNav: (Destination, Boolean) -> Unit = { dest, pop ->
+            val topLevelNav: (Destination) -> Unit = { dest ->
                 selectedItem = dest
-                navController.navigate(dest.dest) {
-                    popUpTo(Destination.Items.dest) {
-                        inclusive = pop
-                    }
-                }
+                navController.popBackStack()
+                navController.navigate(dest.dest)
                 scope.launch { drawerState.close() }
             }
 
@@ -83,7 +86,9 @@ class CardKeeperActivity : ComponentActivity() {
                         topLevelNav = topLevelNav
                     )
                 }) {
-                NavHost(navController = navController, startDestination = Destination.Items.dest) {
+                NavHost(
+                    navController = navController, startDestination = startDest.dest
+                ) {
                     composable(Destination.Items.dest) {
                         ItemsScreen(
                             scanOnClick = {
@@ -117,13 +122,13 @@ class CardKeeperActivity : ComponentActivity() {
                         })
                     ) {
                         ScannedCodeScreen(onDelete = {
-                            topLevelNav(Destination.Items, false)
+                            topLevelNav(Destination.Items)
                         }, navOnClick = popBack)
                     }
                     composable(Destination.Scan.dest) {
                         if (cameraPermissionState.status.isGranted) {
                             ScanScreen(completion = {
-                                topLevelNav(Destination.Items, true)
+                                topLevelNav(Destination.Items)
                             }, navOnClick = openDrawer)
                         } else {
                             PermissionsScreen(navOnClick = openDrawer)
@@ -131,7 +136,7 @@ class CardKeeperActivity : ComponentActivity() {
                     }
                     composable(Destination.Create.dest) {
                         CreateScreen(
-                            completion = { topLevelNav(Destination.Items, true) },
+                            completion = { topLevelNav(Destination.Items) },
                             navOnClick = openDrawer
                         )
                     }
