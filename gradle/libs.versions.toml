@@ -4,6 +4,7 @@ activity-compose = "1.8.2"
 appcompat = "1.6.1"
 cardview = "1.0.0"
 converter-gson = "2.9.0"
+firebase-crashlytics-gradle = "2.9.9"
 flexbox = "3.0.0"
 glide-compiler = "4.14.2"
 coil = "2.4.0"
@@ -14,6 +15,8 @@ compose-navigation = "2.7.6"
 dagger-android-support = "2.48.1"
 dagger = "2.48.1"
 glide = "4.14.2"
+firebase = "32.7.1"
+google-services = "4.4.0"
 gradle = "8.1.4"
 gson = "2.10.1"
 hilt-viewmodel = "1.1.0"
@@ -69,7 +72,12 @@ dagger-android-support = { module = "com.google.dagger:dagger-android-support", 
 dagger = { module = "com.google.dagger:dagger", version.ref = "dagger" }
 dagger-hilt = { group = "com.google.dagger", name = "hilt-android", version.ref = "dagger" }
 dagger-hilt-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "dagger" }
+firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebase" }
+firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
+firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics" }
+firebase-crashlytics-gradle = { module = "com.google.firebase:firebase-crashlytics-gradle", version.ref = "firebase-crashlytics-gradle" }
 flexbox = { module = "com.google.android.flexbox:flexbox", version.ref = "flexbox" }
+google-services = { module = "com.google.gms:google-services", version.ref = "google-services" }
 gradle = { module = "com.android.tools.build:gradle", version.ref = "gradle" }
 gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
 dagger-android-processor = { module = "com.google.dagger:dagger-android-processor", version.ref = "dagger" }

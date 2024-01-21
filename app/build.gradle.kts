@@ -7,6 +7,8 @@ plugins {
     id("com.google.dagger.hilt.android")
     id("com.google.android.gms.oss-licenses-plugin")
     id("com.google.devtools.ksp")
+    id("com.google.gms.google-services")
+    id("com.google.firebase.crashlytics")
 }
 
 android {
@@ -68,6 +70,8 @@ dependencies {
     implementation(project(":data:barcode"))
     implementation(project(":data:pkpass"))
 
+    implementation(platform(libs.compose.bom))
+    implementation(platform(libs.firebase.bom))
     implementation(libs.accompanist.permissions)
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.appcompat)
@@ -83,7 +87,6 @@ dependencies {
     implementation(libs.androidx.room.ktx)
     implementation(libs.androidx.work.runtime.ktx)
     implementation(libs.coil)
-    implementation(platform(libs.compose.bom))
     implementation(libs.compose.constraint)
     implementation(libs.compose.material3)
     implementation(libs.compose.navigation)
@@ -91,6 +94,8 @@ dependencies {
     implementation(libs.dagger)
     implementation(libs.dagger.android.support)
     implementation(libs.dagger.hilt)
+    implementation(libs.firebase.analytics)
+    implementation(libs.firebase.crashlytics)
     implementation(libs.flexbox)
     implementation(libs.glide)
     implementation(libs.gson)
