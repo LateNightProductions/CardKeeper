@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Call
 import androidx.compose.material.icons.filled.Email
@@ -71,20 +72,22 @@ fun ScannedCodeTextPreview(
             }
 
             else -> {
-                Text(
-                    modifier = Modifier
-                        .padding(
-                            start = 4.dp,
-                            end = 4.dp,
-                            bottom = 8.dp
-                        )
-                        .fillMaxWidth()
-                        .align(CenterHorizontally),
-                    text = text,
-                    overflow = TextOverflow.Ellipsis,
-                    maxLines = 1,
-                    textAlign = TextAlign.Center,
-                )
+                SelectionContainer {
+                    Text(
+                        modifier = Modifier
+                            .padding(
+                                start = 4.dp,
+                                end = 4.dp,
+                                bottom = 8.dp
+                            )
+                            .fillMaxWidth()
+                            .align(CenterHorizontally),
+                        text = text,
+                        overflow = TextOverflow.Ellipsis,
+                        maxLines = 1,
+                        textAlign = TextAlign.Center,
+                    )
+                }
             }
         }
     }
@@ -113,14 +116,16 @@ private fun ColumnScope.IconRow(
                 )
                 .align(Alignment.CenterVertically)
         )
-        Text(
-            modifier = Modifier
-                .align(Alignment.CenterVertically),
-            text = text,
-            overflow = TextOverflow.Ellipsis,
-            maxLines = 1,
-            textAlign = TextAlign.Center,
-        )
+        SelectionContainer {
+            Text(
+                modifier = Modifier
+                    .align(Alignment.CenterVertically),
+                text = text,
+                overflow = TextOverflow.Ellipsis,
+                maxLines = 1,
+                textAlign = TextAlign.Center,
+            )
+        }
     }
 }
 

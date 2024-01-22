@@ -2,6 +2,7 @@ package com.awscherb.cardkeeper.ui.common
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material3.Card
@@ -39,27 +40,31 @@ fun EmailView(
         )
 
         email.subject?.let { subject ->
-            Text(
-                text = subject,
-                modifier = Modifier.padding(
-                    start = 16.dp,
-                    end = 16.dp,
-                    bottom = 8.dp
-                ),
-                style = Typography.titleSmall
-            )
+            SelectionContainer {
+                Text(
+                    text = subject,
+                    modifier = Modifier.padding(
+                        start = 16.dp,
+                        end = 16.dp,
+                        bottom = 8.dp
+                    ),
+                    style = Typography.titleSmall
+                )
+            }
         }
 
         email.body?.let { body ->
-            Text(
-                text = body,
-                modifier = Modifier.padding(
-                    start = 16.dp,
-                    end = 16.dp,
-                    bottom = 8.dp
-                ),
-                style = Typography.bodyMedium
-            )
+            SelectionContainer {
+                Text(
+                    text = body,
+                    modifier = Modifier.padding(
+                        start = 16.dp,
+                        end = 16.dp,
+                        bottom = 8.dp
+                    ),
+                    style = Typography.bodyMedium
+                )
+            }
         }
 
     }

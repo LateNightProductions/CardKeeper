@@ -2,6 +2,7 @@ package com.awscherb.cardkeeper.ui.common
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Phone
@@ -26,15 +27,17 @@ fun ContactView(
 
     Column {
         contact.names.firstOrNull()?.let { firstName ->
-            Text(
-                text = firstName,
-                style = Typography.titleLarge,
-                modifier = Modifier.padding(
-                    top = 16.dp,
-                    start = 16.dp,
-                    end = 16.dp
+            SelectionContainer {
+                Text(
+                    text = firstName,
+                    style = Typography.titleLarge,
+                    modifier = Modifier.padding(
+                        top = 16.dp,
+                        start = 16.dp,
+                        end = 16.dp
+                    )
                 )
-            )
+            }
         }
 
         contact.phoneNumbers?.firstOrNull()?.let { phone ->

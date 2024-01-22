@@ -2,6 +2,8 @@ package com.awscherb.cardkeeper.ui.common
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.selection.selectable
+import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -40,6 +42,7 @@ fun CodeRichDataSection(
         }
 
         else -> {
+            SelectionContainer {
             Text(
                 modifier = Modifier
                     .padding(
@@ -51,6 +54,7 @@ fun CodeRichDataSection(
                 overflow = TextOverflow.Ellipsis,
                 textAlign = TextAlign.Center,
             )
+            }
         }
     }
 }

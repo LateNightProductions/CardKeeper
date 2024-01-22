@@ -3,6 +3,7 @@ package com.awscherb.cardkeeper.ui.common
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Phone
 import androidx.compose.material3.Icon
@@ -36,16 +37,18 @@ fun LinkableRow(
             text,
         )
 
-        Text(
-            text = text,
-            style = Typography.bodyMedium,
-            modifier = Modifier
-                .padding(
-                    horizontal = 16.dp,
-                    vertical = 4.dp
-                )
-                .align(Alignment.CenterVertically)
-        )
+        SelectionContainer {
+            Text(
+                text = text,
+                style = Typography.bodyMedium,
+                modifier = Modifier
+                    .padding(
+                        horizontal = 16.dp,
+                        vertical = 4.dp
+                    )
+                    .align(Alignment.CenterVertically)
+            )
+        }
     }
 }
 

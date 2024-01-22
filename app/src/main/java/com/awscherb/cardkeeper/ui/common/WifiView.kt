@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material.icons.Icons
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -54,23 +55,27 @@ fun WifiView(
                 modifier = Modifier.align(Alignment.CenterVertically)
             )
 
-            Text(
-                text = wifi.ssid,
-                style = Typography.titleLarge,
-                modifier = Modifier.padding(
-                    start = 8.dp,
+            SelectionContainer {
+                Text(
+                    text = wifi.ssid,
+                    style = Typography.titleLarge,
+                    modifier = Modifier.padding(
+                        start = 8.dp,
+                    )
                 )
-            )
+            }
         }
 
         Row(
-            Modifier.padding(
-                top = 16.dp,
-                start = 16.dp,
-                end = 16.dp
-            ).clickable {
-                showPassword = !showPassword
-            }
+            Modifier
+                .padding(
+                    top = 16.dp,
+                    start = 16.dp,
+                    end = 16.dp
+                )
+                .clickable {
+                    showPassword = !showPassword
+                }
         ) {
 
             Icon(
@@ -79,13 +84,15 @@ fun WifiView(
                 modifier = Modifier.align(Alignment.CenterVertically)
             )
 
-            Text(
-                text = if (showPassword) wifi.password else "*".repeat(wifi.password.length),
-                style = Typography.titleLarge,
-                modifier = Modifier.padding(
-                    start = 8.dp,
+            SelectionContainer {
+                Text(
+                    text = if (showPassword) wifi.password else "*".repeat(wifi.password.length),
+                    style = Typography.titleLarge,
+                    modifier = Modifier.padding(
+                        start = 8.dp,
+                    )
                 )
-            )
+            }
         }
     }
 }
