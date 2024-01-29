@@ -1,7 +1,6 @@
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
-    id("kotlin-kapt")
     id("com.google.devtools.ksp")
 }
 
@@ -55,6 +54,6 @@ dependencies {
     implementation(libs.retrofit.converter.gson)
     implementation(libs.zxing.core)
 
-    kapt(libs.dagger.compiler)
+    ksp(libs.dagger.compiler)
     ksp(libs.androidx.room.compiler)
 }

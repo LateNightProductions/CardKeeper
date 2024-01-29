@@ -1,7 +1,6 @@
 plugins {
     id("com.android.application")
     id("kotlin-android")
-    id("kotlin-kapt")
     id("kotlin-parcelize")
     id("androidx.navigation.safeargs.kotlin")
     id("com.google.dagger.hilt.android")
@@ -56,7 +55,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.5"
+        kotlinCompilerExtensionVersion = "1.5.8"
     }
 
     namespace = "com.awscherb.cardkeeper"
@@ -111,9 +110,9 @@ dependencies {
     debugImplementation(libs.compose.ui.tooling)
 
     ksp(libs.androidx.room.compiler)
-    kapt(libs.dagger.android.processor)
-    kapt(libs.dagger.compiler)
-    kapt(libs.dagger.hilt.compiler)
+    ksp(libs.dagger.android.processor)
+    ksp(libs.dagger.compiler)
+    ksp(libs.dagger.hilt.compiler)
     ksp(libs.glide.compiler)
 
 
