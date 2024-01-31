@@ -19,7 +19,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.awscherb.cardkeeper.pkpass.model.isSquare
 import com.awscherb.cardkeeper.ui.theme.CardKeeperTheme
-import com.awscherb.cardkeeper.util.EncoderHolder
+import com.awscherb.cardkeeper.util.BarcodeEncoder
 import com.google.zxing.BarcodeFormat
 
 @Composable
@@ -40,7 +40,7 @@ fun BarcodeImage(
 
     val darkMode = isSystemInDarkTheme()
     val bitmap = remember {
-        EncoderHolder.encoder.encodeBitmap(
+        BarcodeEncoder.encodeBitmap(
             message,
             barcodeFormat,
             (width / 1.75).toInt(),

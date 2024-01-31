@@ -16,7 +16,7 @@ import com.google.zxing.common.BitMatrix
  *
  * Licensed under the Apache License, Version 2.0.
  */
-class BarcodeEncoder {
+object BarcodeEncoder {
 
     private fun createBitmap(matrix: BitMatrix, darkMode: Boolean): Bitmap {
         val width = matrix.width
@@ -63,9 +63,7 @@ class BarcodeEncoder {
         return createBitmap(encode(contents, format, width, height), inDarkMode)
     }
 
-    companion object {
-        private const val TRANSPARENT = (0x00FFFFFF).toInt()
-        private const val BLACK = (0xFF000000).toInt()
-        private const val DARK_BACKGROUND = (0xddFFFFFF).toInt()
-    }
+    private const val TRANSPARENT = (0x00FFFFFF).toInt()
+    private const val BLACK = (0xFF000000).toInt()
+    private const val DARK_BACKGROUND = (0xddFFFFFF).toInt()
 }

@@ -35,7 +35,7 @@ fun ItemsList(
             top = 8.dp,
             start = 8.dp,
             end = 8.dp,
-            bottom = 64.dp
+            bottom = 88.dp
         )
     ) {
         items(items,
