@@ -25,6 +25,8 @@ import androidx.compose.ui.unit.dp
 import com.awscherb.cardkeeper.ui.common.icons.NetworkWifi
 import com.awscherb.cardkeeper.ui.common.icons.Public
 import com.awscherb.cardkeeper.ui.theme.CardKeeperTheme
+import com.awscherb.cardkeeper.util.DriverLicenseType
+import com.awscherb.cardkeeper.util.ExtendedTypesHelper
 import com.awscherb.cardkeeper.util.SampleContact
 import com.awscherb.cardkeeper.util.extensions.toAddressBook
 import com.awscherb.cardkeeper.util.extensions.toEmail
@@ -42,8 +44,9 @@ fun ScannedCodeTextPreview(
     Column(
         modifier = modifier.fillMaxWidth()
     ) {
-        when (parsedResultType) {
-            ParsedResultType.ADDRESSBOOK -> {
+        val extendedType = ExtendedTypesHelper.matchType(text)
+        when  {
+            parsedResultType == ParsedResultType.ADDRESSBOOK -> {
                 val contact = text.toAddressBook() ?: return
                 IconRow(
                     icon = Icons.Default.Person, text =
@@ -51,24 +54,28 @@ fun ScannedCodeTextPreview(
                 )
             }
 
-            ParsedResultType.WIFI -> {
+            parsedResultType == ParsedResultType.WIFI -> {
                 val wifi = text.toWifi() ?: return
                 IconRow(NetworkWifi, text = wifi.ssid)
             }
 
-            ParsedResultType.TEL -> {
+            parsedResultType == ParsedResultType.TEL -> {
                 val tel = text.toTel() ?: return
                 IconRow(Icons.Default.Phone, text = tel.number)
             }
 
-            ParsedResultType.EMAIL_ADDRESS -> {
+            parsedResultType == ParsedResultType.EMAIL_ADDRESS -> {
                 val email = text.toEmail() ?: return
                 IconRow(icon = Icons.Default.Email, text = email.subject ?: "")
             }
 
-            ParsedResultType.URI -> {
+            parsedResultType == ParsedResultType.URI -> {
                 val uri = text.toParsedUri() ?: return
                 IconRow(icon = Public, text = uri.title ?: uri.uri)
+            }
+
+            extendedType is DriverLicenseType -> {
+                IconRow(icon = Icons.Default.Person, text = extendedType.getFullName())
             }
 
             else -> {

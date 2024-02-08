@@ -128,6 +128,20 @@ val SampleContact = """
             END:VCARD
             """.trimIndent()
 
+val SampleLicense= """
+    @
+    ANSI 1234
+    DCTFirstname
+    DCSLastname
+    DBD02082024
+    DBB09011993
+    DBA09012030
+    DAG123 Fake Street
+    DAINew York
+    DAJNY
+    DAK10001
+""".trimIndent()
+
 val SampleWifi = "WIFI:T:WPA;S:network_name;P:passsw0rd;H:;"
 
 val SampleTel = "TEL:3125550690"

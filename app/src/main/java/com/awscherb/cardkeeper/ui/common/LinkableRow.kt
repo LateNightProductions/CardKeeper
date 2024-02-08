@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Phone
+import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -35,6 +36,7 @@ fun LinkableRow(
         Icon(
             icon,
             text,
+            modifier=Modifier.align(Alignment.CenterVertically)
         )
 
         SelectionContainer {
@@ -53,10 +55,22 @@ fun LinkableRow(
 }
 
 
-@Preview(showSystemUi = true)
+@Preview(apiLevel = 33)
 @Composable
 fun LinkablePhonePreview() {
     CardKeeperTheme {
+        Card {
         LinkableRow(icon = Icons.Default.Phone, text = "312-555-0690")
+        }
+    }
+}
+
+@Preview(apiLevel = 33)
+@Composable
+fun LinkableMultiRowPreview() {
+    CardKeeperTheme {
+        Card {
+            LinkableRow(icon = Icons.Default.Phone, text = "312-555-0690\nNext Line")
+        }
     }
 }

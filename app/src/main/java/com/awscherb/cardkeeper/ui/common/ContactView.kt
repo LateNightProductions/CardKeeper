@@ -54,7 +54,7 @@ fun ContactView(
 }
 
 
-@Preview(showSystemUi = true)
+@Preview(showSystemUi = true, apiLevel = 33)
 @Composable
 fun ContactViewPreview() {
     CardKeeperTheme {

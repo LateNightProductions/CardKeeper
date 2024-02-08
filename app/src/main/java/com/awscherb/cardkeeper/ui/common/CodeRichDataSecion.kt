@@ -12,6 +12,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.awscherb.cardkeeper.ui.theme.CardKeeperTheme
+import com.awscherb.cardkeeper.util.DriverLicenseType
+import com.awscherb.cardkeeper.util.ExtendedTypesHelper
 import com.awscherb.cardkeeper.util.SampleContact
 import com.google.zxing.client.result.ParsedResultType
 
@@ -20,43 +22,49 @@ fun CodeRichDataSection(
     data: String,
     parsedType: ParsedResultType
 ) {
-    when (parsedType) {
-        ParsedResultType.ADDRESSBOOK -> {
+    val extendedType = ExtendedTypesHelper.matchType(data)
+    when {
+        parsedType == ParsedResultType.ADDRESSBOOK -> {
             ContactView(text = data)
         }
 
-        ParsedResultType.WIFI -> {
+        parsedType == ParsedResultType.WIFI -> {
             WifiView(text = data)
         }
 
-        ParsedResultType.TEL -> {
+        parsedType == ParsedResultType.TEL -> {
             TelView(text = data)
         }
 
-        ParsedResultType.EMAIL_ADDRESS -> {
+        parsedType == ParsedResultType.EMAIL_ADDRESS -> {
             EmailView(text = data)
         }
 
-        ParsedResultType.URI -> {
+        parsedType == ParsedResultType.URI -> {
             UriView(text = data)
+        }
+
+        extendedType is DriverLicenseType -> {
+            DriverLicenseView(license = extendedType)
         }
 
         else -> {
             SelectionContainer {
-            Text(
-                modifier = Modifier
-                    .padding(
-                        vertical = 4.dp,
-                        horizontal = 4.dp
-                    )
-                    .fillMaxWidth(),
-                text = data,
-                overflow = TextOverflow.Ellipsis,
-                textAlign = TextAlign.Center,
-            )
+                Text(
+                    modifier = Modifier
+                        .padding(
+                            vertical = 4.dp,
+                            horizontal = 4.dp
+                        )
+                        .fillMaxWidth(),
+                    text = data,
+                    overflow = TextOverflow.Ellipsis,
+                    textAlign = TextAlign.Center,
+                )
             }
         }
     }
+
 }
 
 @Composable
