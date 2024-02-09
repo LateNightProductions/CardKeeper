@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Call
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Phone
@@ -25,8 +24,9 @@ import androidx.compose.ui.unit.dp
 import com.awscherb.cardkeeper.ui.common.icons.NetworkWifi
 import com.awscherb.cardkeeper.ui.common.icons.Public
 import com.awscherb.cardkeeper.ui.theme.CardKeeperTheme
-import com.awscherb.cardkeeper.util.DriverLicenseType
-import com.awscherb.cardkeeper.util.ExtendedTypesHelper
+import com.awscherb.cardkeeper.barcode.model.DriverLicenseType
+import com.awscherb.cardkeeper.barcode.model.ExtendedTypesHelper
+import com.awscherb.cardkeeper.ui.common.icons.DirectionsCar
 import com.awscherb.cardkeeper.util.SampleContact
 import com.awscherb.cardkeeper.util.extensions.toAddressBook
 import com.awscherb.cardkeeper.util.extensions.toEmail
@@ -75,7 +75,7 @@ fun ScannedCodeTextPreview(
             }
 
             extendedType is DriverLicenseType -> {
-                IconRow(icon = Icons.Default.Person, text = extendedType.getFullName())
+                IconRow(icon = DirectionsCar, text = extendedType.getFullName())
             }
 
             else -> {

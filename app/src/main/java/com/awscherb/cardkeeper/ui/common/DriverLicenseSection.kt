@@ -17,8 +17,8 @@ import androidx.compose.ui.unit.dp
 import com.awscherb.cardkeeper.ui.common.icons.Cake
 import com.awscherb.cardkeeper.ui.theme.CardKeeperTheme
 import com.awscherb.cardkeeper.ui.theme.Typography
-import com.awscherb.cardkeeper.util.DriverLicenseType
-import com.awscherb.cardkeeper.util.ExtendedTypesHelper
+import com.awscherb.cardkeeper.barcode.model.DriverLicenseType
+import com.awscherb.cardkeeper.barcode.model.ExtendedTypesHelper
 import com.awscherb.cardkeeper.util.SampleLicense
 
 @Composable

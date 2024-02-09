@@ -33,7 +33,6 @@ fun EmailView(
     }
 
     Column {
-
         LinkableRow(
             icon = Icons.Default.Email, text = recipients.toString(),
             modifier = Modifier.padding(top = 8.dp)
@@ -71,7 +70,7 @@ fun EmailView(
 }
 
 
-@Preview(showSystemUi = true)
+@Preview(showSystemUi = true, apiLevel = 33)
 @Composable
 fun EmailViewPreview() {
     CardKeeperTheme {

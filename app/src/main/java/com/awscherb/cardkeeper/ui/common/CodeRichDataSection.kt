@@ -2,7 +2,6 @@ package com.awscherb.cardkeeper.ui.common
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -12,8 +11,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.awscherb.cardkeeper.ui.theme.CardKeeperTheme
-import com.awscherb.cardkeeper.util.DriverLicenseType
-import com.awscherb.cardkeeper.util.ExtendedTypesHelper
+import com.awscherb.cardkeeper.barcode.model.DriverLicenseType
+import com.awscherb.cardkeeper.barcode.model.ExtendedTypesHelper
 import com.awscherb.cardkeeper.util.SampleContact
 import com.google.zxing.client.result.ParsedResultType
 
