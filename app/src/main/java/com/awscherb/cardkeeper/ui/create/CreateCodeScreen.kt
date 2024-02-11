@@ -146,7 +146,7 @@ fun CreateScreenInner(
 
 
 @Composable
-@Preview
+@Preview(apiLevel = 33)
 fun CreateCodeScreenPreview() {
     CardKeeperTheme {
         CreateScreenInner(
@@ -158,7 +158,7 @@ fun CreateCodeScreenPreview() {
 }
 
 @Composable
-@Preview
+@Preview(apiLevel = 33)
 fun CreateCodeScreenDialogPreview() {
     CardKeeperTheme {
         CreateScreenInner(

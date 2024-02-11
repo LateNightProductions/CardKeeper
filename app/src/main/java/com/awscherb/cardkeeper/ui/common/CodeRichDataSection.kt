@@ -67,7 +67,7 @@ fun CodeRichDataSection(
 }
 
 @Composable
-@Preview
+@Preview(apiLevel = 33)
 fun RichDataAddress() {
     CardKeeperTheme {
         CodeRichDataSection(

@@ -151,7 +151,7 @@ fun ScannedCodeDetail(
 }
 
 @Composable
-@Preview(showSystemUi = true)
+@Preview(showSystemUi = true, apiLevel = 33)
 fun ScannedCodeContactPreview() {
     CardKeeperTheme {
         ScannedCodeDetail(code = ScannedCodeEntity(
@@ -165,7 +165,7 @@ fun ScannedCodeContactPreview() {
 }
 
 @Composable
-@Preview(showSystemUi = true)
+@Preview(showSystemUi = true, apiLevel = 33)
 fun ScannedCodeTextPreview() {
     CardKeeperTheme {
         ScannedCodeDetail(code = ScannedCodeEntity(

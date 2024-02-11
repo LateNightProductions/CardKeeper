@@ -98,7 +98,7 @@ fun WifiView(
 }
 
 @Composable
-@Preview(showSystemUi = true)
+@Preview(showSystemUi = true, apiLevel = 33)
 fun WifiPreview() {
     CardKeeperTheme {
 
