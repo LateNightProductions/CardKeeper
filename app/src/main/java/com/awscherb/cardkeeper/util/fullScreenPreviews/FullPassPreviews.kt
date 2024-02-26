@@ -9,12 +9,13 @@ import com.awscherb.cardkeeper.pkpass.util.BarcodeConstants
 import com.awscherb.cardkeeper.pkpass.util.TransitConstants
 import com.awscherb.cardkeeper.ui.pkpassDetail.PassDetail
 import com.awscherb.cardkeeper.ui.theme.CardKeeperTheme
+import com.awscherb.cardkeeper.util.GlobalPreviewNightMode
 import com.awscherb.cardkeeper.util.createBarcode
 import com.awscherb.cardkeeper.util.createPassInfo
 import com.awscherb.cardkeeper.util.createPassModel
 
 @Composable
-@Preview(apiLevel = 33)
+@Preview(apiLevel = 33, uiMode = GlobalPreviewNightMode)
 fun AirlinePreview() {
     CardKeeperTheme {
         PassDetail(
@@ -154,7 +155,7 @@ fun StorePassPdfPreview() {
 }
 
 @Composable
-@Preview(apiLevel = 33)
+@Preview(apiLevel = 33, uiMode = GlobalPreviewNightMode)
 fun GenericPassPreview() {
     CardKeeperTheme {
         PassDetail(

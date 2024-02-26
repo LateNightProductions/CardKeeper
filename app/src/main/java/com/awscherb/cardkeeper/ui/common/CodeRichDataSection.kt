@@ -52,7 +52,7 @@ fun CodeRichDataSection(
                 Text(
                     modifier = Modifier
                         .padding(
-                            vertical = 4.dp,
+                            vertical = 16.dp,
                             horizontal = 4.dp
                         )
                         .fillMaxWidth(),

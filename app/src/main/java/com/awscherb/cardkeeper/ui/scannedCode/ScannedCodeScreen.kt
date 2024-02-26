@@ -37,6 +37,7 @@ import com.awscherb.cardkeeper.ui.common.CodeRichDataSection
 import com.awscherb.cardkeeper.ui.common.ScaffoldScreen
 import com.awscherb.cardkeeper.ui.theme.CardKeeperTheme
 import com.awscherb.cardkeeper.ui.theme.Typography
+import com.awscherb.cardkeeper.util.GlobalPreviewNightMode
 import com.awscherb.cardkeeper.util.SampleContact
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.client.result.ParsedResultType
@@ -144,7 +145,8 @@ fun ScannedCodeDetail(
 
         CodeRichDataSection(
             data = code.text,
-            parsedType = code.parsedType)
+            parsedType = code.parsedType
+        )
 
         Box(modifier = Modifier.height(16.dp))
 
@@ -152,29 +154,33 @@ fun ScannedCodeDetail(
 }
 
 @Composable
-@Preview(showSystemUi = true, apiLevel = 33)
+@Preview(showSystemUi = true, apiLevel = 33, uiMode = GlobalPreviewNightMode)
 fun ScannedCodeContactPreview() {
     CardKeeperTheme {
-        ScannedCodeDetail(code = ScannedCodeEntity(
-            format = BarcodeFormat.QR_CODE,
-            created = 0L,
-            text = SampleContact,
-            parsedType = ParsedResultType.ADDRESSBOOK,
-            title = "Contact"
-        ), paddingValues = PaddingValues())
+        ScannedCodeDetail(
+            code = ScannedCodeEntity(
+                format = BarcodeFormat.QR_CODE,
+                created = 0L,
+                text = SampleContact,
+                parsedType = ParsedResultType.ADDRESSBOOK,
+                title = "Contact"
+            ), paddingValues = PaddingValues()
+        )
     }
 }
 
 @Composable
-@Preview(showSystemUi = true, apiLevel = 33)
+@Preview(showSystemUi = true, apiLevel = 33, uiMode = GlobalPreviewNightMode)
 fun ScannedCodeTextPreview() {
     CardKeeperTheme {
-        ScannedCodeDetail(code = ScannedCodeEntity(
-            format = BarcodeFormat.QR_CODE,
-            created = 0L,
-            text = SampleContact,
-            parsedType = ParsedResultType.TEXT,
-            title = "Contact"
-        ), paddingValues = PaddingValues())
+        ScannedCodeDetail(
+            code = ScannedCodeEntity(
+                format = BarcodeFormat.QR_CODE,
+                created = 0L,
+                text = SampleContact,
+                parsedType = ParsedResultType.TEXT,
+                title = "Contact"
+            ), paddingValues = PaddingValues()
+        )
     }
 }

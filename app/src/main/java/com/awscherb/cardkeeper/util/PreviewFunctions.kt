@@ -1,5 +1,6 @@
 package com.awscherb.cardkeeper.util
 
+import android.content.res.Configuration
 import com.awscherb.cardkeeper.barcode.model.ScannedCodeModel
 import com.awscherb.cardkeeper.core.Barcode
 import com.awscherb.cardkeeper.pkpass.model.FieldObject
@@ -111,6 +112,8 @@ fun createBarcode(
     override val message = message
     override val messageEncoding = messageEncoding
 }
+
+const val GlobalPreviewNightMode = Configuration.UI_MODE_NIGHT_YES
 
 val SampleContact = """
             BEGIN:VCARD

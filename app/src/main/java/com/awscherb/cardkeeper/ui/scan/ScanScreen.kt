@@ -1,6 +1,7 @@
 package com.awscherb.cardkeeper.ui.scan
 
 import android.app.Activity
+import android.content.res.Configuration
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -11,6 +12,7 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
@@ -36,6 +38,7 @@ import com.awscherb.cardkeeper.ui.common.CodeRichDataSection
 import com.awscherb.cardkeeper.ui.common.ScaffoldScreen
 import com.awscherb.cardkeeper.ui.theme.CardKeeperTheme
 import com.awscherb.cardkeeper.util.CapWords
+import com.awscherb.cardkeeper.util.GlobalPreviewNightMode
 import com.awscherb.cardkeeper.util.ParsedTypeUtils
 import com.awscherb.cardkeeper.util.SampleContact
 import com.awscherb.cardkeeper.util.SampleLicense
@@ -182,13 +185,13 @@ fun SaveScanDialog(
                         onClick = { onDismissRequest() },
                         modifier = Modifier.padding(8.dp),
                     ) {
-                        Text("Cancel")
+                        Text("Cancel", color = MaterialTheme.colorScheme.error)
                     }
                     TextButton(
                         onClick = { onConfirmation(title) },
                         modifier = Modifier.padding(8.dp),
                     ) {
-                        Text("Save", color = Color.Blue)
+                        Text("Save", color = MaterialTheme.colorScheme.primary)
                     }
                 }
             }
@@ -197,7 +200,7 @@ fun SaveScanDialog(
 }
 
 @Composable
-@Preview(apiLevel = 33)
+@Preview(apiLevel = 33, uiMode = GlobalPreviewNightMode)
 fun SaveScanDialogContactPreview() {
     CardKeeperTheme {
         SaveScanDialog(
@@ -211,7 +214,7 @@ fun SaveScanDialogContactPreview() {
 }
 
 @Composable
-@Preview(apiLevel = 33)
+@Preview(apiLevel = 33, uiMode = GlobalPreviewNightMode)
 fun SaveScanDialogWifiPreview() {
     CardKeeperTheme {
         SaveScanDialog(
@@ -225,7 +228,7 @@ fun SaveScanDialogWifiPreview() {
 }
 
 @Composable
-@Preview(apiLevel = 33)
+@Preview(apiLevel = 33, uiMode = GlobalPreviewNightMode)
 fun SaveScanDialogLicensePreview() {
     CardKeeperTheme {
         SaveScanDialog(
@@ -239,7 +242,7 @@ fun SaveScanDialogLicensePreview() {
 }
 
 @Composable
-@Preview(apiLevel = 33)
+@Preview(apiLevel = 33, uiMode = GlobalPreviewNightMode)
 fun SaveScanDialogTextPreview() {
     CardKeeperTheme {
         SaveScanDialog(
