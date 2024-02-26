@@ -8,13 +8,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -25,7 +25,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -49,11 +48,29 @@ fun ScannedCodeScreen(
     onDelete: () -> Unit,
     navOnClick: () -> Unit
 ) {
+    val scope = rememberCoroutineScope()
 
     val code by scannedCodeViewModel.card.collectAsState(initial = null)
-    val scope = rememberCoroutineScope()
+    ScannedCodeScreenInner(
+        code = code,
+        onDelete = {
+            scope.launch {
+                scannedCodeViewModel.delete()
+                onDelete()
+            }
+        }, navOnClick = navOnClick
+    )
+}
+
+@Composable
+fun ScannedCodeScreenInner(
+    code: ScannedCodeModel?,
+    startWithDeleteOpen: Boolean = false,
+    onDelete: () -> Unit,
+    navOnClick: () -> Unit
+) {
     var showDeleteMenu by remember {
-        mutableStateOf(false)
+        mutableStateOf(startWithDeleteOpen)
     }
 
     ScaffoldScreen(
@@ -83,13 +100,10 @@ fun ScannedCodeScreen(
                 confirmButton = {
                     TextButton(
                         onClick = {
-                            scope.launch {
-                                scannedCodeViewModel.delete()
-                                onDelete()
-                            }
+                            onDelete()
                         }
                     ) {
-                        Text("Delete", color = Color.Red)
+                        Text("Delete", color = MaterialTheme.colorScheme.error)
                     }
                 },
                 dismissButton = {
@@ -157,14 +171,33 @@ fun ScannedCodeDetail(
 @Preview(showSystemUi = true, apiLevel = 33, uiMode = GlobalPreviewNightMode)
 fun ScannedCodeContactPreview() {
     CardKeeperTheme {
-        ScannedCodeDetail(
+        ScannedCodeScreenInner(
             code = ScannedCodeEntity(
                 format = BarcodeFormat.QR_CODE,
                 created = 0L,
                 text = SampleContact,
                 parsedType = ParsedResultType.ADDRESSBOOK,
                 title = "Contact"
-            ), paddingValues = PaddingValues()
+            ), onDelete = {},
+            navOnClick = {}
+        )
+    }
+}
+
+@Composable
+@Preview(showSystemUi = true, apiLevel = 33, uiMode = GlobalPreviewNightMode)
+fun ScannedCodeContactDeletePreview() {
+    CardKeeperTheme {
+        ScannedCodeScreenInner(
+            code = ScannedCodeEntity(
+                format = BarcodeFormat.QR_CODE,
+                created = 0L,
+                text = SampleContact,
+                parsedType = ParsedResultType.ADDRESSBOOK,
+                title = "Contact"
+            ), onDelete = {},
+            navOnClick = {},
+            startWithDeleteOpen = true
         )
     }
 }
@@ -173,14 +206,16 @@ fun ScannedCodeContactPreview() {
 @Preview(showSystemUi = true, apiLevel = 33, uiMode = GlobalPreviewNightMode)
 fun ScannedCodeTextPreview() {
     CardKeeperTheme {
-        ScannedCodeDetail(
+        ScannedCodeScreenInner(
             code = ScannedCodeEntity(
                 format = BarcodeFormat.QR_CODE,
                 created = 0L,
                 text = SampleContact,
                 parsedType = ParsedResultType.TEXT,
                 title = "Contact"
-            ), paddingValues = PaddingValues()
+            ),
+            onDelete = {},
+            navOnClick = {}
         )
     }
 }
