@@ -52,7 +52,7 @@ class CreateViewModel @Inject constructor(
 
 
 sealed class SaveResult
-object InvalidTitle : SaveResult()
-object InvalidText : SaveResult()
-object SaveSuccess : SaveResult()
+data object InvalidTitle : SaveResult()
+data object InvalidText : SaveResult()
+data object SaveSuccess : SaveResult()
 data class Failure(val e: Throwable) : SaveResult()
