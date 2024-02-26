@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Warning
@@ -56,7 +57,7 @@ fun ScannedCodeScreen(
 
     ScaffoldScreen(
         title = "Code",
-        navIcon = Icons.Default.ArrowBack,
+        navIcon = Icons.AutoMirrored.Default.ArrowBack,
         topBarActions = {
             IconButton(onClick = { showDeleteMenu = true }) {
                 Icon(Icons.Default.Delete, "Delete")

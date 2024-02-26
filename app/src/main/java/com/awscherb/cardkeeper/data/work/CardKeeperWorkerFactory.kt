@@ -10,7 +10,7 @@ import com.awscherb.cardkeeper.pkpass.work.ImportPassWorker
 import com.awscherb.cardkeeper.pkpass.work.UpdatePassWorker
 import com.google.gson.Gson
 
-class CardKeeperWorkerFactory constructor(
+class CardKeeperWorkerFactory(
     private val gson: Gson,
     private val pkPassDao: PkPassDao,
     private val pkPassApi: PkPassApi

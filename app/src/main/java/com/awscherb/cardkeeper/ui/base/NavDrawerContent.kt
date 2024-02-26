@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.List
 import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.NavigationDrawerItem
@@ -33,28 +34,22 @@ fun NavDrawerContent(
             ),
             style = Typography.headlineLarge
         )
-        Divider()
-        NavDrawerRow(
-            selectedItem = selectedItem,
-            destination = Destination.Items,
-            topLevelNav = topLevelNav
-        )
-        NavDrawerRow(
-            selectedItem = selectedItem,
-            destination = Destination.Scan,
-            topLevelNav = topLevelNav
-        )
-        NavDrawerRow(
-            selectedItem = selectedItem,
-            destination = Destination.Create,
-            topLevelNav = topLevelNav
-        )
-        Divider()
-        NavDrawerRow(
-            selectedItem = selectedItem,
-            destination = Destination.About,
-            topLevelNav = topLevelNav
-        )
+        HorizontalDivider()
+        Content.MainSectionItems.forEach { dest ->
+            NavDrawerRow(
+                selectedItem = selectedItem,
+                destination = dest,
+                topLevelNav = topLevelNav
+            )
+        }
+        HorizontalDivider()
+        Content.SecondaryItems.forEach { dest ->
+            NavDrawerRow(
+                selectedItem = selectedItem,
+                destination = dest,
+                topLevelNav = topLevelNav
+            )
+        }
     }
 }
 
@@ -83,7 +78,7 @@ fun NavDrawerRow(
 }
 
 @Composable
-@Preview
+@Preview(apiLevel = 33, showSystemUi = true)
 fun DrawerPreview() {
     CardKeeperTheme {
         NavDrawerContent(selectedItem = Destination.Scan, topLevelNav = { _ -> })

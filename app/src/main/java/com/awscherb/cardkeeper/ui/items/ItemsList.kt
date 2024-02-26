@@ -55,7 +55,7 @@ fun ItemsList(
     }
 }
 
-@Preview
+@Preview(apiLevel = 33)
 @Composable
 fun ItemsListPreview() {
     CardKeeperTheme {

@@ -1,6 +1,7 @@
 package com.awscherb.cardkeeper.ui.base
 
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.List
@@ -14,7 +15,7 @@ sealed class Destination(
 ) {
     data object Items : Destination(
         label = "Items",
-        icon = Icons.Default.List,
+        icon = Icons.AutoMirrored.Default.List,
         dest = "items"
     )
 
@@ -50,9 +51,13 @@ sealed class Destination(
 }
 
 object Content {
-    val MAIN_SECTION_ITEMS = listOf(
+    val MainSectionItems = listOf(
         Destination.Items,
         Destination.Scan,
         Destination.Create
+    )
+
+    val SecondaryItems = listOf<Destination>(
+        Destination.About
     )
 }

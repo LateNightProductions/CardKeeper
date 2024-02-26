@@ -9,9 +9,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Card
-import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
@@ -28,7 +27,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
@@ -163,7 +161,7 @@ fun SaveScanDialog(
                     parsedType = data.parsedResultType
                 )
 
-                Divider(
+                HorizontalDivider(
                     modifier = Modifier.padding(top = 8.dp)
                 )
 
@@ -198,7 +196,7 @@ fun SaveScanDialog(
 }
 
 @Composable
-@Preview
+@Preview(apiLevel = 33)
 fun SaveScanDialogContactPreview() {
     CardKeeperTheme {
         SaveScanDialog(
@@ -212,7 +210,7 @@ fun SaveScanDialogContactPreview() {
 }
 
 @Composable
-@Preview
+@Preview(apiLevel = 33)
 fun SaveScanDialogWifiPreview() {
     CardKeeperTheme {
         SaveScanDialog(
@@ -226,14 +224,14 @@ fun SaveScanDialogWifiPreview() {
 }
 
 @Composable
-@Preview
+@Preview(apiLevel = 33)
 fun SaveScanDialogTextPreview() {
     CardKeeperTheme {
         SaveScanDialog(
             onDismissRequest = { },
             onConfirmation = {},
             data = CreateCodeData(
-                BarcodeFormat.QR_CODE, SampleWifi, "", ParsedResultType.TEXT
+                BarcodeFormat.QR_CODE, "text scanned here", "", ParsedResultType.TEXT
             )
         )
     }

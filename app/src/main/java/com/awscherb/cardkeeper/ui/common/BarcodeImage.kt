@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Card
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -20,7 +21,9 @@ import androidx.compose.ui.unit.dp
 import com.awscherb.cardkeeper.pkpass.model.isSquare
 import com.awscherb.cardkeeper.ui.theme.CardKeeperTheme
 import com.awscherb.cardkeeper.util.BarcodeEncoder
+import com.awscherb.cardkeeper.util.SampleLicense
 import com.google.zxing.BarcodeFormat
+import kotlin.random.Random
 
 @Composable
 fun BarcodeImage(
@@ -75,12 +78,28 @@ fun BarcodeImage(
 }
 
 @Composable
-@Preview
+@Preview(apiLevel = 33, showSystemUi = true)
 fun BarcodeImagePreview() {
     CardKeeperTheme {
-        BarcodeImage(
-            barcodeFormat = BarcodeFormat.QR_CODE,
-            message = "something",
-        )
+        Card {
+            BarcodeImage(
+                barcodeFormat = BarcodeFormat.QR_CODE,
+                message = "something",
+            )
+        }
+    }
+}
+
+@Composable
+@Preview(apiLevel = 33, showSystemUi = true)
+fun BarcodeImagePDF417Preview() {
+
+    CardKeeperTheme {
+        Card {
+            BarcodeImage(
+                barcodeFormat = BarcodeFormat.PDF_417,
+                message = SampleLicense,
+            )
+        }
     }
 }

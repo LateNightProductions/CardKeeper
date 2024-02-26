@@ -36,7 +36,7 @@ fun LinkableRow(
         Icon(
             icon,
             text,
-            modifier=Modifier.align(Alignment.CenterVertically)
+            modifier = Modifier.align(Alignment.CenterVertically)
         )
 
         SelectionContainer {
@@ -60,7 +60,7 @@ fun LinkableRow(
 fun LinkablePhonePreview() {
     CardKeeperTheme {
         Card {
-        LinkableRow(icon = Icons.Default.Phone, text = "312-555-0690")
+            LinkableRow(icon = Icons.Default.Phone, text = "312-555-0690")
         }
     }
 }

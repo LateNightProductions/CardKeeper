@@ -1,5 +1,6 @@
 package com.awscherb.cardkeeper.ui.create
 
+import android.content.res.Configuration
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -22,6 +23,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.UiMode
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import com.awscherb.cardkeeper.R
@@ -60,7 +62,7 @@ fun BarcodeTypeDialog(
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 Text(
-                    text = "Choose a barcode type",
+                    text = "Choose a barcode type:",
                     modifier = Modifier.padding(
                         start = 16.dp,
                         end = 16.dp,
@@ -118,7 +120,7 @@ fun BarcodeRow(
                     .padding(start = 4.dp),
                 painter = painterResource(id = R.drawable.ic_check),
                 contentDescription = "Selected",
-                colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.inversePrimary)
+                colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.surfaceTint)
             )
         }
         Text(
@@ -129,14 +131,14 @@ fun BarcodeRow(
                 )
                 .align(Alignment.CenterVertically),
             text = selectionType.label,
-            color = if (selected) MaterialTheme.colorScheme.inversePrimary else Color.Unspecified
+            color = if (selected) MaterialTheme.colorScheme.surfaceTint else Color.Unspecified
         )
     }
 
 }
 
 @Composable
-@Preview
+@Preview(apiLevel = 33)
 fun SelectionDialogPreview() {
     CardKeeperTheme {
         BarcodeTypeDialog(onDismissRequest = { }, onTypeSelected = {})
@@ -144,7 +146,7 @@ fun SelectionDialogPreview() {
 }
 
 @Composable
-@Preview
+@Preview(apiLevel = 33, uiMode = Configuration.UI_MODE_NIGHT_YES)
 fun SelectionDialogInitialPreview() {
     CardKeeperTheme {
         BarcodeTypeDialog(
@@ -156,7 +158,7 @@ fun SelectionDialogInitialPreview() {
 }
 
 @Composable
-@Preview
+@Preview(apiLevel = 33)
 fun SelectedBarcodeRowPreview() {
     CardKeeperTheme {
         BarcodeRow(
@@ -167,7 +169,7 @@ fun SelectedBarcodeRowPreview() {
 }
 
 @Composable
-@Preview
+@Preview(apiLevel = 33)
 fun UnselectedBarcodeRowPreview() {
     CardKeeperTheme {
         BarcodeRow(

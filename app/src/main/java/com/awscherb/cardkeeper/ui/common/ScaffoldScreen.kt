@@ -5,6 +5,7 @@ package com.awscherb.cardkeeper.ui.common
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Info
@@ -176,7 +177,7 @@ fun ScaffoldScreenSimplePreviewCustomBack() {
     CardKeeperTheme {
         ScaffoldScreen(
             title = "Title", navOnClick = { },
-            navIcon = Icons.Default.ArrowBack
+            navIcon = Icons.AutoMirrored.Default.ArrowBack
         ) {
 
         }

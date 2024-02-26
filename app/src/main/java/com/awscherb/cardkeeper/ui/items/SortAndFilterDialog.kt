@@ -45,10 +45,6 @@ fun SortAndFilterDialog(
         mutableStateOf(initialSort)
     }
 
-    var ascending by remember {
-        mutableStateOf(false)
-    }
-
     Dialog(
         onDismissRequest = onDismissRequest
     ) {
@@ -159,7 +155,7 @@ val ALL_FILTER = listOf(
 )
 
 @Composable
-@Preview(showSystemUi = true)
+@Preview(showSystemUi = true, apiLevel = 33)
 fun SortAndFilterPreview() {
     CardKeeperTheme {
         SortAndFilterDialog(

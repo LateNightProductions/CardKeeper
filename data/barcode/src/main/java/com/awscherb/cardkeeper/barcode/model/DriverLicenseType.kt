@@ -1,5 +1,8 @@
 package com.awscherb.cardkeeper.barcode.model
 
+import java.text.SimpleDateFormat
+import java.util.Calendar
+
 data class DriverLicenseType(
     val firstName: String,
     val lastName: String,
@@ -15,6 +18,10 @@ data class DriverLicenseType(
     fun getFullName() = "$firstName $lastName"
 
     companion object Matcher : ExtendedTypeParser<DriverLicenseType> {
+
+        private val DateFormat = SimpleDateFormat("MMM d, yyyy")
+        private val CalenderInstance = Calendar.getInstance()
+
         override fun inputMatches(input: String): Boolean {
             return input.contains("DCA", ignoreCase = true) ||
                     input.contains("DCT", ignoreCase = true)
@@ -58,10 +65,15 @@ data class DriverLicenseType(
         }
 
         private fun String.toPrettyDate(): String {
-            val month = substring(0..<2)
-            val day = substring(2..<4)
-            val year = substring(4..<length)
-            return "$month-$day-$year"
+            val month = substring(0..<2).toInt()
+            val day = substring(2..<4).toInt()
+            val year = substring(4..<length).toInt()
+            with(CalenderInstance) {
+                set(Calendar.MONTH, month)
+                set(Calendar.DAY_OF_MONTH, day)
+                set(Calendar.YEAR, year)
+            }
+            return DateFormat.format(CalenderInstance.time)
         }
     }
 }

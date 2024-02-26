@@ -29,7 +29,6 @@ fun UriView(
             icon = Public, text = uri.title ?: uri.uri,
             modifier = Modifier.padding(top = 8.dp)
         )
-
     }
 }
 

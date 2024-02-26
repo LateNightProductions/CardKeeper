@@ -14,7 +14,7 @@ import com.awscherb.cardkeeper.util.createPassInfo
 import com.awscherb.cardkeeper.util.createPassModel
 
 @Composable
-@Preview
+@Preview(apiLevel = 33)
 fun AirlinePreview() {
     CardKeeperTheme {
         PassDetail(
@@ -54,7 +54,7 @@ fun AirlinePreview() {
 }
 
 @Composable
-@Preview
+@Preview(apiLevel = 33)
 fun GenericPreview() {
     CardKeeperTheme {
         PassDetail(
@@ -89,7 +89,7 @@ fun GenericPreview() {
 }
 
 @Composable
-@Preview
+@Preview(apiLevel = 33)
 fun StorePassQrPreview() {
     CardKeeperTheme {
         PassDetail(
@@ -124,7 +124,7 @@ fun StorePassQrPreview() {
 }
 
 @Composable
-@Preview
+@Preview(apiLevel = 33)
 fun StorePassPdfPreview() {
     CardKeeperTheme {
         PassDetail(
@@ -154,7 +154,7 @@ fun StorePassPdfPreview() {
 }
 
 @Composable
-@Preview
+@Preview(apiLevel = 33)
 fun GenericPassPreview() {
     CardKeeperTheme {
         PassDetail(

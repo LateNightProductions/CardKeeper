@@ -68,9 +68,6 @@ fun DriverLicenseView(
         LinkableRow(
             icon = Icons.Default.DateRange, text = "Expires ${license.expiration}",
         )
-
-
-
     }
 }
 

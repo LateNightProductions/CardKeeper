@@ -67,7 +67,7 @@ class CardKeeperActivity : ComponentActivity() {
                 val cameraPermissionState = rememberPermissionState(Manifest.permission.CAMERA)
                 navController = rememberNavController()
                 var selectedItem by remember {
-                    mutableStateOf<Destination>(startDest)
+                    mutableStateOf(startDest)
                 }
                 val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
                 val scope = rememberCoroutineScope()
