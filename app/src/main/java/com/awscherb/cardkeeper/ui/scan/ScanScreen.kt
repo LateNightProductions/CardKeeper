@@ -38,6 +38,7 @@ import com.awscherb.cardkeeper.ui.theme.CardKeeperTheme
 import com.awscherb.cardkeeper.util.CapWords
 import com.awscherb.cardkeeper.util.ParsedTypeUtils
 import com.awscherb.cardkeeper.util.SampleContact
+import com.awscherb.cardkeeper.util.SampleLicense
 import com.awscherb.cardkeeper.util.SampleWifi
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.client.result.ParsedResultType
@@ -218,6 +219,20 @@ fun SaveScanDialogWifiPreview() {
             onConfirmation = {},
             data = CreateCodeData(
                 BarcodeFormat.QR_CODE, SampleWifi, "title", ParsedResultType.WIFI
+            )
+        )
+    }
+}
+
+@Composable
+@Preview(apiLevel = 33)
+fun SaveScanDialogLicensePreview() {
+    CardKeeperTheme {
+        SaveScanDialog(
+            onDismissRequest = { },
+            onConfirmation = {},
+            data = CreateCodeData(
+                BarcodeFormat.PDF_417, SampleLicense, "", ParsedResultType.TEXT
             )
         )
     }
