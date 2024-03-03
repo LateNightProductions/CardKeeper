@@ -113,7 +113,7 @@ fun createBarcode(
     override val messageEncoding = messageEncoding
 }
 
-const val GlobalPreviewNightMode = Configuration.UI_MODE_NIGHT_YES
+const val GlobalPreviewNightMode = Configuration.UI_MODE_NIGHT_NO
 
 val SampleContact = """
             BEGIN:VCARD

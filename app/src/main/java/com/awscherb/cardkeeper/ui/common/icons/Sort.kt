@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+// From https://androidx.tech/artifacts/compose.material/material-icons-extended-android/
 
 import androidx.compose.material.icons.materialIcon
 import androidx.compose.material.icons.materialPath

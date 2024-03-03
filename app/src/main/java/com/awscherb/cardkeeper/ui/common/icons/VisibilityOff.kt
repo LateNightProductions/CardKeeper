@@ -16,6 +16,7 @@ package com.awscherb.cardkeeper.ui.common.icons
  * limitations under the License.
  */
 
+// From https://androidx.tech/artifacts/compose.material/material-icons-extended-android/
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.materialIcon

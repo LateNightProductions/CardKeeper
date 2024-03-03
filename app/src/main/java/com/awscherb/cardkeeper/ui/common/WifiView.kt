@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.selection.SelectionContainer
-import androidx.compose.material.icons.Icons
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -22,10 +21,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.awscherb.cardkeeper.ui.common.icons.NetworkWifi
-import com.awscherb.cardkeeper.ui.common.icons.Password
 import com.awscherb.cardkeeper.ui.common.icons.Visibility
 import com.awscherb.cardkeeper.ui.common.icons.VisibilityOff
-import com.awscherb.cardkeeper.ui.common.icons.WifiPassword
 import com.awscherb.cardkeeper.ui.theme.CardKeeperTheme
 import com.awscherb.cardkeeper.ui.theme.Typography
 import com.awscherb.cardkeeper.util.SampleWifi
