@@ -18,8 +18,8 @@ android {
         minSdk = 24
         targetSdk = 34
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        versionCode = 201
-        versionName = "2.1"
+        versionCode = 218
+        versionName = "2.2"
     }
 
     flavorDimensions += "env"
