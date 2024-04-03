@@ -1,6 +1,9 @@
 package com.awscherb.cardkeeper.ui.pkpassDetail
 
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -16,11 +19,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.blur
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import coil.compose.AsyncImage
 import com.awscherb.cardkeeper.pkpass.model.PassInfoType
 import com.awscherb.cardkeeper.pkpass.model.PkPassModel
 import com.awscherb.cardkeeper.pkpass.model.canBeUpdated
@@ -33,6 +39,7 @@ import com.awscherb.cardkeeper.ui.common.BarcodeSection
 import com.awscherb.cardkeeper.ui.common.PkPassHeaderView
 import com.awscherb.cardkeeper.ui.common.ScaffoldScreen
 import com.awscherb.cardkeeper.ui.theme.CardKeeperTheme
+import com.awscherb.cardkeeper.util.SampleEvent
 import com.awscherb.cardkeeper.util.SampleFlight
 import com.awscherb.cardkeeper.util.SampleGenericPass2
 
@@ -129,37 +136,52 @@ fun PassDetail(
         modifier = modifier
             .padding(padding)
             .padding(horizontal = 8.dp, vertical = 8.dp),
-
         colors = CardDefaults.cardColors(
             containerColor = Color(pass.backgroundColor.parseHexColor())
         )
     ) {
-        PkPassHeaderView(
-            pass = pass
-        )
 
-        pass.findPassInfo()?.let { passInfo ->
-            when (pass.passInfoType) {
-                PassInfoType.BOARDING_PASS -> BoardingPass(pass, passInfo)
-                PassInfoType.STORE_CARD -> StoreCard(pass, passInfo)
-                PassInfoType.COUPON -> Coupon(pass, passInfo)
-                PassInfoType.GENERIC -> Generic(pass, passInfo)
-                PassInfoType.EVENT_TICKET -> Event(pass, passInfo)
-                null -> {}
+        Box {
+            pass.backgroundPath?.let { background ->
+                AsyncImage(
+                    model = background,
+                    contentDescription = "Background",
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .blur(radius = 32.dp)
+                )
             }
-        }
 
-        pass.findFirstBarcode()?.let { barcode ->
-            BarcodeSection(
-                modifier = Modifier.padding(
-                    top = if (pass.footerPath != null) 0.dp else 16.dp,
-                ),
-                message = barcode.message,
-                barcodeFormat = barcode.format.toBarcodeFormat(),
-                altText = barcode.altText,
-                altColor = Color(pass.foregroundColor.parseHexColor()),
-                backgroundColor = Color.White
-            )
+            Column {
+                PkPassHeaderView(
+                    pass = pass
+                )
+
+                pass.findPassInfo()?.let { passInfo ->
+                    when (pass.passInfoType) {
+                        PassInfoType.BOARDING_PASS -> BoardingPass(pass, passInfo)
+                        PassInfoType.STORE_CARD -> StoreCard(pass, passInfo)
+                        PassInfoType.COUPON -> Coupon(pass, passInfo)
+                        PassInfoType.GENERIC -> Generic(pass, passInfo)
+                        PassInfoType.EVENT_TICKET -> Event(pass, passInfo)
+                        null -> {}
+                    }
+                }
+
+
+                pass.findFirstBarcode()?.let { barcode ->
+                    BarcodeSection(
+                        modifier = Modifier.padding(
+                            top = if (pass.footerPath != null) 0.dp else 16.dp,
+                        ),
+                        message = barcode.message,
+                        barcodeFormat = barcode.format.toBarcodeFormat(),
+                        altText = barcode.altText,
+                        altColor = Color(pass.foregroundColor.parseHexColor()),
+                        backgroundColor = Color.White,
+                    )
+                }
+            }
         }
     }
 }
@@ -222,6 +244,20 @@ fun PassDetailGenericScreenPreview() {
             backItems = listOf("" to ""),
             isAutoUpdateOn = false,
             pass = SampleGenericPass2,
+            navOnClick = { }) {
+        }
+    }
+}
+
+
+@Preview(showSystemUi = true)
+@Composable
+fun PassDetailEventScreenPreview() {
+    CardKeeperTheme {
+        PassDetailScreenInner(
+            backItems = listOf("" to ""),
+            isAutoUpdateOn = false,
+            pass = SampleEvent,
             navOnClick = { }) {
         }
     }

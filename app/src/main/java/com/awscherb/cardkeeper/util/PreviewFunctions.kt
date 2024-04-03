@@ -235,6 +235,32 @@ val SampleStorePass = createPassModel(
     )
 )
 
+val SampleEvent = createPassModel(
+    backgroundColor = "rgb(219, 235, 52)",
+    foregroundColor = "rgb(0,0,0)",
+    labelColor = "rgb(0,0,0)",
+    barcode = createBarcode(
+        altText = "1234",
+        format = BarcodeConstants.FORMAT_PDF_417
+    ),
+    eventTicket = createPassInfo(
+        primaryFields = listOf(
+            FieldObject(
+                "balance", "remaining balance", "21.75"
+            )
+        ),
+        headerFields = listOf(
+            FieldObject("key", null, "Loyalty")
+        ),
+        auxiliaryFields = listOf(
+            FieldObject("accountNumber", "Account Number", "1234"),
+        ),
+        secondaryFields = listOf(
+            FieldObject("expiresOn", "Expires On", "12/31/23"),
+        )
+    )
+)
+
 val SamplePdfPass = createPassModel(
     backgroundColor = "rgb(200, 50, 43)",
     foregroundColor = "rgb(0,0,0)",

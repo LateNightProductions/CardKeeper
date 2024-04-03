@@ -19,7 +19,7 @@ import com.awscherb.cardkeeper.util.createScannedCode
 @Composable
 fun ScannedCodeItem(
     item: ScannedCodeModel,
-    /** Set text length to one line and ellipsize */
+    showBarcode: Boolean = true,
     onClick: (ScannedCodeModel) -> Unit,
 ) {
     ElevatedCard(
@@ -35,10 +35,12 @@ fun ScannedCodeItem(
                 .padding(start = 8.dp, end = 8.dp, top = 16.dp, bottom = 8.dp)
         )
 
+        if (showBarcode) {
         BarcodeImage(
             barcodeFormat = item.format,
             message = item.text,
         )
+        }
 
         ScannedCodeTextPreview(
             modifier = Modifier.padding(top = 16.dp),
@@ -55,6 +57,17 @@ fun ScannedCodePreview() {
     CardKeeperTheme {
         ScannedCodeItem(
             item = createScannedCode(),
+            onClick = {})
+    }
+}
+
+@Composable
+@Preview
+fun ScannedCodeNoBarcodePreview() {
+    CardKeeperTheme {
+        ScannedCodeItem(
+            item = createScannedCode(),
+            showBarcode = false,
             onClick = {})
     }
 }
