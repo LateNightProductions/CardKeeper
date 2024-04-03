@@ -1,9 +1,11 @@
 package com.awscherb.cardkeeper.ui.pkpassDetail
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -19,10 +21,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.blur
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -132,6 +135,7 @@ fun PassDetail(
     padding: PaddingValues,
     pass: PkPassModel,
 ) {
+
     Card(
         modifier = modifier
             .padding(padding)
@@ -152,28 +156,42 @@ fun PassDetail(
                 )
             }
 
-            Column {
-                PkPassHeaderView(
-                    pass = pass
-                )
+            val heightModifier = if (pass.backgroundPath != null) {
 
-                pass.findPassInfo()?.let { passInfo ->
-                    when (pass.passInfoType) {
-                        PassInfoType.BOARDING_PASS -> BoardingPass(pass, passInfo)
-                        PassInfoType.STORE_CARD -> StoreCard(pass, passInfo)
-                        PassInfoType.COUPON -> Coupon(pass, passInfo)
-                        PassInfoType.GENERIC -> Generic(pass, passInfo)
-                        PassInfoType.EVENT_TICKET -> Event(pass, passInfo)
-                        null -> {}
+                val height = LocalDensity.current.run {
+                    (LocalConfiguration.current.screenWidthDp - 16.toDp().toPx()) * (220f / 180f)
+                }.dp
+                Modifier.height(height = height)
+            } else {
+                Modifier
+            }
+            Column(
+                modifier = heightModifier,
+                verticalArrangement = Arrangement.SpaceBetween
+            ) {
+                Column {
+                    PkPassHeaderView(
+                        pass = pass
+                    )
+
+                    pass.findPassInfo()?.let { passInfo ->
+                        when (pass.passInfoType) {
+                            PassInfoType.BOARDING_PASS -> BoardingPass(pass, passInfo)
+                            PassInfoType.STORE_CARD -> StoreCard(pass, passInfo)
+                            PassInfoType.COUPON -> Coupon(pass, passInfo)
+                            PassInfoType.GENERIC -> Generic(pass, passInfo)
+                            PassInfoType.EVENT_TICKET -> Event(pass, passInfo)
+                            null -> {}
+                        }
                     }
                 }
 
-
                 pass.findFirstBarcode()?.let { barcode ->
                     BarcodeSection(
-                        modifier = Modifier.padding(
-                            top = if (pass.footerPath != null) 0.dp else 16.dp,
-                        ),
+                        modifier = Modifier
+                            .padding(
+                                top = if (pass.footerPath != null) 0.dp else 16.dp,
+                            ),
                         message = barcode.message,
                         barcodeFormat = barcode.format.toBarcodeFormat(),
                         altText = barcode.altText,
