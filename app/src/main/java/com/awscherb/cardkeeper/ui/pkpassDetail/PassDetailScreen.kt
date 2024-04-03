@@ -18,6 +18,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.awscherb.cardkeeper.pkpass.model.PassInfoType
@@ -31,6 +32,8 @@ import com.awscherb.cardkeeper.pkpass.model.toBarcodeFormat
 import com.awscherb.cardkeeper.ui.common.BarcodeSection
 import com.awscherb.cardkeeper.ui.common.PkPassHeaderView
 import com.awscherb.cardkeeper.ui.common.ScaffoldScreen
+import com.awscherb.cardkeeper.ui.theme.CardKeeperTheme
+import com.awscherb.cardkeeper.util.SampleFlight
 
 @Composable
 fun PassDetailScreen(
@@ -40,12 +43,35 @@ fun PassDetailScreen(
     val pass by passDetailViewModel.pass.collectAsState(initial = null)
     val isAutoUpdateOn by passDetailViewModel.shouldUpdate.collectAsState(initial = false)
     val backItems by passDetailViewModel.backItems.collectAsState(initial = emptyList())
+
+    pass?.let {
+        PassDetailScreenInner(
+            backItems = backItems,
+            isAutoUpdateOn = isAutoUpdateOn,
+            pass = it,
+            navOnClick = navOnClick,
+            setAutoUpdate = passDetailViewModel::setAutoUpdate
+        )
+    }
+}
+
+@Composable
+fun PassDetailScreenInner(
+    backItems: List<Pair<String, String>>,
+    isAutoUpdateOn: Boolean,
+    pass: PkPassModel,
+    startShowingBackInfo: Boolean = false,
+    startShowingAutoUpdate: Boolean = false,
+    navOnClick: () -> Unit,
+    setAutoUpdate: (Boolean) -> Unit
+) {
     var showBackInfo by remember {
-        mutableStateOf(false)
+        mutableStateOf(startShowingBackInfo)
     }
     var showUpdateSettings by remember {
-        mutableStateOf(false)
+        mutableStateOf(startShowingAutoUpdate)
     }
+
 
     ScaffoldScreen(title = "Pass",
         navIcon = Icons.AutoMirrored.Default.ArrowBack,
@@ -60,7 +86,7 @@ fun PassDetailScreen(
                 }
             }
 
-            if (pass?.canBeUpdated() == true) {
+            if (pass.canBeUpdated()) {
                 IconButton(onClick = {
                     showBackInfo = false
                     showUpdateSettings = true
@@ -69,28 +95,26 @@ fun PassDetailScreen(
                 }
             }
         }) {
-        pass?.let { pass ->
-            if (showBackInfo) {
-                PassInfoDialog(items = backItems) {
-                    showBackInfo = false
+        if (showBackInfo) {
+            PassInfoDialog(items = backItems) {
+                showBackInfo = false
+            }
+        }
+
+        if (showUpdateSettings) {
+            PassUpdateSettingsDialog(
+                isAutoUpdateOn = isAutoUpdateOn,
+                onDismissRequest = { showUpdateSettings = false },
+                onUpdateSettingsChanged = { update ->
+                    setAutoUpdate(update)
                 }
-            }
-
-            if (showUpdateSettings) {
-                PassUpdateSettingsDialog(
-                    isAutoUpdateOn = isAutoUpdateOn,
-                    onDismissRequest = { showUpdateSettings = false },
-                    onUpdateSettingsChanged = {
-                        passDetailViewModel.setAutoUpdate(it)
-                    }
-                )
-            }
-
-            PassDetail(
-                padding = it,
-                pass = pass,
             )
         }
+
+        PassDetail(
+            padding = it,
+            pass = pass,
+        )
     }
 }
 
@@ -135,6 +159,55 @@ fun PassDetail(
                 altColor = Color(pass.foregroundColor.parseHexColor()),
                 backgroundColor = Color.White
             )
+        }
+    }
+}
+
+@Preview(showSystemUi = true)
+@Composable
+fun PassDetailScreenPreview() {
+    CardKeeperTheme {
+        PassDetailScreenInner(
+            backItems = listOf("" to ""),
+            isAutoUpdateOn = false,
+            pass = SampleFlight,
+            navOnClick = { }) {
+        }
+    }
+}
+
+@Preview(showSystemUi = true)
+@Composable
+fun PassDetailScreenBackPreview() {
+    CardKeeperTheme {
+        PassDetailScreenInner(
+            backItems = listOf(
+                "Gate" to "A4",
+                "Departure" to "JFK",
+                "Arrival" to "LAX"
+            ),
+            isAutoUpdateOn = false,
+            startShowingBackInfo = true,
+            pass = SampleFlight,
+            navOnClick = { }) {
+        }
+    }
+}
+
+@Preview(showSystemUi = true)
+@Composable
+fun PassDetailScreenAutoUpdatePreview() {
+    CardKeeperTheme {
+        PassDetailScreenInner(
+            backItems = listOf(
+                "Gate" to "A4",
+                "Departure" to "JFK",
+                "Arrival" to "LAX"
+            ),
+            isAutoUpdateOn = true,
+            startShowingAutoUpdate = true,
+            pass = SampleFlight,
+            navOnClick = { }) {
         }
     }
 }

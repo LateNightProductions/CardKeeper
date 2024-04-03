@@ -7,6 +7,7 @@ import com.awscherb.cardkeeper.pkpass.model.FieldObject
 import com.awscherb.cardkeeper.pkpass.model.PassInfo
 import com.awscherb.cardkeeper.pkpass.model.PkPassModel
 import com.awscherb.cardkeeper.pkpass.util.BarcodeConstants
+import com.awscherb.cardkeeper.pkpass.util.TransitConstants
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.client.result.ParsedResultType
 import java.util.Date
@@ -131,7 +132,7 @@ val SampleContact = """
             END:VCARD
             """.trimIndent()
 
-val SampleLicense= """
+val SampleLicense = """
     @
     ANSI 1234
     DCTFirstname
@@ -150,3 +151,131 @@ val SampleWifi = "WIFI:T:WPA;S:network_name;P:passsw0rd;H:;"
 val SampleTel = "TEL:3125550690"
 
 val SampleEmail = "mailto:recip@example.com?cc=other@example.com&subject=hello&body=email body"
+
+val SampleFlight = createPassModel(
+    backgroundColor = "rgb(50,168,96)",
+    foregroundColor = "rgb(255,255,255)",
+    labelColor = "rgb(255,255,255)",
+    logoText = "Flight",
+    barcode = createBarcode(
+        altText = "Alt Text"
+    ),
+    boardingPass = createPassInfo(
+        transitType = TransitConstants.TYPE_AIR,
+        headerFields = listOf(
+            FieldObject("key", "FLIGHT", "DL123"),
+            FieldObject("key", "GATE", "50")
+        ),
+        primaryFields = listOf(
+            FieldObject("origin", "NEW YORK", "JFK"),
+            FieldObject("destination", "LOS ANGELES", "LAX")
+        ),
+        auxiliaryFields = listOf(
+            FieldObject("terminal", "TERMINAL", "4"),
+            FieldObject("gate", "GATE", "50"),
+            FieldObject("seat", "SEAT", "10A"),
+            FieldObject("zone", "ZONE", "1"),
+        ),
+        secondaryFields = listOf(
+            FieldObject("passenger", "PASSENGER", "Joe Android"),
+            FieldObject("boardingTime", "BOARDING", "12:00 PM"),
+        )
+    )
+)
+
+val SampleGenericTravel = createPassModel(
+    backgroundColor = "rgb(87,28,220)",
+    foregroundColor = "rgb(255,255,255)",
+    labelColor = "rgb(255,255,255)",
+    barcode = createBarcode(
+        altText = "Alt Text",
+        format = BarcodeConstants.FORMAT_PDF_417
+    ),
+    boardingPass = createPassInfo(
+        transitType = "other",
+        headerFields = listOf(
+            FieldObject("key", "TRACK", "4")
+        ),
+        primaryFields = listOf(
+            FieldObject("origin", "NYP", "PENN"),
+            FieldObject("destination", "EWR", "EWR")
+        ),
+        auxiliaryFields = listOf(
+            FieldObject("terminal", "TRACK", "4"),
+        ),
+        secondaryFields = listOf(
+            FieldObject("boardingTime", "BOARDING", "12:00 PM"),
+        )
+    )
+)
+
+val SampleStorePass = createPassModel(
+    backgroundColor = "rgb(219, 235, 52)",
+    foregroundColor = "rgb(0,0,0)",
+    labelColor = "rgb(0,0,0)",
+    barcode = createBarcode(
+        altText = "1234",
+        format = BarcodeConstants.FORMAT_QR
+    ),
+    storeCard = createPassInfo(
+        primaryFields = listOf(
+            FieldObject(
+                "balance", "remaining balance", "21.75"
+            )
+        ),
+        headerFields = listOf(
+            FieldObject("key", null, "Loyalty")
+        ),
+        auxiliaryFields = listOf(
+            FieldObject("accountNumber", "Account Number", "1234"),
+        ),
+        secondaryFields = listOf(
+            FieldObject("expiresOn", "Expires On", "12/31/23"),
+        )
+    )
+)
+
+val SamplePdfPass = createPassModel(
+    backgroundColor = "rgb(200, 50, 43)",
+    foregroundColor = "rgb(0,0,0)",
+    labelColor = "rgb(0,0,0)",
+    barcode = createBarcode(
+        altText = "1234",
+        format = BarcodeConstants.FORMAT_PDF_417
+    ),
+    storeCard = createPassInfo(
+        headerFields = listOf(
+            FieldObject("key", null, "Loyalty")
+        ),
+        auxiliaryFields = listOf(
+            FieldObject("accountNumber", "Account Number", "1234"),
+        ),
+        secondaryFields = listOf(
+            FieldObject("expiresOn", "Expires On", "12/31/23"),
+        )
+    )
+)
+
+val SampleGenericPass = createPassModel(
+    backgroundColor = "rgb(128, 200, 45)",
+    foregroundColor = "rgb(0,0,0)",
+    labelColor = "rgb(0,0,0)",
+    barcode = createBarcode(
+        altText = "1234",
+        format = BarcodeConstants.FORMAT_PDF_417
+    ),
+    generic = createPassInfo(
+        headerFields = listOf(
+            FieldObject("key", null, "Card Keeper Giant Card")
+        ),
+        primaryFields = listOf(
+            FieldObject("key", null, "Card Keeper Giant Card")
+        ),
+        auxiliaryFields = listOf(
+            FieldObject("accountNumber", "Account Number", "1234"),
+        ),
+        secondaryFields = listOf(
+            FieldObject("expiresOn", "Expires On", "12/31/23"),
+        )
+    )
+)
