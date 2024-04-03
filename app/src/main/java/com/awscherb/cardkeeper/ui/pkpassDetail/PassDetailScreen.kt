@@ -34,6 +34,7 @@ import com.awscherb.cardkeeper.ui.common.PkPassHeaderView
 import com.awscherb.cardkeeper.ui.common.ScaffoldScreen
 import com.awscherb.cardkeeper.ui.theme.CardKeeperTheme
 import com.awscherb.cardkeeper.util.SampleFlight
+import com.awscherb.cardkeeper.util.SampleGenericPass2
 
 @Composable
 fun PassDetailScreen(
@@ -143,7 +144,7 @@ fun PassDetail(
                 PassInfoType.STORE_CARD -> StoreCard(pass, passInfo)
                 PassInfoType.COUPON -> Coupon(pass, passInfo)
                 PassInfoType.GENERIC -> Generic(pass, passInfo)
-                PassInfoType.EVENT_TICKET -> {}
+                PassInfoType.EVENT_TICKET -> Event(pass, passInfo)
                 null -> {}
             }
         }
@@ -151,7 +152,7 @@ fun PassDetail(
         pass.findFirstBarcode()?.let { barcode ->
             BarcodeSection(
                 modifier = Modifier.padding(
-                    top = if (pass.footerPath != null) 0.dp else 16.dp
+                    top = if (pass.footerPath != null) 0.dp else 16.dp,
                 ),
                 message = barcode.message,
                 barcodeFormat = barcode.format.toBarcodeFormat(),
@@ -212,3 +213,16 @@ fun PassDetailScreenAutoUpdatePreview() {
     }
 }
 
+
+@Preview(showSystemUi = true)
+@Composable
+fun PassDetailGenericScreenPreview() {
+    CardKeeperTheme {
+        PassDetailScreenInner(
+            backItems = listOf("" to ""),
+            isAutoUpdateOn = false,
+            pass = SampleGenericPass2,
+            navOnClick = { }) {
+        }
+    }
+}

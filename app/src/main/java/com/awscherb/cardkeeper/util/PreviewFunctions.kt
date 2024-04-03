@@ -279,3 +279,26 @@ val SampleGenericPass = createPassModel(
         )
     )
 )
+
+val SampleGenericPass2 = createPassModel(
+    backgroundColor = "rgb(128, 200, 45)",
+    foregroundColor = "rgb(0,0,0)",
+    labelColor = "rgb(0,0,0)",
+    barcode = createBarcode(
+        format = BarcodeConstants.FORMAT_PDF_417
+    ),
+    generic = createPassInfo(
+        headerFields = listOf(
+            FieldObject("key", null, "Card Keeper Giant Card")
+        ),
+        primaryFields = listOf(
+            FieldObject("key", null, "Card Keeper Giant Card")
+        ),
+        auxiliaryFields = listOf(
+            FieldObject("accountNumber", "Account Number", "1234"),
+        ),
+        secondaryFields = listOf(
+            FieldObject("expiresOn", "Expires On", "12/31/23"),
+        )
+    )
+)

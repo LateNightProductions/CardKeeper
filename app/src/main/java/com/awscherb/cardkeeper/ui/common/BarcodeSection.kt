@@ -1,7 +1,9 @@
 package com.awscherb.cardkeeper.ui.common
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material3.Text
@@ -51,26 +53,29 @@ fun BarcodeSection(
             modifier = modifier
         )
 
-        altText?.let { alt ->
+        if (altText != null) {
             SelectionContainer {
                 Text(
                     modifier = Modifier
                         .padding(
+                            top = 8.dp,
                             start = 4.dp,
                             end = 4.dp,
-                            bottom = 8.dp
+                            bottom = 16.dp
                         )
                         .fillMaxWidth()
                         .align(Alignment.CenterHorizontally),
-                    text = alt,
+                    text = altText,
                     overflow = TextOverflow.Ellipsis,
                     maxLines = if (altTextIsPreview) 1 else Int.MAX_VALUE,
                     textAlign = TextAlign.Center,
                     color = altColor,
                 )
             }
-
+        } else {
+            Spacer(modifier = Modifier.height(16.dp))
         }
+
     }
 }
 
