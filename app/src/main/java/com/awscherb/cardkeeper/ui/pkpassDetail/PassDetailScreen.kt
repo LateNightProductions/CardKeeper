@@ -44,22 +44,20 @@ fun PassDetailScreen(
     val isAutoUpdateOn by passDetailViewModel.shouldUpdate.collectAsState(initial = false)
     val backItems by passDetailViewModel.backItems.collectAsState(initial = emptyList())
 
-    pass?.let {
-        PassDetailScreenInner(
-            backItems = backItems,
-            isAutoUpdateOn = isAutoUpdateOn,
-            pass = it,
-            navOnClick = navOnClick,
-            setAutoUpdate = passDetailViewModel::setAutoUpdate
-        )
-    }
+    PassDetailScreenInner(
+        backItems = backItems,
+        isAutoUpdateOn = isAutoUpdateOn,
+        pass = pass,
+        navOnClick = navOnClick,
+        setAutoUpdate = passDetailViewModel::setAutoUpdate
+    )
 }
 
 @Composable
 fun PassDetailScreenInner(
     backItems: List<Pair<String, String>>,
     isAutoUpdateOn: Boolean,
-    pass: PkPassModel,
+    pass: PkPassModel?,
     startShowingBackInfo: Boolean = false,
     startShowingAutoUpdate: Boolean = false,
     navOnClick: () -> Unit,
@@ -86,7 +84,7 @@ fun PassDetailScreenInner(
                 }
             }
 
-            if (pass.canBeUpdated()) {
+            if (pass?.canBeUpdated() == true) {
                 IconButton(onClick = {
                     showBackInfo = false
                     showUpdateSettings = true
@@ -111,10 +109,12 @@ fun PassDetailScreenInner(
             )
         }
 
-        PassDetail(
-            padding = it,
-            pass = pass,
-        )
+        pass?.let { pass ->
+            PassDetail(
+                padding = it,
+                pass = pass,
+            )
+        }
     }
 }
 
