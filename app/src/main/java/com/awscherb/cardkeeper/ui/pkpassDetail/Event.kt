@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -30,7 +31,6 @@ import com.awscherb.cardkeeper.ui.common.getAlignmentForFieldText
  */
 @Composable
 fun Event(pass: PkPassModel, passInfo: PassInfo) {
-    // TODO strip vs background image pass
     Box {
         pass.stripPath?.let {
             AsyncImage(
@@ -41,12 +41,27 @@ fun Event(pass: PkPassModel, passInfo: PassInfo) {
             )
         }
 
-        passInfo.primaryFields?.firstOrNull()?.let { primary ->
-            EventTextView(
-                modifier = Modifier.padding(horizontal = 8.dp),
-                pass = pass,
-                primary = primary
-            )
+        Row {
+            passInfo.primaryFields?.firstOrNull()?.let { primary ->
+                EventTextView(
+                    modifier = Modifier
+                        .padding(horizontal = 8.dp)
+                        .weight(.75f),
+                    pass = pass,
+                    primary = primary
+                )
+            }
+
+            pass.thumbnailPath?.let { thumbnail ->
+                AsyncImage(
+                    modifier = Modifier
+                        .padding(horizontal = 8.dp)
+                        .align(Alignment.CenterVertically)
+                        .weight(.25f),
+                    model = thumbnail,
+                    contentDescription = "Thumbnail",
+                )
+            }
         }
     }
 
