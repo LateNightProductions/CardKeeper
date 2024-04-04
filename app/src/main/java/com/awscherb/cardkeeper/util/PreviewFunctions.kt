@@ -244,19 +244,32 @@ val SampleEvent = createPassModel(
         format = BarcodeConstants.FORMAT_PDF_417
     ),
     eventTicket = createPassInfo(
-        primaryFields = listOf(
-            FieldObject(
-                "balance", "remaining balance", "21.75"
-            )
-        ),
-        headerFields = listOf(
-            FieldObject("key", null, "Loyalty")
-        ),
         auxiliaryFields = listOf(
-            FieldObject("accountNumber", "Account Number", "1234"),
+            FieldObject("Visit Date", "Visit Date", "4/3/2024"),
+            FieldObject("Time", "Time", "12:00 PM"),
         ),
         secondaryFields = listOf(
-            FieldObject("expiresOn", "Expires On", "12/31/23"),
+            FieldObject("Details", "Details", "Details On Back"),
+        )
+    )
+)
+val SampleEvent2 = createPassModel(
+    backgroundColor = "rgb(219, 235, 52)",
+    foregroundColor = "rgb(0,0,0)",
+    labelColor = "rgb(0,0,0)",
+    backgroundPath = "path",
+
+    stripPath = null,
+    barcode = createBarcode(
+        altText = "1234",
+        format = BarcodeConstants.FORMAT_PDF_417
+    ),
+    eventTicket = createPassInfo(
+        primaryFields = listOf(
+            FieldObject("Event", "Event", "Cool Event"),
+        ),
+        secondaryFields = listOf(
+            FieldObject("Location", "Location", "Venue"),
         )
     )
 )
@@ -326,5 +339,24 @@ val SampleGenericPass2 = createPassModel(
         secondaryFields = listOf(
             FieldObject("expiresOn", "Expires On", "12/31/23"),
         )
+    )
+)
+
+
+val SampleCoupon = createPassModel(
+    backgroundColor = "rgb(128, 200, 45)",
+    foregroundColor = "rgb(0,0,0)",
+    labelColor = "rgb(0,0,0)",
+    stripPath = null,
+    barcode = createBarcode(
+        format = BarcodeConstants.FORMAT_PDF_417
+    ),
+    coupon = createPassInfo(
+        primaryFields = listOf(
+            FieldObject("Offer", "Offer", "20% off")
+        ),
+        auxiliaryFields = listOf(
+            FieldObject("expires", "Expires", "Tomorrow"),
+        ),
     )
 )

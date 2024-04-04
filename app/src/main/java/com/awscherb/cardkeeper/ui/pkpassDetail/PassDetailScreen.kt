@@ -42,9 +42,11 @@ import com.awscherb.cardkeeper.ui.common.BarcodeSection
 import com.awscherb.cardkeeper.ui.common.PkPassHeaderView
 import com.awscherb.cardkeeper.ui.common.ScaffoldScreen
 import com.awscherb.cardkeeper.ui.theme.CardKeeperTheme
+import com.awscherb.cardkeeper.util.SampleCoupon
 import com.awscherb.cardkeeper.util.SampleEvent
 import com.awscherb.cardkeeper.util.SampleFlight
 import com.awscherb.cardkeeper.util.SampleGenericPass2
+import com.awscherb.cardkeeper.util.SampleStorePass
 
 @Composable
 fun PassDetailScreen(
@@ -248,6 +250,31 @@ fun PassDetailScreenAutoUpdatePreview() {
             isAutoUpdateOn = true,
             startShowingAutoUpdate = true,
             pass = SampleFlight,
+            navOnClick = { }) {
+        }
+    }
+}
+@Preview(showSystemUi = true)
+@Composable
+fun PassDetailStorePassPreview() {
+    CardKeeperTheme {
+        PassDetailScreenInner(
+            backItems = listOf("" to ""),
+            isAutoUpdateOn = false,
+            pass = SampleStorePass,
+            navOnClick = { }) {
+        }
+    }
+}
+
+@Preview(showSystemUi = true)
+@Composable
+fun PassDetailCouponScreenPreview() {
+    CardKeeperTheme {
+        PassDetailScreenInner(
+            backItems = listOf("" to ""),
+            isAutoUpdateOn = false,
+            pass = SampleCoupon,
             navOnClick = { }) {
         }
     }
