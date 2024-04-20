@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -188,7 +189,9 @@ fun PassDetail(
                     }
                 }
 
+                var hasBarcode = false
                 pass.findFirstBarcode()?.let { barcode ->
+                    hasBarcode = true
                     BarcodeSection(
                         modifier = Modifier
                             .padding(
@@ -201,6 +204,12 @@ fun PassDetail(
                         backgroundColor = Color.White,
                     )
                 }
+
+                if (!hasBarcode) {
+                    Spacer(modifier = Modifier.height(16.dp))
+                }
+
+
             }
         }
     }

@@ -11,6 +11,7 @@ import com.awscherb.cardkeeper.ui.pkpassDetail.PassDetail
 import com.awscherb.cardkeeper.ui.theme.CardKeeperTheme
 import com.awscherb.cardkeeper.util.GlobalPreviewNightMode
 import com.awscherb.cardkeeper.util.SampleFlight
+import com.awscherb.cardkeeper.util.SampleGenericNoBarcodePass
 import com.awscherb.cardkeeper.util.SampleGenericPass
 import com.awscherb.cardkeeper.util.SampleGenericTravel
 import com.awscherb.cardkeeper.util.SamplePdfPass
@@ -70,6 +71,17 @@ fun GenericPassPreview() {
         PassDetail(
             padding = PaddingValues(),
             pass = SampleGenericPass
+        )
+    }
+}
+
+@Composable
+@Preview(apiLevel = 33, uiMode = GlobalPreviewNightMode)
+fun GenericPassNoBarcodePreview() {
+    CardKeeperTheme {
+        PassDetail(
+            padding = PaddingValues(),
+            pass = SampleGenericNoBarcodePass
         )
     }
 }
