@@ -158,9 +158,7 @@ val SampleFlight = createPassModel(
     labelColor = "rgb(255,255,255)",
     footerPath = "asdf",
     logoText = "Flight",
-    barcode = createBarcode(
-        altText = "Alt Text"
-    ),
+    barcode = createBarcode(),
     boardingPass = createPassInfo(
         transitType = TransitConstants.TYPE_AIR,
         headerFields = listOf(

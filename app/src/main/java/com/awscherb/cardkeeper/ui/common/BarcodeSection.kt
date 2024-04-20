@@ -61,7 +61,7 @@ fun BarcodeSection(
                             top = 8.dp,
                             start = 4.dp,
                             end = 4.dp,
-                            bottom = 16.dp
+                            bottom = 8.dp
                         )
                         .fillMaxWidth()
                         .align(Alignment.CenterHorizontally),
@@ -73,7 +73,7 @@ fun BarcodeSection(
                 )
             }
         } else {
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(8.dp))
         }
 
     }

@@ -100,7 +100,7 @@ fun ColumnScope.BoardingPass(pass: PkPassModel, passInfo: PassInfo) {
 
                 .fillMaxWidth(.5f)
                 .align(CenterHorizontally)
-                .padding(top = 16.dp),
+                .padding(top = 16.dp, bottom = 4.dp),
             contentDescription = "Pass Footer",
         )
     }
