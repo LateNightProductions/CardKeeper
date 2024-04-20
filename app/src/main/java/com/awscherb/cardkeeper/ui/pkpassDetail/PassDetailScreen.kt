@@ -10,12 +10,18 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.Warning
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -40,6 +46,7 @@ import com.awscherb.cardkeeper.pkpass.model.parseHexColor
 import com.awscherb.cardkeeper.pkpass.model.passInfoType
 import com.awscherb.cardkeeper.pkpass.model.toBarcodeFormat
 import com.awscherb.cardkeeper.ui.common.BarcodeSection
+import com.awscherb.cardkeeper.ui.common.DeleteDialog
 import com.awscherb.cardkeeper.ui.common.PkPassHeaderView
 import com.awscherb.cardkeeper.ui.common.ScaffoldScreen
 import com.awscherb.cardkeeper.ui.theme.CardKeeperTheme
@@ -52,6 +59,7 @@ import com.awscherb.cardkeeper.util.SampleStorePass
 @Composable
 fun PassDetailScreen(
     passDetailViewModel: PkPassViewModel = hiltViewModel(),
+    onDelete: () -> Unit = { },
     navOnClick: () -> Unit
 ) {
     val pass by passDetailViewModel.pass.collectAsState(initial = null)
@@ -63,7 +71,11 @@ fun PassDetailScreen(
         isAutoUpdateOn = isAutoUpdateOn,
         pass = pass,
         navOnClick = navOnClick,
-        setAutoUpdate = passDetailViewModel::setAutoUpdate
+        setAutoUpdate = passDetailViewModel::setAutoUpdate,
+        onDelete = {
+            passDetailViewModel.deletePass()
+            onDelete()
+        }
     )
 }
 
@@ -74,7 +86,9 @@ fun PassDetailScreenInner(
     pass: PkPassModel?,
     startShowingBackInfo: Boolean = false,
     startShowingAutoUpdate: Boolean = false,
+    startWithDeleteOpen: Boolean = false,
     navOnClick: () -> Unit,
+    onDelete: () -> Unit = {},
     setAutoUpdate: (Boolean) -> Unit
 ) {
     var showBackInfo by remember {
@@ -84,11 +98,17 @@ fun PassDetailScreenInner(
         mutableStateOf(startShowingAutoUpdate)
     }
 
+    var showDeleteMenu by remember {
+        mutableStateOf(startWithDeleteOpen)
+    }
 
     ScaffoldScreen(title = "Pass",
         navIcon = Icons.AutoMirrored.Default.ArrowBack,
         navOnClick = navOnClick,
         topBarActions = {
+            IconButton(onClick = { showDeleteMenu = true }) {
+                Icon(Icons.Default.Delete, "Delete")
+            }
             if (backItems.isNotEmpty()) {
                 IconButton(onClick = {
                     showBackInfo = true
@@ -107,6 +127,15 @@ fun PassDetailScreenInner(
                 }
             }
         }) {
+
+        if (showDeleteMenu) {
+            DeleteDialog(
+                onDelete = onDelete,
+                onDismiss = {
+                    showDeleteMenu = false
+                })
+        }
+
         if (showBackInfo) {
             PassInfoDialog(items = backItems) {
                 showBackInfo = false
@@ -263,6 +292,7 @@ fun PassDetailScreenAutoUpdatePreview() {
         }
     }
 }
+
 @Preview(showSystemUi = true)
 @Composable
 fun PassDetailStorePassPreview() {
@@ -303,7 +333,6 @@ fun PassDetailGenericScreenPreview() {
     }
 }
 
-
 @Preview(showSystemUi = true)
 @Composable
 fun PassDetailEventScreenPreview() {
@@ -312,6 +341,20 @@ fun PassDetailEventScreenPreview() {
             backItems = listOf("" to ""),
             isAutoUpdateOn = false,
             pass = SampleEvent,
+            navOnClick = { }) {
+        }
+    }
+}
+
+@Preview(showSystemUi = true)
+@Composable
+fun PassDetailEventScreenDeletePreview() {
+    CardKeeperTheme {
+        PassDetailScreenInner(
+            backItems = listOf("" to ""),
+            isAutoUpdateOn = false,
+            pass = SampleEvent,
+            startWithDeleteOpen = true,
             navOnClick = { }) {
         }
     }

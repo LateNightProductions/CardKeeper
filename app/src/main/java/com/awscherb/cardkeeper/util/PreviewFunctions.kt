@@ -237,6 +237,7 @@ val SampleStorePass = createPassModel(
 val SampleEvent = createPassModel(
     backgroundColor = "rgb(219, 235, 52)",
     foregroundColor = "rgb(0,0,0)",
+    webServiceURL = "wer",
     labelColor = "rgb(0,0,0)",
     barcode = createBarcode(
         altText = "1234",

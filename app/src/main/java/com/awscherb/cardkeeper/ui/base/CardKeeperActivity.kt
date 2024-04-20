@@ -116,7 +116,7 @@ class CardKeeperActivity : ComponentActivity() {
                                 type = NavType.StringType
                             })
                         ) {
-                            PassDetailScreen(navOnClick = popBack)
+                            PassDetailScreen(navOnClick = popBack, onDelete = popBack)
                         }
                         composable(
                             Destination.Code.dest, arguments =

@@ -33,6 +33,7 @@ import com.awscherb.cardkeeper.barcode.entity.ScannedCodeEntity
 import com.awscherb.cardkeeper.barcode.model.ScannedCodeModel
 import com.awscherb.cardkeeper.ui.common.BarcodeImage
 import com.awscherb.cardkeeper.ui.common.CodeRichDataSection
+import com.awscherb.cardkeeper.ui.common.DeleteDialog
 import com.awscherb.cardkeeper.ui.common.ScaffoldScreen
 import com.awscherb.cardkeeper.ui.theme.CardKeeperTheme
 import com.awscherb.cardkeeper.ui.theme.Typography
@@ -84,38 +85,11 @@ fun ScannedCodeScreenInner(
         navOnClick = navOnClick
     ) {
         if (showDeleteMenu) {
-            AlertDialog(
-                icon = {
-                    Icon(Icons.Default.Warning, contentDescription = "Warning")
-                },
-                title = {
-                    Text(text = "Delete")
-                },
-                text = {
-                    Text(text = "Delete this item?")
-                },
-                onDismissRequest = {
+            DeleteDialog(
+                onDelete = onDelete,
+                onDismiss = {
                     showDeleteMenu = false
-                },
-                confirmButton = {
-                    TextButton(
-                        onClick = {
-                            onDelete()
-                        }
-                    ) {
-                        Text("Delete", color = MaterialTheme.colorScheme.error)
-                    }
-                },
-                dismissButton = {
-                    TextButton(
-                        onClick = {
-                            showDeleteMenu = false
-                        }
-                    ) {
-                        Text("Cancel")
-                    }
-                }
-            )
+                })
         }
         code?.let { code ->
             ScannedCodeDetail(
