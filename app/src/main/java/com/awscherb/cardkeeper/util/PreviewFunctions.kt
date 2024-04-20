@@ -156,6 +156,7 @@ val SampleFlight = createPassModel(
     backgroundColor = "rgb(50,168,96)",
     foregroundColor = "rgb(255,255,255)",
     labelColor = "rgb(255,255,255)",
+    footerPath = "asdf",
     logoText = "Flight",
     barcode = createBarcode(
         altText = "Alt Text"

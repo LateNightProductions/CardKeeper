@@ -3,13 +3,16 @@ package com.awscherb.cardkeeper.ui.pkpassDetail
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import com.awscherb.cardkeeper.R
 import com.awscherb.cardkeeper.pkpass.model.PassInfo
 import com.awscherb.cardkeeper.pkpass.model.PkPassModel
 import com.awscherb.cardkeeper.pkpass.model.findOriginDestination
@@ -92,7 +95,10 @@ fun ColumnScope.BoardingPass(pass: PkPassModel, passInfo: PassInfo) {
     pass.footerPath?.let { footer ->
         AsyncImage(
             model = footer,
+            placeholder = painterResource(id = R.drawable.footer_placeholder),
             modifier = Modifier
+
+                .fillMaxWidth(.5f)
                 .align(CenterHorizontally)
                 .padding(top = 16.dp),
             contentDescription = "Pass Footer",
