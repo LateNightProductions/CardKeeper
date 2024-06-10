@@ -63,11 +63,11 @@ abstract class InputStreamWorker(
                 }
             }
 
-            findLargestImageFile("background")?.let { stripFile ->
+            findLargestImageFile("background")?.let { background ->
                 attemptImageCopy(
-                    imageFile = stripFile,
+                    imageFile = background,
                     entity = pass,
-                    type = "strip",
+                    type = "background",
                 ) {
                     pass.backgroundPath = it
                 }
@@ -77,7 +77,7 @@ abstract class InputStreamWorker(
                 attemptImageCopy(
                     imageFile = footerFile,
                     entity = pass,
-                    type = "strip",
+                    type = "footerFile",
                 ) {
                     pass.footerPath = it
                 }

@@ -22,7 +22,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.awscherb.cardkeeper.pkpass.model.isSquare
 import com.awscherb.cardkeeper.ui.theme.CardKeeperTheme
-import com.awscherb.cardkeeper.ui.theme.Purple40
 import com.awscherb.cardkeeper.ui.theme.Purple80
 import com.awscherb.cardkeeper.util.BarcodeEncoder
 import com.awscherb.cardkeeper.util.SampleLicense
@@ -35,8 +34,12 @@ fun BarcodeImage(
     message: String,
     backgroundColor: Color? = null
 ) {
-    val width = LocalDensity.current.run {
-        LocalConfiguration.current.screenWidthDp.dp.toPx().toInt()
+
+    val width: Int
+    val border: Int
+    LocalDensity.current.run {
+        width = LocalConfiguration.current.screenWidthDp.dp.roundToPx()
+        border = 8.dp.roundToPx()
     }
 
     val height = when (barcodeFormat.isSquare()) {
@@ -47,11 +50,12 @@ fun BarcodeImage(
     val darkMode = isSystemInDarkTheme()
     val bitmap = remember {
         BarcodeEncoder.encodeBitmap(
-            message,
-            barcodeFormat,
-            (width / 1.75).toInt(),
-            height,
-            inDarkMode = darkMode
+            contents = message,
+            format = barcodeFormat,
+            width = (width / 1.75).toInt(),
+            height = height,
+            inDarkMode = darkMode,
+            paddingPx = border
         )
     }
 
@@ -98,11 +102,36 @@ fun BarcodeImagePreview() {
 @Composable
 @Preview(apiLevel = 33, showSystemUi = true)
 fun BarcodeImagePDF417Preview() {
-
     CardKeeperTheme {
         Card {
             BarcodeImage(
                 barcodeFormat = BarcodeFormat.PDF_417,
+                message = SampleLicense,
+            )
+        }
+    }
+}
+
+@Composable
+@Preview(apiLevel = 33, showSystemUi = true)
+fun BarcodeImageAztecPreview() {
+    CardKeeperTheme {
+        Card {
+            BarcodeImage(
+                barcodeFormat = BarcodeFormat.AZTEC,
+                message = SampleLicense,
+            )
+        }
+    }
+}
+
+@Composable
+@Preview(apiLevel = 33, showSystemUi = true)
+fun BarcodeImageDataMatrixPreview() {
+    CardKeeperTheme {
+        Card {
+            BarcodeImage(
+                barcodeFormat = BarcodeFormat.DATA_MATRIX,
                 message = SampleLicense,
             )
         }

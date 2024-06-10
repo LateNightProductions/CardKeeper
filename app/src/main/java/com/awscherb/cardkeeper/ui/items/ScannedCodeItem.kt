@@ -36,10 +36,10 @@ fun ScannedCodeItem(
         )
 
         if (showBarcode) {
-        BarcodeImage(
-            barcodeFormat = item.format,
-            message = item.text,
-        )
+            BarcodeImage(
+                barcodeFormat = item.format,
+                message = item.text,
+            )
         }
 
         ScannedCodeTextPreview(

@@ -18,19 +18,37 @@ import com.google.zxing.common.BitMatrix
  */
 object BarcodeEncoder {
 
-    private fun createBitmap(matrix: BitMatrix, darkMode: Boolean): Bitmap {
-        val width = matrix.width
-        val height = matrix.height
-        val pixels = IntArray(width * height)
-        for (y in 0 until height) {
-            val offset = y * width
-            for (x in 0 until width) {
-                pixels[offset + x] =
-                    if (matrix[x, y]) BLACK else if (darkMode) DARK_BACKGROUND else TRANSPARENT
+    private val writer = MultiFormatWriter()
+
+    private fun createBitmap(
+        matrix: BitMatrix,
+        darkMode: Boolean,
+        paddingPx: Int = 0
+    ): Bitmap {
+        val bgColor = if (darkMode) DARK_BACKGROUND else TRANSPARENT
+        val (left, top, width, height) = matrix.enclosingRectangle
+        val fullWidth = width + (2 * paddingPx)
+        val fullHeight = height + (2 * paddingPx)
+        val bitmap = Bitmap.createBitmap(fullWidth, fullHeight, Bitmap.Config.ARGB_8888)
+        for (x in 0 until fullWidth) {
+            for (y in 0 until fullHeight) {
+                when {
+                    x < paddingPx || x > (width + paddingPx) || y < paddingPx || y > (height + paddingPx) -> {
+                        bitmap.setPixel(x, y, bgColor)
+                    }
+
+                    else -> bitmap.setPixel(
+                        x,
+                        y,
+                        if (matrix.get(
+                                x + (left - paddingPx),
+                                y + (top - paddingPx)
+                            )
+                        ) BLACK else bgColor
+                    )
+                }
             }
         }
-        val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
-        bitmap.setPixels(pixels, 0, width, 0, 0, width, height)
         return bitmap
     }
 
@@ -42,7 +60,7 @@ object BarcodeEncoder {
         height: Int,
     ): BitMatrix {
         return try {
-            MultiFormatWriter().encode(contents, format, width, height)
+            writer.encode(contents, format, width, height)
         } catch (e: WriterException) {
             throw e
         } catch (e: Exception) {
@@ -59,8 +77,18 @@ object BarcodeEncoder {
         width: Int,
         height: Int,
         inDarkMode: Boolean,
+        paddingPx: Int = 0
     ): Bitmap {
-        return createBitmap(encode(contents, format, width, height), inDarkMode)
+        return createBitmap(
+            matrix = encode(
+                contents = contents,
+                format = format,
+                width = width,
+                height = height
+            ),
+            darkMode = inDarkMode,
+            paddingPx = paddingPx
+        )
     }
 
     private const val TRANSPARENT = (0x00FFFFFF).toInt()

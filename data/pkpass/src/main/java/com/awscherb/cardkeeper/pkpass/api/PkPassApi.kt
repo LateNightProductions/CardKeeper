@@ -10,7 +10,6 @@ interface PkPassApi {
 
     @GET
     suspend fun getPass(
-        @Url webServiceUrl: String,
-        @Header("Authorization") auth: String
+        @Url webServiceUrl: String, @Header("Authorization") auth: String
     ): Response<ResponseBody>
 }

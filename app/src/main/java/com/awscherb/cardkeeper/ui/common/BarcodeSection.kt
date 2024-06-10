@@ -33,7 +33,7 @@ fun BarcodeSection(
 ) {
 
     val width = LocalDensity.current.run {
-        LocalConfiguration.current.screenWidthDp.dp.toPx().toInt()
+        LocalConfiguration.current.screenWidthDp.dp.roundToPx()
     }
 
     val height = when (barcodeFormat.isSquare()) {

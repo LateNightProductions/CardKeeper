@@ -280,7 +280,7 @@ val SamplePdfPass = createPassModel(
     labelColor = "rgb(0,0,0)",
     barcode = createBarcode(
         altText = "1234",
-        format = BarcodeConstants.FORMAT_PDF_417
+        format = BarcodeConstants.FORMAT_CODE_128
     ),
     storeCard = createPassInfo(
         headerFields = listOf(
