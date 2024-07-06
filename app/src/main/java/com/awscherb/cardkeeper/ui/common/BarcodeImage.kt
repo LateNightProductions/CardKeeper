@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.runtime.Composable
@@ -16,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.tooling.preview.Preview
@@ -52,7 +54,7 @@ fun BarcodeImage(
         BarcodeEncoder.encodeBitmap(
             contents = message,
             format = barcodeFormat,
-            width = (width / 1.75).toInt(),
+            width = (width / 1.5).toInt(),
             height = height,
             inDarkMode = darkMode,
             paddingPx = border
@@ -76,6 +78,7 @@ fun BarcodeImage(
         ) {
             Image(
                 bitmap = bitmap.asImageBitmap(),
+                contentScale = ContentScale.FillWidth,
                 contentDescription = "",
                 modifier = modifier
                     .clip(RoundedCornerShape(8.dp))
@@ -131,7 +134,7 @@ fun BarcodeImageDataMatrixPreview() {
     CardKeeperTheme {
         Card {
             BarcodeImage(
-                barcodeFormat = BarcodeFormat.DATA_MATRIX,
+                barcodeFormat = BarcodeFormat.CODE_128,
                 message = SampleLicense,
             )
         }

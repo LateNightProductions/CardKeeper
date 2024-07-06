@@ -25,15 +25,19 @@ object BarcodeEncoder {
         darkMode: Boolean,
         paddingPx: Int = 0
     ): Bitmap {
+        var realPadding = paddingPx
         val bgColor = if (darkMode) DARK_BACKGROUND else TRANSPARENT
         val (left, top, width, height) = matrix.enclosingRectangle
-        val fullWidth = width + (2 * paddingPx)
-        val fullHeight = height + (2 * paddingPx)
+        if (left == 0 || top == 0) {
+            realPadding = 0
+        }
+        val fullWidth = width + (2 * realPadding)
+        val fullHeight = height + (2 * realPadding)
         val bitmap = Bitmap.createBitmap(fullWidth, fullHeight, Bitmap.Config.ARGB_8888)
         for (x in 0 until fullWidth) {
             for (y in 0 until fullHeight) {
                 when {
-                    x < paddingPx || x > (width + paddingPx) || y < paddingPx || y > (height + paddingPx) -> {
+                    x < realPadding || x > (width + realPadding) || y < realPadding || y > (height + realPadding) -> {
                         bitmap.setPixel(x, y, bgColor)
                     }
 
@@ -41,8 +45,8 @@ object BarcodeEncoder {
                         x,
                         y,
                         if (matrix.get(
-                                x + (left - paddingPx),
-                                y + (top - paddingPx)
+                                x + (left - realPadding),
+                                y + (top - realPadding)
                             )
                         ) BLACK else bgColor
                     )

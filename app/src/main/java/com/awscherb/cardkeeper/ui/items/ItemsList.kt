@@ -16,10 +16,12 @@ import com.awscherb.cardkeeper.pkpass.model.PkPassModel
 import com.awscherb.cardkeeper.pkpass.util.TransitConstants
 import com.awscherb.cardkeeper.ui.theme.CardKeeperTheme
 import com.awscherb.cardkeeper.util.GlobalPreviewNightMode
+import com.awscherb.cardkeeper.util.SampleLicense
 import com.awscherb.cardkeeper.util.createBarcode
 import com.awscherb.cardkeeper.util.createPassInfo
 import com.awscherb.cardkeeper.util.createPassModel
 import com.awscherb.cardkeeper.util.createScannedCode
+import com.google.zxing.BarcodeFormat
 
 @Composable
 fun ItemsList(
@@ -93,6 +95,7 @@ fun ItemsListPreview() {
                 )
             ),
             createScannedCode(id = 1, title = "Ticket", text = "here's some text"),
+            createScannedCode(id = 2, title = "License", text = SampleLicense, format = BarcodeFormat.PDF_417),
         ), paddingValues = PaddingValues(), onClick = {})
     }
 }
