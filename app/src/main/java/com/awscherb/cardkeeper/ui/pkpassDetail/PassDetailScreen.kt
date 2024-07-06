@@ -167,7 +167,6 @@ fun PassDetail(
     padding: PaddingValues,
     pass: PkPassModel,
 ) {
-
     Card(
         modifier = modifier
             .padding(padding)
@@ -189,7 +188,6 @@ fun PassDetail(
             }
 
             val heightModifier = if (pass.backgroundPath != null) {
-
                 val height = LocalDensity.current.run {
                     (LocalConfiguration.current.screenWidthDp - 16.toDp().toPx()) * (220f / 180f)
                 }.dp

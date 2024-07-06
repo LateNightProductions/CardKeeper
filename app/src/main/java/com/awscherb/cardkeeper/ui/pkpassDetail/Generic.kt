@@ -72,7 +72,7 @@ fun Generic(pass: PkPassModel, passInfo: PassInfo) {
             val align =
                 getAlignmentForFieldText(
                     index,
-                    passInfo.auxiliaryFields?.size ?: 0
+                    allFields.size
                 )
             FieldTextView(
                 alignment = align,
