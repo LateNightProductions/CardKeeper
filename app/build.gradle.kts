@@ -69,6 +69,9 @@ dependencies {
     implementation(project(":data:barcode"))
     implementation(project(":data:pkpass"))
 
+    // Copy icon source
+//    implementation("androidx.compose.material:material-icons-extended:1.6.8")
+
     implementation(platform(libs.compose.bom))
     implementation(platform(libs.firebase.bom))
     implementation(libs.accompanist.permissions)

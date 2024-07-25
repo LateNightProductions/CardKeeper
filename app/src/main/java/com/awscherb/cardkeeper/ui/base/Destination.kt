@@ -3,11 +3,13 @@ package com.awscherb.cardkeeper.ui.base
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.FileOpen
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.awscherb.cardkeeper.ui.common.icons.Camera
+import com.awscherb.cardkeeper.ui.common.icons.FileOpen
 
 sealed class Destination(
     val label: String,
@@ -51,8 +53,8 @@ sealed class Destination(
     )
 
     data object Import : Destination(
-        label = "Open a pass",
-        icon = Icons.Default.Search,
+        label = "Import pass",
+        icon = FileOpen,
         dest = "import"
     )
 }

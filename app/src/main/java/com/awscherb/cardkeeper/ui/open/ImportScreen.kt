@@ -17,18 +17,23 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.awscherb.cardkeeper.ui.common.ScaffoldScreen
+import com.awscherb.cardkeeper.ui.theme.CardKeeperTheme
+import com.awscherb.cardkeeper.ui.theme.Typography
+import com.awscherb.cardkeeper.util.GlobalPreviewNightMode
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
 
 @Composable
 fun ImportScreen(
+    viewModel: ImportScreenViewModel = hiltViewModel(),
     navOnClick: () -> Unit,
     onComplete: () -> Unit,
-    viewModel: ImportScreenViewModel = hiltViewModel()
 ) {
     val launcher =
         rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()) { result ->
@@ -43,15 +48,36 @@ fun ImportScreen(
             onComplete()
         }
     }
-    ScaffoldScreen(title = "Import", navOnClick = navOnClick) {
+
+    ImportScreenContent(
+        launch = {
+            launcher.launch(
+                arrayOf(
+                    "application/x-zip",
+                    "application/vnd-com.apple.pkpass",
+                    "application/vnd.apple.pkpass"
+                )
+            )
+        },
+        navOnClick = navOnClick,
+        errorText = (result as? ImportResult.Error?)?.message
+    )
+}
+
+@Composable
+fun ImportScreenContent(
+    launch: () -> Unit,
+    navOnClick: () -> Unit,
+    errorText: String?
+) {
+    ScaffoldScreen(title = "Import pass", navOnClick = navOnClick) {
         Column(
             Modifier
                 .padding(it)
                 .fillMaxWidth()
         ) {
-
             Text(
-                "Select a file ", modifier = Modifier
+                "Select a file to import:", modifier = Modifier
                     .align(CenterHorizontally)
                     .padding(top = 24.dp)
             )
@@ -61,27 +87,33 @@ fun ImportScreen(
             )
             Button(modifier = Modifier.align(CenterHorizontally),
                 onClick = {
-                    launcher.launch(
-                        arrayOf(
-                            "application/x-zip",
-                            "application/vnd-com.apple.pkpass",
-                            "application/vnd.apple.pkpass"
-                        )
-                    )
+                    launch()
                 }) {
-                Text("Tap to select a file")
+                Text("Open a file...")
             }
-            result?.let {
-                if (it is ImportResult.Error) {
-                    Text(
-                        it.message,
-                        modifier = Modifier
-                            .align(CenterHorizontally)
-                            .padding(top = 24.dp)
-                    )
-                }
+            errorText?.let { error ->
+                Text(
+                    error,
+                    color = Color.Red,
+                    style = Typography.bodyLarge,
+                    modifier = Modifier
+                        .align(CenterHorizontally)
+                        .padding(top = 24.dp)
+                )
             }
         }
     }
+
 }
 
+@Preview(uiMode = GlobalPreviewNightMode)
+@Composable
+fun ImportScreenPreview() {
+    CardKeeperTheme {
+        ImportScreenContent(
+            launch = {},
+            navOnClick = {},
+            errorText = "Incorrect file type detected"
+        )
+    }
+}
