@@ -10,7 +10,6 @@ import dagger.hilt.android.components.ActivityComponent
 @InstallIn(ActivityComponent::class)
 abstract class BindingsModule {
 
-
     @ContributesAndroidInjector
     abstract fun contributesCardKeeperActivity(): CardKeeperActivity
 }

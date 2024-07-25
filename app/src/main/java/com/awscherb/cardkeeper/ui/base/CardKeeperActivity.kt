@@ -4,6 +4,7 @@ package com.awscherb.cardkeeper.ui.base
 
 import android.Manifest
 import android.content.ContentResolver
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -31,6 +32,7 @@ import com.awscherb.cardkeeper.pkpass.model.PkPassModel
 import com.awscherb.cardkeeper.pkpass.work.ImportPassWorker
 import com.awscherb.cardkeeper.ui.about.AboutScreen
 import com.awscherb.cardkeeper.ui.create.CreateScreen
+import com.awscherb.cardkeeper.ui.open.ImportScreen
 import com.awscherb.cardkeeper.ui.items.ItemsScreen
 import com.awscherb.cardkeeper.ui.pkpassDetail.PassDetailScreen
 import com.awscherb.cardkeeper.ui.scan.PermissionsScreen
@@ -142,6 +144,10 @@ class CardKeeperActivity : ComponentActivity() {
                                 completion = { topLevelNav(Destination.Items) },
                                 navOnClick = openDrawer
                             )
+                        }
+                        composable(Destination.Import.dest) {
+                            ImportScreen(navOnClick = openDrawer,
+                                onComplete = { topLevelNav(Destination.Items) })
                         }
                         composable(Destination.About.dest) {
                             AboutScreen(
