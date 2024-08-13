@@ -90,3 +90,4 @@ output.json
 .idea/*
 /app/prod/release/output-metadata.json
 /app/google-services.json
+/app/prod/release/baselineProfiles/
