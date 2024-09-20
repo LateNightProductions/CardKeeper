@@ -33,13 +33,14 @@ class PkPassViewModel @Inject constructor(
     val pass = pkPassService.getPass(passId)
 
     val shouldUpdate = pkPassService.shouldAutoUpdatePass(passId)
+
     init {
         pass
-            .combine(shouldUpdate) { pass, update -> pass.canBeUpdated() && update }
-            .filter { it }
+            .combine(shouldUpdate) { pass, update -> (pass.canBeUpdated() && update) to pass }
+            .filter { (update, _) -> update }
             .take(1)
-            .onEach {
-                passWorkManager.enqueuePassUpdate(pass.first())
+            .onEach { (_, pass) ->
+                passWorkManager.enqueuePassUpdate(pass)
             }
             .launchIn(viewModelScope)
     }

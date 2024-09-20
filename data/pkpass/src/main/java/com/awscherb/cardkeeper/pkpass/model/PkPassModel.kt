@@ -131,7 +131,7 @@ fun PassInfo.findOriginDestination(): Pair<FieldObject, FieldObject> {
 fun PkPassModel.getTranslatedLabel(label: String?): String? {
     val tr = translation
     return when {
-        tr != null -> tr[label] ?: label
+        tr != null -> tr[label?.trim()] ?: label
         else -> label
     }
 }
@@ -139,7 +139,7 @@ fun PkPassModel.getTranslatedLabel(label: String?): String? {
 fun PkPassModel.getTranslatedValue(label: String?): String {
     val tr = translation
     return when {
-        tr != null -> tr[label] ?: label ?: ""
+        tr != null -> tr[label?.trim()] ?: label ?: ""
         else -> label ?: ""
     }
 }

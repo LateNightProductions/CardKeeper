@@ -42,7 +42,7 @@ class ItemsViewModel @Inject constructor(
                 when {
                     it is PkPassModel && showExpired -> true
                     it is PkPassModel -> {
-                        (it.relevantDate?.time ?: Long.MAX_VALUE) <= filterTime
+                        (it.relevantDate?.time ?: Long.MAX_VALUE) >= filterTime
                     }
 
                     else -> true

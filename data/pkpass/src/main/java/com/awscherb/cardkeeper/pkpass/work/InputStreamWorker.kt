@@ -201,8 +201,8 @@ abstract class InputStreamWorker(
                 // Probably malformed
                 return "" to ""
             } else if (parts.size > 2) {
-                // value probably has an `=` in it somewhere, join all parts
-                parts[1] = parts.subList(1, parts.size).joinToString { it }
+                // value probably has an `=` in it somewhere, join all parts and put = back in
+                parts[1] = parts.subList(1, parts.size).joinToString(separator = "=") { it }
             }
             return parts[0].replace("\"", "").trim() to
                     parts[1].replace("\"", "").trim()
