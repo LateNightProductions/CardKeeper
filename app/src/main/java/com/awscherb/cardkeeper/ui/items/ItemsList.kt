@@ -29,7 +29,6 @@ fun ItemsList(
     paddingValues: PaddingValues,
     onClick: (SavedItem) -> Unit
 ) {
-
     LazyColumn(
         modifier = Modifier
             .padding(paddingValues),
@@ -95,7 +94,12 @@ fun ItemsListPreview() {
                 )
             ),
             createScannedCode(id = 1, title = "Ticket", text = "here's some text"),
-            createScannedCode(id = 2, title = "License", text = SampleLicense, format = BarcodeFormat.PDF_417),
+            createScannedCode(
+                id = 2,
+                title = "License",
+                text = SampleLicense,
+                format = BarcodeFormat.PDF_417
+            ),
         ), paddingValues = PaddingValues(), onClick = {})
     }
 }

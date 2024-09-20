@@ -7,7 +7,7 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.Checkbox
-import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
+import com.awscherb.cardkeeper.ui.common.CheckboxRow
 import com.awscherb.cardkeeper.ui.theme.CardKeeperTheme
 import com.awscherb.cardkeeper.ui.theme.Typography
 
@@ -39,19 +40,12 @@ fun PassUpdateSettingsDialog(
                     .padding(top = 24.dp, bottom = 16.dp)
                     .align(Alignment.CenterHorizontally)
             )
-            Divider()
-            Row {
-                Checkbox(checked = isAutoUpdateOn, onCheckedChange = {
-                    onUpdateSettingsChanged(it)
-                })
-                Text(
-                    text = "Automatically update pass",
-                    style = Typography.bodyLarge,
-                    modifier = Modifier.align(
-                        Alignment.CenterVertically
-                    )
-                )
-            }
+            HorizontalDivider()
+            CheckboxRow(
+                label = "Automatically update pass",
+                checked = isAutoUpdateOn,
+                onCheckedChanged = onUpdateSettingsChanged
+            )
         }
     }
 }

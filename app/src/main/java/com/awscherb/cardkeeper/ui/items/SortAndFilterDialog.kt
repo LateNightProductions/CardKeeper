@@ -11,10 +11,11 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material3.Card
-import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -25,15 +26,45 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
+import com.awscherb.cardkeeper.ui.common.CheckboxRow
 import com.awscherb.cardkeeper.ui.common.RadioRow
 import com.awscherb.cardkeeper.ui.theme.CardKeeperTheme
 import com.awscherb.cardkeeper.ui.theme.Typography
+import kotlinx.coroutines.flow.update
 
 @Composable
 fun SortAndFilterDialog(
+    viewModel: ItemsViewModel,
+    onDismissRequest: () -> Unit = {}
+) {
+
+    val filter by viewModel.filter.collectAsState()
+    val sort by viewModel.sort.collectAsState()
+    val showExpiredPasses by viewModel.showExpiredPasses.collectAsState()
+
+    SortAndFilterDialogContent(
+        initialFilter = filter,
+        onFilterChanged = { newFilter ->
+            viewModel.filter.value = newFilter
+        },
+        initialSort = sort,
+        onSortChanged = { newSort ->
+            viewModel.sort.value = newSort
+        },
+        showExpiredPasses = showExpiredPasses,
+        onShowExpiredPassesChanged = viewModel.showExpiredPasses::tryEmit,
+        onDismissRequest = onDismissRequest
+    )
+
+}
+
+@Composable
+fun SortAndFilterDialogContent(
     onDismissRequest: () -> Unit,
     initialFilter: FilterOptions = FilterOptions.All,
     onFilterChanged: (newFilter: FilterOptions) -> Unit,
+    showExpiredPasses: Boolean = true,
+    onShowExpiredPassesChanged: (Boolean) -> Unit = {},
     initialSort: SortOptions = SortOptions.Date(ascending = false),
     onSortChanged: (newSort: SortOptions) -> Unit,
 ) {
@@ -62,7 +93,7 @@ fun SortAndFilterDialog(
                     .padding(top = 24.dp, bottom = 16.dp)
                     .align(Alignment.CenterHorizontally)
             )
-            Divider()
+            HorizontalDivider()
             Column(
                 modifier = Modifier.padding(
                     horizontal = 8.dp
@@ -87,9 +118,23 @@ fun SortAndFilterDialog(
                     }
 
                 }
-                Divider()
+                HorizontalDivider()
+                Text(
+                    text = "Pass Options",
+                    style = Typography.titleMedium,
+                    modifier = Modifier
+                        .padding(
+                            horizontal = 8.dp,
+                            vertical = 8.dp
+                        )
+                )
+                CheckboxRow(
+                    label = "Show expired passes",
+                    checked = showExpiredPasses,
+                    onCheckedChanged = onShowExpiredPassesChanged
+                )
+                HorizontalDivider()
                 Row {
-
                     Text(
                         text = "Sort",
                         style = Typography.titleMedium,
@@ -146,6 +191,7 @@ fun SortAndFilterDialog(
             }
         }
     }
+
 }
 
 val ALL_FILTER = listOf(
@@ -158,7 +204,7 @@ val ALL_FILTER = listOf(
 @Preview(showSystemUi = true, apiLevel = 33)
 fun SortAndFilterPreview() {
     CardKeeperTheme {
-        SortAndFilterDialog(
+        SortAndFilterDialogContent(
             onDismissRequest = {},
             initialFilter = FilterOptions.All,
             onFilterChanged = {},

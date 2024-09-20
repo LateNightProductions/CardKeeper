@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Menu
@@ -31,9 +30,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
-import com.awscherb.cardkeeper.R
 import com.awscherb.cardkeeper.ui.theme.CardKeeperTheme
 
 @Composable
@@ -139,9 +136,7 @@ fun SearchableScaffoldScreen(
                 navigationIcon = {
                     IconButton(onClick = { navOnClick() }) {
                         Icon(
-                            painter = painterResource(
-                                id = R.drawable.ic_menu
-                            ),
+                            Icons.Default.Menu,
                             contentDescription = "Menu",
                         )
                     }

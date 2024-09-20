@@ -23,9 +23,8 @@ fun ItemsScreen(
     scanOnClick: () -> Unit,
     onClick: (SavedItem) -> Unit
 ) {
+
     val items by viewModel.items.collectAsState(initial = emptyList())
-    val filter by viewModel.filter.collectAsState()
-    val sort by viewModel.sort.collectAsState()
 
     var showSort by remember {
         mutableStateOf(false)
@@ -56,15 +55,8 @@ fun ItemsScreen(
         ItemsList(items, it, onClick)
         if (showSort) {
             SortAndFilterDialog(
+                viewModel = viewModel,
                 onDismissRequest = { showSort = false },
-                initialFilter = filter,
-                onFilterChanged = { newFilter ->
-                    viewModel.filter.value = newFilter
-                },
-                initialSort = sort,
-                onSortChanged = { newSort ->
-                    viewModel.sort.value = newSort
-                }
             )
         }
     }

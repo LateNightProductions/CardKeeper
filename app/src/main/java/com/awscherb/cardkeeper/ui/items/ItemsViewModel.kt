@@ -30,13 +30,29 @@ class ItemsViewModel @Inject constructor(
 
     val sort = MutableStateFlow<SortOptions>(SortOptions.Date(ascending = false))
 
+    val showExpiredPasses = MutableStateFlow(false)
+
     val searchQuery = MutableStateFlow("")
 
     val items: Flow<List<SavedItem>> = searchQuery
         .flatMapLatest { savedItemRepository.listSavedItems(it) }
+        .combine(showExpiredPasses) { items, showExpired ->
+            items.filter {
+                val filterTime = System.currentTimeMillis()
+                when {
+                    it is PkPassModel && showExpired -> true
+                    it is PkPassModel -> {
+                        (it.relevantDate?.time ?: Long.MAX_VALUE) <= filterTime
+                    }
+
+                    else -> true
+                }
+            }
+        }
         .combine(filter) { items, filter -> items.filter(filterForOptions(filter)) }
         .combine(sort) { items, sort ->
             items.sortedWith(sort.sort)
         }
+
 
 }
