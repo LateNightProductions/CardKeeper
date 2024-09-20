@@ -8,7 +8,6 @@ import com.awscherb.cardkeeper.pkpass.util.PassDateUtils
 import com.awscherb.cardkeeper.pkpass.util.TransitConstants
 import com.google.zxing.BarcodeFormat
 import okhttp3.internal.toHexString
-import java.util.Date
 
 interface PkPassModel : SavedItem {
     override val id: String
@@ -19,8 +18,10 @@ interface PkPassModel : SavedItem {
     val passTypeIdentifier: String
     val logoText: String?
 
-    val expirationDate: Date?
-    val relevantDate: Date?
+    // Dates on the pass contain timezone offset
+    // Consumers can handle that
+    val expirationDate: String?
+    val relevantDate: String?
 
     // rgb(0, 187, 82)
     val backgroundColor: String?
@@ -69,7 +70,7 @@ data class FieldObject(
         get() = when {
             value == null -> ""
             hasDate -> {
-                val date = PassDateUtils.timezoneFormat.parse(value) ?: Date()
+                val date = PassDateUtils.dateStringToLocalTime(value)
                 PassDateUtils.shortDateFormat.format(date)
             }
 

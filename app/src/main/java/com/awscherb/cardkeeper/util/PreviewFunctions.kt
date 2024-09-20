@@ -20,8 +20,8 @@ fun createPassModel(
     barcodes: List<Barcode>? = null,
     passTypeId: String = "",
     logoText: String? = null,
-    expirationDate: Date? = null,
-    relevantDate: Date? = null,
+    expirationDate: String? = null,
+    relevantDate: String? = null,
     backgroundColor: String? = null,
     foregroundColor: String? = null,
     labelColor: String? = null,
@@ -48,8 +48,8 @@ fun createPassModel(
     override val barcodes: List<Barcode>? = barcodes
     override val passTypeIdentifier: String = passTypeId
     override val logoText: String? = logoText
-    override val expirationDate: Date? = expirationDate
-    override val relevantDate: Date? = relevantDate
+    override val expirationDate: String? = expirationDate
+    override val relevantDate: String? = relevantDate
     override val backgroundColor: String? = backgroundColor
     override val foregroundColor: String? = foregroundColor
     override val labelColor: String? = labelColor

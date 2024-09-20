@@ -1,18 +1,21 @@
 package com.awscherb.cardkeeper.pkpass.util
 
 import java.text.SimpleDateFormat
+import java.time.OffsetDateTime
+import java.util.Date
 import java.util.Locale
 
 object PassDateUtils {
-    val networkFormat =
-        SimpleDateFormat(
-            "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.US
-        )
 
-    val timezoneFormat =
-        SimpleDateFormat(
-            "yyyy-MM-dd'T'HH:mm", Locale.US
-        )
+    fun dateStringToLocalTime(date: String): Date {
+        return try {
+            val odf = OffsetDateTime.parse(date)
+            Date(odf.toInstant().toEpochMilli())
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Date()
+        }
+    }
 
     val shortDateFormat = SimpleDateFormat("M/dd/yy", Locale.US)
 }

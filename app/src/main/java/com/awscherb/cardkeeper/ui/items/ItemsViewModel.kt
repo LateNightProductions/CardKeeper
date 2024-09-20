@@ -5,6 +5,7 @@ import com.awscherb.cardkeeper.barcode.model.ScannedCodeModel
 import com.awscherb.cardkeeper.core.SavedItem
 import com.awscherb.cardkeeper.data.repository.SavedItemRepository
 import com.awscherb.cardkeeper.pkpass.model.PkPassModel
+import com.awscherb.cardkeeper.pkpass.util.PassDateUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -41,8 +42,8 @@ class ItemsViewModel @Inject constructor(
                 val filterTime = System.currentTimeMillis()
                 when {
                     it is PkPassModel && showExpired -> true
-                    it is PkPassModel -> {
-                        (it.relevantDate?.time ?: Long.MAX_VALUE) >= filterTime
+                    it is PkPassModel && it.expirationDate != null -> {
+                        (PassDateUtils.dateStringToLocalTime(it.expirationDate!!).time) >= filterTime
                     }
 
                     else -> true

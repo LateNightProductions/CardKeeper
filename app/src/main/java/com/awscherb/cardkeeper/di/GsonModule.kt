@@ -29,17 +29,7 @@ interface GsonModule {
                     ): Date? {
                         val s = json?.asJsonPrimitive?.asString ?: return null
 
-                        try {
-                            PassDateUtils.networkFormat.parse(s)
-                        } catch (e: Exception) {
-                            try {
-                                PassDateUtils.timezoneFormat.parse(s)
-                            } catch (e: Exception) {
-                                e.printStackTrace()
-                            }
-                        }
-
-                        return null
+                        return PassDateUtils.dateStringToLocalTime(s)
                     }
 
                 })

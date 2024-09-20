@@ -15,7 +15,7 @@ android {
 
     defaultConfig {
         applicationId = "com.awscherb.cardkeeper"
-        minSdk = 24
+        minSdk = 26
         targetSdk = 34
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         versionCode = 240
