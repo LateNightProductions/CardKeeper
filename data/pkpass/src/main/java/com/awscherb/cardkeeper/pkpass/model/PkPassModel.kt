@@ -60,13 +60,14 @@ interface PassInfo {
 data class FieldObject(
     val key: String,
     val label: String?,
-    val value: String,
+    val value: String?,
     val dateStyle: String? = null
 ) {
     val hasDate get() = dateStyle != null
 
     val typedValue: String
         get() = when {
+            value == null -> ""
             hasDate -> {
                 val date = PassDateUtils.timezoneFormat.parse(value) ?: Date()
                 PassDateUtils.shortDateFormat.format(date)
@@ -135,11 +136,11 @@ fun PkPassModel.getTranslatedLabel(label: String?): String? {
     }
 }
 
-fun PkPassModel.getTranslatedValue(label: String): String {
+fun PkPassModel.getTranslatedValue(label: String?): String {
     val tr = translation
     return when {
-        tr != null -> tr[label] ?: label
-        else -> label
+        tr != null -> tr[label] ?: label ?: ""
+        else -> label ?: ""
     }
 }
 

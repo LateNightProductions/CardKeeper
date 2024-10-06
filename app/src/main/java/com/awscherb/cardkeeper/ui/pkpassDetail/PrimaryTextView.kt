@@ -28,7 +28,7 @@ fun PrimaryTextView(
         modifier = modifier,
         fieldConfig = FieldConfig(
             label = pass.getTranslatedLabel(primary.label),
-            value = pass.getTranslatedValue(primary.value),
+            value = pass.getTranslatedValue(primary.typedValue),
             labelColor = pass.foregroundColor.parseHexColor(),
             valueColor = pass.foregroundColor.parseHexColor()
         ),

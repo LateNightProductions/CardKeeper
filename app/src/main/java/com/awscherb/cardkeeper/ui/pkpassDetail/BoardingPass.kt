@@ -40,9 +40,9 @@ fun ColumnScope.BoardingPass(pass: PkPassModel, passInfo: PassInfo) {
     TransitPrimarySection(
         modifier = Modifier.padding(top = 8.dp),
         fromAirport = origin.label ?: "",
-        fromCode = origin.value,
+        fromCode = origin.value ?: "",
         toAirport = destination.label ?: "",
-        toCode = destination.value,
+        toCode = destination.value ?: "",
         tint = pass.getForegroundColor(),
         transitType = passInfo.getTransitType()
     )
