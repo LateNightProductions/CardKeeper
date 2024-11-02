@@ -8,18 +8,19 @@ plugins {
     id("com.google.devtools.ksp")
     id("com.google.gms.google-services")
     id("com.google.firebase.crashlytics")
+    alias(libs.plugins.compose.compiler)
 }
 
 android {
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.awscherb.cardkeeper"
         minSdk = 26
-        targetSdk = 34
+        targetSdk = 35
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        versionCode = 240
-        versionName = "2.3"
+        versionCode = 246
+        versionName = "2.4"
     }
 
     flavorDimensions += "env"
@@ -53,9 +54,6 @@ android {
     }
     buildFeatures {
         compose = true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.9"
     }
 
     namespace = "com.awscherb.cardkeeper"

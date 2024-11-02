@@ -45,6 +45,7 @@ import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -191,6 +192,7 @@ class CardKeeperActivity : ComponentActivity() {
                     enqueue(req)
 
                     getWorkInfoByIdFlow(req.id)
+                        .filterNotNull()
                         .onEach {
                             when (it.state) {
                                 WorkInfo.State.SUCCEEDED -> {
