@@ -6,6 +6,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.awscherb.cardkeeper.ui.pkpassDetail.PassDetail
 import com.awscherb.cardkeeper.ui.theme.CardKeeperTheme
 import com.awscherb.cardkeeper.util.GlobalPreviewNightMode
+import com.awscherb.cardkeeper.util.SampleEvent
 import com.awscherb.cardkeeper.util.SampleFlight
 import com.awscherb.cardkeeper.util.SampleGenericNoBarcodePass
 import com.awscherb.cardkeeper.util.SampleGenericPass
@@ -75,6 +76,17 @@ fun GenericPassNoBarcodePreview() {
         PassDetail(
             padding = PaddingValues(),
             pass = SampleGenericNoBarcodePass
+        )
+    }
+}
+
+@Composable
+@Preview(apiLevel = 33, uiMode = GlobalPreviewNightMode)
+fun EventPreview() {
+    CardKeeperTheme {
+        PassDetail(
+            padding = PaddingValues(),
+            pass = SampleEvent
         )
     }
 }

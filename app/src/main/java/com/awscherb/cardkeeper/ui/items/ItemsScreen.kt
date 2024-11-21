@@ -1,5 +1,7 @@
 package com.awscherb.cardkeeper.ui.items
 
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -47,7 +49,7 @@ fun ItemsScreen(
         },
         topBarActions = {
             IconButton(onClick = { showSort = true }) {
-                Icon(Icons.AutoMirrored.Filled.Sort, "Sort and filter")
+                Icon(Icons.Filled.Menu, "Sort and filter")
             }
         }
     ) {
