@@ -5,9 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.work.WorkInfo
 import com.awscherb.cardkeeper.pkpass.work.ImportPassWorker
-import com.awscherb.cardkeeper.ui.base.Destination
 import com.awscherb.cardkeeper.util.ImportWorkManager
-import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.launchIn

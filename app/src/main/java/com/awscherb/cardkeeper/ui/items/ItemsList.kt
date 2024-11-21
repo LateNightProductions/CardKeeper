@@ -40,7 +40,8 @@ fun ItemsList(
             bottom = 88.dp
         )
     ) {
-        items(items,
+        items(
+            items,
             key = { it.id },
             contentType = { it::class }
         ) { item ->
@@ -61,45 +62,46 @@ fun ItemsList(
 @Composable
 fun ItemsListPreview() {
     CardKeeperTheme {
-        ItemsList(items = listOf(
-            createScannedCode(),
-            createPassModel(
-                backgroundColor = "rgb(50,168,96)",
-                foregroundColor = "rgb(255,255,255)",
-                labelColor = "rgb(255,255,255)",
-                logoText = "Flight",
-                barcode = createBarcode(
-                    altText = "Alt Text"
-                ),
-                boardingPass = createPassInfo(
-                    transitType = TransitConstants.TYPE_AIR,
-                    headerFields = listOf(
-                        FieldObject("key", "FLIGHT", "DL123"),
-                        FieldObject("key", "GATE", "50")
+        ItemsList(
+            items = listOf(
+                createScannedCode(),
+                createPassModel(
+                    backgroundColor = "rgb(50,168,96)",
+                    foregroundColor = "rgb(255,255,255)",
+                    labelColor = "rgb(255,255,255)",
+                    logoText = "Flight",
+                    barcode = createBarcode(
+                        altText = "Alt Text"
                     ),
-                    primaryFields = listOf(
-                        FieldObject("origin", "NEW YORK", "JFK"),
-                        FieldObject("destination", "LOS ANGELES", "LAX")
-                    ),
-                    auxiliaryFields = listOf(
-                        FieldObject("terminal", "TERMINAL", "4"),
-                        FieldObject("gate", "GATE", "50"),
-                        FieldObject("seat", "SEAT", "10A"),
-                        FieldObject("zone", "ZONE", "1"),
-                    ),
-                    secondaryFields = listOf(
-                        FieldObject("passenger", "PASSENGER", "Joe Android"),
-                        FieldObject("boardingTime", "BOARDING", "12:00 PM"),
+                    boardingPass = createPassInfo(
+                        transitType = TransitConstants.TYPE_AIR,
+                        headerFields = listOf(
+                            FieldObject("key", "FLIGHT", "DL123"),
+                            FieldObject("key", "GATE", "50")
+                        ),
+                        primaryFields = listOf(
+                            FieldObject("origin", "NEW YORK", "JFK"),
+                            FieldObject("destination", "LOS ANGELES", "LAX")
+                        ),
+                        auxiliaryFields = listOf(
+                            FieldObject("terminal", "TERMINAL", "4"),
+                            FieldObject("gate", "GATE", "50"),
+                            FieldObject("seat", "SEAT", "10A"),
+                            FieldObject("zone", "ZONE", "1"),
+                        ),
+                        secondaryFields = listOf(
+                            FieldObject("passenger", "PASSENGER", "Joe Android"),
+                            FieldObject("boardingTime", "BOARDING", "12:00 PM"),
+                        )
                     )
-                )
-            ),
-            createScannedCode(id = 1, title = "Ticket", text = "here's some text"),
-            createScannedCode(
-                id = 2,
-                title = "License",
-                text = SampleLicense,
-                format = BarcodeFormat.PDF_417
-            ),
-        ), paddingValues = PaddingValues(), onClick = {})
+                ),
+                createScannedCode(id = 1, title = "Ticket", text = "here's some text"),
+                createScannedCode(
+                    id = 2,
+                    title = "License",
+                    text = SampleLicense,
+                    format = BarcodeFormat.PDF_417
+                ),
+            ), paddingValues = PaddingValues(), onClick = {})
     }
 }

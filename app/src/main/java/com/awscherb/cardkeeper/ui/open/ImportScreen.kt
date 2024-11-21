@@ -26,8 +26,6 @@ import com.awscherb.cardkeeper.ui.theme.CardKeeperTheme
 import com.awscherb.cardkeeper.ui.theme.Typography
 import com.awscherb.cardkeeper.util.GlobalPreviewNightMode
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
-import com.google.accompanist.permissions.isGranted
-import com.google.accompanist.permissions.rememberPermissionState
 
 @Composable
 fun ImportScreen(
@@ -85,7 +83,8 @@ fun ImportScreenContent(
                 modifier = Modifier
                     .height(8.dp)
             )
-            Button(modifier = Modifier.align(CenterHorizontally),
+            Button(
+                modifier = Modifier.align(CenterHorizontally),
                 onClick = {
                     launch()
                 }) {

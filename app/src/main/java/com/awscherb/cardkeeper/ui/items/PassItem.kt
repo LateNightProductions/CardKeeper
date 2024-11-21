@@ -18,8 +18,8 @@ import coil.compose.AsyncImage
 import com.awscherb.cardkeeper.pkpass.model.FieldObject
 import com.awscherb.cardkeeper.pkpass.model.PkPassModel
 import com.awscherb.cardkeeper.pkpass.model.parseHexColor
-import com.awscherb.cardkeeper.ui.theme.CardKeeperTheme
 import com.awscherb.cardkeeper.ui.common.PkPassHeaderView
+import com.awscherb.cardkeeper.ui.theme.CardKeeperTheme
 import com.awscherb.cardkeeper.util.createPassInfo
 import com.awscherb.cardkeeper.util.createPassModel
 

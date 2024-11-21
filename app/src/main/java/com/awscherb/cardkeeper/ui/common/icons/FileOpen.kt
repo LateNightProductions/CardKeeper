@@ -15,7 +15,6 @@ package com.awscherb.cardkeeper.ui.common.icons
  * limitations under the License.
  */
 
-import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.materialIcon
 import androidx.compose.material.icons.materialPath
 import androidx.compose.ui.graphics.vector.ImageVector

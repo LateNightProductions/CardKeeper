@@ -39,5 +39,5 @@ interface BarcodeModule {
     }
 
     @Binds
-    abstract fun bindScannedCodeService(handler: ScannedCodeHandler): ScannedCodeService
+    fun bindScannedCodeService(handler: ScannedCodeHandler): ScannedCodeService
 }

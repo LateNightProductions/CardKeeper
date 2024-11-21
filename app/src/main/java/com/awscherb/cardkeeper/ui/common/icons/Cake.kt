@@ -18,12 +18,11 @@ package com.awscherb.cardkeeper.ui.common.icons
 
 // From https://androidx.tech/artifacts/compose.material/material-icons-extended-android/
 
-import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.materialIcon
 import androidx.compose.material.icons.materialPath
 import androidx.compose.ui.graphics.vector.ImageVector
 
-public val Cake: ImageVector
+val Cake: ImageVector
     get() {
         if (_cake != null) {
             return _cake!!

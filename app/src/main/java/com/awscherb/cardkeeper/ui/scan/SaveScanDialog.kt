@@ -97,6 +97,7 @@ fun SaveScanDialog(
         }
     }
 }
+
 @Composable
 @Preview(apiLevel = 33, uiMode = GlobalPreviewNightMode)
 fun SaveScanDialogContactPreview() {

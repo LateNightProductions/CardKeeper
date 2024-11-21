@@ -30,7 +30,6 @@ import com.awscherb.cardkeeper.ui.common.CheckboxRow
 import com.awscherb.cardkeeper.ui.common.RadioRow
 import com.awscherb.cardkeeper.ui.theme.CardKeeperTheme
 import com.awscherb.cardkeeper.ui.theme.Typography
-import kotlinx.coroutines.flow.update
 
 @Composable
 fun SortAndFilterDialog(

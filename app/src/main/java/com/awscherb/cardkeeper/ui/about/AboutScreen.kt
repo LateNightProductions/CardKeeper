@@ -5,7 +5,7 @@ import android.net.Uri
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -18,7 +18,6 @@ import com.awscherb.cardkeeper.ui.theme.CardKeeperTheme
 import com.awscherb.cardkeeper.ui.theme.Typography
 import com.awscherb.cardkeeper.util.AppVersion
 import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
-import dagger.Provides
 
 @Composable
 fun AboutScreen(
@@ -63,7 +62,7 @@ fun AboutScreen(
             }
 
             item {
-                Divider()
+                HorizontalDivider()
             }
 
             item {
@@ -83,7 +82,7 @@ fun AboutPreview() {
     CardKeeperTheme {
         AboutScreen(
             appVersion =
-            AppVersion("1.0", 100)
+                AppVersion("1.0", 100)
         ) {
         }
     }

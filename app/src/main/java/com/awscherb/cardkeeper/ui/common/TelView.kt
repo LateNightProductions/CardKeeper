@@ -28,9 +28,11 @@ fun TelView(
             val handler = LocalUriHandler.current
             LinkableRow(
                 icon = Icons.Default.Phone, text = phone,
-                modifier = Modifier.padding(top = 8.dp).clickable {
-                    handler.openUri("tel://$phone")
-                }
+                modifier = Modifier
+                    .padding(top = 8.dp)
+                    .clickable {
+                        handler.openUri("tel://$phone")
+                    }
             )
         }
 

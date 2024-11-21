@@ -61,7 +61,7 @@ fun TransitPrimarySection(
         ) {
             ConstraintLayout(
                 modifier =
-                Modifier.fillMaxWidth()
+                    Modifier.fillMaxWidth()
             ) {
                 val (from, image, to) = createRefs()
 

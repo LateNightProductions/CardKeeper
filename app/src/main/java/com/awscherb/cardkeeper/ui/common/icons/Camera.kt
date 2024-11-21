@@ -22,7 +22,7 @@ import androidx.compose.material.icons.materialIcon
 import androidx.compose.material.icons.materialPath
 import androidx.compose.ui.graphics.vector.ImageVector
 
-public val Camera: ImageVector
+val Camera: ImageVector
     get() {
         if (_camera != null) {
             return _camera!!

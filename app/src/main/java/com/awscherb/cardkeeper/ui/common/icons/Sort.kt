@@ -27,7 +27,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
         "androidx.compose.material.icons.automirrored.filled.Sort"
     ),
 )
-public val Sort: ImageVector
+val Sort: ImageVector
     get() {
         if (_sort != null) {
             return _sort!!

@@ -7,7 +7,6 @@ import com.awscherb.cardkeeper.pkpass.db.PkPassDatabase
 import com.awscherb.cardkeeper.pkpass.handler.PkPassHandler
 import com.awscherb.cardkeeper.pkpass.service.PkPassService
 import com.google.gson.Gson
-import com.google.gson.GsonBuilder
 import dagger.Binds
 import dagger.Module
 import dagger.Provides

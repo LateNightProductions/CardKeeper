@@ -29,7 +29,8 @@ fun PermissionsScreen(
     } else {
         ScaffoldScreen(title = "Camera", navOnClick = navOnClick) {
             Column(
-                Modifier.padding(it)
+                Modifier
+                    .padding(it)
                     .fillMaxWidth()
             ) {
                 val textToShow = if (cameraPermissionState.status.shouldShowRationale) {
@@ -39,14 +40,16 @@ fun PermissionsScreen(
                 }
 
                 Text(
-                    textToShow, modifier = Modifier.align(CenterHorizontally)
+                    textToShow, modifier = Modifier
+                        .align(CenterHorizontally)
                         .padding(top = 24.dp)
                 )
                 Spacer(
                     modifier = Modifier
                         .height(8.dp)
                 )
-                Button(modifier = Modifier.align(CenterHorizontally),
+                Button(
+                    modifier = Modifier.align(CenterHorizontally),
                     onClick = { cameraPermissionState.launchPermissionRequest() }) {
                     Text("Request camera permission")
                 }

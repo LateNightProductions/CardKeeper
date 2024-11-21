@@ -22,11 +22,13 @@ object ParsedTypeUtils {
                     "Email to $first"
                 } ?: "Email"
             }
+
             type == ParsedResultType.URI -> {
                 data.toParsedUri()?.let { parsed ->
                     parsed.title ?: parsed.title
                 } ?: "Link"
             }
+
             extendedType is DriverLicenseType ->
                 extendedType.getFullName()
 

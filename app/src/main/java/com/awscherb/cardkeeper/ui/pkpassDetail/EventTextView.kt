@@ -12,9 +12,9 @@ import com.awscherb.cardkeeper.pkpass.model.PkPassModel
 import com.awscherb.cardkeeper.pkpass.model.getTranslatedLabel
 import com.awscherb.cardkeeper.pkpass.model.getTranslatedValue
 import com.awscherb.cardkeeper.pkpass.model.parseHexColor
+import com.awscherb.cardkeeper.ui.common.FieldConfig
 import com.awscherb.cardkeeper.ui.theme.CardKeeperTheme
 import com.awscherb.cardkeeper.ui.theme.Typography
-import com.awscherb.cardkeeper.ui.common.FieldConfig
 
 @Composable
 fun EventTextView(

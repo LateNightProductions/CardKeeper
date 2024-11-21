@@ -14,11 +14,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.awscherb.cardkeeper.barcode.model.DriverLicenseType
+import com.awscherb.cardkeeper.barcode.model.ExtendedTypesHelper
 import com.awscherb.cardkeeper.ui.common.icons.Cake
 import com.awscherb.cardkeeper.ui.theme.CardKeeperTheme
 import com.awscherb.cardkeeper.ui.theme.Typography
-import com.awscherb.cardkeeper.barcode.model.DriverLicenseType
-import com.awscherb.cardkeeper.barcode.model.ExtendedTypesHelper
 import com.awscherb.cardkeeper.util.SampleLicense
 
 @Composable
@@ -53,7 +53,7 @@ fun DriverLicenseView(
 
         LinkableRow(
             icon = Icons.Default.Home, text = address,
-            modifier = Modifier.padding(top=8.dp)
+            modifier = Modifier.padding(top = 8.dp)
         )
 
         LinkableRow(

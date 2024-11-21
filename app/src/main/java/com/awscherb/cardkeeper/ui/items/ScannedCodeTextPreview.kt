@@ -21,12 +21,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.awscherb.cardkeeper.ui.common.icons.NetworkWifi
-import com.awscherb.cardkeeper.ui.common.icons.Public
-import com.awscherb.cardkeeper.ui.theme.CardKeeperTheme
 import com.awscherb.cardkeeper.barcode.model.DriverLicenseType
 import com.awscherb.cardkeeper.barcode.model.ExtendedTypesHelper
 import com.awscherb.cardkeeper.ui.common.icons.DirectionsCar
+import com.awscherb.cardkeeper.ui.common.icons.NetworkWifi
+import com.awscherb.cardkeeper.ui.common.icons.Public
+import com.awscherb.cardkeeper.ui.theme.CardKeeperTheme
 import com.awscherb.cardkeeper.util.SampleContact
 import com.awscherb.cardkeeper.util.extensions.toAddressBook
 import com.awscherb.cardkeeper.util.extensions.toEmail
@@ -45,12 +45,12 @@ fun ScannedCodeTextPreview(
         modifier = modifier.fillMaxWidth()
     ) {
         val extendedType = ExtendedTypesHelper.matchType(text)
-        when  {
+        when {
             parsedResultType == ParsedResultType.ADDRESSBOOK -> {
                 val contact = text.toAddressBook() ?: return
                 IconRow(
                     icon = Icons.Default.Person, text =
-                    contact.names.firstOrNull() ?: ""
+                        contact.names.firstOrNull() ?: ""
                 )
             }
 
@@ -142,7 +142,7 @@ fun ScannedPreviewTextPreview() {
     CardKeeperTheme {
         ScannedCodeTextPreview(
             text = SampleContact, parsedResultType =
-            ParsedResultType.TEXT
+                ParsedResultType.TEXT
         )
     }
 }
@@ -153,7 +153,7 @@ fun ScannedCodeContextPreview() {
     CardKeeperTheme {
         ScannedCodeTextPreview(
             text = SampleContact, parsedResultType =
-            ParsedResultType.ADDRESSBOOK
+                ParsedResultType.ADDRESSBOOK
         )
     }
 }

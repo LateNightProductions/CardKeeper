@@ -183,7 +183,8 @@ fun ScaffoldScreenSimplePreviewCustomBack() {
 @Composable
 fun ScaffoldScreenSingleMenuItem() {
     CardKeeperTheme {
-        ScaffoldScreen(title = "Title",
+        ScaffoldScreen(
+            title = "Title",
             topBarActions = {
                 IconButton(onClick = { }) {
                     Icon(Icons.Default.Info, "Info")
@@ -199,7 +200,8 @@ fun ScaffoldScreenSingleMenuItem() {
 @Composable
 fun ScaffoldScreenSingleDoubleItem() {
     CardKeeperTheme {
-        ScaffoldScreen(title = "Title",
+        ScaffoldScreen(
+            title = "Title",
             topBarActions = {
                 IconButton(onClick = { }) {
                     Icon(Icons.Default.Info, "Info")

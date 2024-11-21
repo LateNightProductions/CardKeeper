@@ -3,7 +3,6 @@ package com.awscherb.cardkeeper.ui.pkpassDetail
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
@@ -20,8 +19,8 @@ import com.awscherb.cardkeeper.pkpass.model.getTransitType
 import com.awscherb.cardkeeper.pkpass.model.getTranslatedLabel
 import com.awscherb.cardkeeper.pkpass.model.getTranslatedValue
 import com.awscherb.cardkeeper.pkpass.model.parseHexColor
-import com.awscherb.cardkeeper.ui.common.getAlignmentForFieldText
 import com.awscherb.cardkeeper.ui.common.FieldConfig
+import com.awscherb.cardkeeper.ui.common.getAlignmentForFieldText
 import com.awscherb.cardkeeper.util.extensions.getForegroundColor
 
 /**

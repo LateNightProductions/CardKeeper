@@ -1,6 +1,3 @@
 package com.awscherb.cardkeeper.data
 
-object DatabaseMigrations {
-
-
-}
+object DatabaseMigrations

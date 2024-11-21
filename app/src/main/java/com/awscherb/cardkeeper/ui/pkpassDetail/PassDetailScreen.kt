@@ -13,15 +13,10 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material.icons.filled.Warning
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -102,7 +97,8 @@ fun PassDetailScreenInner(
         mutableStateOf(startWithDeleteOpen)
     }
 
-    ScaffoldScreen(title = "Pass",
+    ScaffoldScreen(
+        title = "Pass",
         navIcon = Icons.AutoMirrored.Default.ArrowBack,
         navOnClick = navOnClick,
         topBarActions = {

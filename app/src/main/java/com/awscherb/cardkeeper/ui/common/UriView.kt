@@ -25,9 +25,11 @@ fun UriView(
         val handler = LocalUriHandler.current
         LinkableRow(
             icon = Public, text = uri.title ?: uri.uri,
-            modifier = Modifier.padding(top = 8.dp).clickable {
-                handler.openUri(uri.uri)
-            }
+            modifier = Modifier
+                .padding(top = 8.dp)
+                .clickable {
+                    handler.openUri(uri.uri)
+                }
         )
     }
 }

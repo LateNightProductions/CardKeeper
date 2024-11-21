@@ -6,16 +6,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.tooling.preview.Preview
 import com.awscherb.cardkeeper.pkpass.model.FieldObject
 import com.awscherb.cardkeeper.pkpass.model.PkPassModel
 import com.awscherb.cardkeeper.pkpass.model.getTranslatedLabel
 import com.awscherb.cardkeeper.pkpass.model.getTranslatedValue
 import com.awscherb.cardkeeper.pkpass.model.parseHexColor
+import com.awscherb.cardkeeper.ui.common.FieldConfig
 import com.awscherb.cardkeeper.ui.theme.CardKeeperTheme
 import com.awscherb.cardkeeper.ui.theme.Typography
-import com.awscherb.cardkeeper.ui.common.FieldConfig
 
 @Composable
 fun PrimaryTextView(

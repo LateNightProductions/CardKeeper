@@ -10,7 +10,6 @@ import com.awscherb.cardkeeper.pkpass.util.BarcodeConstants
 import com.awscherb.cardkeeper.pkpass.util.TransitConstants
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.client.result.ParsedResultType
-import java.util.Date
 
 fun createPassModel(
     id: String = "",

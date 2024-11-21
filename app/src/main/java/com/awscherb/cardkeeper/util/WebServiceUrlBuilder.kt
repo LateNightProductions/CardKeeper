@@ -6,7 +6,7 @@ import com.awscherb.cardkeeper.pkpass.model.canBeUpdated
 object WebServiceUrlBuilder {
 
     fun buildUrl(
-       pass: PkPassModel
+        pass: PkPassModel
     ): String {
         if (!pass.canBeUpdated()) return ""
         val cleanedUrl =

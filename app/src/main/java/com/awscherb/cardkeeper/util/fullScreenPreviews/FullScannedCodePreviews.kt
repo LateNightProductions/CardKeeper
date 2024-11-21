@@ -2,7 +2,6 @@ package com.awscherb.cardkeeper.util.fullScreenPreviews
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.tooling.preview.Preview
 import com.awscherb.cardkeeper.ui.scannedCode.ScannedCodeDetail
 import com.awscherb.cardkeeper.ui.theme.CardKeeperTheme

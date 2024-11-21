@@ -2,15 +2,12 @@ package com.awscherb.cardkeeper.util.extensions
 
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.Result
-import com.google.zxing.client.result.AddressBookAUResultParser
 import com.google.zxing.client.result.AddressBookDoCoMoResultParser
 import com.google.zxing.client.result.AddressBookParsedResult
 import com.google.zxing.client.result.BizcardResultParser
 import com.google.zxing.client.result.EmailAddressParsedResult
 import com.google.zxing.client.result.EmailAddressResultParser
 import com.google.zxing.client.result.EmailDoCoMoResultParser
-import com.google.zxing.client.result.SMSMMSResultParser
-import com.google.zxing.client.result.SMSParsedResult
 import com.google.zxing.client.result.TelParsedResult
 import com.google.zxing.client.result.TelResultParser
 import com.google.zxing.client.result.URIParsedResult
@@ -25,9 +22,11 @@ fun String.toAddressBook(): AddressBookParsedResult? {
         startsWith("MECARD:") -> {
             AddressBookDoCoMoResultParser().parse(res)
         }
+
         startsWith("BIZCARD:") -> {
             BizcardResultParser().parse(res)
         }
+
         else -> {
             VCardResultParser().parse(res)
         }
@@ -51,6 +50,7 @@ fun String.toEmail(): EmailAddressParsedResult? {
     return when {
         startsWith("MATMSG:") ->
             EmailDoCoMoResultParser().parse(res)
+
         else ->
             EmailAddressResultParser().parse(res)
     }

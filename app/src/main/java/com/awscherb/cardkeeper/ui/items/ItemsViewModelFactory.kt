@@ -7,7 +7,7 @@ import javax.inject.Inject
 
 class ItemsViewModelFactory @Inject constructor(
     private val savedItemRepository: SavedItemRepository
-): ViewModelProvider.NewInstanceFactory() {
+) : ViewModelProvider.NewInstanceFactory() {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return ItemsViewModel(savedItemRepository) as T
     }

@@ -18,12 +18,11 @@
 
 package com.awscherb.cardkeeper.ui.common.icons
 
-import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.materialIcon
 import androidx.compose.material.icons.materialPath
 import androidx.compose.ui.graphics.vector.ImageVector
 
-public val FlashlightOn: ImageVector
+val FlashlightOn: ImageVector
     get() {
         if (_flashlightOn != null) {
             return _flashlightOn!!
