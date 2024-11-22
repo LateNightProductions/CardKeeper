@@ -10,16 +10,24 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.blur
+import androidx.compose.ui.draw.drawWithContent
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.CompositingStrategy
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.awscherb.cardkeeper.pkpass.model.FieldObject
+import com.awscherb.cardkeeper.pkpass.model.PassInfoType
 import com.awscherb.cardkeeper.pkpass.model.PkPassModel
 import com.awscherb.cardkeeper.pkpass.model.parseHexColor
+import com.awscherb.cardkeeper.pkpass.model.passInfoType
 import com.awscherb.cardkeeper.ui.common.PkPassHeaderView
 import com.awscherb.cardkeeper.ui.theme.CardKeeperTheme
+import com.awscherb.cardkeeper.util.SampleEvent
 import com.awscherb.cardkeeper.util.createPassInfo
 import com.awscherb.cardkeeper.util.createPassModel
 
@@ -29,7 +37,24 @@ fun PassItem(
     onClick: (PkPassModel) -> Unit
 ) {
     ElevatedCard(
-        modifier = Modifier.clickable { onClick(pass) },
+        modifier = Modifier.clickable { onClick(pass) }
+            .graphicsLayer {
+                compositingStrategy = CompositingStrategy.Offscreen
+            }
+            .drawWithContent {
+                drawContent()
+                if (pass.passInfoType == PassInfoType.EVENT_TICKET) {
+                    drawCircle(
+                        color = Color.Red,
+                        radius = 32.dp.toPx(),
+                        center = Offset(
+                            x = this.center.x,
+                            y =  -(16.dp.toPx())
+                        ),
+                        blendMode = BlendMode.DstOut
+                    )
+                }
+            },
         colors = CardDefaults.cardColors(
             containerColor = Color(pass.backgroundColor.parseHexColor())
         )
@@ -68,5 +93,17 @@ fun PassItemPreview() {
                 )
             )
         )
+    }
+}
+
+@Composable
+@Preview
+fun PassItemEventPreview() {
+    CardKeeperTheme {
+        PassItem(
+            onClick = {},
+            pass = SampleEvent
+            )
+
     }
 }
