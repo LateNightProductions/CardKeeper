@@ -37,7 +37,8 @@ fun PassItem(
     onClick: (PkPassModel) -> Unit
 ) {
     ElevatedCard(
-        modifier = Modifier.clickable { onClick(pass) }
+        modifier = Modifier
+            .clickable { onClick(pass) }
             .graphicsLayer {
                 compositingStrategy = CompositingStrategy.Offscreen
             }
@@ -49,7 +50,7 @@ fun PassItem(
                         radius = 32.dp.toPx(),
                         center = Offset(
                             x = this.center.x,
-                            y =  -(16.dp.toPx())
+                            y = -(16.dp.toPx())
                         ),
                         blendMode = BlendMode.DstOut
                     )
@@ -103,7 +104,7 @@ fun PassItemEventPreview() {
         PassItem(
             onClick = {},
             pass = SampleEvent
-            )
+        )
 
     }
 }
