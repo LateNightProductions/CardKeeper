@@ -1,15 +1,16 @@
 package com.awscherb.cardkeeper.ui.items
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ElevatedCard
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.blur
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.BlendMode
@@ -36,7 +37,7 @@ fun PassItem(
     pass: PkPassModel,
     onClick: (PkPassModel) -> Unit
 ) {
-    ElevatedCard(
+    Box(
         modifier = Modifier
             .clickable { onClick(pass) }
             .graphicsLayer {
@@ -55,10 +56,10 @@ fun PassItem(
                         blendMode = BlendMode.DstOut
                     )
                 }
-            },
-        colors = CardDefaults.cardColors(
-            containerColor = Color(pass.backgroundColor.parseHexColor())
-        )
+            }
+            .clip(RoundedCornerShape(if (pass.eventTicket != null) 0.dp else 8.dp))
+            .background(color = Color(pass.backgroundColor.parseHexColor()))
+
     ) {
         Box {
             pass.backgroundPath?.let { background ->
