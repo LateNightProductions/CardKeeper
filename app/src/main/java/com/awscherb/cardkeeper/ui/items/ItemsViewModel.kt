@@ -7,10 +7,12 @@ import com.awscherb.cardkeeper.data.repository.SavedItemRepository
 import com.awscherb.cardkeeper.pkpass.model.PkPassModel
 import com.awscherb.cardkeeper.pkpass.util.PassDateUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
 @HiltViewModel
@@ -50,10 +52,12 @@ class ItemsViewModel @Inject constructor(
                 }
             }
         }
-        .combine(filter) { items, filter -> items.filter(filterForOptions(filter)) }
+        .combine(filter) { items, filter ->
+            items.filter(filterForOptions(filter))
+        }
         .combine(sort) { items, sort ->
             items.sortedWith(sort.sort)
         }
-
-
+        .flowOn(Dispatchers.IO)
+    
 }
