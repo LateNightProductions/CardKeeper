@@ -1,6 +1,7 @@
 package com.awscherb.cardkeeper.pkpass.work
 
 import android.content.Context
+import android.util.Log
 import androidx.work.WorkerParameters
 import com.awscherb.cardkeeper.pkpass.api.PkPassApi
 import com.awscherb.cardkeeper.pkpass.db.PkPassDao
@@ -33,13 +34,17 @@ class UpdatePassWorker(
             val response = pkPassApi.getPass(url, "ApplePass $token")
 
             val inputStream = response.body()?.byteStream()
-
-            inputStream?.use {
-                createPassFromZipInput(it)?.let { pass ->
-                    pkPassDao.updatePass(pass)
+            if ((response.body()?.contentLength() ?: 0) < 1L) {
+                Log.d("CardKeeper", "Content length was ${response.body()?.contentLength()}")
+                Result.success()
+            } else {
+                inputStream?.use {
+                    createPassFromZipInput(it)?.let { pass ->
+                        pkPassDao.updatePass(pass)
+                    }
                 }
+                Result.success()
             }
-            Result.success()
         } catch (e: Exception) {
             Result.failure()
         }
