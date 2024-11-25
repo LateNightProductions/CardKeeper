@@ -34,7 +34,7 @@ class UpdatePassWorker(
             val response = pkPassApi.getPass(url, "ApplePass $token")
 
             val inputStream = response.body()?.byteStream()
-            if ((response.body()?.contentLength() ?: 0) < 1L) {
+            if ((response.body()?.contentLength() ?: 0) == 0L) {
                 Log.d("CardKeeper", "Content length was ${response.body()?.contentLength()}")
                 Result.success()
             } else {
