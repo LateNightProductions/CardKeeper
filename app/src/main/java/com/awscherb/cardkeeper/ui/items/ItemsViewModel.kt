@@ -59,5 +59,5 @@ class ItemsViewModel @Inject constructor(
             items.sortedWith(sort.sort)
         }
         .flowOn(Dispatchers.IO)
-    
+
 }
