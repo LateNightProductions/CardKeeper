@@ -30,7 +30,7 @@ import com.awscherb.cardkeeper.barcode.model.ScannedCodeModel
 import com.awscherb.cardkeeper.ui.common.BarcodeImage
 import com.awscherb.cardkeeper.ui.common.CodeRichDataSection
 import com.awscherb.cardkeeper.ui.common.DeleteDialog
-import com.awscherb.cardkeeper.ui.common.ScaffoldScreen
+import com.awscherb.cardkeeper.compose_common.ScaffoldScreen
 import com.awscherb.cardkeeper.ui.theme.CardKeeperTheme
 import com.awscherb.cardkeeper.ui.theme.Typography
 import com.awscherb.cardkeeper.util.GlobalPreviewNightMode

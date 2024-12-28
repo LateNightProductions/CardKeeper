@@ -2,11 +2,10 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.compose.compiler)
-    alias(libs.plugins.devtools.ksp)
 }
 
 android {
-    namespace = "com.awscherb.cardkeeper.passdetail"
+    namespace = "com.awscherb.cardkeeper.compose_common"
     compileSdk = 35
 
     defaultConfig {
@@ -25,11 +24,6 @@ android {
             )
         }
     }
-
-    buildFeatures {
-        compose = true
-    }
-
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
@@ -37,25 +31,20 @@ android {
     kotlinOptions {
         jvmTarget = "17"
     }
+    buildFeatures {
+        compose = true
+    }
 }
 
 dependencies {
     implementation(platform(libs.compose.bom))
-
     implementation(libs.androidx.appcompat)
     implementation(libs.coil)
     implementation(libs.compose.constraint)
     implementation(libs.compose.material3)
     implementation(libs.compose.navigation)
     implementation(libs.compose.ui.tooling.preview)
-    implementation(libs.dagger)
-    implementation(libs.dagger.hilt)
-    implementation(libs.hilt.navigation)
     implementation(libs.material)
 
     debugImplementation(libs.compose.ui.tooling)
-
-    ksp(libs.androidx.room.compiler)
-    ksp(libs.dagger.compiler)
-    ksp(libs.dagger.hilt.compiler)
 }

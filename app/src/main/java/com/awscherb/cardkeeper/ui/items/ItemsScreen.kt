@@ -15,7 +15,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.awscherb.cardkeeper.R
 import com.awscherb.cardkeeper.core.SavedItem
-import com.awscherb.cardkeeper.ui.common.SearchableScaffoldScreen
+import com.awscherb.cardkeeper.compose_common.SearchableScaffoldScreen
 
 @Composable
 fun ItemsScreen(

@@ -21,7 +21,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.awscherb.cardkeeper.ui.common.ScaffoldScreen
+import com.awscherb.cardkeeper.compose_common.ScaffoldScreen
 import com.awscherb.cardkeeper.ui.theme.CardKeeperTheme
 import com.awscherb.cardkeeper.ui.theme.Typography
 import com.awscherb.cardkeeper.util.GlobalPreviewNightMode

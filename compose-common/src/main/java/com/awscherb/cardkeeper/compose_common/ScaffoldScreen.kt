@@ -1,6 +1,6 @@
 @file:OptIn(ExperimentalMaterial3Api::class)
 
-package com.awscherb.cardkeeper.ui.common
+package com.awscherb.cardkeeper.compose_common
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.RowScope
@@ -31,7 +31,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.tooling.preview.Preview
-import com.awscherb.cardkeeper.ui.theme.CardKeeperTheme
 
 @Composable
 fun ScaffoldScreen(
@@ -159,100 +158,88 @@ fun SearchableScaffoldScreen(
 @Preview
 @Composable
 fun ScaffoldScreenSimplePreview() {
-    CardKeeperTheme {
-        ScaffoldScreen(title = "Title", navOnClick = { }) {
+    ScaffoldScreen(title = "Title", navOnClick = { }) {
 
-        }
     }
 }
 
 @Preview
 @Composable
 fun ScaffoldScreenSimplePreviewCustomBack() {
-    CardKeeperTheme {
-        ScaffoldScreen(
-            title = "Title", navOnClick = { },
-            navIcon = Icons.AutoMirrored.Default.ArrowBack
-        ) {
+    ScaffoldScreen(
+        title = "Title", navOnClick = { },
+        navIcon = Icons.AutoMirrored.Default.ArrowBack
+    ) {
 
-        }
     }
 }
 
 @Preview
 @Composable
 fun ScaffoldScreenSingleMenuItem() {
-    CardKeeperTheme {
-        ScaffoldScreen(
-            title = "Title",
-            topBarActions = {
-                IconButton(onClick = { }) {
-                    Icon(Icons.Default.Info, "Info")
-                }
-            },
-            navOnClick = { }) {
+    ScaffoldScreen(
+        title = "Title",
+        topBarActions = {
+            IconButton(onClick = { }) {
+                Icon(Icons.Default.Info, "Info")
+            }
+        },
+        navOnClick = { }) {
 
-        }
     }
 }
 
 @Preview
 @Composable
 fun ScaffoldScreenSingleDoubleItem() {
-    CardKeeperTheme {
-        ScaffoldScreen(
-            title = "Title",
-            topBarActions = {
-                IconButton(onClick = { }) {
-                    Icon(Icons.Default.Info, "Info")
-                }
-                IconButton(onClick = { }) {
-                    Icon(Icons.Default.Settings, "Settings")
-                }
-            },
-            navOnClick = { }) {
+    ScaffoldScreen(
+        title = "Title",
+        topBarActions = {
+            IconButton(onClick = { }) {
+                Icon(Icons.Default.Info, "Info")
+            }
+            IconButton(onClick = { }) {
+                Icon(Icons.Default.Settings, "Settings")
+            }
+        },
+        navOnClick = { }) {
 
-        }
     }
 }
 
 @Preview
 @Composable
 fun SearchableScaffoldPreview() {
-    CardKeeperTheme {
-        SearchableScaffoldScreen(
-            title = "Title",
-            topBarActions = {
-                IconButton(onClick = { }) {
-                    Icon(Icons.Default.Info, "Info")
-                }
-                IconButton(onClick = { }) {
-                    Icon(Icons.Default.Settings, "Settings")
-                }
-            },
-            navOnClick = { },
-            startSearchEnabled = true
-        ) {
+    SearchableScaffoldScreen(
+        title = "Title",
+        topBarActions = {
+            IconButton(onClick = { }) {
+                Icon(Icons.Default.Info, "Info")
+            }
+            IconButton(onClick = { }) {
+                Icon(Icons.Default.Settings, "Settings")
+            }
+        },
+        navOnClick = { },
+        startSearchEnabled = true
+    ) {
 
-        }
     }
 }
 
 @Preview
 @Composable
 fun SearchableScaffoldDisabledPreview() {
-    CardKeeperTheme {
-        SearchableScaffoldScreen(
-            title = "Title",
-            topBarActions = {
-                IconButton(onClick = { }) {
-                    Icon(Icons.Default.Settings, "Settings")
-                }
-            },
-            navOnClick = { },
-            startSearchEnabled = false
-        ) {
+    SearchableScaffoldScreen(
+        title = "Title",
+        topBarActions = {
+            IconButton(onClick = { }) {
+                Icon(Icons.Default.Settings, "Settings")
+            }
+        },
+        navOnClick = { },
+        startSearchEnabled = false
+    ) {
 
-        }
     }
 }

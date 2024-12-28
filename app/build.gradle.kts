@@ -62,6 +62,7 @@ android {
 
 dependencies {
 
+    implementation(project(":compose-common"))
     implementation(project(":data:core"))
     implementation(project(":data:common"))
     implementation(project(":data:barcode"))

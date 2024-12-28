@@ -49,7 +49,7 @@ import com.awscherb.cardkeeper.pkpass.model.toBarcodeFormat
 import com.awscherb.cardkeeper.ui.common.BarcodeSection
 import com.awscherb.cardkeeper.ui.common.DeleteDialog
 import com.awscherb.cardkeeper.ui.common.PkPassHeaderView
-import com.awscherb.cardkeeper.ui.common.ScaffoldScreen
+import com.awscherb.cardkeeper.compose_common.ScaffoldScreen
 import com.awscherb.cardkeeper.ui.theme.CardKeeperTheme
 import com.awscherb.cardkeeper.util.SampleCoupon
 import com.awscherb.cardkeeper.util.SampleEvent
