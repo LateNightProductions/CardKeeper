@@ -1,11 +1,12 @@
 plugins {
-    id("com.android.library")
-    id("org.jetbrains.kotlin.android")
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.compose.compiler)
     alias(libs.plugins.devtools.ksp)
 }
 
 android {
-    namespace = "com.awscherb.cardkeeper.pkpass"
+    namespace = "com.awscherb.cardkeeper.passdetail"
     compileSdk = 35
 
     defaultConfig {
@@ -24,6 +25,11 @@ android {
             )
         }
     }
+
+    buildFeatures {
+        compose = true
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
@@ -31,29 +37,21 @@ android {
     kotlinOptions {
         jvmTarget = "17"
     }
-    ksp {
-        arg("room.schemaLocation", "$projectDir/schemas")
-    }
 }
 
 dependencies {
-
-    implementation(project(":data:core"))
-    implementation(project(":data:common"))
-
     implementation(libs.androidx.appcompat)
-    implementation(libs.androidx.room.ktx)
-    implementation(libs.androidx.room.runtime)
-    implementation(libs.androidx.work.runtime.ktx)
+    implementation(libs.coil)
+    implementation(libs.compose.constraint)
+    implementation(libs.compose.material3)
+    implementation(libs.compose.navigation)
+    implementation(libs.compose.ui.tooling.preview)
     implementation(libs.dagger)
-    implementation(libs.gson)
+    implementation(libs.dagger.hilt)
+    implementation(libs.hilt.navigation)
     implementation(libs.material)
-    implementation(libs.okhttp)
-    implementation(libs.okhttp.logging.interceptor)
-    implementation(libs.retrofit)
-    implementation(libs.retrofit.converter.gson)
-    implementation(libs.zxing.core)
 
-    ksp(libs.dagger.compiler)
     ksp(libs.androidx.room.compiler)
+    ksp(libs.dagger.compiler)
+    ksp(libs.dagger.hilt.compiler)
 }

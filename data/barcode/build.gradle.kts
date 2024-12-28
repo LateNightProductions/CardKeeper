@@ -1,12 +1,12 @@
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
-    id("com.google.devtools.ksp")
+    alias(libs.plugins.devtools.ksp)
 }
 
 android {
     namespace = "com.awscherb.cardkeeper.barcode"
-    compileSdk = 33
+    compileSdk = 35
 
     defaultConfig {
         minSdk = 26

@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace = "com.awscherb.cardkeeper.common"
-    compileSdk = 33
+    compileSdk = 35
 
     defaultConfig {
         minSdk = 26

@@ -1,5 +1,0 @@
-include ':app'
-include ':data:pkpass'
-include ':data:barcode'
-include ':data:core'
-include ':data:common'
