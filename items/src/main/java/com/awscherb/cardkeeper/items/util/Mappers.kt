@@ -1,6 +1,8 @@
-package com.awscherb.cardkeeper.items
+package com.awscherb.cardkeeper.items.util
 
 import com.awscherb.cardkeeper.barcode.model.ScannedCodeModel
+import com.awscherb.cardkeeper.items.model.PassItemModel
+import com.awscherb.cardkeeper.items.model.ScannedCodeItemModel
 import com.awscherb.cardkeeper.passUi.FieldConfig
 import com.awscherb.cardkeeper.passUi.PassHeaderModel
 import com.awscherb.cardkeeper.pkpass.model.PkPassModel

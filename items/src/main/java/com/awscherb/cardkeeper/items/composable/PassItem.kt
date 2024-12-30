@@ -1,4 +1,4 @@
-package com.awscherb.cardkeeper.items
+package com.awscherb.cardkeeper.items.composable
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -22,6 +22,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.awscherb.cardkeeper.compose_common.theme.CardKeeperTheme
+import com.awscherb.cardkeeper.items.model.PassItemModel
 import com.awscherb.cardkeeper.passUi.PassHeaderModel
 import com.awscherb.cardkeeper.passUi.PkPassHeaderView
 

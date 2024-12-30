@@ -1,4 +1,4 @@
-package com.awscherb.cardkeeper.items
+package com.awscherb.cardkeeper.items.model
 
 sealed interface ItemModel {
     val id: String

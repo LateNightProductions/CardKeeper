@@ -27,9 +27,9 @@ import androidx.work.WorkInfo
 import androidx.work.WorkManager
 import androidx.work.workDataOf
 import com.awscherb.cardkeeper.compose_common.theme.CardKeeperTheme
-import com.awscherb.cardkeeper.items.ItemsScreen
-import com.awscherb.cardkeeper.items.PassItemModel
-import com.awscherb.cardkeeper.items.ScannedCodeItemModel
+import com.awscherb.cardkeeper.items.composable.ItemsScreen
+import com.awscherb.cardkeeper.items.model.PassItemModel
+import com.awscherb.cardkeeper.items.model.ScannedCodeItemModel
 import com.awscherb.cardkeeper.pkpass.work.ImportPassWorker
 import com.awscherb.cardkeeper.ui.about.AboutScreen
 import com.awscherb.cardkeeper.ui.create.CreateScreen

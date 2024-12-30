@@ -1,4 +1,4 @@
-package com.awscherb.cardkeeper.items
+package com.awscherb.cardkeeper.items.composable
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
@@ -14,6 +14,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.res.painterResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.awscherb.cardkeeper.compose_common.theme.SearchableScaffoldScreen
+import com.awscherb.cardkeeper.items.vm.ItemsViewModel
+import com.awscherb.cardkeeper.items.R
+import com.awscherb.cardkeeper.items.model.ItemModel
 
 @Composable
 fun ItemsScreen(

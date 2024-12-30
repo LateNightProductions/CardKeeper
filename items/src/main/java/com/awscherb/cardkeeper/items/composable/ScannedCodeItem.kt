@@ -1,4 +1,4 @@
-package com.awscherb.cardkeeper.items
+package com.awscherb.cardkeeper.items.composable
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -13,6 +13,7 @@ import androidx.compose.ui.unit.dp
 import com.awscherb.cardkeeper.compose_common.composable.BarcodeImage
 import com.awscherb.cardkeeper.compose_common.theme.CardKeeperTheme
 import com.awscherb.cardkeeper.compose_common.theme.Typography
+import com.awscherb.cardkeeper.items.model.ScannedCodeItemModel
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.client.result.ParsedResultType
 

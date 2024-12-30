@@ -1,4 +1,4 @@
-package com.awscherb.cardkeeper.items
+package com.awscherb.cardkeeper.items.composable
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
@@ -10,6 +10,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import com.awscherb.cardkeeper.compose_common.theme.CardKeeperTheme
+import com.awscherb.cardkeeper.items.model.ItemModel
+import com.awscherb.cardkeeper.items.model.PassItemModel
+import com.awscherb.cardkeeper.items.model.ScannedCodeItemModel
 
 @Composable
 fun ItemsList(
