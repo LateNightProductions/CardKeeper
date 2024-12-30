@@ -31,8 +31,8 @@ import com.awscherb.cardkeeper.ui.common.BarcodeImage
 import com.awscherb.cardkeeper.ui.common.CodeRichDataSection
 import com.awscherb.cardkeeper.ui.common.DeleteDialog
 import com.awscherb.cardkeeper.compose_common.ScaffoldScreen
-import com.awscherb.cardkeeper.ui.theme.CardKeeperTheme
-import com.awscherb.cardkeeper.ui.theme.Typography
+import com.awscherb.cardkeeper.compose_common.CardKeeperTheme
+import com.awscherb.cardkeeper.compose_common.Typography
 import com.awscherb.cardkeeper.util.GlobalPreviewNightMode
 import com.awscherb.cardkeeper.util.SampleContact
 import com.google.zxing.BarcodeFormat

@@ -22,8 +22,8 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.awscherb.cardkeeper.pkpass.model.isSquare
-import com.awscherb.cardkeeper.ui.theme.CardKeeperTheme
-import com.awscherb.cardkeeper.ui.theme.Purple80
+import com.awscherb.cardkeeper.compose_common.CardKeeperTheme
+import com.awscherb.cardkeeper.compose_common.Purple80
 import com.awscherb.cardkeeper.util.BarcodeEncoder
 import com.awscherb.cardkeeper.util.SampleLicense
 import com.google.zxing.BarcodeFormat

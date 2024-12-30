@@ -1,4 +1,4 @@
-package com.awscherb.cardkeeper.ui.theme
+package com.awscherb.cardkeeper.compose_common
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

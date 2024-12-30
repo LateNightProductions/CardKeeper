@@ -1,4 +1,4 @@
-package com.awscherb.cardkeeper.ui.common
+package com.awscherb.cardkeeper.passUi
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -17,24 +17,15 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.constraintlayout.compose.atMostWrapContent
 import coil.compose.AsyncImage
-import com.awscherb.cardkeeper.R
-import com.awscherb.cardkeeper.pkpass.model.FieldObject
-import com.awscherb.cardkeeper.pkpass.model.PkPassModel
-import com.awscherb.cardkeeper.pkpass.model.findPassInfo
-import com.awscherb.cardkeeper.pkpass.model.getTranslatedLabel
-import com.awscherb.cardkeeper.pkpass.model.getTranslatedValue
-import com.awscherb.cardkeeper.pkpass.model.parseHexColor
-import com.awscherb.cardkeeper.ui.pkpassDetail.FieldTextView
-import com.awscherb.cardkeeper.ui.theme.CardKeeperTheme
-import com.awscherb.cardkeeper.ui.theme.Typography
-import com.awscherb.cardkeeper.util.createPassInfo
-import com.awscherb.cardkeeper.util.createPassModel
+import com.awscherb.cardkeeper.compose_common.CardKeeperTheme
+import com.awscherb.cardkeeper.compose_common.Typography
+import com.awscherb.cardkeeper.pass_ui_common.R
 
 
 @Composable
 fun PkPassHeaderView(
     modifier: Modifier = Modifier,
-    pass: PkPassModel,
+    pass: PassHeaderModel,
     showPlaceholder: Boolean = false
 ) {
     ConstraintLayout(
@@ -45,8 +36,9 @@ fun PkPassHeaderView(
         val (image, description, headers) = createRefs()
 
         AsyncImage(
-            model = pass.logoPath,
+            model = pass.logo,
             placeholder = painterResource(id = R.drawable.logo_placeholder),
+            fallback = painterResource(id = R.drawable.logo_placeholder),
             contentDescription = pass.description,
             modifier = Modifier
                 .padding(start = 8.dp, top = 4.dp, bottom = 4.dp)
@@ -73,7 +65,7 @@ fun PkPassHeaderView(
                 )
                 width = Dimension.fillToConstraints.atMostWrapContent
             },
-            color = Color(pass.foregroundColor.parseHexColor())
+            color = Color(pass.foregroundColor)
         )
 
         Row(
@@ -86,33 +78,20 @@ fun PkPassHeaderView(
                 )
             }
         ) {
-            pass.findPassInfo()?.headerFields?.let { passHeaders ->
+            pass.headerConfig.let { passHeaders ->
                 if (passHeaders.isEmpty()) {
                     return@let
                 }
 
-                val labelColor = pass.labelColor.parseHexColor()
-                val valueColor = pass.foregroundColor.parseHexColor()
-
                 val firstPass = passHeaders[0]
                 FieldTextView(
-                    fieldConfig = FieldConfig(
-                        label = pass.getTranslatedLabel(firstPass.label),
-                        value = pass.getTranslatedValue(firstPass.typedValue),
-                        labelColor = labelColor,
-                        valueColor = valueColor
-                    )
+                    fieldConfig = firstPass
                 )
                 if (passHeaders.size > 1) {
                     val secondPass = passHeaders[1]
                     FieldTextView(
                         modifier = Modifier.padding(start = 8.dp),
-                        fieldConfig = FieldConfig(
-                            label = pass.getTranslatedLabel(secondPass.label),
-                            value = pass.getTranslatedValue(secondPass.typedValue),
-                            labelColor = labelColor,
-                            valueColor = valueColor
-                        )
+                        fieldConfig = secondPass
                     )
                 }
             }
@@ -125,13 +104,19 @@ fun PkPassHeaderView(
 fun PassHeaderTextSingleHeader() {
     CardKeeperTheme {
         PkPassHeaderView(
-            pass = createPassModel(
+            pass = PassHeaderModel(
                 logoText = "Loyalty Card",
-                boardingPass = createPassInfo(
-                    headerFields = listOf(
-                        FieldObject("key", "label", "value")
-                    )
-                ),
+                logo = "",
+                foregroundColor = 0xFF0000,
+                labelColor = 0xFF0000,
+                description = "Something",
+                headerConfig = listOf(
+                    FieldConfig(
+                        label = "label",
+                        value = "value",
+                        labelColor = 0xFF0000
+                    ),
+                )
             ),
             showPlaceholder = true
         )
@@ -143,13 +128,24 @@ fun PassHeaderTextSingleHeader() {
 fun PassHeaderMultipleHeaders() {
     CardKeeperTheme {
         PkPassHeaderView(
-            pass = createPassModel(
-                boardingPass = createPassInfo(
-                    headerFields = listOf(
-                        FieldObject("key", "label", "value"),
-                        FieldObject("key", "label", "value")
-                    )
-                ),
+            pass = PassHeaderModel(
+                logoText = "Loyalty Card",
+                logo = "",
+                foregroundColor = Color.Red.value.toInt(),
+                labelColor = 0xFF0000,
+                description = "Something",
+                headerConfig = listOf(
+                    FieldConfig(
+                        label = "label",
+                        value = "value",
+                        labelColor = 0xFF0000
+                    ),
+                    FieldConfig(
+                        label = "label",
+                        value = "value",
+                        labelColor = 0xFF0000
+                    ),
+                )
             ),
             showPlaceholder = true
         )
@@ -161,9 +157,14 @@ fun PassHeaderMultipleHeaders() {
 fun PassHeaderLongNameNoHeaders() {
     CardKeeperTheme {
         PkPassHeaderView(
-            pass = createPassModel(
-                logoText = "Header Field With A Super Long Name Should Be Ellipsized",
-                boardingPass = createPassInfo()
+            pass = PassHeaderModel(
+                logoText = "Loyalty Card name with a really long name",
+                logo = "",
+                foregroundColor = Color.Red.value.toInt(),
+                labelColor = Color.Red.value.toInt(),
+                description = "Something",
+                headerConfig = listOf(
+                )
             ),
             showPlaceholder = true
         )
@@ -175,13 +176,23 @@ fun PassHeaderLongNameNoHeaders() {
 fun PassHeaderLongTextMultipleHeaders() {
     CardKeeperTheme {
         PkPassHeaderView(
-            pass = createPassModel(
-                logoText = "Header Field With A Super Long Name Should Be Ellipsized",
-                boardingPass = createPassInfo(
-                    headerFields = listOf(
-                        FieldObject("key", "label", "value"),
-                        FieldObject("key", "label", "value")
-                    )
+            pass = PassHeaderModel(
+                logoText = "Loyalty Card header with a long name",
+                logo = "",
+                foregroundColor = 0xFF0000,
+                labelColor = 0xFF0000,
+                description = "Something",
+                headerConfig = listOf(
+                    FieldConfig(
+                        label = "label",
+                        value = "value",
+                        labelColor = 0xFF0000
+                    ),
+                    FieldConfig(
+                        label = "label",
+                        value = "value",
+                        labelColor = 0xFF0000
+                    ),
                 )
             ),
             showPlaceholder = true

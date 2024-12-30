@@ -25,7 +25,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import com.awscherb.cardkeeper.ui.common.CodeRichDataSection
-import com.awscherb.cardkeeper.ui.theme.CardKeeperTheme
+import com.awscherb.cardkeeper.compose_common.CardKeeperTheme
 import com.awscherb.cardkeeper.util.CapWords
 import com.awscherb.cardkeeper.util.GlobalPreviewNightMode
 import com.awscherb.cardkeeper.util.ParsedTypeUtils

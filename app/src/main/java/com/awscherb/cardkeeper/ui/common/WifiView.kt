@@ -23,8 +23,8 @@ import androidx.compose.ui.unit.dp
 import com.awscherb.cardkeeper.ui.common.icons.NetworkWifi
 import com.awscherb.cardkeeper.ui.common.icons.Visibility
 import com.awscherb.cardkeeper.ui.common.icons.VisibilityOff
-import com.awscherb.cardkeeper.ui.theme.CardKeeperTheme
-import com.awscherb.cardkeeper.ui.theme.Typography
+import com.awscherb.cardkeeper.compose_common.CardKeeperTheme
+import com.awscherb.cardkeeper.compose_common.Typography
 import com.awscherb.cardkeeper.util.SampleWifi
 import com.awscherb.cardkeeper.util.extensions.toWifi
 

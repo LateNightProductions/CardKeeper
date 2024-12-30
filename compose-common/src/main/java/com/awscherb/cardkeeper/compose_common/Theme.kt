@@ -1,4 +1,4 @@
-package com.awscherb.cardkeeper.ui.theme
+package com.awscherb.cardkeeper.compose_common
 
 import android.app.Activity
 import android.os.Build

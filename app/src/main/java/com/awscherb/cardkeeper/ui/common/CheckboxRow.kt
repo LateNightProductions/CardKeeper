@@ -7,7 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.awscherb.cardkeeper.ui.theme.Typography
+import com.awscherb.cardkeeper.compose_common.Typography
 
 @Composable
 fun CheckboxRow(

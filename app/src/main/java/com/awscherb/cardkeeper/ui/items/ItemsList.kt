@@ -14,7 +14,7 @@ import com.awscherb.cardkeeper.core.SavedItem
 import com.awscherb.cardkeeper.pkpass.model.FieldObject
 import com.awscherb.cardkeeper.pkpass.model.PkPassModel
 import com.awscherb.cardkeeper.pkpass.util.TransitConstants
-import com.awscherb.cardkeeper.ui.theme.CardKeeperTheme
+import com.awscherb.cardkeeper.compose_common.CardKeeperTheme
 import com.awscherb.cardkeeper.util.GlobalPreviewNightMode
 import com.awscherb.cardkeeper.util.SampleLicense
 import com.awscherb.cardkeeper.util.createBarcode

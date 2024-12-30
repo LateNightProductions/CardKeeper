@@ -26,7 +26,7 @@ import com.awscherb.cardkeeper.barcode.model.ExtendedTypesHelper
 import com.awscherb.cardkeeper.ui.common.icons.DirectionsCar
 import com.awscherb.cardkeeper.ui.common.icons.NetworkWifi
 import com.awscherb.cardkeeper.ui.common.icons.Public
-import com.awscherb.cardkeeper.ui.theme.CardKeeperTheme
+import com.awscherb.cardkeeper.compose_common.CardKeeperTheme
 import com.awscherb.cardkeeper.util.SampleContact
 import com.awscherb.cardkeeper.util.extensions.toAddressBook
 import com.awscherb.cardkeeper.util.extensions.toEmail

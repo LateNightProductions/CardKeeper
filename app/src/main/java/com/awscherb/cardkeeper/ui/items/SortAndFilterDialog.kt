@@ -28,8 +28,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import com.awscherb.cardkeeper.ui.common.CheckboxRow
 import com.awscherb.cardkeeper.ui.common.RadioRow
-import com.awscherb.cardkeeper.ui.theme.CardKeeperTheme
-import com.awscherb.cardkeeper.ui.theme.Typography
+import com.awscherb.cardkeeper.compose_common.CardKeeperTheme
+import com.awscherb.cardkeeper.compose_common.Typography
 
 @Composable
 fun SortAndFilterDialog(

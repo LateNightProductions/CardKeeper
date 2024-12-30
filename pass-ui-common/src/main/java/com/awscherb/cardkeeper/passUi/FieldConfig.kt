@@ -1,4 +1,4 @@
-package com.awscherb.cardkeeper.ui.common
+package com.awscherb.cardkeeper.passUi
 
 data class FieldConfig(
     val label: String?,

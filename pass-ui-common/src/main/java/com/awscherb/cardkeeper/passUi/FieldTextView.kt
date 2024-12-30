@@ -1,4 +1,4 @@
-package com.awscherb.cardkeeper.ui.pkpassDetail
+package com.awscherb.cardkeeper.passUi
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Text
@@ -7,10 +7,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
-import com.awscherb.cardkeeper.pkpass.model.parseHexColor
-import com.awscherb.cardkeeper.ui.common.FieldConfig
-import com.awscherb.cardkeeper.ui.theme.CardKeeperTheme
-import com.awscherb.cardkeeper.ui.theme.Typography
+import com.awscherb.cardkeeper.compose_common.CardKeeperTheme
+import com.awscherb.cardkeeper.compose_common.Typography
 
 @Composable
 fun FieldTextView(
@@ -45,7 +43,7 @@ fun FieldTextViewHeaderPreview() {
             fieldConfig = FieldConfig(
                 label = "time",
                 value = "12:00",
-                labelColor = "rgb(0,0,0)".parseHexColor()
+                labelColor = 0x000000
             )
         )
     }
@@ -60,7 +58,7 @@ fun FieldTextViewAlignmentPreview() {
             fieldConfig = FieldConfig(
                 label = "time",
                 value = "12:00",
-                labelColor = "rgb(0,0,0)".parseHexColor()
+                labelColor = 0x000000
             )
         )
     }
@@ -74,7 +72,7 @@ fun FieldTextViewValueOnlyPReview() {
             fieldConfig = FieldConfig(
                 label = null,
                 value = "12:00",
-                labelColor = "rgb(0,0,0)".parseHexColor()
+                labelColor = 0x000000
             )
         )
     }

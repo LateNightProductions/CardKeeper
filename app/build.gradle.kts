@@ -67,6 +67,7 @@ dependencies {
     implementation(project(":data:common"))
     implementation(project(":data:barcode"))
     implementation(project(":data:pkpass"))
+    implementation(project(":pass-ui-common"))
 
     // Copy icon source
 //    implementation("androidx.compose.material:material-icons-extended:1.6.8")
