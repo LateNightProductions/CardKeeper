@@ -1,7 +1,5 @@
 package com.awscherb.cardkeeper.barcode.model
 
-import androidx.room.PrimaryKey
-import com.awscherb.cardkeeper.core.Barcode
 import com.awscherb.cardkeeper.core.SavedItem
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.client.result.ParsedResultType

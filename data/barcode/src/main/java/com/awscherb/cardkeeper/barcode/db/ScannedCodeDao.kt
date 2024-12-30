@@ -1,6 +1,10 @@
 package com.awscherb.cardkeeper.barcode.db
 
-import androidx.room.*
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
+import androidx.room.Update
 import com.awscherb.cardkeeper.barcode.entity.ScannedCodeEntity
 import kotlinx.coroutines.flow.Flow
 

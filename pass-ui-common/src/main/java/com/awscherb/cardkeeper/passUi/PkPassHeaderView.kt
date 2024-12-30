@@ -17,8 +17,8 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.constraintlayout.compose.atMostWrapContent
 import coil.compose.AsyncImage
-import com.awscherb.cardkeeper.compose_common.CardKeeperTheme
-import com.awscherb.cardkeeper.compose_common.Typography
+import com.awscherb.cardkeeper.compose_common.theme.CardKeeperTheme
+import com.awscherb.cardkeeper.compose_common.theme.Typography
 import com.awscherb.cardkeeper.pass_ui_common.R
 
 
@@ -26,7 +26,6 @@ import com.awscherb.cardkeeper.pass_ui_common.R
 fun PkPassHeaderView(
     modifier: Modifier = Modifier,
     pass: PassHeaderModel,
-    showPlaceholder: Boolean = false
 ) {
     ConstraintLayout(
         modifier = modifier
@@ -118,7 +117,6 @@ fun PassHeaderTextSingleHeader() {
                     ),
                 )
             ),
-            showPlaceholder = true
         )
     }
 }
@@ -147,7 +145,6 @@ fun PassHeaderMultipleHeaders() {
                     ),
                 )
             ),
-            showPlaceholder = true
         )
     }
 }
@@ -166,7 +163,6 @@ fun PassHeaderLongNameNoHeaders() {
                 headerConfig = listOf(
                 )
             ),
-            showPlaceholder = true
         )
     }
 }
@@ -195,7 +191,6 @@ fun PassHeaderLongTextMultipleHeaders() {
                     ),
                 )
             ),
-            showPlaceholder = true
         )
     }
 }

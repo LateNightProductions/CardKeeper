@@ -2,11 +2,11 @@ package com.awscherb.cardkeeper.util
 
 import com.awscherb.cardkeeper.barcode.model.DriverLicenseType
 import com.awscherb.cardkeeper.barcode.model.ExtendedTypesHelper
-import com.awscherb.cardkeeper.util.extensions.toAddressBook
-import com.awscherb.cardkeeper.util.extensions.toEmail
-import com.awscherb.cardkeeper.util.extensions.toParsedUri
-import com.awscherb.cardkeeper.util.extensions.toTel
-import com.awscherb.cardkeeper.util.extensions.toWifi
+import com.awscherb.cardkeeper.core.toAddressBook
+import com.awscherb.cardkeeper.core.toEmail
+import com.awscherb.cardkeeper.core.toParsedUri
+import com.awscherb.cardkeeper.core.toTel
+import com.awscherb.cardkeeper.core.toWifi
 import com.google.zxing.client.result.ParsedResultType
 
 object ParsedTypeUtils {

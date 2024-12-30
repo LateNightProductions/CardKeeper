@@ -7,8 +7,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
-import com.awscherb.cardkeeper.compose_common.CardKeeperTheme
-import com.awscherb.cardkeeper.compose_common.Typography
+import com.awscherb.cardkeeper.compose_common.theme.CardKeeperTheme
+import com.awscherb.cardkeeper.compose_common.theme.Typography
 import com.awscherb.cardkeeper.passUi.FieldConfig
 import com.awscherb.cardkeeper.pkpass.model.FieldObject
 import com.awscherb.cardkeeper.pkpass.model.PkPassModel

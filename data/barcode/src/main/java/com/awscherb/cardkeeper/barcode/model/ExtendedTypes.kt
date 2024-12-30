@@ -1,7 +1,5 @@
 package com.awscherb.cardkeeper.barcode.model
 
-import java.lang.IllegalArgumentException
-
 /**
  * Extended types to support beyond just the ParsedType that ZXINg gets us
  * i.e. a driver's license

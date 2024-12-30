@@ -5,8 +5,8 @@ import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.ui.graphics.vector.ImageVector
-import com.awscherb.cardkeeper.ui.common.icons.Camera
-import com.awscherb.cardkeeper.ui.common.icons.FileOpen
+import com.awscherb.cardkeeper.compose_common.icons.Camera
+import com.awscherb.cardkeeper.compose_common.icons.FileOpen
 
 sealed class Destination(
     val label: String,

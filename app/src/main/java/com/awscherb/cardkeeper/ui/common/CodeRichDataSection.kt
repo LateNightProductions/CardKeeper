@@ -12,8 +12,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.awscherb.cardkeeper.barcode.model.DriverLicenseType
 import com.awscherb.cardkeeper.barcode.model.ExtendedTypesHelper
-import com.awscherb.cardkeeper.compose_common.CardKeeperTheme
-import com.awscherb.cardkeeper.util.SampleContact
+import com.awscherb.cardkeeper.compose_common.theme.CardKeeperTheme
+import com.awscherb.cardkeeper.compose_common.util.SampleContact
 import com.google.zxing.client.result.ParsedResultType
 
 @Composable

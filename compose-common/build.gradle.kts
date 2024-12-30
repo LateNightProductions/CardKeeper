@@ -37,6 +37,8 @@ android {
 }
 
 dependencies {
+    implementation(project(":data:core"))
+    implementation(project(":data:types"))
     implementation(platform(libs.compose.bom))
     implementation(libs.androidx.appcompat)
     implementation(libs.coil)
@@ -45,6 +47,7 @@ dependencies {
     implementation(libs.compose.navigation)
     implementation(libs.compose.ui.tooling.preview)
     implementation(libs.material)
+    implementation(libs.zxing.core)
 
     debugImplementation(libs.compose.ui.tooling)
 }

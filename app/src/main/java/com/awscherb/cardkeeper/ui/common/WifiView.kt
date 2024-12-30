@@ -20,13 +20,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.awscherb.cardkeeper.ui.common.icons.NetworkWifi
-import com.awscherb.cardkeeper.ui.common.icons.Visibility
-import com.awscherb.cardkeeper.ui.common.icons.VisibilityOff
-import com.awscherb.cardkeeper.compose_common.CardKeeperTheme
-import com.awscherb.cardkeeper.compose_common.Typography
-import com.awscherb.cardkeeper.util.SampleWifi
-import com.awscherb.cardkeeper.util.extensions.toWifi
+import com.awscherb.cardkeeper.compose_common.icons.NetworkWifi
+import com.awscherb.cardkeeper.compose_common.icons.Visibility
+import com.awscherb.cardkeeper.compose_common.icons.VisibilityOff
+import com.awscherb.cardkeeper.compose_common.theme.CardKeeperTheme
+import com.awscherb.cardkeeper.compose_common.theme.Typography
+import com.awscherb.cardkeeper.compose_common.util.SampleWifi
+import com.awscherb.cardkeeper.core.toWifi
 
 @Composable
 fun WifiView(

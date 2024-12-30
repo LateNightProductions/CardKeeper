@@ -19,12 +19,12 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.awscherb.cardkeeper.compose_common.ScaffoldScreen
-import com.awscherb.cardkeeper.ui.common.icons.FlashlightOff
-import com.awscherb.cardkeeper.ui.common.icons.FlashlightOn
-import com.awscherb.cardkeeper.compose_common.CardKeeperTheme
+import com.awscherb.cardkeeper.compose_common.icons.FlashlightOff
+import com.awscherb.cardkeeper.compose_common.icons.FlashlightOn
+import com.awscherb.cardkeeper.compose_common.theme.CardKeeperTheme
+import com.awscherb.cardkeeper.compose_common.theme.ScaffoldScreen
+import com.awscherb.cardkeeper.compose_common.util.SampleWifi
 import com.awscherb.cardkeeper.util.GlobalPreviewNightMode
-import com.awscherb.cardkeeper.util.SampleWifi
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.client.result.ParsedResultType
 import com.google.zxing.client.result.ResultParser

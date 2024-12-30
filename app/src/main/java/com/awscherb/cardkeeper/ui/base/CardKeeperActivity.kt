@@ -26,18 +26,18 @@ import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkInfo
 import androidx.work.WorkManager
 import androidx.work.workDataOf
-import com.awscherb.cardkeeper.barcode.model.ScannedCodeModel
-import com.awscherb.cardkeeper.pkpass.model.PkPassModel
+import com.awscherb.cardkeeper.compose_common.theme.CardKeeperTheme
+import com.awscherb.cardkeeper.items.ItemsScreen
+import com.awscherb.cardkeeper.items.PassItemModel
+import com.awscherb.cardkeeper.items.ScannedCodeItemModel
 import com.awscherb.cardkeeper.pkpass.work.ImportPassWorker
 import com.awscherb.cardkeeper.ui.about.AboutScreen
 import com.awscherb.cardkeeper.ui.create.CreateScreen
-import com.awscherb.cardkeeper.ui.items.ItemsScreen
 import com.awscherb.cardkeeper.ui.open.ImportScreen
 import com.awscherb.cardkeeper.ui.pkpassDetail.PassDetailScreen
 import com.awscherb.cardkeeper.ui.scan.PermissionsScreen
 import com.awscherb.cardkeeper.ui.scan.ScanScreen
 import com.awscherb.cardkeeper.ui.scannedCode.ScannedCodeScreen
-import com.awscherb.cardkeeper.compose_common.CardKeeperTheme
 import com.awscherb.cardkeeper.util.getAppVersion
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
@@ -103,10 +103,10 @@ class CardKeeperActivity : ComponentActivity() {
                             ) {
 
                                 when (it) {
-                                    is PkPassModel ->
+                                    is PassItemModel ->
                                         navController.navigate("pass/${it.id}")
 
-                                    is ScannedCodeModel ->
+                                    is ScannedCodeItemModel ->
                                         navController.navigate("code/${it.id}")
                                 }
 

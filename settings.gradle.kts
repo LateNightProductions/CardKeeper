@@ -15,10 +15,13 @@ dependencyResolutionManagement {
 }
 
 include(":app")
+include(":code-ui-common")
 include(":compose-common")
 include(":data:pkpass")
 include(":data:barcode")
 include(":data:core")
 include(":data:common")
+include(":data:types")
+include(":items")
 include(":passdetail")
 include(":pass-ui-common")

@@ -1,10 +1,8 @@
 package com.awscherb.cardkeeper.barcode.db
 
-import androidx.room.AutoMigration
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import androidx.room.migration.AutoMigrationSpec
 import com.awscherb.cardkeeper.barcode.entity.ScannedCodeEntity
 
 @Database(

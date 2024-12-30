@@ -62,11 +62,14 @@ android {
 
 dependencies {
 
+    implementation(project(":code-ui-common"))
     implementation(project(":compose-common"))
     implementation(project(":data:core"))
     implementation(project(":data:common"))
     implementation(project(":data:barcode"))
     implementation(project(":data:pkpass"))
+    implementation(project(":data:types"))
+    implementation(project(":items"))
     implementation(project(":pass-ui-common"))
 
     // Copy icon source

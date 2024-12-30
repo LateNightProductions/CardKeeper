@@ -1,11 +1,12 @@
 package com.awscherb.cardkeeper.pkpass.model
 
 import android.graphics.Color
-import com.awscherb.cardkeeper.core.Barcode
 import com.awscherb.cardkeeper.core.SavedItem
 import com.awscherb.cardkeeper.pkpass.util.BarcodeConstants
 import com.awscherb.cardkeeper.pkpass.util.PassDateUtils
 import com.awscherb.cardkeeper.pkpass.util.TransitConstants
+import com.awscherb.cardkeeper.types.Barcode
+import com.awscherb.cardkeeper.types.isSquare
 import com.google.zxing.BarcodeFormat
 import okhttp3.internal.toHexString
 
@@ -97,15 +98,6 @@ fun PkPassModel.isBarcodeSquare(): Boolean {
     return findFirstBarcode()?.format?.toBarcodeFormat()?.isSquare() == true
 }
 
-fun BarcodeFormat.isSquare(): Boolean {
-    return when (this) {
-        BarcodeFormat.DATA_MATRIX,
-        BarcodeFormat.QR_CODE,
-        BarcodeFormat.AZTEC -> true
-
-        else -> false
-    }
-}
 
 enum class TransitType {
     AIR,
@@ -155,7 +147,8 @@ fun String?.getTransitType(): TransitType =
     }
 
 fun String?.parseHexColor(): Int {
-    return Color.parseColor(when (this) {
+    return Color.parseColor(
+        when (this) {
         null -> "#000000"
         else -> {
             if (this.startsWith("#")) {

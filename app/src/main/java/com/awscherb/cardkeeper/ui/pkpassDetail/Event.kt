@@ -23,7 +23,7 @@ import com.awscherb.cardkeeper.pkpass.model.getTranslatedValue
 import com.awscherb.cardkeeper.pkpass.model.parseHexColor
 import com.awscherb.cardkeeper.passUi.FieldConfig
 import com.awscherb.cardkeeper.ui.common.getAlignmentForFieldText
-import com.awscherb.cardkeeper.compose_common.CardKeeperTheme
+import com.awscherb.cardkeeper.compose_common.theme.CardKeeperTheme
 import com.awscherb.cardkeeper.passUi.FieldTextView
 import com.awscherb.cardkeeper.util.SampleEvent
 import com.awscherb.cardkeeper.util.SampleEvent2

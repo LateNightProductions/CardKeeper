@@ -40,6 +40,7 @@ dependencies {
 
     implementation(project(":data:core"))
     implementation(project(":data:common"))
+    implementation(project(":data:types"))
 
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.room.ktx)
