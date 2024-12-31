@@ -2,10 +2,10 @@ package com.awscherb.cardkeeper.items.vm
 
 import androidx.lifecycle.ViewModel
 import com.awscherb.cardkeeper.items.model.FilterOptions
-import com.awscherb.cardkeeper.items.model.SortOptions
 import com.awscherb.cardkeeper.items.model.ItemModel
 import com.awscherb.cardkeeper.items.model.PassItemModel
 import com.awscherb.cardkeeper.items.model.ScannedCodeItemModel
+import com.awscherb.cardkeeper.items.model.SortOptions
 import com.awscherb.cardkeeper.items.repo.ItemsRepository
 import com.awscherb.cardkeeper.pkpass.model.PkPassModel
 import com.awscherb.cardkeeper.pkpass.util.PassDateUtils

@@ -3,8 +3,8 @@ package com.awscherb.cardkeeper.util.fullScreenPreviews
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import com.awscherb.cardkeeper.ui.pkpassDetail.PassDetail
 import com.awscherb.cardkeeper.compose_common.theme.CardKeeperTheme
+import com.awscherb.cardkeeper.ui.pkpassDetail.PassDetail
 import com.awscherb.cardkeeper.util.GlobalPreviewNightMode
 import com.awscherb.cardkeeper.util.SampleEvent
 import com.awscherb.cardkeeper.util.SampleFlight

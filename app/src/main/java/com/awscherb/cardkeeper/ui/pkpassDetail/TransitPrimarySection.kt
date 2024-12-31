@@ -21,9 +21,9 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.constraintlayout.compose.atMostWrapContent
 import com.awscherb.cardkeeper.R
-import com.awscherb.cardkeeper.pkpass.model.TransitType
 import com.awscherb.cardkeeper.compose_common.theme.CardKeeperTheme
 import com.awscherb.cardkeeper.compose_common.theme.Typography
+import com.awscherb.cardkeeper.pkpass.model.TransitType
 
 @Composable
 fun TransitPrimarySection(

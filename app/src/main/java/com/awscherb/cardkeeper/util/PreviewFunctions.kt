@@ -2,12 +2,12 @@ package com.awscherb.cardkeeper.util
 
 import android.content.res.Configuration
 import com.awscherb.cardkeeper.barcode.model.ScannedCodeModel
-import com.awscherb.cardkeeper.types.Barcode
 import com.awscherb.cardkeeper.pkpass.model.FieldObject
 import com.awscherb.cardkeeper.pkpass.model.PassInfo
 import com.awscherb.cardkeeper.pkpass.model.PkPassModel
 import com.awscherb.cardkeeper.pkpass.util.BarcodeConstants
 import com.awscherb.cardkeeper.pkpass.util.TransitConstants
+import com.awscherb.cardkeeper.types.Barcode
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.client.result.ParsedResultType
 

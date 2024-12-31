@@ -15,7 +15,6 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -26,13 +25,14 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.awscherb.cardkeeper.compose_common.composable.CheckboxRow
 import com.awscherb.cardkeeper.compose_common.composable.RadioRow
 import com.awscherb.cardkeeper.compose_common.theme.CardKeeperTheme
 import com.awscherb.cardkeeper.compose_common.theme.Typography
 import com.awscherb.cardkeeper.items.model.FilterOptions
-import com.awscherb.cardkeeper.items.vm.ItemsViewModel
 import com.awscherb.cardkeeper.items.model.SortOptions
+import com.awscherb.cardkeeper.items.vm.ItemsViewModel
 
 @Composable
 fun SortAndFilterDialog(
@@ -40,9 +40,9 @@ fun SortAndFilterDialog(
     onDismissRequest: () -> Unit = {}
 ) {
 
-    val filter by viewModel.filter.collectAsState()
-    val sort by viewModel.sort.collectAsState()
-    val showExpiredPasses by viewModel.showExpiredPasses.collectAsState()
+    val filter by viewModel.filter.collectAsStateWithLifecycle()
+    val sort by viewModel.sort.collectAsStateWithLifecycle()
+    val showExpiredPasses by viewModel.showExpiredPasses.collectAsStateWithLifecycle()
 
     SortAndFilterDialogContent(
         initialFilter = filter,
