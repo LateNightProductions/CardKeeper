@@ -28,7 +28,7 @@ import com.awscherb.cardkeeper.compose_common.theme.CardKeeperTheme
 import com.awscherb.cardkeeper.compose_common.util.SampleContact
 import com.awscherb.cardkeeper.compose_common.util.SampleLicense
 import com.awscherb.cardkeeper.compose_common.util.SampleWifi
-import com.awscherb.cardkeeper.ui.common.CodeRichDataSection
+import com.awscherb.cardkeeper.codeUi.CodeRichDataSection
 import com.awscherb.cardkeeper.util.CapWords
 import com.awscherb.cardkeeper.util.GlobalPreviewNightMode
 import com.awscherb.cardkeeper.util.ParsedTypeUtils

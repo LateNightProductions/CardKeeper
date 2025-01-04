@@ -1,4 +1,4 @@
-package com.awscherb.cardkeeper.ui.common
+package com.awscherb.cardkeeper.codeUi
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column

@@ -1,4 +1,4 @@
-package com.awscherb.cardkeeper.ui.common
+package com.awscherb.cardkeeper.codeUi
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -14,12 +14,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.awscherb.cardkeeper.barcode.model.DriverLicenseType
-import com.awscherb.cardkeeper.barcode.model.ExtendedTypesHelper
+import com.awscherb.cardkeeper.compose_common.composable.LinkableRow
 import com.awscherb.cardkeeper.compose_common.icons.Cake
 import com.awscherb.cardkeeper.compose_common.theme.CardKeeperTheme
 import com.awscherb.cardkeeper.compose_common.theme.Typography
 import com.awscherb.cardkeeper.compose_common.util.SampleLicense
+import com.awscherb.cardkeeper.types.DriverLicenseType
+import com.awscherb.cardkeeper.types.ExtendedTypesHelper
 
 @Composable
 fun DriverLicenseView(

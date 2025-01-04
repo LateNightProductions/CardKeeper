@@ -1,4 +1,4 @@
-package com.awscherb.cardkeeper.barcode.model
+package com.awscherb.cardkeeper.types
 
 /**
  * Extended types to support beyond just the ParsedType that ZXINg gets us
@@ -8,7 +8,7 @@ sealed class ExtendedType
 
 object ExtendedTypesHelper {
 
-    private val MATCHERS = listOf<ExtendedTypeParser<*>>(DriverLicenseType.Matcher)
+    private val MATCHERS = listOf<ExtendedTypeParser<*>>(DriverLicenseType)
 
     fun mayBeExtendedType(input: String): Boolean {
         return MATCHERS.any { it.inputMatches(input) }

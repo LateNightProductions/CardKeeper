@@ -1,4 +1,4 @@
-package com.awscherb.cardkeeper.ui.common
+package com.awscherb.cardkeeper.compose_common.dialog
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Warning

@@ -54,7 +54,7 @@ import com.awscherb.cardkeeper.pkpass.model.parseHexColor
 import com.awscherb.cardkeeper.pkpass.model.passInfoType
 import com.awscherb.cardkeeper.pkpass.model.toBarcodeFormat
 import com.awscherb.cardkeeper.ui.common.BarcodeSection
-import com.awscherb.cardkeeper.ui.common.DeleteDialog
+import com.awscherb.cardkeeper.compose_common.dialog.DeleteDialog
 import com.awscherb.cardkeeper.util.SampleCoupon
 import com.awscherb.cardkeeper.util.SampleEvent
 import com.awscherb.cardkeeper.util.SampleFlight

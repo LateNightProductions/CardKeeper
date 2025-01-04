@@ -1,4 +1,4 @@
-package com.awscherb.cardkeeper.ui.scannedCode
+package com.awscherb.cardkeeper.codedetail
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -25,16 +25,13 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.awscherb.cardkeeper.barcode.entity.ScannedCodeEntity
-import com.awscherb.cardkeeper.barcode.model.ScannedCodeModel
+import com.awscherb.cardkeeper.codeUi.CodeRichDataSection
 import com.awscherb.cardkeeper.compose_common.composable.BarcodeImage
+import com.awscherb.cardkeeper.compose_common.dialog.DeleteDialog
 import com.awscherb.cardkeeper.compose_common.theme.CardKeeperTheme
 import com.awscherb.cardkeeper.compose_common.theme.ScaffoldScreen
 import com.awscherb.cardkeeper.compose_common.theme.Typography
 import com.awscherb.cardkeeper.compose_common.util.SampleContact
-import com.awscherb.cardkeeper.ui.common.CodeRichDataSection
-import com.awscherb.cardkeeper.ui.common.DeleteDialog
-import com.awscherb.cardkeeper.util.GlobalPreviewNightMode
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.client.result.ParsedResultType
 import kotlinx.coroutines.launch
@@ -47,7 +44,7 @@ fun ScannedCodeScreen(
 ) {
     val scope = rememberCoroutineScope()
 
-    val code by scannedCodeViewModel.card.collectAsState(initial = null)
+    val code by scannedCodeViewModel.code.collectAsState(initial = null)
     ScannedCodeScreenInner(
         code = code,
         onDelete = {
@@ -61,7 +58,7 @@ fun ScannedCodeScreen(
 
 @Composable
 fun ScannedCodeScreenInner(
-    code: ScannedCodeModel?,
+    code: CodeDetailModel?,
     startWithDeleteOpen: Boolean = false,
     onDelete: () -> Unit,
     navOnClick: () -> Unit
@@ -98,7 +95,7 @@ fun ScannedCodeScreenInner(
 
 @Composable
 fun ScannedCodeDetail(
-    code: ScannedCodeModel,
+    code: CodeDetailModel,
     paddingValues: PaddingValues,
     modifier: Modifier = Modifier
 ) {
@@ -138,13 +135,12 @@ fun ScannedCodeDetail(
 }
 
 @Composable
-@Preview(showSystemUi = true, apiLevel = 33, uiMode = GlobalPreviewNightMode)
+@Preview
 fun ScannedCodeContactPreview() {
     CardKeeperTheme {
         ScannedCodeScreenInner(
-            code = ScannedCodeEntity(
+            code = CodeDetailModel(
                 format = BarcodeFormat.QR_CODE,
-                created = 0L,
                 text = SampleContact,
                 parsedType = ParsedResultType.ADDRESSBOOK,
                 title = "Contact"
@@ -155,13 +151,12 @@ fun ScannedCodeContactPreview() {
 }
 
 @Composable
-@Preview(showSystemUi = true, apiLevel = 33, uiMode = GlobalPreviewNightMode)
+@Preview(showSystemUi = true, apiLevel = 33)
 fun ScannedCodeContactDeletePreview() {
     CardKeeperTheme {
         ScannedCodeScreenInner(
-            code = ScannedCodeEntity(
+            code = CodeDetailModel(
                 format = BarcodeFormat.QR_CODE,
-                created = 0L,
                 text = SampleContact,
                 parsedType = ParsedResultType.ADDRESSBOOK,
                 title = "Contact"
@@ -173,13 +168,12 @@ fun ScannedCodeContactDeletePreview() {
 }
 
 @Composable
-@Preview(showSystemUi = true, apiLevel = 33, uiMode = GlobalPreviewNightMode)
+@Preview(showSystemUi = true, apiLevel = 33)
 fun ScannedCodeTextPreview() {
     CardKeeperTheme {
         ScannedCodeScreenInner(
-            code = ScannedCodeEntity(
+            code = CodeDetailModel(
                 format = BarcodeFormat.QR_CODE,
-                created = 0L,
                 text = SampleContact,
                 parsedType = ParsedResultType.TEXT,
                 title = "Contact"

@@ -62,6 +62,7 @@ android {
 
 dependencies {
 
+    implementation(project(":code-detail"))
     implementation(project(":code-ui-common"))
     implementation(project(":compose-common"))
     implementation(project(":data:core"))

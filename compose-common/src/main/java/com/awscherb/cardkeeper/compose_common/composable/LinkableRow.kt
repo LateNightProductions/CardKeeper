@@ -1,4 +1,4 @@
-package com.awscherb.cardkeeper.ui.common
+package com.awscherb.cardkeeper.compose_common.composable
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth

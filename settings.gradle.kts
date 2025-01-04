@@ -15,6 +15,7 @@ dependencyResolutionManagement {
 }
 
 include(":app")
+include(":code-detail")
 include(":code-ui-common")
 include(":compose-common")
 include(":data:pkpass")

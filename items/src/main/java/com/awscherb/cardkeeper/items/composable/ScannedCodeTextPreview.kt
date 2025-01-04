@@ -21,8 +21,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.awscherb.cardkeeper.barcode.model.DriverLicenseType
-import com.awscherb.cardkeeper.barcode.model.ExtendedTypesHelper
+import com.awscherb.cardkeeper.types.DriverLicenseType
+import com.awscherb.cardkeeper.types.ExtendedTypesHelper
 import com.awscherb.cardkeeper.compose_common.icons.DirectionsCar
 import com.awscherb.cardkeeper.compose_common.icons.NetworkWifi
 import com.awscherb.cardkeeper.compose_common.icons.Public

@@ -1,7 +1,7 @@
 package com.awscherb.cardkeeper.util
 
-import com.awscherb.cardkeeper.barcode.model.DriverLicenseType
-import com.awscherb.cardkeeper.barcode.model.ExtendedTypesHelper
+import com.awscherb.cardkeeper.types.DriverLicenseType
+import com.awscherb.cardkeeper.types.ExtendedTypesHelper
 import com.awscherb.cardkeeper.core.toAddressBook
 import com.awscherb.cardkeeper.core.toEmail
 import com.awscherb.cardkeeper.core.toParsedUri

@@ -1,4 +1,4 @@
-package com.awscherb.cardkeeper.barcode.model
+package com.awscherb.cardkeeper.types
 
 import java.text.SimpleDateFormat
 import java.util.Calendar
