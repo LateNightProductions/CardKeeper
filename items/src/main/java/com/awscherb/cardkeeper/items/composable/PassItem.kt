@@ -52,7 +52,7 @@ fun PassItem(
                 }
             }
             .clip(RoundedCornerShape(if (pass.isEvent) 0.dp else 8.dp))
-            .background(color = Color(pass.backgroundColor))
+            .background(color = pass.backgroundColor)
 
     ) {
         Box {
@@ -82,13 +82,13 @@ fun PassItemPreview() {
         PassItem(
             onClick = {},
             pass = PassItemModel(
-                backgroundColor = 0xff0000,
+                backgroundColor = Color.White,
                 id = "",
                 header = PassHeaderModel(
                     logo = "",
                     description = "desc",
-                    foregroundColor = 0xff0000,
-                    labelColor = 0xff0000,
+                    foregroundColor = Color.Red,
+                    labelColor = Color.Red,
                     logoText = "logo",
                     headerConfig = emptyList(),
                 ),

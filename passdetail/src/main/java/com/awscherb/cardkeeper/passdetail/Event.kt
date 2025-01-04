@@ -1,4 +1,4 @@
-package com.awscherb.cardkeeper.ui.pkpassDetail
+package com.awscherb.cardkeeper.passdetail
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -14,19 +14,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.awscherb.cardkeeper.R
 import com.awscherb.cardkeeper.compose_common.theme.CardKeeperTheme
-import com.awscherb.cardkeeper.passUi.FieldConfig
 import com.awscherb.cardkeeper.passUi.FieldTextView
-import com.awscherb.cardkeeper.pkpass.model.PassInfo
-import com.awscherb.cardkeeper.pkpass.model.PkPassModel
-import com.awscherb.cardkeeper.pkpass.model.findPassInfo
-import com.awscherb.cardkeeper.pkpass.model.getTranslatedLabel
-import com.awscherb.cardkeeper.pkpass.model.getTranslatedValue
-import com.awscherb.cardkeeper.pkpass.model.parseHexColor
-import com.awscherb.cardkeeper.ui.common.getAlignmentForFieldText
-import com.awscherb.cardkeeper.util.SampleEvent
-import com.awscherb.cardkeeper.util.SampleEvent2
+import com.awscherb.cardkeeper.passdetail.util.getAlignmentForFieldText
 
 /**
  * |        Primary         |
@@ -36,7 +26,7 @@ import com.awscherb.cardkeeper.util.SampleEvent2
  * |         Barcode        |
  */
 @Composable
-fun Event(pass: PkPassModel, passInfo: PassInfo) {
+fun Event(pass: PassDetailModel) {
     Box {
         pass.stripPath?.let {
             AsyncImage(
@@ -48,7 +38,7 @@ fun Event(pass: PkPassModel, passInfo: PassInfo) {
         }
 
         Row {
-            passInfo.primaryFields?.firstOrNull()?.let { primary ->
+            pass.primaryFields.firstOrNull()?.let { primary ->
                 EventTextView(
                     modifier = Modifier
                         .padding(horizontal = 8.dp)
@@ -77,20 +67,21 @@ fun Event(pass: PkPassModel, passInfo: PassInfo) {
             .padding(start = 8.dp, end = 8.dp, top = 16.dp),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        passInfo.secondaryFields?.forEachIndexed { index, field ->
+        pass.secondaryFields.forEachIndexed { index, field ->
             val align =
                 getAlignmentForFieldText(
                     index,
-                    passInfo.secondaryFields?.size ?: 0
+                    pass.secondaryFields.size
                 )
             FieldTextView(
                 alignment = align,
-                fieldConfig = FieldConfig(
-                    label = pass.getTranslatedLabel(field.label),
-                    value = pass.getTranslatedValue(field.typedValue),
-                    labelColor = pass.labelColor.parseHexColor(),
-                    valueColor = pass.foregroundColor.parseHexColor()
-                )
+                fieldConfig = field
+//                    FieldConfig(
+//                    label = pass.getTranslatedLabel(field.label),
+//                    value = pass.getTranslatedValue(field.typedValue),
+//                    labelColor = pass.labelColor.parseHexColor(),
+//                    valueColor = pass.foregroundColor.parseHexColor()
+//                )
             )
         }
     }
@@ -101,20 +92,21 @@ fun Event(pass: PkPassModel, passInfo: PassInfo) {
             .padding(start = 8.dp, end = 8.dp, top = 16.dp),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        passInfo.auxiliaryFields?.forEachIndexed { index, field ->
+        pass.auxiliaryFields.forEachIndexed { index, field ->
             val align =
                 getAlignmentForFieldText(
                     index,
-                    passInfo.auxiliaryFields?.size ?: 0
+                    pass.auxiliaryFields.size
                 )
             FieldTextView(
                 alignment = align,
-                fieldConfig = FieldConfig(
-                    label = pass.getTranslatedLabel(field.label),
-                    value = pass.getTranslatedValue(field.typedValue),
-                    labelColor = pass.labelColor.parseHexColor(),
-                    valueColor = pass.foregroundColor.parseHexColor()
-                )
+                fieldConfig = field
+//                    FieldConfig(
+//                    label = pass.getTranslatedLabel(field.label),
+//                    value = pass.getTranslatedValue(field.typedValue),
+//                    labelColor = pass.labelColor.parseHexColor(),
+//                    valueColor = pass.foregroundColor.parseHexColor()
+//                )
             )
         }
     }
@@ -126,7 +118,7 @@ fun EventStripPreview() {
     CardKeeperTheme {
         Card {
             Column {
-                Event(pass = SampleEvent, passInfo = SampleEvent.findPassInfo()!!)
+//                Event(pass = SampleEvent, passInfo = SampleEvent.findPassInfo()!!)
             }
         }
     }
@@ -138,8 +130,9 @@ fun EventBackgroundPreview() {
     CardKeeperTheme {
         Card {
             Column {
-                Event(pass = SampleEvent2, passInfo = SampleEvent.findPassInfo()!!)
+//                Event(pass = SampleEvent2, passInfo = SampleEvent.findPassInfo()!!)
             }
         }
     }
 }
+

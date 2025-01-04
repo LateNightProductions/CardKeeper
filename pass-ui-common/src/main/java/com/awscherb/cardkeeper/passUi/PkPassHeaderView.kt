@@ -64,7 +64,7 @@ fun PkPassHeaderView(
                 )
                 width = Dimension.fillToConstraints.atMostWrapContent
             },
-            color = Color(pass.foregroundColor)
+            color = pass.foregroundColor
         )
 
         Row(
@@ -106,8 +106,8 @@ fun PassHeaderTextSingleHeader() {
             pass = PassHeaderModel(
                 logoText = "Loyalty Card",
                 logo = "",
-                foregroundColor = 0xFF0000,
-                labelColor = 0xFF0000,
+                foregroundColor = Color.Red,
+                labelColor = Color.White,
                 description = "Something",
                 headerConfig = listOf(
                     FieldConfig(
@@ -129,8 +129,8 @@ fun PassHeaderMultipleHeaders() {
             pass = PassHeaderModel(
                 logoText = "Loyalty Card",
                 logo = "",
-                foregroundColor = Color.Red.value.toInt(),
-                labelColor = 0xFF0000,
+                foregroundColor = Color.Red,
+                labelColor = Color.Red,
                 description = "Something",
                 headerConfig = listOf(
                     FieldConfig(
@@ -157,8 +157,8 @@ fun PassHeaderLongNameNoHeaders() {
             pass = PassHeaderModel(
                 logoText = "Loyalty Card name with a really long name",
                 logo = "",
-                foregroundColor = Color.Red.value.toInt(),
-                labelColor = Color.Red.value.toInt(),
+                foregroundColor = Color.Red,
+                labelColor = Color.Red,
                 description = "Something",
                 headerConfig = listOf(
                 )
@@ -175,8 +175,8 @@ fun PassHeaderLongTextMultipleHeaders() {
             pass = PassHeaderModel(
                 logoText = "Loyalty Card header with a long name",
                 logo = "",
-                foregroundColor = 0xFF0000,
-                labelColor = 0xFF0000,
+                foregroundColor = Color.Red,
+                labelColor = Color.Red,
                 description = "Something",
                 headerConfig = listOf(
                     FieldConfig(

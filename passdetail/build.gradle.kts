@@ -40,9 +40,17 @@ android {
 }
 
 dependencies {
+    implementation(project(":pass-ui-common"))
+    implementation(project(":compose-common"))
+    implementation(project(":data:core"))
+    implementation(project(":data:common"))
+    implementation(project(":data:pkpass"))
+    implementation(project(":data:types"))
+
     implementation(platform(libs.compose.bom))
 
     implementation(libs.androidx.appcompat)
+    implementation(libs.androidx.work.runtime.ktx)
     implementation(libs.coil)
     implementation(libs.compose.constraint)
     implementation(libs.compose.material3)
@@ -52,6 +60,7 @@ dependencies {
     implementation(libs.dagger.hilt)
     implementation(libs.hilt.navigation)
     implementation(libs.material)
+    implementation(libs.zxing.core)
 
     debugImplementation(libs.compose.ui.tooling)
 

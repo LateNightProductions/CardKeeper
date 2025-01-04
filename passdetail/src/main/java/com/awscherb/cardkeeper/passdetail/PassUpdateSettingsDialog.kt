@@ -1,4 +1,4 @@
-package com.awscherb.cardkeeper.ui.pkpassDetail
+package com.awscherb.cardkeeper.passdetail
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding

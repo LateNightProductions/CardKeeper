@@ -1,4 +1,4 @@
-package com.awscherb.cardkeeper.ui.pkpassDetail
+package com.awscherb.cardkeeper.passdetail
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -10,15 +10,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.awscherb.cardkeeper.R
-import com.awscherb.cardkeeper.passUi.FieldConfig
 import com.awscherb.cardkeeper.passUi.FieldTextView
-import com.awscherb.cardkeeper.pkpass.model.PassInfo
-import com.awscherb.cardkeeper.pkpass.model.PkPassModel
-import com.awscherb.cardkeeper.pkpass.model.getTranslatedLabel
-import com.awscherb.cardkeeper.pkpass.model.getTranslatedValue
-import com.awscherb.cardkeeper.pkpass.model.parseHexColor
-import com.awscherb.cardkeeper.ui.common.getAlignmentForFieldText
+import com.awscherb.cardkeeper.passdetail.util.getAlignmentForFieldText
 
 /**
  * |        Primary         |
@@ -27,7 +20,7 @@ import com.awscherb.cardkeeper.ui.common.getAlignmentForFieldText
  * |         Footer         |
  */
 @Composable
-fun StoreCard(pass: PkPassModel, passInfo: PassInfo) {
+fun StoreCard(pass: PassDetailModel) {
 
     Box {
         pass.stripPath?.let {
@@ -39,7 +32,7 @@ fun StoreCard(pass: PkPassModel, passInfo: PassInfo) {
             )
         }
 
-        passInfo.primaryFields?.firstOrNull()?.let { primary ->
+        pass.primaryFields.firstOrNull()?.let { primary ->
             PrimaryTextView(
                 modifier = Modifier.padding(horizontal = 8.dp),
                 pass = pass,
@@ -48,8 +41,7 @@ fun StoreCard(pass: PkPassModel, passInfo: PassInfo) {
         }
     }
 
-    val allFields = (passInfo.auxiliaryFields ?: emptyList()) +
-            (passInfo.secondaryFields ?: emptyList())
+    val allFields = (pass.auxiliaryFields) + (pass.secondaryFields)
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -64,12 +56,13 @@ fun StoreCard(pass: PkPassModel, passInfo: PassInfo) {
                 )
             FieldTextView(
                 alignment = align,
-                fieldConfig = FieldConfig(
-                    label = pass.getTranslatedLabel(field.label),
-                    value = pass.getTranslatedValue(field.typedValue),
-                    labelColor = pass.labelColor.parseHexColor(),
-                    valueColor = pass.foregroundColor.parseHexColor()
-                )
+                fieldConfig = field
+//                    FieldConfig(
+//                    label = pass.getTranslatedLabel(field.label),
+//                    value = pass.getTranslatedValue(field.typedValue),
+//                    labelColor = pass.labelColor.parseHexColor(),
+//                    valueColor = pass.foregroundColor.parseHexColor()
+//                )
             )
         }
     }

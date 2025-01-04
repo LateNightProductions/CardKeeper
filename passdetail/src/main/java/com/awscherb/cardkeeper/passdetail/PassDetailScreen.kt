@@ -1,4 +1,4 @@
-package com.awscherb.cardkeeper.ui.pkpassDetail
+package com.awscherb.cardkeeper.passdetail
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -38,28 +38,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
-import com.awscherb.cardkeeper.compose_common.theme.CardKeeperTheme
+import com.awscherb.cardkeeper.compose_common.dialog.DeleteDialog
 import com.awscherb.cardkeeper.compose_common.theme.ScaffoldScreen
-import com.awscherb.cardkeeper.passUi.FieldConfig
 import com.awscherb.cardkeeper.passUi.PassHeaderModel
 import com.awscherb.cardkeeper.passUi.PkPassHeaderView
-import com.awscherb.cardkeeper.pkpass.model.PassInfoType
-import com.awscherb.cardkeeper.pkpass.model.PkPassModel
-import com.awscherb.cardkeeper.pkpass.model.canBeUpdated
-import com.awscherb.cardkeeper.pkpass.model.findFirstBarcode
-import com.awscherb.cardkeeper.pkpass.model.findPassInfo
-import com.awscherb.cardkeeper.pkpass.model.getTranslatedLabel
-import com.awscherb.cardkeeper.pkpass.model.getTranslatedValue
-import com.awscherb.cardkeeper.pkpass.model.parseHexColor
-import com.awscherb.cardkeeper.pkpass.model.passInfoType
 import com.awscherb.cardkeeper.pkpass.model.toBarcodeFormat
-import com.awscherb.cardkeeper.ui.common.BarcodeSection
-import com.awscherb.cardkeeper.compose_common.dialog.DeleteDialog
-import com.awscherb.cardkeeper.util.SampleCoupon
-import com.awscherb.cardkeeper.util.SampleEvent
-import com.awscherb.cardkeeper.util.SampleFlight
-import com.awscherb.cardkeeper.util.SampleGenericPass2
-import com.awscherb.cardkeeper.util.SampleStorePass
 
 @Composable
 fun PassDetailScreen(
@@ -88,7 +71,7 @@ fun PassDetailScreen(
 fun PassDetailScreenInner(
     backItems: List<Pair<String, String>>,
     isAutoUpdateOn: Boolean,
-    pass: PkPassModel?,
+    pass: PassDetailModel?,
     startShowingBackInfo: Boolean = false,
     startShowingAutoUpdate: Boolean = false,
     startWithDeleteOpen: Boolean = false,
@@ -124,7 +107,7 @@ fun PassDetailScreenInner(
                 }
             }
 
-            if (pass?.canBeUpdated() == true) {
+            if (pass?.canBeUpdated == true) {
                 IconButton(onClick = {
                     showBackInfo = false
                     showUpdateSettings = true
@@ -171,7 +154,7 @@ fun PassDetailScreenInner(
 fun PassDetail(
     modifier: Modifier = Modifier,
     padding: PaddingValues,
-    pass: PkPassModel,
+    pass: PassDetailModel,
 ) {
     Box(
         modifier = modifier
@@ -180,7 +163,7 @@ fun PassDetail(
             }
             .drawWithContent {
                 drawContent()
-                if (pass.passInfoType == PassInfoType.EVENT_TICKET) {
+                if (pass.type == PassDetailModel.Type.EVENT_TICKET) {
                     drawCircle(
                         color = Color.Red,
                         radius = 32.dp.toPx(),
@@ -200,8 +183,8 @@ fun PassDetail(
                     bottom = padding.calculateBottomPadding() + 8.dp,
                 )
             )
-            .clip(RoundedCornerShape(if (pass.eventTicket != null) 0.dp else 8.dp))
-            .background(color = Color(pass.backgroundColor.parseHexColor())),
+            .clip(RoundedCornerShape(if (pass.type == PassDetailModel.Type.EVENT_TICKET) 0.dp else 8.dp))
+            .background(color = pass.backgroundColor),
     ) {
 
         Box {
@@ -232,54 +215,52 @@ fun PassDetail(
                         pass = PassHeaderModel(
                             logo = pass.logoPath,
                             description = pass.description,
-                            foregroundColor = pass.foregroundColor.parseHexColor(),
-                            labelColor = pass.labelColor.parseHexColor(),
+                            foregroundColor = pass.foregroundColor,
+                            labelColor = pass.labelColor,
                             logoText = pass.logoText,
-                            headerConfig = buildList {
-                                pass.findPassInfo()?.headerFields?.let {
-                                    if (it.isNotEmpty()) {
-                                        val firstPass = it[0]
-                                        add(
-                                            FieldConfig(
-                                                label = pass.getTranslatedLabel(firstPass.label),
-                                                value = pass.getTranslatedValue(firstPass.typedValue),
-                                                labelColor = pass.labelColor.parseHexColor(),
-                                                valueColor = pass.foregroundColor.parseHexColor()
-                                            )
-                                        )
-
-                                        if (it.size > 1) {
-                                            val secondPass = it[1]
-
-                                            add(
-                                                FieldConfig(
-                                                    label = pass.getTranslatedLabel(secondPass.label),
-                                                    value = pass.getTranslatedValue(secondPass.typedValue),
-                                                    labelColor = pass.labelColor.parseHexColor(),
-                                                    valueColor = pass.foregroundColor.parseHexColor()
-                                                )
-                                            )
-                                        }
-                                    }
-                                }
-                            }
+                            headerConfig = pass.headerItems
+//                                buildList {
+//                                pass.headerFields?.let {
+//                                    if (it.isNotEmpty()) {
+//                                        val firstPass = it[0]
+//                                        add(
+//                                            FieldConfig(
+//                                                label = pass.getTranslatedLabel(firstPass.label),
+//                                                value = pass.getTranslatedValue(firstPass.typedValue),
+//                                                labelColor = pass.labelColor.parseHexColor(),
+//                                                valueColor = pass.foregroundColor.parseHexColor()
+//                                            )
+//                                        )
+//
+//                                        if (it.size > 1) {
+//                                            val secondPass = it[1]
+//
+//                                            add(
+//                                                FieldConfig(
+//                                                    label = pass.getTranslatedLabel(secondPass.label),
+//                                                    value = pass.getTranslatedValue(secondPass.typedValue),
+//                                                    labelColor = pass.labelColor.parseHexColor(),
+//                                                    valueColor = pass.foregroundColor.parseHexColor()
+//                                                )
+//                                            )
+//                                        }
+//                                    }
+//                                }
+//                            }
                         )
                     )
 
-                    pass.findPassInfo()?.let { passInfo ->
-                        when (pass.passInfoType) {
-                            PassInfoType.BOARDING_PASS -> BoardingPass(pass, passInfo)
-                            PassInfoType.STORE_CARD -> StoreCard(pass, passInfo)
-                            PassInfoType.COUPON -> Coupon(pass, passInfo)
-                            PassInfoType.GENERIC -> Generic(pass, passInfo)
-                            PassInfoType.EVENT_TICKET -> Event(pass, passInfo)
-                            null -> {}
-                        }
+                    when (pass.type) {
+                        PassDetailModel.Type.BOARDING_PASS -> BoardingPass(pass)
+                        PassDetailModel.Type.STORE_CARD -> StoreCard(pass)
+                        PassDetailModel.Type.COUPON -> Coupon(pass)
+                        PassDetailModel.Type.GENERIC -> Generic(pass)
+                        PassDetailModel.Type.EVENT_TICKET -> Event(pass)
                     }
                 }
 
                 var hasBarcode = false
-                pass.findFirstBarcode()?.let { barcode ->
+                pass.barcodes.firstOrNull()?.let { barcode ->
                     hasBarcode = true
                     BarcodeSection(
                         modifier = Modifier
@@ -289,7 +270,7 @@ fun PassDetail(
                         message = barcode.message,
                         barcodeFormat = barcode.format.toBarcodeFormat(),
                         altText = barcode.altText,
-                        altColor = Color(pass.foregroundColor.parseHexColor()),
+                        altColor = pass.foregroundColor,
                         backgroundColor = Color.White,
                     )
                 }
@@ -307,115 +288,115 @@ fun PassDetail(
 @Preview(showSystemUi = true)
 @Composable
 fun PassDetailScreenPreview() {
-    CardKeeperTheme {
-        PassDetailScreenInner(
-            backItems = listOf("" to ""),
-            isAutoUpdateOn = false,
-            pass = SampleEvent,
-            navOnClick = { }) {
-        }
-    }
+//    CardKeeperTheme {
+//        PassDetailScreenInner(
+//            backItems = listOf("" to ""),
+//            isAutoUpdateOn = false,
+//            pass = SampleEvent,
+//            navOnClick = { }) {
+//        }
+//    }
 }
 
 @Preview(showSystemUi = true)
 @Composable
 fun PassDetailScreenBackPreview() {
-    CardKeeperTheme {
-        PassDetailScreenInner(
-            backItems = listOf(
-                "Gate" to "A4",
-                "Departure" to "JFK",
-                "Arrival" to "LAX"
-            ),
-            isAutoUpdateOn = false,
-            startShowingBackInfo = true,
-            pass = SampleFlight,
-            navOnClick = { }) {
-        }
-    }
+//    CardKeeperTheme {
+//        PassDetailScreenInner(
+//            backItems = listOf(
+//                "Gate" to "A4",
+//                "Departure" to "JFK",
+//                "Arrival" to "LAX"
+//            ),
+//            isAutoUpdateOn = false,
+//            startShowingBackInfo = true,
+//            pass = SampleFlight,
+//            navOnClick = { }) {
+//        }
+//    }
 }
 
 @Preview(showSystemUi = true)
 @Composable
 fun PassDetailScreenAutoUpdatePreview() {
-    CardKeeperTheme {
-        PassDetailScreenInner(
-            backItems = listOf(
-                "Gate" to "A4",
-                "Departure" to "JFK",
-                "Arrival" to "LAX"
-            ),
-            isAutoUpdateOn = true,
-            startShowingAutoUpdate = true,
-            pass = SampleFlight,
-            navOnClick = { }) {
-        }
-    }
+//    CardKeeperTheme {
+//        PassDetailScreenInner(
+//            backItems = listOf(
+//                "Gate" to "A4",
+//                "Departure" to "JFK",
+//                "Arrival" to "LAX"
+//            ),
+//            isAutoUpdateOn = true,
+//            startShowingAutoUpdate = true,
+//            pass = SampleFlight,
+//            navOnClick = { }) {
+//        }
+//    }
 }
 
 @Preview(showSystemUi = true)
 @Composable
 fun PassDetailStorePassPreview() {
-    CardKeeperTheme {
-        PassDetailScreenInner(
-            backItems = listOf("" to ""),
-            isAutoUpdateOn = false,
-            pass = SampleStorePass,
-            navOnClick = { }) {
-        }
-    }
+//    CardKeeperTheme {
+//        PassDetailScreenInner(
+//            backItems = listOf("" to ""),
+//            isAutoUpdateOn = false,
+//            pass = SampleStorePass,
+//            navOnClick = { }) {
+//        }
+//    }
 }
 
 @Preview(showSystemUi = true)
 @Composable
 fun PassDetailCouponScreenPreview() {
-    CardKeeperTheme {
-        PassDetailScreenInner(
-            backItems = listOf("" to ""),
-            isAutoUpdateOn = false,
-            pass = SampleCoupon,
-            navOnClick = { }) {
-        }
-    }
+//    CardKeeperTheme {
+//        PassDetailScreenInner(
+//            backItems = listOf("" to ""),
+//            isAutoUpdateOn = false,
+//            pass = SampleCoupon,
+//            navOnClick = { }) {
+//        }
+//    }
 }
 
 
 @Preview(showSystemUi = true)
 @Composable
 fun PassDetailGenericScreenPreview() {
-    CardKeeperTheme {
-        PassDetailScreenInner(
-            backItems = listOf("" to ""),
-            isAutoUpdateOn = false,
-            pass = SampleGenericPass2,
-            navOnClick = { }) {
-        }
-    }
+//    CardKeeperTheme {
+//        PassDetailScreenInner(
+//            backItems = listOf("" to ""),
+//            isAutoUpdateOn = false,
+//            pass = SampleGenericPass2,
+//            navOnClick = { }) {
+//        }
+//    }
 }
 
 @Preview(showSystemUi = true)
 @Composable
 fun PassDetailEventScreenPreview() {
-    CardKeeperTheme {
-        PassDetailScreenInner(
-            backItems = listOf("" to ""),
-            isAutoUpdateOn = false,
-            pass = SampleEvent,
-            navOnClick = { }) {
-        }
-    }
+//    CardKeeperTheme {
+//        PassDetailScreenInner(
+//            backItems = listOf("" to ""),
+//            isAutoUpdateOn = false,
+//            pass = SampleEvent,
+//            navOnClick = { }) {
+//        }
+//    }
 }
 
 @Preview(showSystemUi = true)
 @Composable
 fun PassDetailEventScreenDeletePreview() {
-    CardKeeperTheme {
-        PassDetailScreenInner(
-            backItems = listOf("" to ""),
-            isAutoUpdateOn = false,
-            pass = SampleEvent,
-            startWithDeleteOpen = true,
-            navOnClick = { }) {
-        }
-    }
+//    CardKeeperTheme {
+//        PassDetailScreenInner(
+//            backItems = listOf("" to ""),
+//            isAutoUpdateOn = false,
+//            pass = SampleEvent,
+//            startWithDeleteOpen = true,
+//            navOnClick = { }) {
+//        }
+//    }
 }

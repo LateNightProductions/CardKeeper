@@ -1,5 +1,6 @@
 package com.awscherb.cardkeeper.items.util
 
+import androidx.compose.ui.graphics.Color
 import com.awscherb.cardkeeper.barcode.model.ScannedCodeModel
 import com.awscherb.cardkeeper.items.model.PassItemModel
 import com.awscherb.cardkeeper.items.model.ScannedCodeItemModel
@@ -28,15 +29,15 @@ internal object Mappers {
 
         PassItemModel(
             id = id,
-            backgroundColor = backgroundColor.parseHexColor(),
+            backgroundColor = Color(backgroundColor.parseHexColor()),
             created = created,
             backgroundPath = backgroundPath,
             isEvent = eventTicket != null,
             header = PassHeaderModel(
                 logo = logoPath,
                 description = description,
-                foregroundColor = foregroundColor.parseHexColor(),
-                labelColor = labelColor.parseHexColor(),
+                foregroundColor = Color(foregroundColor.parseHexColor()),
+                labelColor = Color(labelColor.parseHexColor()),
                 logoText = logoText,
                 headerConfig = buildList {
                     findPassInfo()?.headerFields?.let {

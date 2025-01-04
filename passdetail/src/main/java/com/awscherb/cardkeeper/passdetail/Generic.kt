@@ -1,4 +1,4 @@
-package com.awscherb.cardkeeper.ui.pkpassDetail
+package com.awscherb.cardkeeper.passdetail
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -9,15 +9,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.awscherb.cardkeeper.passUi.FieldConfig
 import com.awscherb.cardkeeper.passUi.FieldTextView
-import com.awscherb.cardkeeper.pkpass.model.PassInfo
-import com.awscherb.cardkeeper.pkpass.model.PkPassModel
-import com.awscherb.cardkeeper.pkpass.model.getTranslatedLabel
-import com.awscherb.cardkeeper.pkpass.model.getTranslatedValue
-import com.awscherb.cardkeeper.pkpass.model.isBarcodeSquare
-import com.awscherb.cardkeeper.pkpass.model.parseHexColor
-import com.awscherb.cardkeeper.ui.common.getAlignmentForFieldText
+import com.awscherb.cardkeeper.passdetail.util.getAlignmentForFieldText
 
 /**
  * |    Primary [thumb]     |
@@ -34,10 +27,10 @@ import com.awscherb.cardkeeper.ui.common.getAlignmentForFieldText
 
 
 @Composable
-fun Generic(pass: PkPassModel, passInfo: PassInfo) {
+fun Generic(pass: PassDetailModel) {
 
     Row {
-        passInfo.primaryFields?.firstOrNull()?.let { primary ->
+        pass.primaryFields.firstOrNull()?.let { primary ->
             PrimaryTextView(
                 modifier = Modifier
                     .padding(horizontal = 8.dp)
@@ -59,10 +52,9 @@ fun Generic(pass: PkPassModel, passInfo: PassInfo) {
         }
     }
 
-    val allFields = if (pass.isBarcodeSquare())
-        (passInfo.auxiliaryFields ?: emptyList()) +
-                (passInfo.secondaryFields ?: emptyList())
-    else passInfo.secondaryFields ?: emptyList()
+    val allFields = if (pass.isBarcodeSquare)
+        pass.auxiliaryFields + pass.secondaryFields
+    else pass.secondaryFields
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -77,37 +69,39 @@ fun Generic(pass: PkPassModel, passInfo: PassInfo) {
                 )
             FieldTextView(
                 alignment = align,
-                fieldConfig = FieldConfig(
-                    label = pass.getTranslatedLabel(field.label),
-                    value = pass.getTranslatedValue(field.typedValue),
-                    labelColor = pass.labelColor.parseHexColor(),
-                    valueColor = pass.foregroundColor.parseHexColor()
-                )
+                fieldConfig = field
+//                    FieldConfig(
+//                    label = pass.getTranslatedLabel(field.label),
+//                    value = pass.getTranslatedValue(field.typedValue),
+//                    labelColor = pass.labelColor.parseHexColor(),
+//                    valueColor = pass.foregroundColor.parseHexColor()
+//                )
             )
         }
     }
 
-    if (!pass.isBarcodeSquare()) {
+    if (!pass.isBarcodeSquare) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(start = 8.dp, end = 8.dp, top = 16.dp),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            passInfo.auxiliaryFields?.forEachIndexed { index, field ->
+            pass.auxiliaryFields.forEachIndexed { index, field ->
                 val align =
                     getAlignmentForFieldText(
                         index,
-                        passInfo.auxiliaryFields?.size ?: 0
+                        pass.auxiliaryFields.size
                     )
                 FieldTextView(
                     alignment = align,
-                    fieldConfig = FieldConfig(
-                        label = pass.getTranslatedLabel(field.label),
-                        value = pass.getTranslatedValue(field.typedValue),
-                        labelColor = pass.labelColor.parseHexColor(),
-                        valueColor = pass.foregroundColor.parseHexColor()
-                    )
+                    fieldConfig = field
+//                        FieldConfig(
+//                        label = pass.getTranslatedLabel(field.label),
+//                        value = pass.getTranslatedValue(field.typedValue),
+//                        labelColor = pass.labelColor.parseHexColor(),
+//                        valueColor = pass.foregroundColor.parseHexColor()
+//                    )
                 )
             }
         }

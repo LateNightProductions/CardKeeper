@@ -1,10 +1,11 @@
-package com.awscherb.cardkeeper.util
+package com.awscherb.cardkeeper.passdetail.worker
 
 import android.content.Context
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.workDataOf
-import com.awscherb.cardkeeper.pkpass.model.PkPassModel
+import com.awscherb.cardkeeper.passdetail.PassDetailModel
+import com.awscherb.cardkeeper.passdetail.util.WebServiceUrlBuilder
 import com.awscherb.cardkeeper.pkpass.work.UpdatePassWorker
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
@@ -14,7 +15,7 @@ import javax.inject.Singleton
 class PassWorkManager @Inject constructor(
     @ApplicationContext private val context: Context
 ) {
-    fun enqueuePassUpdate(pass: PkPassModel) {
+    fun enqueuePassUpdate(pass: PassDetailModel) {
         val req = OneTimeWorkRequestBuilder<UpdatePassWorker>()
             .setInputData(
                 workDataOf(

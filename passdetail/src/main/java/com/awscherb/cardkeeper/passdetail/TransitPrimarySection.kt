@@ -1,4 +1,4 @@
-package com.awscherb.cardkeeper.ui.pkpassDetail
+package com.awscherb.cardkeeper.passdetail
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -20,10 +20,8 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.constraintlayout.compose.atMostWrapContent
-import com.awscherb.cardkeeper.R
 import com.awscherb.cardkeeper.compose_common.theme.CardKeeperTheme
 import com.awscherb.cardkeeper.compose_common.theme.Typography
-import com.awscherb.cardkeeper.pkpass.model.TransitType
 
 @Composable
 fun TransitPrimarySection(
@@ -33,7 +31,7 @@ fun TransitPrimarySection(
     toAirport: String,
     toCode: String,
     tint: Color,
-    transitType: TransitType = TransitType.GENERIC
+    transitType: TransitModel.Type
 ) {
     Column(modifier) {
         Row(
@@ -78,15 +76,15 @@ fun TransitPrimarySection(
                 )
 
                 val transitIcon = when (transitType) {
-                    TransitType.AIR -> R.drawable.ic_airplane
-                    TransitType.BOAT -> R.drawable.ic_boat
-                    TransitType.BUS -> R.drawable.ic_bus
-                    TransitType.GENERIC -> R.drawable.ic_up
-                    TransitType.TRAIN -> R.drawable.ic_train
+                    TransitModel.Type.AIR -> R.drawable.ic_airplane
+                    TransitModel.Type.BOAT -> R.drawable.ic_boat
+                    TransitModel.Type.BUS -> R.drawable.ic_bus
+                    TransitModel.Type.GENERIC -> R.drawable.ic_up
+                    TransitModel.Type.TRAIN -> R.drawable.ic_train
                 }
 
-                val rotation = if (transitType == TransitType.AIR ||
-                    transitType == TransitType.GENERIC
+                val rotation = if (transitType == TransitModel.Type.AIR ||
+                    transitType == TransitModel.Type.GENERIC
                 ) 90f else 0f
 
                 Image(
@@ -135,7 +133,7 @@ fun TransitPrimaryAir() {
             "Ithaca",
             "ITH",
             Color.Cyan,
-            transitType = TransitType.AIR
+            transitType = TransitModel.Type.AIR
         )
     }
 }
@@ -151,7 +149,7 @@ fun TransitPrimaryAirTruncated() {
             "Ithaca",
             "ITH REALLY LONG NAME",
             Color.Magenta,
-            transitType = TransitType.AIR
+            transitType = TransitModel.Type.AIR
         )
     }
 }
@@ -167,7 +165,7 @@ fun TransitPrimaryTrain() {
             "Boston South Station",
             "BOS",
             Color.Yellow,
-            transitType = TransitType.TRAIN
+            transitType = TransitModel.Type.TRAIN
         )
     }
 }
@@ -183,7 +181,7 @@ fun TransitPrimaryBoat() {
             "New York",
             "NYC",
             Color.Green,
-            transitType = TransitType.BOAT
+            transitType = TransitModel.Type.BOAT
         )
     }
 }
@@ -199,7 +197,7 @@ fun TransitPrimaryBus() {
             "New York",
             "NYC",
             Color.Blue,
-            transitType = TransitType.BUS
+            transitType = TransitModel.Type.BUS
         )
     }
 }
@@ -215,7 +213,7 @@ fun TransitPrimaryGeneric() {
             "Nowhere",
             "NOW",
             Color.Red,
-            transitType = TransitType.GENERIC
+            transitType = TransitModel.Type.GENERIC
         )
     }
 }

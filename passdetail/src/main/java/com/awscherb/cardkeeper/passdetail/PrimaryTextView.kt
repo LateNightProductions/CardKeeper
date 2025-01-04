@@ -1,4 +1,4 @@
-package com.awscherb.cardkeeper.ui.pkpassDetail
+package com.awscherb.cardkeeper.passdetail
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Text
@@ -10,27 +10,25 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.awscherb.cardkeeper.compose_common.theme.CardKeeperTheme
 import com.awscherb.cardkeeper.compose_common.theme.Typography
 import com.awscherb.cardkeeper.passUi.FieldConfig
-import com.awscherb.cardkeeper.pkpass.model.FieldObject
-import com.awscherb.cardkeeper.pkpass.model.PkPassModel
-import com.awscherb.cardkeeper.pkpass.model.getTranslatedLabel
-import com.awscherb.cardkeeper.pkpass.model.getTranslatedValue
 import com.awscherb.cardkeeper.pkpass.model.parseHexColor
 
 @Composable
 fun PrimaryTextView(
     modifier: Modifier = Modifier,
-    pass: PkPassModel,
-    primary: FieldObject,
+    pass: PassDetailModel,
+    primary: FieldConfig,
     alignment: Alignment.Horizontal = Alignment.Start
 ) {
     PrimaryTextViewInner(
         modifier = modifier,
-        fieldConfig = FieldConfig(
-            label = pass.getTranslatedLabel(primary.label),
-            value = pass.getTranslatedValue(primary.typedValue),
-            labelColor = pass.foregroundColor.parseHexColor(),
-            valueColor = pass.foregroundColor.parseHexColor()
-        ),
+        fieldConfig = primary
+//            FieldConfig(
+//            label = pass.getTranslatedLabel(primary.label),
+//            value = pass.getTranslatedValue(primary.typedValue),
+//            labelColor = pass.foregroundColor.parseHexColor(),
+//            valueColor = pass.foregroundColor.parseHexColor()
+//        )
+        ,
         alignment = alignment
     )
 }

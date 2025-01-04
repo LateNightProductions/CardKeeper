@@ -1,4 +1,4 @@
-package com.awscherb.cardkeeper.ui.common
+package com.awscherb.cardkeeper.passdetail.util
 
 import androidx.compose.ui.Alignment
 

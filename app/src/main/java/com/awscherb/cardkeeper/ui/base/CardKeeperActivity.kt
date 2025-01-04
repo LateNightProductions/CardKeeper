@@ -34,7 +34,7 @@ import com.awscherb.cardkeeper.pkpass.work.ImportPassWorker
 import com.awscherb.cardkeeper.ui.about.AboutScreen
 import com.awscherb.cardkeeper.ui.create.CreateScreen
 import com.awscherb.cardkeeper.ui.open.ImportScreen
-import com.awscherb.cardkeeper.ui.pkpassDetail.PassDetailScreen
+import com.awscherb.cardkeeper.passdetail.PassDetailScreen
 import com.awscherb.cardkeeper.ui.scan.PermissionsScreen
 import com.awscherb.cardkeeper.ui.scan.ScanScreen
 import com.awscherb.cardkeeper.codedetail.ScannedCodeScreen
@@ -118,7 +118,10 @@ class CardKeeperActivity : ComponentActivity() {
                                     type = NavType.StringType
                                 })
                         ) {
-                            PassDetailScreen(navOnClick = popBack, onDelete = popBack)
+                            com.awscherb.cardkeeper.passdetail.PassDetailScreen(
+                                navOnClick = popBack,
+                                onDelete = popBack
+                            )
                         }
                         composable(
                             Destination.Code.dest, arguments =
