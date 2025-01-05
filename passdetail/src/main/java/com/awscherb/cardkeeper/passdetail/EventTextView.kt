@@ -21,14 +21,7 @@ fun EventTextView(
 ) {
     EventTextViewInner(
         modifier = modifier,
-        fieldConfig = primary
-//            FieldConfig(
-//            label = pass.getTranslatedLabel(primary.label),
-//            value = pass.getTranslatedValue(primary.value),
-//            labelColor = pass.labelColor.parseHexColor(),
-//            valueColor = pass.foregroundColor.parseHexColor()
-//        )
-        ,
+        fieldConfig = primary,
         alignment = alignment
     )
 }

@@ -21,7 +21,6 @@ import com.awscherb.cardkeeper.passdetail.util.getAlignmentForFieldText
  */
 @Composable
 fun StoreCard(pass: PassDetailModel) {
-
     Box {
         pass.stripPath?.let {
             AsyncImage(
@@ -57,12 +56,6 @@ fun StoreCard(pass: PassDetailModel) {
             FieldTextView(
                 alignment = align,
                 fieldConfig = field
-//                    FieldConfig(
-//                    label = pass.getTranslatedLabel(field.label),
-//                    value = pass.getTranslatedValue(field.typedValue),
-//                    labelColor = pass.labelColor.parseHexColor(),
-//                    valueColor = pass.foregroundColor.parseHexColor()
-//                )
             )
         }
     }

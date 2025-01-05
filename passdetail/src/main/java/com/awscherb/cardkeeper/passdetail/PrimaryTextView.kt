@@ -21,14 +21,7 @@ fun PrimaryTextView(
 ) {
     PrimaryTextViewInner(
         modifier = modifier,
-        fieldConfig = primary
-//            FieldConfig(
-//            label = pass.getTranslatedLabel(primary.label),
-//            value = pass.getTranslatedValue(primary.typedValue),
-//            labelColor = pass.foregroundColor.parseHexColor(),
-//            valueColor = pass.foregroundColor.parseHexColor()
-//        )
-        ,
+        fieldConfig = primary,
         alignment = alignment
     )
 }

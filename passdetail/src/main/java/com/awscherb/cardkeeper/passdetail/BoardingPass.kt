@@ -52,12 +52,6 @@ fun ColumnScope.BoardingPass(pass: PassDetailModel) {
             FieldTextView(
                 alignment = align,
                 fieldConfig = field
-//                    FieldConfig(
-//                    label = pass.getTranslatedLabel(field.label),
-//                    value = pass.getTranslatedValue(field.typedValue),
-//                    labelColor = pass.labelColor.parseHexColor(),
-//                    valueColor = pass.foregroundColor.parseHexColor()
-//                )
             )
         }
     }
@@ -74,12 +68,6 @@ fun ColumnScope.BoardingPass(pass: PassDetailModel) {
             FieldTextView(
                 alignment = align,
                 fieldConfig = field
-//                    FieldConfig(
-//                    label = pass.getTranslatedLabel(field.label),
-//                    value = pass.getTranslatedValue(field.typedValue),
-//                    labelColor = pass.labelColor.parseHexColor(),
-//                    valueColor = pass.foregroundColor.parseHexColor()
-//                )
             )
         }
     }

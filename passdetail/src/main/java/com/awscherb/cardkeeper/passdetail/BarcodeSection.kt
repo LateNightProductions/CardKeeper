@@ -11,15 +11,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.awscherb.cardkeeper.compose_common.composable.BarcodeImage
 import com.awscherb.cardkeeper.compose_common.theme.CardKeeperTheme
-import com.awscherb.cardkeeper.types.isSquare
 import com.google.zxing.BarcodeFormat
 
 @Composable
@@ -32,16 +29,6 @@ fun BarcodeSection(
     altTextIsPreview: Boolean = false,
     backgroundColor: Color? = null
 ) {
-
-    val width = LocalDensity.current.run {
-        LocalConfiguration.current.screenWidthDp.dp.roundToPx()
-    }
-
-    val height = when (barcodeFormat.isSquare()) {
-        true -> width / 2
-        false -> width / 6
-    }
-
     Column(
         modifier = Modifier
             .fillMaxWidth()

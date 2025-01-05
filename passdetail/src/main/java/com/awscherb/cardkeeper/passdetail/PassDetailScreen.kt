@@ -46,7 +46,7 @@ import com.awscherb.cardkeeper.pkpass.model.toBarcodeFormat
 
 @Composable
 fun PassDetailScreen(
-    passDetailViewModel: PkPassViewModel = hiltViewModel(),
+    passDetailViewModel: PassViewModel = hiltViewModel(),
     onDelete: () -> Unit = { },
     navOnClick: () -> Unit
 ) {
@@ -219,34 +219,6 @@ fun PassDetail(
                             labelColor = pass.labelColor,
                             logoText = pass.logoText,
                             headerConfig = pass.headerItems
-//                                buildList {
-//                                pass.headerFields?.let {
-//                                    if (it.isNotEmpty()) {
-//                                        val firstPass = it[0]
-//                                        add(
-//                                            FieldConfig(
-//                                                label = pass.getTranslatedLabel(firstPass.label),
-//                                                value = pass.getTranslatedValue(firstPass.typedValue),
-//                                                labelColor = pass.labelColor.parseHexColor(),
-//                                                valueColor = pass.foregroundColor.parseHexColor()
-//                                            )
-//                                        )
-//
-//                                        if (it.size > 1) {
-//                                            val secondPass = it[1]
-//
-//                                            add(
-//                                                FieldConfig(
-//                                                    label = pass.getTranslatedLabel(secondPass.label),
-//                                                    value = pass.getTranslatedValue(secondPass.typedValue),
-//                                                    labelColor = pass.labelColor.parseHexColor(),
-//                                                    valueColor = pass.foregroundColor.parseHexColor()
-//                                                )
-//                                            )
-//                                        }
-//                                    }
-//                                }
-//                            }
                         )
                     )
 

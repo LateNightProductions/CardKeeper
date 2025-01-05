@@ -17,7 +17,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class PkPassViewModel @Inject constructor(
+class PassViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val pkPassService: PkPassService,
     private val passWorkManager: PassWorkManager
@@ -44,16 +44,6 @@ class PkPassViewModel @Inject constructor(
 
     val backItems: Flow<List<Pair<String, String>>> = pass.map { pass ->
         pass.backItems
-//        if (info?.backFields?.isEmpty() == true) {
-//            emptyList()
-//        } else {
-//            info?.backFields
-//                ?.filter { it.label != null }
-//                ?.map { field ->
-//                    pass.getTranslatedLabel(field.label)!! to
-//                            pass.getTranslatedValue(field.typedValue)
-//                } ?: emptyList()
-//        }
     }
 
     fun setAutoUpdate(autoUpdate: Boolean) {
