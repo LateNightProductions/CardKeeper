@@ -1,4 +1,4 @@
-package com.awscherb.cardkeeper.passdetail
+package com.awscherb.cardkeeper.passdetail.generic
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -10,6 +10,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.awscherb.cardkeeper.passUi.FieldTextView
+import com.awscherb.cardkeeper.passdetail.model.PassDetailModel
+import com.awscherb.cardkeeper.passdetail.common.PrimaryTextView
 import com.awscherb.cardkeeper.passdetail.util.getAlignmentForFieldText
 
 /**
@@ -35,7 +37,6 @@ fun Generic(pass: PassDetailModel) {
                 modifier = Modifier
                     .padding(horizontal = 8.dp)
                     .weight(.75f),
-                pass = pass,
                 primary = primary
             )
         }

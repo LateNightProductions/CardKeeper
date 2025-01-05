@@ -1,4 +1,4 @@
-package com.awscherb.cardkeeper.passdetail
+package com.awscherb.cardkeeper.passdetail.common
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Text
@@ -15,7 +15,6 @@ import com.awscherb.cardkeeper.pkpass.model.parseHexColor
 @Composable
 fun PrimaryTextView(
     modifier: Modifier = Modifier,
-    pass: PassDetailModel,
     primary: FieldConfig,
     alignment: Alignment.Horizontal = Alignment.Start
 ) {
@@ -37,13 +36,13 @@ fun PrimaryTextViewInner(
         Text(
             text = fieldConfig.value,
             modifier = Modifier.align(alignment),
-            color = Color(fieldConfig.valueColor),
+            color = fieldConfig.valueColor,
             style = Typography.displaySmall
         )
         fieldConfig.label?.let { label ->
             Text(
                 text = label,
-                color = Color(fieldConfig.labelColor),
+                color = fieldConfig.labelColor,
                 style = Typography.bodyLarge,
                 modifier = Modifier.align(alignment)
             )
@@ -59,7 +58,7 @@ fun PrimaryTextViewPreview() {
             fieldConfig = FieldConfig(
                 label = "Time",
                 value = "12:00",
-                labelColor = "rgb(255,120,65)".parseHexColor()
+                labelColor = Color("rgb(255,120,65)".parseHexColor())
             )
         )
     }

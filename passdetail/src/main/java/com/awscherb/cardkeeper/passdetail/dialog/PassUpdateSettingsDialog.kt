@@ -1,4 +1,4 @@
-package com.awscherb.cardkeeper.passdetail
+package com.awscherb.cardkeeper.passdetail.dialog
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding

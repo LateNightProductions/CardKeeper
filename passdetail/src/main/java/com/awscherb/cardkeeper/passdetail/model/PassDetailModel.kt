@@ -1,4 +1,4 @@
-package com.awscherb.cardkeeper.passdetail
+package com.awscherb.cardkeeper.passdetail.model
 
 import androidx.compose.ui.graphics.Color
 import com.awscherb.cardkeeper.passUi.FieldConfig

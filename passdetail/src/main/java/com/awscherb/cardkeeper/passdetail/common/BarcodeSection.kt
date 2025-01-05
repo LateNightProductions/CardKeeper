@@ -1,4 +1,4 @@
-package com.awscherb.cardkeeper.passdetail
+package com.awscherb.cardkeeper.passdetail.common
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer

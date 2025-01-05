@@ -1,7 +1,9 @@
-package com.awscherb.cardkeeper.passdetail
+package com.awscherb.cardkeeper.passdetail.util
 
 import androidx.compose.ui.graphics.Color
 import com.awscherb.cardkeeper.passUi.FieldConfig
+import com.awscherb.cardkeeper.passdetail.model.PassDetailModel
+import com.awscherb.cardkeeper.passdetail.model.TransitModel
 import com.awscherb.cardkeeper.pkpass.model.PassInfoType
 import com.awscherb.cardkeeper.pkpass.model.PkPassModel
 import com.awscherb.cardkeeper.pkpass.model.TransitType
@@ -43,20 +45,20 @@ internal object Mappers {
             thumbnailPath = model.thumbnailPath,
             transit = if (model.passInfoType == PassInfoType.BOARDING_PASS) model.findPassInfo()
                 ?.findOriginDestination()?.let { (origin, destination) ->
-                TransitModel(
-                    originLabel = origin.label.orEmpty(),
-                    originValue = origin.value.orEmpty(),
-                    destinationLabel = destination.label.orEmpty(),
-                    destinationValue = destination.value.orEmpty(),
-                    type = when (model.findPassInfo()?.getTransitType()) {
-                        TransitType.AIR -> TransitModel.Type.AIR
-                        TransitType.BOAT -> TransitModel.Type.BOAT
-                        TransitType.BUS -> TransitModel.Type.BUS
-                        TransitType.TRAIN -> TransitModel.Type.TRAIN
-                        else -> TransitModel.Type.GENERIC
-                    }
-                )
-            } else null,
+                    TransitModel(
+                        originLabel = origin.label.orEmpty(),
+                        originValue = origin.value.orEmpty(),
+                        destinationLabel = destination.label.orEmpty(),
+                        destinationValue = destination.value.orEmpty(),
+                        type = when (model.findPassInfo()?.getTransitType()) {
+                            TransitType.AIR -> TransitModel.Type.AIR
+                            TransitType.BOAT -> TransitModel.Type.BOAT
+                            TransitType.BUS -> TransitModel.Type.BUS
+                            TransitType.TRAIN -> TransitModel.Type.TRAIN
+                            else -> TransitModel.Type.GENERIC
+                        }
+                    )
+                } else null,
             identifier = model.passTypeIdentifier,
             barcodes = buildList {
                 model.barcode?.let { first -> add(first) }
@@ -72,8 +74,8 @@ internal object Mappers {
                             FieldConfig(
                                 label = model.getTranslatedLabel(firstPass.label),
                                 value = model.getTranslatedValue(firstPass.typedValue),
-                                labelColor = model.labelColor.parseHexColor(),
-                                valueColor = model.foregroundColor.parseHexColor()
+                                labelColor = Color(model.labelColor.parseHexColor()),
+                                valueColor = Color(model.foregroundColor.parseHexColor())
                             )
                         )
 
@@ -84,8 +86,8 @@ internal object Mappers {
                                 FieldConfig(
                                     label = model.getTranslatedLabel(secondPass.label),
                                     value = model.getTranslatedValue(secondPass.typedValue),
-                                    labelColor = model.labelColor.parseHexColor(),
-                                    valueColor = model.foregroundColor.parseHexColor()
+                                    labelColor = Color(model.labelColor.parseHexColor()),
+                                    valueColor = Color(model.foregroundColor.parseHexColor())
                                 )
                             )
                         }
@@ -96,24 +98,24 @@ internal object Mappers {
                 FieldConfig(
                     label = model.getTranslatedLabel(field.label),
                     value = model.getTranslatedValue(field.typedValue),
-                    labelColor = model.labelColor.parseHexColor(),
-                    valueColor = model.foregroundColor.parseHexColor()
+                    labelColor = Color(model.labelColor.parseHexColor()),
+                    valueColor = Color(model.foregroundColor.parseHexColor())
                 )
             }.orEmpty(),
             auxiliaryFields = model.findPassInfo()?.auxiliaryFields?.map { field ->
                 FieldConfig(
                     label = model.getTranslatedLabel(field.label),
                     value = model.getTranslatedValue(field.typedValue),
-                    labelColor = model.labelColor.parseHexColor(),
-                    valueColor = model.foregroundColor.parseHexColor()
+                    labelColor = Color(model.labelColor.parseHexColor()),
+                    valueColor = Color(model.foregroundColor.parseHexColor())
                 )
             }.orEmpty(),
             secondaryFields = model.findPassInfo()?.secondaryFields?.map { field ->
                 FieldConfig(
                     label = model.getTranslatedLabel(field.label),
                     value = model.getTranslatedValue(field.typedValue),
-                    labelColor = model.labelColor.parseHexColor(),
-                    valueColor = model.foregroundColor.parseHexColor()
+                    labelColor = Color(model.labelColor.parseHexColor()),
+                    valueColor = Color(model.foregroundColor.parseHexColor())
                 )
             }.orEmpty(),
             backItems = model.findPassInfo()?.backFields

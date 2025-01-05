@@ -3,8 +3,8 @@ package com.awscherb.cardkeeper.passdetail
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.awscherb.cardkeeper.passdetail.model.PassDetailModel
 import com.awscherb.cardkeeper.passdetail.worker.PassWorkManager
-import com.awscherb.cardkeeper.pkpass.service.PkPassService
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
@@ -19,17 +19,15 @@ import javax.inject.Inject
 @HiltViewModel
 class PassViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    private val pkPassService: PkPassService,
+    private val repository: PassDetailRepository,
     private val passWorkManager: PassWorkManager
 ) : ViewModel() {
 
-    val passId = savedStateHandle.get<String>("passId")!!
+    private val passId = savedStateHandle.get<String>("passId")!!
 
-    val pass: Flow<PassDetailModel> = pkPassService.getPass(passId).map {
-        Mappers.detailModel(it)
-    }
+    val pass: Flow<PassDetailModel> = repository.getPass(passId)
 
-    val shouldUpdate = pkPassService.shouldAutoUpdatePass(passId)
+    val shouldUpdate = repository.shouldAutoUpdate(passId)
 
     init {
         pass
@@ -48,13 +46,13 @@ class PassViewModel @Inject constructor(
 
     fun setAutoUpdate(autoUpdate: Boolean) {
         viewModelScope.launch {
-            pkPassService.setAutoUpdatePass(passId, autoUpdate)
+            repository.setAutoUpdate(passId, autoUpdate)
         }
     }
 
     fun deletePass() {
         viewModelScope.launch {
-//            pkPassService.delete(pass.first())
+            repository.delete(passId)
         }
     }
 

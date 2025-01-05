@@ -113,7 +113,7 @@ fun PassHeaderTextSingleHeader() {
                     FieldConfig(
                         label = "label",
                         value = "value",
-                        labelColor = 0xFF0000
+                        labelColor = Color.White
                     ),
                 )
             ),
@@ -136,12 +136,12 @@ fun PassHeaderMultipleHeaders() {
                     FieldConfig(
                         label = "label",
                         value = "value",
-                        labelColor = 0xFF0000
+                        labelColor = Color.White
                     ),
                     FieldConfig(
                         label = "label",
                         value = "value",
-                        labelColor = 0xFF0000
+                        labelColor = Color.White
                     ),
                 )
             ),
@@ -182,12 +182,12 @@ fun PassHeaderLongTextMultipleHeaders() {
                     FieldConfig(
                         label = "label",
                         value = "value",
-                        labelColor = 0xFF0000
+                        labelColor = Color.White
                     ),
                     FieldConfig(
                         label = "label",
                         value = "value",
-                        labelColor = 0xFF0000
+                        labelColor = Color.White
                     ),
                 )
             ),

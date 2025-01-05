@@ -1,4 +1,4 @@
-package com.awscherb.cardkeeper.passdetail
+package com.awscherb.cardkeeper.passdetail.boardingpass
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.ColumnScope
@@ -12,6 +12,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.awscherb.cardkeeper.passUi.FieldTextView
+import com.awscherb.cardkeeper.passdetail.model.PassDetailModel
+import com.awscherb.cardkeeper.passdetail.R
 import com.awscherb.cardkeeper.passdetail.util.getAlignmentForFieldText
 
 /**

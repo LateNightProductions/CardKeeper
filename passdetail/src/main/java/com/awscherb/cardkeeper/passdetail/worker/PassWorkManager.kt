@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.workDataOf
-import com.awscherb.cardkeeper.passdetail.PassDetailModel
+import com.awscherb.cardkeeper.passdetail.model.PassDetailModel
 import com.awscherb.cardkeeper.passdetail.util.WebServiceUrlBuilder
 import com.awscherb.cardkeeper.pkpass.work.UpdatePassWorker
 import dagger.hilt.android.qualifiers.ApplicationContext

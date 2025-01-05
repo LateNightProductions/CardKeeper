@@ -1,6 +1,6 @@
 package com.awscherb.cardkeeper.passdetail.util
 
-import com.awscherb.cardkeeper.passdetail.PassDetailModel
+import com.awscherb.cardkeeper.passdetail.model.PassDetailModel
 
 object WebServiceUrlBuilder {
 

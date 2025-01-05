@@ -20,7 +20,7 @@ fun FieldTextView(
         if (fieldConfig.label != null) {
             Text(
                 text = fieldConfig.label.uppercase(),
-                color = Color(fieldConfig.labelColor),
+                color = fieldConfig.labelColor,
                 style = Typography.labelSmall,
                 modifier = Modifier.align(alignment)
             )
@@ -29,7 +29,7 @@ fun FieldTextView(
         Text(
             text = fieldConfig.value,
             modifier = Modifier.align(alignment),
-            color = Color(fieldConfig.valueColor),
+            color = fieldConfig.valueColor,
             style = if (fieldConfig.label == null) Typography.bodyMedium else Typography.bodyLarge
         )
     }
@@ -43,7 +43,7 @@ fun FieldTextViewHeaderPreview() {
             fieldConfig = FieldConfig(
                 label = "time",
                 value = "12:00",
-                labelColor = 0x000000
+                labelColor = Color.White
             )
         )
     }
@@ -58,7 +58,7 @@ fun FieldTextViewAlignmentPreview() {
             fieldConfig = FieldConfig(
                 label = "time",
                 value = "12:00",
-                labelColor = 0x000000
+                labelColor = Color.White
             )
         )
     }
@@ -72,7 +72,7 @@ fun FieldTextViewValueOnlyPReview() {
             fieldConfig = FieldConfig(
                 label = null,
                 value = "12:00",
-                labelColor = 0x000000
+                labelColor = Color.White
             )
         )
     }

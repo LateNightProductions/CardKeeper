@@ -22,11 +22,15 @@ class PkPassHandler @Inject constructor(
     }
 
     override suspend fun delete(item: PkPassModel) {
-        dao.delete(item.id)
+        delete(item.id)
     }
 
     override fun update(item: PkPassModel): Flow<Result<PkPassModel>> {
         TODO("Not yet implemented")
+    }
+
+    override suspend fun delete(id: String) {
+        dao.delete(id)
     }
 
     override fun shouldAutoUpdatePass(passId: String): Flow<Boolean> {

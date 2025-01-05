@@ -1,4 +1,4 @@
-package com.awscherb.cardkeeper.passdetail
+package com.awscherb.cardkeeper.passdetail.boardingpass
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -22,6 +22,8 @@ import androidx.constraintlayout.compose.Dimension
 import androidx.constraintlayout.compose.atMostWrapContent
 import com.awscherb.cardkeeper.compose_common.theme.CardKeeperTheme
 import com.awscherb.cardkeeper.compose_common.theme.Typography
+import com.awscherb.cardkeeper.passdetail.R
+import com.awscherb.cardkeeper.passdetail.model.TransitModel
 
 @Composable
 fun TransitPrimarySection(

@@ -47,8 +47,8 @@ internal object Mappers {
                                 FieldConfig(
                                     label = getTranslatedLabel(firstPass.label),
                                     value = getTranslatedValue(firstPass.typedValue),
-                                    labelColor = labelColor.parseHexColor(),
-                                    valueColor = foregroundColor.parseHexColor()
+                                    labelColor = Color(labelColor.parseHexColor()),
+                                    valueColor = Color(foregroundColor.parseHexColor())
                                 )
                             )
 
@@ -59,8 +59,8 @@ internal object Mappers {
                                     FieldConfig(
                                         label = getTranslatedLabel(secondPass.label),
                                         value = getTranslatedValue(secondPass.typedValue),
-                                        labelColor = labelColor.parseHexColor(),
-                                        valueColor = foregroundColor.parseHexColor()
+                                        labelColor = Color(labelColor.parseHexColor()),
+                                        valueColor = Color(foregroundColor.parseHexColor())
                                     )
                                 )
                             }

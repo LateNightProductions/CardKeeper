@@ -35,13 +35,26 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.awscherb.cardkeeper.compose_common.dialog.DeleteDialog
+import com.awscherb.cardkeeper.compose_common.theme.CardKeeperTheme
 import com.awscherb.cardkeeper.compose_common.theme.ScaffoldScreen
 import com.awscherb.cardkeeper.passUi.PassHeaderModel
 import com.awscherb.cardkeeper.passUi.PkPassHeaderView
+import com.awscherb.cardkeeper.passdetail.dialog.PassInfoDialog
+import com.awscherb.cardkeeper.passdetail.dialog.PassUpdateSettingsDialog
+import com.awscherb.cardkeeper.passdetail.boardingpass.BoardingPass
+import com.awscherb.cardkeeper.passdetail.common.BarcodeSection
+import com.awscherb.cardkeeper.passdetail.coupon.Coupon
+import com.awscherb.cardkeeper.passdetail.event.Event
+import com.awscherb.cardkeeper.passdetail.model.PassDetailModel
+import com.awscherb.cardkeeper.passdetail.generic.Generic
+import com.awscherb.cardkeeper.passdetail.storecard.StoreCard
+import com.awscherb.cardkeeper.passdetail.util.SampleEvent
 import com.awscherb.cardkeeper.pkpass.model.toBarcodeFormat
 
 @Composable
@@ -257,118 +270,23 @@ fun PassDetail(
     }
 }
 
-@Preview(showSystemUi = true)
+@PreviewParameter(ModelProvider::class)
+@Preview()
 @Composable
-fun PassDetailScreenPreview() {
-//    CardKeeperTheme {
-//        PassDetailScreenInner(
-//            backItems = listOf("" to ""),
-//            isAutoUpdateOn = false,
-//            pass = SampleEvent,
-//            navOnClick = { }) {
-//        }
-//    }
+fun PassDetailScreenPreview(model: PassDetailModel? = null) {
+    CardKeeperTheme {
+        PassDetailScreenInner(
+            backItems = listOf("" to ""),
+            isAutoUpdateOn = false,
+            pass = model,
+            navOnClick = { }) {
+        }
+    }
 }
 
-@Preview(showSystemUi = true)
-@Composable
-fun PassDetailScreenBackPreview() {
-//    CardKeeperTheme {
-//        PassDetailScreenInner(
-//            backItems = listOf(
-//                "Gate" to "A4",
-//                "Departure" to "JFK",
-//                "Arrival" to "LAX"
-//            ),
-//            isAutoUpdateOn = false,
-//            startShowingBackInfo = true,
-//            pass = SampleFlight,
-//            navOnClick = { }) {
-//        }
-//    }
+private class ModelProvider: PreviewParameterProvider<PassDetailModel> {
+    override val values: Sequence<PassDetailModel>
+        get() = listOf(SampleEvent).asSequence()
+
 }
 
-@Preview(showSystemUi = true)
-@Composable
-fun PassDetailScreenAutoUpdatePreview() {
-//    CardKeeperTheme {
-//        PassDetailScreenInner(
-//            backItems = listOf(
-//                "Gate" to "A4",
-//                "Departure" to "JFK",
-//                "Arrival" to "LAX"
-//            ),
-//            isAutoUpdateOn = true,
-//            startShowingAutoUpdate = true,
-//            pass = SampleFlight,
-//            navOnClick = { }) {
-//        }
-//    }
-}
-
-@Preview(showSystemUi = true)
-@Composable
-fun PassDetailStorePassPreview() {
-//    CardKeeperTheme {
-//        PassDetailScreenInner(
-//            backItems = listOf("" to ""),
-//            isAutoUpdateOn = false,
-//            pass = SampleStorePass,
-//            navOnClick = { }) {
-//        }
-//    }
-}
-
-@Preview(showSystemUi = true)
-@Composable
-fun PassDetailCouponScreenPreview() {
-//    CardKeeperTheme {
-//        PassDetailScreenInner(
-//            backItems = listOf("" to ""),
-//            isAutoUpdateOn = false,
-//            pass = SampleCoupon,
-//            navOnClick = { }) {
-//        }
-//    }
-}
-
-
-@Preview(showSystemUi = true)
-@Composable
-fun PassDetailGenericScreenPreview() {
-//    CardKeeperTheme {
-//        PassDetailScreenInner(
-//            backItems = listOf("" to ""),
-//            isAutoUpdateOn = false,
-//            pass = SampleGenericPass2,
-//            navOnClick = { }) {
-//        }
-//    }
-}
-
-@Preview(showSystemUi = true)
-@Composable
-fun PassDetailEventScreenPreview() {
-//    CardKeeperTheme {
-//        PassDetailScreenInner(
-//            backItems = listOf("" to ""),
-//            isAutoUpdateOn = false,
-//            pass = SampleEvent,
-//            navOnClick = { }) {
-//        }
-//    }
-}
-
-@Preview(showSystemUi = true)
-@Composable
-fun PassDetailEventScreenDeletePreview() {
-//    CardKeeperTheme {
-//        PassDetailScreenInner(
-//            backItems = listOf("" to ""),
-//            isAutoUpdateOn = false,
-//            pass = SampleEvent,
-//            startWithDeleteOpen = true,
-//            navOnClick = { }) {
-//        }
-//    }
-}

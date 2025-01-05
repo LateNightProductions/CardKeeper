@@ -1,4 +1,4 @@
-package com.awscherb.cardkeeper.passdetail
+package com.awscherb.cardkeeper.passdetail.event
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Text
@@ -10,6 +10,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.awscherb.cardkeeper.compose_common.theme.CardKeeperTheme
 import com.awscherb.cardkeeper.compose_common.theme.Typography
 import com.awscherb.cardkeeper.passUi.FieldConfig
+import com.awscherb.cardkeeper.passdetail.model.PassDetailModel
 import com.awscherb.cardkeeper.pkpass.model.parseHexColor
 
 @Composable
@@ -37,7 +38,7 @@ fun EventTextViewInner(
         fieldConfig.label?.let { label ->
             Text(
                 text = label,
-                color = Color(fieldConfig.labelColor),
+                color = fieldConfig.labelColor,
                 style = Typography.bodyMedium,
                 modifier = Modifier.align(alignment)
             )
@@ -45,7 +46,7 @@ fun EventTextViewInner(
         Text(
             text = fieldConfig.value,
             modifier = Modifier.align(alignment),
-            color = Color(fieldConfig.valueColor),
+            color = fieldConfig.valueColor,
             style = Typography.titleLarge
         )
 
@@ -60,7 +61,7 @@ fun EventTextViewPreview() {
             fieldConfig = FieldConfig(
                 label = "Time",
                 value = "12:00",
-                labelColor = "rgb(255,120,65)".parseHexColor()
+                labelColor = Color("rgb(255,120,65)".parseHexColor())
             )
         )
     }

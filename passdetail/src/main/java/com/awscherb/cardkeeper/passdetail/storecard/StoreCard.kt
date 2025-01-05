@@ -1,4 +1,4 @@
-package com.awscherb.cardkeeper.passdetail
+package com.awscherb.cardkeeper.passdetail.storecard
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -11,6 +11,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.awscherb.cardkeeper.passUi.FieldTextView
+import com.awscherb.cardkeeper.passdetail.model.PassDetailModel
+import com.awscherb.cardkeeper.passdetail.common.PrimaryTextView
+import com.awscherb.cardkeeper.passdetail.R
 import com.awscherb.cardkeeper.passdetail.util.getAlignmentForFieldText
 
 /**
@@ -34,7 +37,6 @@ fun StoreCard(pass: PassDetailModel) {
         pass.primaryFields.firstOrNull()?.let { primary ->
             PrimaryTextView(
                 modifier = Modifier.padding(horizontal = 8.dp),
-                pass = pass,
                 primary = primary
             )
         }
