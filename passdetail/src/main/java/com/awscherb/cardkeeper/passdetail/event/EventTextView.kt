@@ -16,7 +16,6 @@ import com.awscherb.cardkeeper.pkpass.model.parseHexColor
 @Composable
 fun EventTextView(
     modifier: Modifier = Modifier,
-    pass: PassDetailModel,
     primary: FieldConfig,
     alignment: Alignment.Horizontal = Alignment.Start
 ) {

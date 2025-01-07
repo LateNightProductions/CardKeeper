@@ -45,7 +45,6 @@ fun Event(pass: PassDetailModel) {
                     modifier = Modifier
                         .padding(horizontal = 8.dp)
                         .weight(.75f),
-                    pass = pass,
                     primary = primary
                 )
             }
