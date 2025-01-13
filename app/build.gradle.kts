@@ -71,7 +71,7 @@ dependencies {
     implementation(project(":data:pkpass"))
     implementation(project(":data:types"))
     implementation(project(":items"))
-    implementation(project(":passdetail"))
+    implementation(project(":pass-detail"))
     implementation(project(":pass-ui-common"))
 
     // Copy icon source
