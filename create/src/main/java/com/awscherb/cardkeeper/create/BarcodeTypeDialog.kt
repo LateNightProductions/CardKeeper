@@ -1,4 +1,4 @@
-package com.awscherb.cardkeeper.ui.create
+package com.awscherb.cardkeeper.create
 
 import android.content.res.Configuration
 import androidx.compose.foundation.Image
@@ -25,7 +25,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import com.awscherb.cardkeeper.R
 import com.awscherb.cardkeeper.compose_common.theme.CardKeeperTheme
 import com.google.zxing.BarcodeFormat
 
@@ -140,7 +139,9 @@ fun BarcodeRow(
 @Preview(apiLevel = 33)
 fun SelectionDialogPreview() {
     CardKeeperTheme {
-        BarcodeTypeDialog(onDismissRequest = { }, onTypeSelected = {})
+        BarcodeTypeDialog(
+            onDismissRequest = { },
+            onTypeSelected = {})
     }
 }
 
@@ -161,7 +162,10 @@ fun SelectionDialogInitialPreview() {
 fun SelectedBarcodeRowPreview() {
     CardKeeperTheme {
         BarcodeRow(
-            selectionType = SelectionType(BarcodeFormat.QR_CODE, "QR Code"),
+            selectionType = SelectionType(
+                BarcodeFormat.QR_CODE,
+                "QR Code"
+            ),
             selected = true
         )
     }
@@ -172,7 +176,10 @@ fun SelectedBarcodeRowPreview() {
 fun UnselectedBarcodeRowPreview() {
     CardKeeperTheme {
         BarcodeRow(
-            selectionType = SelectionType(BarcodeFormat.QR_CODE, "QR Code"),
+            selectionType = SelectionType(
+                BarcodeFormat.QR_CODE,
+                "QR Code"
+            ),
             selected = false
         )
     }

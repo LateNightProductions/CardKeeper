@@ -1,4 +1,4 @@
-package com.awscherb.cardkeeper.ui.create
+package com.awscherb.cardkeeper.create
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.awscherb.cardkeeper.compose_common.theme.CardKeeperTheme
 import com.awscherb.cardkeeper.compose_common.theme.ScaffoldScreen
-import com.awscherb.cardkeeper.util.CapWords
+import com.awscherb.cardkeeper.compose_common.util.CapWords
 import com.google.zxing.BarcodeFormat
 
 @Composable
