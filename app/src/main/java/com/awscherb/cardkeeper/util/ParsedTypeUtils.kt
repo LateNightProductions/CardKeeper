@@ -1,12 +1,12 @@
 package com.awscherb.cardkeeper.util
 
-import com.awscherb.cardkeeper.types.DriverLicenseType
-import com.awscherb.cardkeeper.types.ExtendedTypesHelper
 import com.awscherb.cardkeeper.core.toAddressBook
 import com.awscherb.cardkeeper.core.toEmail
 import com.awscherb.cardkeeper.core.toParsedUri
 import com.awscherb.cardkeeper.core.toTel
 import com.awscherb.cardkeeper.core.toWifi
+import com.awscherb.cardkeeper.types.DriverLicenseType
+import com.awscherb.cardkeeper.types.ExtendedTypesHelper
 import com.google.zxing.client.result.ParsedResultType
 
 object ParsedTypeUtils {

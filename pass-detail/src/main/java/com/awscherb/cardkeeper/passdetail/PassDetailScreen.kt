@@ -45,14 +45,14 @@ import com.awscherb.cardkeeper.compose_common.theme.CardKeeperTheme
 import com.awscherb.cardkeeper.compose_common.theme.ScaffoldScreen
 import com.awscherb.cardkeeper.passUi.PassHeaderModel
 import com.awscherb.cardkeeper.passUi.PkPassHeaderView
-import com.awscherb.cardkeeper.passdetail.dialog.PassInfoDialog
-import com.awscherb.cardkeeper.passdetail.dialog.PassUpdateSettingsDialog
 import com.awscherb.cardkeeper.passdetail.boardingpass.BoardingPass
 import com.awscherb.cardkeeper.passdetail.common.BarcodeSection
 import com.awscherb.cardkeeper.passdetail.coupon.Coupon
+import com.awscherb.cardkeeper.passdetail.dialog.PassInfoDialog
+import com.awscherb.cardkeeper.passdetail.dialog.PassUpdateSettingsDialog
 import com.awscherb.cardkeeper.passdetail.event.Event
-import com.awscherb.cardkeeper.passdetail.model.PassDetailModel
 import com.awscherb.cardkeeper.passdetail.generic.Generic
+import com.awscherb.cardkeeper.passdetail.model.PassDetailModel
 import com.awscherb.cardkeeper.passdetail.storecard.StoreCard
 import com.awscherb.cardkeeper.passdetail.util.SampleEvent
 import com.awscherb.cardkeeper.pkpass.model.toBarcodeFormat
@@ -284,7 +284,7 @@ fun PassDetailScreenPreview(model: PassDetailModel? = null) {
     }
 }
 
-private class ModelProvider: PreviewParameterProvider<PassDetailModel> {
+private class ModelProvider : PreviewParameterProvider<PassDetailModel> {
     override val values: Sequence<PassDetailModel>
         get() = listOf(SampleEvent).asSequence()
 

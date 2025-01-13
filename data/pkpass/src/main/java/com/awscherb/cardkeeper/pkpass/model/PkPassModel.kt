@@ -149,33 +149,33 @@ fun String?.getTransitType(): TransitType =
 fun String?.parseHexColor(): Int {
     return Color.parseColor(
         when (this) {
-        null -> "#000000"
-        else -> {
-            if (this.startsWith("#")) {
-                this
-            } else {
-                val parse = subSequence(indexOf("(") + 1, indexOf(")"))
-
-                val numbers = parse.split(",")
-
-                val ints = numbers.subList(0, 3).map { it.trim().toInt() }
-                val hex = ints.map { Integer.toHexString(it) }
-                val padded = hex.map { if (it.length == 1) "0$it" else it }
-
-                // Check for alpha - format rgba(r, g, b, a), or just use full opacity
-                val alpha = if (numbers.size == 4) {
-                    val alphaPercent = numbers[3].toFloat()
-                    (255 * alphaPercent).toInt().toHexString()
+            null -> "#000000"
+            else -> {
+                if (this.startsWith("#")) {
+                    this
                 } else {
-                    "FF"
-                }
+                    val parse = subSequence(indexOf("(") + 1, indexOf(")"))
 
-                val sb = StringBuilder()
-                padded.forEach { sb.append(it) }
-                "#$alpha$sb"
+                    val numbers = parse.split(",")
+
+                    val ints = numbers.subList(0, 3).map { it.trim().toInt() }
+                    val hex = ints.map { Integer.toHexString(it) }
+                    val padded = hex.map { if (it.length == 1) "0$it" else it }
+
+                    // Check for alpha - format rgba(r, g, b, a), or just use full opacity
+                    val alpha = if (numbers.size == 4) {
+                        val alphaPercent = numbers[3].toFloat()
+                        (255 * alphaPercent).toInt().toHexString()
+                    } else {
+                        "FF"
+                    }
+
+                    val sb = StringBuilder()
+                    padded.forEach { sb.append(it) }
+                    "#$alpha$sb"
+                }
             }
-        }
-    })
+        })
 }
 
 

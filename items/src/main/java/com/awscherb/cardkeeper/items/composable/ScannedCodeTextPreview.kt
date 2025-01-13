@@ -21,8 +21,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.awscherb.cardkeeper.types.DriverLicenseType
-import com.awscherb.cardkeeper.types.ExtendedTypesHelper
 import com.awscherb.cardkeeper.compose_common.icons.DirectionsCar
 import com.awscherb.cardkeeper.compose_common.icons.NetworkWifi
 import com.awscherb.cardkeeper.compose_common.icons.Public
@@ -33,6 +31,8 @@ import com.awscherb.cardkeeper.core.toEmail
 import com.awscherb.cardkeeper.core.toParsedUri
 import com.awscherb.cardkeeper.core.toTel
 import com.awscherb.cardkeeper.core.toWifi
+import com.awscherb.cardkeeper.types.DriverLicenseType
+import com.awscherb.cardkeeper.types.ExtendedTypesHelper
 import com.google.zxing.client.result.ParsedResultType
 
 @Composable

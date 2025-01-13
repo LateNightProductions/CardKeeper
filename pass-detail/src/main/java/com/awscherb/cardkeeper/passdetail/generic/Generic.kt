@@ -10,8 +10,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.awscherb.cardkeeper.passUi.FieldTextView
-import com.awscherb.cardkeeper.passdetail.model.PassDetailModel
 import com.awscherb.cardkeeper.passdetail.common.PrimaryTextView
+import com.awscherb.cardkeeper.passdetail.model.PassDetailModel
 import com.awscherb.cardkeeper.passdetail.util.getAlignmentForFieldText
 
 /**

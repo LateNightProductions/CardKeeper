@@ -24,12 +24,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
+import com.awscherb.cardkeeper.codeUi.CodeRichDataSection
 import com.awscherb.cardkeeper.compose_common.theme.CardKeeperTheme
+import com.awscherb.cardkeeper.compose_common.util.CapWords
 import com.awscherb.cardkeeper.compose_common.util.SampleContact
 import com.awscherb.cardkeeper.compose_common.util.SampleLicense
 import com.awscherb.cardkeeper.compose_common.util.SampleWifi
-import com.awscherb.cardkeeper.codeUi.CodeRichDataSection
-import com.awscherb.cardkeeper.compose_common.util.CapWords
 import com.awscherb.cardkeeper.util.GlobalPreviewNightMode
 import com.awscherb.cardkeeper.util.ParsedTypeUtils
 import com.google.zxing.BarcodeFormat

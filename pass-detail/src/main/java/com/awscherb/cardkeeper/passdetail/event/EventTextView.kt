@@ -10,7 +10,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.awscherb.cardkeeper.compose_common.theme.CardKeeperTheme
 import com.awscherb.cardkeeper.compose_common.theme.Typography
 import com.awscherb.cardkeeper.passUi.FieldConfig
-import com.awscherb.cardkeeper.passdetail.model.PassDetailModel
 import com.awscherb.cardkeeper.pkpass.model.parseHexColor
 
 @Composable

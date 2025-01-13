@@ -11,7 +11,7 @@ class ScannedCodeViewModel @Inject constructor(
     private val repository: CodeRepository
 ) : ViewModel() {
 
-    private  val codeId = savedStateHandle.get<Int>("codeId")!!
+    private val codeId = savedStateHandle.get<Int>("codeId")!!
     val code = repository.fetchCode(codeId)
 
     suspend fun delete() {
