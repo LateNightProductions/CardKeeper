@@ -35,8 +35,8 @@ import com.awscherb.cardkeeper.items.model.ScannedCodeItemModel
 import com.awscherb.cardkeeper.pkpass.work.ImportPassWorker
 import com.awscherb.cardkeeper.ui.about.AboutScreen
 import com.awscherb.cardkeeper.ui.open.ImportScreen
-import com.awscherb.cardkeeper.ui.scan.PermissionsScreen
-import com.awscherb.cardkeeper.ui.scan.ScanScreen
+import com.awscherb.cardkeeper.scan.PermissionsScreen
+import com.awscherb.cardkeeper.scan.ScanScreen
 import com.awscherb.cardkeeper.util.getAppVersion
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted

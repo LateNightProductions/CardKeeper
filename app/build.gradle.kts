@@ -74,6 +74,7 @@ dependencies {
     implementation(project(":items"))
     implementation(project(":pass-detail"))
     implementation(project(":pass-ui-common"))
+    implementation(project(":scan"))
 
     // Copy icon source
 //    implementation("androidx.compose.material:material-icons-extended:1.6.8")

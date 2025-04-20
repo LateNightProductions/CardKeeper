@@ -1,4 +1,4 @@
-package com.awscherb.cardkeeper.ui.scan
+package com.awscherb.cardkeeper.scan
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -22,6 +22,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import com.awscherb.cardkeeper.codeUi.CodeRichDataSection
@@ -30,8 +31,6 @@ import com.awscherb.cardkeeper.compose_common.util.CapWords
 import com.awscherb.cardkeeper.compose_common.util.SampleContact
 import com.awscherb.cardkeeper.compose_common.util.SampleLicense
 import com.awscherb.cardkeeper.compose_common.util.SampleWifi
-import com.awscherb.cardkeeper.util.GlobalPreviewNightMode
-import com.awscherb.cardkeeper.util.ParsedTypeUtils
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.client.result.ParsedResultType
 
@@ -99,7 +98,7 @@ fun SaveScanDialog(
 }
 
 @Composable
-@Preview(apiLevel = 33, uiMode = GlobalPreviewNightMode)
+@PreviewLightDark
 fun SaveScanDialogContactPreview() {
     CardKeeperTheme {
         SaveScanDialog(
@@ -113,7 +112,7 @@ fun SaveScanDialogContactPreview() {
 }
 
 @Composable
-@Preview(apiLevel = 33, uiMode = GlobalPreviewNightMode)
+@PreviewLightDark
 fun SaveScanDialogWifiPreview() {
     CardKeeperTheme {
         SaveScanDialog(
@@ -127,7 +126,7 @@ fun SaveScanDialogWifiPreview() {
 }
 
 @Composable
-@Preview(apiLevel = 33, uiMode = GlobalPreviewNightMode)
+@PreviewLightDark
 fun SaveScanDialogLicensePreview() {
     CardKeeperTheme {
         SaveScanDialog(
@@ -141,7 +140,7 @@ fun SaveScanDialogLicensePreview() {
 }
 
 @Composable
-@Preview(apiLevel = 33, uiMode = GlobalPreviewNightMode)
+@PreviewLightDark
 fun SaveScanDialogTextPreview() {
     CardKeeperTheme {
         SaveScanDialog(

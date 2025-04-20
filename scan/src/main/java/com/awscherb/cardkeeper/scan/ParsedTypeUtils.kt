@@ -1,4 +1,4 @@
-package com.awscherb.cardkeeper.util
+package com.awscherb.cardkeeper.scan
 
 import com.awscherb.cardkeeper.core.toAddressBook
 import com.awscherb.cardkeeper.core.toEmail

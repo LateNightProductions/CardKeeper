@@ -1,7 +1,8 @@
 @file:OptIn(ExperimentalPermissionsApi::class)
 
-package com.awscherb.cardkeeper.ui.scan
+package com.awscherb.cardkeeper.scan
 
+import android.Manifest
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -23,7 +24,7 @@ import com.google.accompanist.permissions.shouldShowRationale
 fun PermissionsScreen(
     navOnClick: () -> Unit
 ) {
-    val cameraPermissionState = rememberPermissionState(android.Manifest.permission.CAMERA)
+    val cameraPermissionState = rememberPermissionState(Manifest.permission.CAMERA)
     if (cameraPermissionState.status.isGranted) {
         Text("Camera permission Granted")
     } else {

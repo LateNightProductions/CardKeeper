@@ -1,4 +1,4 @@
-package com.awscherb.cardkeeper.ui.scan
+package com.awscherb.cardkeeper.scan
 
 import android.app.Activity
 import android.view.View
@@ -16,7 +16,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.awscherb.cardkeeper.compose_common.icons.FlashlightOff
@@ -24,7 +24,6 @@ import com.awscherb.cardkeeper.compose_common.icons.FlashlightOn
 import com.awscherb.cardkeeper.compose_common.theme.CardKeeperTheme
 import com.awscherb.cardkeeper.compose_common.theme.ScaffoldScreen
 import com.awscherb.cardkeeper.compose_common.util.SampleWifi
-import com.awscherb.cardkeeper.util.GlobalPreviewNightMode
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.client.result.ParsedResultType
 import com.google.zxing.client.result.ResultParser
@@ -162,7 +161,7 @@ fun ScanScreenInner(
     }
 }
 
-@Preview(apiLevel = 33, uiMode = GlobalPreviewNightMode)
+@PreviewLightDark
 @Composable
 fun ScanScreenPreview() {
     CardKeeperTheme {
@@ -177,7 +176,7 @@ fun ScanScreenPreview() {
     }
 }
 
-@Preview(apiLevel = 33, uiMode = GlobalPreviewNightMode)
+@PreviewLightDark
 @Composable
 fun ScanScreenFlashOnPreview() {
     CardKeeperTheme {
@@ -194,7 +193,7 @@ fun ScanScreenFlashOnPreview() {
 }
 
 
-@Preview(apiLevel = 33, uiMode = GlobalPreviewNightMode)
+@PreviewLightDark
 @Composable
 fun ScanScreenTextPreview() {
     CardKeeperTheme {
@@ -214,7 +213,7 @@ fun ScanScreenTextPreview() {
     }
 }
 
-@Preview(apiLevel = 33, uiMode = GlobalPreviewNightMode)
+@PreviewLightDark
 @Composable
 fun ScanScreenWifiPreview() {
     CardKeeperTheme {

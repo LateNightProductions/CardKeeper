@@ -1,4 +1,4 @@
-package com.awscherb.cardkeeper.ui.scan
+package com.awscherb.cardkeeper.scan
 
 import androidx.lifecycle.ViewModel
 import com.awscherb.cardkeeper.barcode.entity.ScannedCodeEntity
