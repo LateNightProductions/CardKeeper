@@ -16,6 +16,7 @@ dependencyResolutionManagement {
 }
 
 include(":app")
+include(":barcode-image")
 include(":code-detail")
 include(":code-ui-common")
 include(":compose-common")

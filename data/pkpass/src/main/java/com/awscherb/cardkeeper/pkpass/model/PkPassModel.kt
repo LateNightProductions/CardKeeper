@@ -7,7 +7,7 @@ import com.awscherb.cardkeeper.pkpass.util.PassDateUtils
 import com.awscherb.cardkeeper.pkpass.util.TransitConstants
 import com.awscherb.cardkeeper.types.Barcode
 import com.awscherb.cardkeeper.types.isSquare
-import com.google.zxing.BarcodeFormat
+import com.awscherb.cardkeeper.types.BarcodeFormat
 import okhttp3.internal.toHexString
 
 interface PkPassModel : SavedItem {

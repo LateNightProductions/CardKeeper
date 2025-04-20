@@ -3,8 +3,8 @@ package com.awscherb.cardkeeper.barcode.entity
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.awscherb.cardkeeper.barcode.model.ScannedCodeModel
-import com.google.zxing.BarcodeFormat
-import com.google.zxing.client.result.ParsedResultType
+import com.awscherb.cardkeeper.types.BarcodeFormat
+import com.awscherb.cardkeeper.types.ParsedResultType
 
 /**
  * User scanned code, QR, barcode, etc

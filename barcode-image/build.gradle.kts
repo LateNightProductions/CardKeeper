@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.awscherb.cardkeeper.compose_common"
+    namespace = "com.awscherb.cardkeeper.barcode_image"
     compileSdk = 35
 
     defaultConfig {
@@ -37,16 +37,15 @@ android {
 }
 
 dependencies {
+    implementation(project(":compose-common"))
     implementation(project(":data:core"))
     implementation(project(":data:types"))
     implementation(platform(libs.compose.bom))
     implementation(libs.androidx.appcompat)
     implementation(libs.coil)
-    implementation(libs.compose.constraint)
     implementation(libs.compose.material3)
-    implementation(libs.compose.navigation)
     implementation(libs.compose.ui.tooling.preview)
-    implementation(libs.material)
+    implementation(libs.zxing.core)
 
     debugImplementation(libs.compose.ui.tooling)
 }

@@ -31,8 +31,8 @@ import com.awscherb.cardkeeper.compose_common.util.CapWords
 import com.awscherb.cardkeeper.compose_common.util.SampleContact
 import com.awscherb.cardkeeper.compose_common.util.SampleLicense
 import com.awscherb.cardkeeper.compose_common.util.SampleWifi
-import com.google.zxing.BarcodeFormat
-import com.google.zxing.client.result.ParsedResultType
+import com.awscherb.cardkeeper.types.BarcodeFormat
+import com.awscherb.cardkeeper.types.ParsedResultType
 
 @Composable
 fun SaveScanDialog(

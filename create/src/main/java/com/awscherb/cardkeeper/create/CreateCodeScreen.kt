@@ -21,7 +21,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.awscherb.cardkeeper.compose_common.theme.CardKeeperTheme
 import com.awscherb.cardkeeper.compose_common.theme.ScaffoldScreen
 import com.awscherb.cardkeeper.compose_common.util.CapWords
-import com.google.zxing.BarcodeFormat
+import com.awscherb.cardkeeper.types.BarcodeFormat
 
 @Composable
 fun CreateScreen(

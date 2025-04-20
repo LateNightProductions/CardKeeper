@@ -2,7 +2,7 @@ package com.awscherb.cardkeeper.create
 
 import com.awscherb.cardkeeper.barcode.entity.ScannedCodeEntity
 import com.awscherb.cardkeeper.barcode.service.ScannedCodeService
-import com.google.zxing.client.result.ParsedResultType
+import com.awscherb.cardkeeper.types.ParsedResultType
 import javax.inject.Inject
 import kotlin.random.Random
 

@@ -1,8 +1,8 @@
 package com.awscherb.cardkeeper.barcode.db
 
 import androidx.room.TypeConverter
-import com.google.zxing.BarcodeFormat
-import com.google.zxing.client.result.ParsedResultType
+import com.awscherb.cardkeeper.types.BarcodeFormat
+import com.awscherb.cardkeeper.types.ParsedResultType
 
 object BarcodeConverters {
 

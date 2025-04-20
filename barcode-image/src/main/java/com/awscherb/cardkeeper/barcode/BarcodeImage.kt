@@ -1,4 +1,4 @@
-package com.awscherb.cardkeeper.compose_common.composable
+package com.awscherb.cardkeeper.barcode
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -23,10 +23,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.awscherb.cardkeeper.compose_common.theme.CardKeeperTheme
 import com.awscherb.cardkeeper.compose_common.theme.Purple80
-import com.awscherb.cardkeeper.compose_common.util.BarcodeEncoder
 import com.awscherb.cardkeeper.compose_common.util.SampleLicense
 import com.awscherb.cardkeeper.types.isSquare
-import com.google.zxing.BarcodeFormat
+import com.awscherb.cardkeeper.types.BarcodeFormat
 
 @Composable
 fun BarcodeImage(

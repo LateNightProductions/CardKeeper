@@ -15,9 +15,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.awscherb.cardkeeper.compose_common.composable.BarcodeImage
+import com.awscherb.cardkeeper.barcode.BarcodeImage
+import com.awscherb.cardkeeper.types.BarcodeFormat
 import com.awscherb.cardkeeper.compose_common.theme.CardKeeperTheme
-import com.google.zxing.BarcodeFormat
 
 @Composable
 fun BarcodeSection(

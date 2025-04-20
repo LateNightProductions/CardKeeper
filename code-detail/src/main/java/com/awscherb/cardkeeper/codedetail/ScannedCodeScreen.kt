@@ -26,14 +26,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.awscherb.cardkeeper.codeUi.CodeRichDataSection
-import com.awscherb.cardkeeper.compose_common.composable.BarcodeImage
+import com.awscherb.cardkeeper.barcode.BarcodeImage
 import com.awscherb.cardkeeper.compose_common.dialog.DeleteDialog
 import com.awscherb.cardkeeper.compose_common.theme.CardKeeperTheme
 import com.awscherb.cardkeeper.compose_common.theme.ScaffoldScreen
 import com.awscherb.cardkeeper.compose_common.theme.Typography
 import com.awscherb.cardkeeper.compose_common.util.SampleContact
-import com.google.zxing.BarcodeFormat
-import com.google.zxing.client.result.ParsedResultType
+import com.awscherb.cardkeeper.types.BarcodeFormat
+import com.awscherb.cardkeeper.types.ParsedResultType
 import kotlinx.coroutines.launch
 
 @Composable

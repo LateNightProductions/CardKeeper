@@ -20,13 +20,13 @@ import com.awscherb.cardkeeper.compose_common.theme.CardKeeperTheme
 import com.awscherb.cardkeeper.compose_common.theme.Typography
 import com.awscherb.cardkeeper.compose_common.util.SampleLicense
 import com.awscherb.cardkeeper.types.DriverLicenseType
-import com.awscherb.cardkeeper.types.ExtendedTypesHelper
 
 @Composable
 fun DriverLicenseView(
-    license: DriverLicenseType
+    text: String
 ) {
-
+    // todo
+    val license = DriverLicenseType.parseResult(text)
     Column {
         val names = "${license.firstName} ${license.lastName}"
         SelectionContainer {
@@ -83,7 +83,7 @@ fun DriverLicensePreviewPreview() {
             )
         ) {
             DriverLicenseView(
-                ExtendedTypesHelper.matchType(SampleLicense) as DriverLicenseType
+                SampleLicense
             )
         }
     }

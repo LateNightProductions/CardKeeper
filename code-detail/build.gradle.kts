@@ -40,6 +40,7 @@ android {
 }
 
 dependencies {
+    implementation(project(":barcode-image"))
     implementation(project(":code-ui-common"))
     implementation(project(":compose-common"))
     implementation(project(":data:core"))
@@ -59,7 +60,6 @@ dependencies {
     implementation(libs.dagger.hilt)
     implementation(libs.hilt.navigation)
     implementation(libs.material)
-    implementation(libs.zxing.core)
 
     debugImplementation(libs.compose.ui.tooling)
 

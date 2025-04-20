@@ -40,6 +40,7 @@ android {
 
 dependencies {
 
+    implementation(project(":barcode-image"))
     implementation(project(":code-ui-common"))
     implementation(project(":compose-common"))
     implementation(project(":data:core"))

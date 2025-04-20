@@ -40,12 +40,13 @@ android {
 }
 
 dependencies {
-    implementation(project(":pass-ui-common"))
+    implementation(project(":barcode-image"))
     implementation(project(":compose-common"))
     implementation(project(":data:core"))
     implementation(project(":data:common"))
     implementation(project(":data:pkpass"))
     implementation(project(":data:types"))
+    implementation(project(":pass-ui-common"))
 
     implementation(platform(libs.compose.bom))
 
@@ -60,7 +61,6 @@ dependencies {
     implementation(libs.dagger.hilt)
     implementation(libs.hilt.navigation)
     implementation(libs.material)
-    implementation(libs.zxing.core)
 
     debugImplementation(libs.compose.ui.tooling)
 

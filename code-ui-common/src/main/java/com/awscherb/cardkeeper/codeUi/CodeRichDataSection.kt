@@ -12,9 +12,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.awscherb.cardkeeper.compose_common.theme.CardKeeperTheme
 import com.awscherb.cardkeeper.compose_common.util.SampleContact
-import com.awscherb.cardkeeper.types.DriverLicenseType
 import com.awscherb.cardkeeper.types.ExtendedTypesHelper
-import com.google.zxing.client.result.ParsedResultType
+import com.awscherb.cardkeeper.types.ParsedResultType
 
 @Composable
 fun CodeRichDataSection(
@@ -22,31 +21,25 @@ fun CodeRichDataSection(
     parsedType: ParsedResultType
 ) {
     val extendedType = ExtendedTypesHelper.matchType(data)
-    when {
-        parsedType == ParsedResultType.ADDRESSBOOK -> {
+    when (parsedType) {
+        ParsedResultType.ADDRESSBOOK -> {
             ContactView(text = data)
         }
-
-        parsedType == ParsedResultType.WIFI -> {
+        ParsedResultType.WIFI -> {
             WifiView(text = data)
         }
-
-        parsedType == ParsedResultType.TEL -> {
+        ParsedResultType.TEL -> {
             TelView(text = data)
         }
-
-        parsedType == ParsedResultType.EMAIL_ADDRESS -> {
+        ParsedResultType.EMAIL_ADDRESS -> {
             EmailView(text = data)
         }
-
-        parsedType == ParsedResultType.URI -> {
+        ParsedResultType.URI -> {
             UriView(text = data)
         }
-
-        extendedType is DriverLicenseType -> {
-            DriverLicenseView(license = extendedType)
+        ParsedResultType.DRIVER_LICENSE -> {
+            DriverLicenseView(text = data)
         }
-
         else -> {
             SelectionContainer {
                 Text(

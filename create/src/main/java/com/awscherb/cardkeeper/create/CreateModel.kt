@@ -1,7 +1,7 @@
 package com.awscherb.cardkeeper.create
 
-import com.google.zxing.BarcodeFormat
-import com.google.zxing.client.result.ParsedResultType
+import com.awscherb.cardkeeper.types.BarcodeFormat
+import com.awscherb.cardkeeper.types.ParsedResultType
 
 data class CreateModel(
     val title: String,

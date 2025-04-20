@@ -3,8 +3,8 @@ package com.awscherb.cardkeeper.scan
 import androidx.lifecycle.ViewModel
 import com.awscherb.cardkeeper.barcode.entity.ScannedCodeEntity
 import com.awscherb.cardkeeper.barcode.service.ScannedCodeService
-import com.google.zxing.BarcodeFormat
-import com.google.zxing.client.result.ParsedResultType
+import com.awscherb.cardkeeper.types.BarcodeFormat
+import com.awscherb.cardkeeper.types.ParsedResultType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import javax.inject.Inject

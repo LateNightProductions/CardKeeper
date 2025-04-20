@@ -1,8 +1,8 @@
 package com.awscherb.cardkeeper.barcode.model
 
 import com.awscherb.cardkeeper.core.SavedItem
-import com.google.zxing.BarcodeFormat
-import com.google.zxing.client.result.ParsedResultType
+import com.awscherb.cardkeeper.types.BarcodeFormat
+import com.awscherb.cardkeeper.types.ParsedResultType
 
 interface ScannedCodeModel : SavedItem {
     override val id: Int

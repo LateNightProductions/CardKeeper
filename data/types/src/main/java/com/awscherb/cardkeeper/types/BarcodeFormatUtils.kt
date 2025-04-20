@@ -1,6 +1,5 @@
 package com.awscherb.cardkeeper.types
 
-import com.google.zxing.BarcodeFormat
 
 fun BarcodeFormat.isSquare(): Boolean {
     return when (this) {

@@ -24,8 +24,8 @@ import com.awscherb.cardkeeper.compose_common.icons.FlashlightOn
 import com.awscherb.cardkeeper.compose_common.theme.CardKeeperTheme
 import com.awscherb.cardkeeper.compose_common.theme.ScaffoldScreen
 import com.awscherb.cardkeeper.compose_common.util.SampleWifi
-import com.google.zxing.BarcodeFormat
-import com.google.zxing.client.result.ParsedResultType
+import com.awscherb.cardkeeper.types.BarcodeFormat
+import com.awscherb.cardkeeper.types.ParsedResultType
 import com.google.zxing.client.result.ResultParser
 import com.journeyapps.barcodescanner.CaptureManager
 import com.journeyapps.barcodescanner.CompoundBarcodeView
@@ -69,12 +69,11 @@ fun ScanScreen(
                         isDialogOpen = true
                         viewModel.pendingCreateData.value =
                             CreateCodeData(
-                                format = result.barcodeFormat,
+                                format = result.barcodeFormat.toBarcodeFormat(),
                                 text = text,
                                 title = "",
-                                parsedResultType = res.type
+                                parsedResultType = toResultType(res.type, text)
                             )
-
                     }
 
                     scanFlag = false

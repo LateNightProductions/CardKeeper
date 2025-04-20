@@ -2,7 +2,7 @@ package com.awscherb.cardkeeper.create
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.google.zxing.BarcodeFormat
+import com.awscherb.cardkeeper.types.BarcodeFormat
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch

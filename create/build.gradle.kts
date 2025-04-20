@@ -50,7 +50,6 @@ dependencies {
     implementation(libs.hilt.navigation)
     implementation(libs.compose.ui.tooling.preview)
     implementation(libs.material)
-    implementation(libs.zxing.core)
     implementation(libs.dagger)
     implementation(libs.dagger.hilt)
 
