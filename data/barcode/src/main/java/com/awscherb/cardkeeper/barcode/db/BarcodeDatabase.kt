@@ -13,7 +13,6 @@ import com.awscherb.cardkeeper.barcode.entity.ScannedCodeEntity
     exportSchema = true,
 )
 @TypeConverters(
-    com.awscherb.cardkeeper.common.TypeConverters::class,
     BarcodeConverters::class
 )
 abstract class BarcodeDatabase : RoomDatabase() {

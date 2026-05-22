@@ -1,7 +1,12 @@
 package com.awscherb.cardkeeper.codeUi
 
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.scrollable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -12,15 +17,15 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.awscherb.cardkeeper.compose_common.theme.CardKeeperTheme
 import com.awscherb.cardkeeper.compose_common.util.SampleContact
-import com.awscherb.cardkeeper.types.ExtendedTypesHelper
+import com.awscherb.cardkeeper.compose_common.util.SampleLotsOfData
 import com.awscherb.cardkeeper.types.ParsedResultType
 
 @Composable
 fun CodeRichDataSection(
     data: String,
-    parsedType: ParsedResultType
+    parsedType: ParsedResultType,
+    modifier: Modifier = Modifier,
 ) {
-    val extendedType = ExtendedTypesHelper.matchType(data)
     when (parsedType) {
         ParsedResultType.ADDRESSBOOK -> {
             ContactView(text = data)
@@ -42,6 +47,10 @@ fun CodeRichDataSection(
         }
         else -> {
             SelectionContainer {
+                val scrollState = rememberScrollState()
+                Box(modifier = modifier
+                    .scrollable(scrollState, Orientation.Vertical)) {
+
                 Text(
                     modifier = Modifier
                         .padding(
@@ -50,9 +59,9 @@ fun CodeRichDataSection(
                         )
                         .fillMaxWidth(),
                     text = data,
-                    overflow = TextOverflow.Ellipsis,
                     textAlign = TextAlign.Center,
                 )
+                }
             }
         }
     }
@@ -66,6 +75,18 @@ fun RichDataAddress() {
         CodeRichDataSection(
             data = SampleContact,
             parsedType = ParsedResultType.ADDRESSBOOK
+        )
+    }
+}
+
+@Composable
+@Preview(apiLevel = 33)
+fun RichScrollableOverflow() {
+    CardKeeperTheme {
+        CodeRichDataSection(
+            modifier = Modifier.heightIn(max = 100.dp),
+            data = SampleLotsOfData,
+            parsedType = ParsedResultType.TEXT
         )
     }
 }

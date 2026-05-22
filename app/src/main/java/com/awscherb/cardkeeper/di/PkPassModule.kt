@@ -26,7 +26,7 @@ interface PkPassModule {
     companion object {
 
         @Provides
-        fun provideLevel(buildInfo: com.awscherb.cardkeeper.common.BuildInfo) =
+        fun provideLevel(buildInfo: BuildInfo) =
             if (buildInfo.debug) HttpLoggingInterceptor.Level.HEADERS
             else HttpLoggingInterceptor.Level.NONE
 

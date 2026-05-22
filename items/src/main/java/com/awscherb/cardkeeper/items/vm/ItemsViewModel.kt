@@ -8,7 +8,7 @@ import com.awscherb.cardkeeper.items.model.ScannedCodeItemModel
 import com.awscherb.cardkeeper.items.model.SortOptions
 import com.awscherb.cardkeeper.items.repo.ItemsRepository
 import com.awscherb.cardkeeper.pkpass.model.PkPassModel
-import com.awscherb.cardkeeper.pkpass.util.PassDateUtils
+import com.awscherb.cardkeeper.pkpass.model.isExpired
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -44,13 +44,9 @@ class ItemsViewModel @Inject constructor(
         .flatMapLatest { savedItemRepository.listSavedItems(it) }
         .combine(showExpiredPasses) { items, showExpired ->
             items.filter {
-                val filterTime = System.currentTimeMillis()
                 when {
                     it is PkPassModel && showExpired -> true
-                    it is PkPassModel && it.expirationDate != null -> {
-                        (PassDateUtils.dateStringToLocalTime(it.expirationDate!!).time) >= filterTime
-                    }
-
+                    it is PkPassModel -> !it.isExpired()
                     else -> true
                 }
             }

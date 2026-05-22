@@ -1,7 +1,6 @@
 package com.awscherb.cardkeeper.di
 
 import com.awscherb.cardkeeper.BuildConfig
-import com.awscherb.cardkeeper.common.BuildInfo
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

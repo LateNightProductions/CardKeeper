@@ -207,3 +207,8 @@ enum class PassInfoType {
 }
 
 fun PkPassModel.canBeUpdated() = !this.webServiceURL.isNullOrEmpty()
+
+fun PkPassModel.isExpired(): Boolean {
+    val expiration = expirationDate ?: return false
+    return PassDateUtils.dateStringToLocalTime(expiration).time < System.currentTimeMillis()
+}

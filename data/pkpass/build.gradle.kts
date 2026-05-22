@@ -25,12 +25,10 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
     }
-    kotlinOptions {
-        jvmTarget = "17"
-    }
+    
     ksp {
         arg("room.schemaLocation", "$projectDir/schemas")
     }
@@ -39,7 +37,6 @@ android {
 dependencies {
 
     implementation(project(":data:core"))
-    implementation(project(":data:common"))
     implementation(project(":data:types"))
 
     implementation(libs.androidx.appcompat)

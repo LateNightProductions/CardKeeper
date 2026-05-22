@@ -2,6 +2,7 @@ package com.awscherb.cardkeeper.barcode.handler
 
 import com.awscherb.cardkeeper.barcode.db.ScannedCodeDao
 import com.awscherb.cardkeeper.barcode.entity.ScannedCodeEntity
+import com.awscherb.cardkeeper.barcode.model.NewScannedCode
 import com.awscherb.cardkeeper.barcode.model.ScannedCodeModel
 import com.awscherb.cardkeeper.barcode.service.ScannedCodeService
 import com.awscherb.cardkeeper.core.filterOne
@@ -29,8 +30,16 @@ class ScannedCodeHandler @Inject constructor(
         )
     }
 
-    override suspend fun addScannedCode(scannedCode: ScannedCodeEntity) {
-        scannedCodeDao.insertCode(scannedCode)
+    override suspend fun addScannedCode(code: NewScannedCode) {
+        scannedCodeDao.insertCode(
+            ScannedCodeEntity(
+                format = code.format,
+                text = code.text,
+                title = code.title,
+                created = code.created,
+                parsedType = code.parsedType
+            )
+        )
     }
 
     override suspend fun deleteCode(id: Int) {

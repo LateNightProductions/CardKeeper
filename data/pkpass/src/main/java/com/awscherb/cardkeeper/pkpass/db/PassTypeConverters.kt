@@ -1,4 +1,4 @@
-package com.awscherb.cardkeeper.common
+package com.awscherb.cardkeeper.pkpass.db
 
 import androidx.room.TypeConverter
 import com.google.gson.GsonBuilder
@@ -7,7 +7,7 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-object TypeConverters {
+object PassTypeConverters {
 
     private val gson by lazy { GsonBuilder().create() }
 
@@ -16,7 +16,6 @@ object TypeConverters {
             "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.US
         )
     }
-
 
     @[TypeConverter JvmStatic]
     fun toTranslation(list: String?): Map<String, String>? {
@@ -37,6 +36,4 @@ object TypeConverters {
     @[TypeConverter JvmStatic]
     fun toDate(date: Date?): String? =
         date?.let { dateFormat.format(it) }
-
-
 }

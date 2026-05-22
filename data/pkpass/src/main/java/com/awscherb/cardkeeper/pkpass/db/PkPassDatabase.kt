@@ -19,7 +19,7 @@ import com.awscherb.cardkeeper.pkpass.entity.PkPassEntity
     ]
 )
 @TypeConverters(
-    com.awscherb.cardkeeper.common.TypeConverters::class,
+    PassTypeConverters::class,
     PkPassConverters::class
 )
 abstract class PkPassDatabase : RoomDatabase() {

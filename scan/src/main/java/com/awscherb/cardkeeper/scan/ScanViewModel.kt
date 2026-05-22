@@ -1,14 +1,13 @@
 package com.awscherb.cardkeeper.scan
 
 import androidx.lifecycle.ViewModel
-import com.awscherb.cardkeeper.barcode.entity.ScannedCodeEntity
+import com.awscherb.cardkeeper.barcode.model.NewScannedCode
 import com.awscherb.cardkeeper.barcode.service.ScannedCodeService
 import com.awscherb.cardkeeper.types.BarcodeFormat
 import com.awscherb.cardkeeper.types.ParsedResultType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import javax.inject.Inject
-import kotlin.random.Random
 
 @HiltViewModel
 class ScanViewModel @Inject constructor(
@@ -23,8 +22,7 @@ class ScanViewModel @Inject constructor(
     suspend fun createCode(data: CreateCodeData) {
         if (adding.compareAndSet(expect = false, update = true)) {
             scannedCodeService.addScannedCode(
-                ScannedCodeEntity(
-                    id = Random.nextInt(),
+                NewScannedCode(
                     format = data.format,
                     text = data.text,
                     title = data.title,

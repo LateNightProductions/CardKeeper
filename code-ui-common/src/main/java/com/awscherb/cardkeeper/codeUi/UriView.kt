@@ -1,5 +1,6 @@
 package com.awscherb.cardkeeper.codeUi
 
+import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -29,7 +30,11 @@ fun UriView(
             modifier = Modifier
                 .padding(top = 8.dp)
                 .clickable {
-                    handler.openUri(uri.uri)
+                    try {
+                        handler.openUri(uri.uri)
+                    } catch (e: Exception) {
+                        Log.e("URL", "Unable to handle ${e.message}")
+                    }
                 }
         )
     }
