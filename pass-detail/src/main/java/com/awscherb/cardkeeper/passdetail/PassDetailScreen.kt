@@ -63,6 +63,7 @@ import com.awscherb.cardkeeper.passdetail.event.Event
 import com.awscherb.cardkeeper.passdetail.generic.Generic
 import com.awscherb.cardkeeper.passdetail.model.PassDetailModel
 import com.awscherb.cardkeeper.passdetail.storecard.StoreCard
+import com.awscherb.cardkeeper.passdetail.model.TransitModel
 import com.awscherb.cardkeeper.passdetail.util.SampleEvent
 import com.awscherb.cardkeeper.pkpass.model.toBarcodeFormat
 
@@ -340,6 +341,69 @@ fun PassDetailScreenPreview(model: PassDetailModel? = null) {
 private class ModelProvider : PreviewParameterProvider<PassDetailModel> {
     override val values: Sequence<PassDetailModel>
         get() = listOf(SampleEvent).asSequence()
+}
 
+private fun sampleBoardingPass(id: String, passengerName: String, seat: String) = PassDetailModel(
+    id = id,
+    canBeUpdated = false,
+    type = PassDetailModel.Type.BOARDING_PASS,
+    backgroundColor = androidx.compose.ui.graphics.Color(0xFF1A3A5C),
+    backgroundPath = null,
+    logoPath = null,
+    description = "SFO → JFK",
+    foregroundColor = androidx.compose.ui.graphics.Color.White,
+    labelColor = androidx.compose.ui.graphics.Color(0xFFAABBCC),
+    logoText = "SkyWave Air",
+    barcodes = emptyList(),
+    isBarcodeSquare = false,
+    footerPath = null,
+    headerItems = listOf(
+        com.awscherb.cardkeeper.passUi.FieldConfig("Flight", "SW 412", androidx.compose.ui.graphics.Color(0xFFAABBCC), androidx.compose.ui.graphics.Color.White),
+        com.awscherb.cardkeeper.passUi.FieldConfig("Date", "15 JUN", androidx.compose.ui.graphics.Color(0xFFAABBCC), androidx.compose.ui.graphics.Color.White),
+    ),
+    primaryFields = listOf(
+        com.awscherb.cardkeeper.passUi.FieldConfig("FROM", "SFO", androidx.compose.ui.graphics.Color(0xFFAABBCC), androidx.compose.ui.graphics.Color.White),
+        com.awscherb.cardkeeper.passUi.FieldConfig("TO", "JFK", androidx.compose.ui.graphics.Color(0xFFAABBCC), androidx.compose.ui.graphics.Color.White),
+    ),
+    secondaryFields = listOf(
+        com.awscherb.cardkeeper.passUi.FieldConfig("PASSENGER", passengerName, androidx.compose.ui.graphics.Color(0xFFAABBCC), androidx.compose.ui.graphics.Color.White),
+        com.awscherb.cardkeeper.passUi.FieldConfig("SEAT", seat, androidx.compose.ui.graphics.Color(0xFFAABBCC), androidx.compose.ui.graphics.Color.White),
+    ),
+    auxiliaryFields = listOf(
+        com.awscherb.cardkeeper.passUi.FieldConfig("BOARDING", "08:10", androidx.compose.ui.graphics.Color(0xFFAABBCC), androidx.compose.ui.graphics.Color.White),
+        com.awscherb.cardkeeper.passUi.FieldConfig("CLASS", "Economy", androidx.compose.ui.graphics.Color(0xFFAABBCC), androidx.compose.ui.graphics.Color.White),
+    ),
+    transit = TransitModel(
+        originLabel = "SAN FRANCISCO",
+        originValue = "SFO",
+        destinationLabel = "NEW YORK",
+        destinationValue = "JFK",
+        type = TransitModel.Type.AIR
+    ),
+    stripPath = null,
+    thumbnailPath = null,
+    backItems = emptyList(),
+    webServiceUrl = null,
+    identifier = "pass.com.skywave.boarding",
+    authenticationToken = null,
+    groupingIdentifier = null,
+    groupId = "pass.com.skywave.boarding|2026-06-15T08:30-07:00"
+)
+
+@Preview
+@Composable
+fun GroupedBoardingPassPreview() {
+    CardKeeperTheme {
+        PassDetailScreenInner(
+            passes = listOf(
+                sampleBoardingPass("sw-412-1", "John Doe", "12A"),
+                sampleBoardingPass("sw-412-2", "Jane Doe", "12B"),
+            ),
+            backItems = emptyList(),
+            isAutoUpdateOn = false,
+            navOnClick = {},
+            setAutoUpdate = {}
+        )
+    }
 }
 
