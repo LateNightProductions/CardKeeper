@@ -10,5 +10,6 @@ data class ScannedCodeItemModel(
     val barcodeFormat: BarcodeFormat,
     val message: String,
     val parsedType: ParsedResultType,
-    override val created: Long
+    override val created: Long,
+    override val sortOrder: Long
 ) : ItemModel

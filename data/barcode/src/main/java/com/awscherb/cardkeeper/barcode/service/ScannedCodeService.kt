@@ -12,4 +12,6 @@ interface ScannedCodeService : SavedItemService<ScannedCodeModel> {
     suspend fun addScannedCode(code: NewScannedCode)
 
     suspend fun deleteCode(id: Int)
+
+    suspend fun updateSortOrder(id: Int, sortOrder: Long)
 }

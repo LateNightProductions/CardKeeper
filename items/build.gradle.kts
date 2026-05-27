@@ -57,6 +57,7 @@ dependencies {
     implementation(libs.dagger.hilt)
     implementation(libs.hilt.navigation)
     implementation(libs.material)
+    implementation(libs.reorderable)
     implementation(libs.zxing.core)
 
     ksp(libs.dagger.compiler)

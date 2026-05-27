@@ -17,5 +17,6 @@ data class ScannedCodeEntity(
     override val text: String,
     override val title: String,
     override val created: Long,
-    override val parsedType: ParsedResultType
+    override val parsedType: ParsedResultType,
+    override val sortOrder: Long = 0L
 ) : ScannedCodeModel

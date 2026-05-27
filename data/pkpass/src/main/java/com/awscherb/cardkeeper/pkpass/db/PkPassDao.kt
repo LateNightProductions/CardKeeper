@@ -35,4 +35,7 @@ interface PkPassDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun setAutoUpdateSettings(settings: PassUpdateEntity)
+
+    @Query("UPDATE PkPassEntity SET sortOrder = :sortOrder WHERE id = :id")
+    suspend fun updateSortOrder(id: String, sortOrder: Long)
 }

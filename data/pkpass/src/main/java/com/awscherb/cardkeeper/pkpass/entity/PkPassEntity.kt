@@ -43,7 +43,9 @@ data class PkPassEntity(
 
     override var translation: Map<String, String>?,
     override val webServiceURL: String?,
-    override val authenticationToken: String?
+    override val authenticationToken: String?,
+
+    override var sortOrder: Long = 0L
 
 ) : PkPassModel
 

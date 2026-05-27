@@ -93,3 +93,4 @@ output.json
 /app/prod/release/baselineProfiles/
 build_config.sh
 build_and_upload.sh
+boarding-pass-ui-diff.md

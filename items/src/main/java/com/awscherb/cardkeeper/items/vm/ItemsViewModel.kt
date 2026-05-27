@@ -1,6 +1,7 @@
 package com.awscherb.cardkeeper.items.vm
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.awscherb.cardkeeper.items.model.FilterOptions
 import com.awscherb.cardkeeper.items.model.ItemModel
 import com.awscherb.cardkeeper.items.model.PassItemModel
@@ -13,9 +14,13 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -58,5 +63,34 @@ class ItemsViewModel @Inject constructor(
             items.sortedWith(sort.sort)
         }
         .flowOn(Dispatchers.IO)
+
+    private val _reorderItems = MutableStateFlow<List<ItemModel>>(emptyList())
+    val reorderItems: StateFlow<List<ItemModel>> = _reorderItems.asStateFlow()
+
+    val reorderMode = MutableStateFlow(false)
+
+    fun enterReorderMode(currentItems: List<ItemModel>) {
+        _reorderItems.value = currentItems
+        reorderMode.value = true
+    }
+
+    fun moveItem(fromIndex: Int, toIndex: Int) {
+        _reorderItems.update {
+            it.toMutableList().apply { add(toIndex, removeAt(fromIndex)) }
+        }
+    }
+
+    fun cancelReorderMode() {
+        reorderMode.value = false
+        _reorderItems.value = emptyList()
+    }
+
+    fun saveReorder() {
+        viewModelScope.launch {
+            savedItemRepository.updateSortOrders(_reorderItems.value)
+            reorderMode.value = false
+            _reorderItems.value = emptyList()
+        }
+    }
 
 }

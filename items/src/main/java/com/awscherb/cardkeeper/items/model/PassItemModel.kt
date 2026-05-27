@@ -9,5 +9,6 @@ data class PassItemModel(
     val backgroundPath: String? = null,
     val header: PassHeaderModel,
     val isEvent: Boolean = false,
-    override val created: Long
+    override val created: Long,
+    override val sortOrder: Long
 ) : ItemModel

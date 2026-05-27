@@ -148,40 +148,48 @@ fun SortAndFilterDialogContent(
                             )
                     )
 
-                    val ascLabel: String
-                    val ascIcon: ImageVector
-                    when (selectedSort.ascending) {
-                        true -> {
-                            ascLabel = "Ascending"
-                            ascIcon = Icons.Default.KeyboardArrowUp
+                    if (selectedSort !is SortOptions.Default) {
+                        val ascLabel: String
+                        val ascIcon: ImageVector
+                        when (selectedSort.ascending) {
+                            true -> {
+                                ascLabel = "Ascending"
+                                ascIcon = Icons.Default.KeyboardArrowUp
+                            }
+
+                            false -> {
+                                ascLabel = "Descending"
+                                ascIcon = Icons.Default.KeyboardArrowDown
+                            }
                         }
 
-                        false -> {
-                            ascLabel = "Descending"
-                            ascIcon = Icons.Default.KeyboardArrowDown
+                        Row(
+                            modifier = Modifier.clickable {
+                                val newSort = selectedSort.invert()
+                                selectedSort = newSort
+                                onSortChanged(newSort)
+                            }
+                        ) {
+                            Text(
+                                text = ascLabel,
+                                style = Typography.titleMedium,
+                                modifier = Modifier
+                                    .padding(vertical = 8.dp)
+                            )
+                            Icon(
+                                ascIcon, ascLabel,
+                                modifier = Modifier
+                                    .align(Alignment.CenterVertically)
+                            )
                         }
                     }
-
-                    Row(
-                        modifier = Modifier.clickable {
-                            val newSort = selectedSort.invert()
-                            selectedSort = newSort
-                            onSortChanged(newSort)
-                        }
-                    ) {
-                        Text(
-                            text = ascLabel,
-                            style = Typography.titleMedium,
-                            modifier = Modifier
-                                .padding(vertical = 8.dp)
-                        )
-                        Icon(
-                            ascIcon, ascLabel,
-                            modifier = Modifier
-                                .align(Alignment.CenterVertically)
-                        )
-                    }
-
+                }
+                RadioRow(
+                    selected = selectedSort is SortOptions.Default,
+                    label = SortOptions.Default.label
+                ) {
+                    onSortChanged(SortOptions.Default)
+                    selectedSort = SortOptions.Default
                 }
                 RadioRow(
                     selected = selectedSort is SortOptions.Date,

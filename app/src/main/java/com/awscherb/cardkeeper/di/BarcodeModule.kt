@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import com.awscherb.cardkeeper.barcode.db.BarcodeDatabase
 import com.awscherb.cardkeeper.barcode.db.migrations.MIGRATION_11_12_ADD_RESULT
+import com.awscherb.cardkeeper.barcode.db.migrations.MIGRATION_12_13_ADD_SORT_ORDER
 import com.awscherb.cardkeeper.barcode.handler.ScannedCodeHandler
 import com.awscherb.cardkeeper.barcode.service.ScannedCodeService
 import dagger.Binds
@@ -27,7 +28,8 @@ interface BarcodeModule {
                 context.applicationContext, BarcodeDatabase::class.java, "cardkeeper.db"
             )
                 .addMigrations(
-                    MIGRATION_11_12_ADD_RESULT
+                    MIGRATION_11_12_ADD_RESULT,
+                    MIGRATION_12_13_ADD_SORT_ORDER
                 )
                 .fallbackToDestructiveMigration()
                 .build()

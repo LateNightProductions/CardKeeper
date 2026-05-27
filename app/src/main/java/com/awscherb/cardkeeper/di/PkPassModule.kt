@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import com.awscherb.cardkeeper.pkpass.api.PkPassApi
 import com.awscherb.cardkeeper.pkpass.db.PkPassDatabase
+import com.awscherb.cardkeeper.pkpass.db.migrations.MIGRATION_9_10_ADD_SORT_ORDER
 import com.awscherb.cardkeeper.pkpass.handler.PkPassHandler
 import com.awscherb.cardkeeper.pkpass.service.PkPassService
 import com.google.gson.Gson
@@ -57,6 +58,7 @@ interface PkPassModule {
             return Room.databaseBuilder(
                 context.applicationContext, PkPassDatabase::class.java, "pkpass.db"
             )
+                .addMigrations(MIGRATION_9_10_ADD_SORT_ORDER)
                 .fallbackToDestructiveMigration()
                 .build()
         }

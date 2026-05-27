@@ -20,11 +20,12 @@ import com.awscherb.cardkeeper.types.ParsedResultType
 @Composable
 fun ScannedCodeItem(
     item: ScannedCodeItemModel,
+    modifier: Modifier = Modifier,
     showBarcode: Boolean = true,
     onClick: (ScannedCodeItemModel) -> Unit,
 ) {
     ElevatedCard(
-        modifier = Modifier.clickable { onClick(item) }
+        modifier = modifier.clickable { onClick(item) }
     ) {
         Text(
             text = item.title,
@@ -63,7 +64,8 @@ fun ScannedCodePreview() {
                 barcodeFormat = BarcodeFormat.QR_CODE,
                 parsedType = ParsedResultType.TEXT,
                 id = "",
-                created = 1
+                created = 1,
+                sortOrder = 0
             ),
             onClick = {})
     }
@@ -80,7 +82,8 @@ fun ScannedCodeNoBarcodePreview() {
                 barcodeFormat = BarcodeFormat.QR_CODE,
                 parsedType = ParsedResultType.TEXT,
                 id = "",
-                created = 1
+                created = 1,
+                sortOrder = 0
             ),
             showBarcode = false,
             onClick = {})

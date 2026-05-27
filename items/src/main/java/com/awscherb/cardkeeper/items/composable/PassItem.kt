@@ -29,10 +29,11 @@ import com.awscherb.cardkeeper.passUi.PkPassHeaderView
 @Composable
 fun PassItem(
     pass: PassItemModel,
+    modifier: Modifier = Modifier,
     onClick: (PassItemModel) -> Unit
 ) {
     Box(
-        modifier = Modifier
+        modifier = modifier
             .clickable { onClick(pass) }
             .graphicsLayer {
                 compositingStrategy = CompositingStrategy.Offscreen
@@ -92,7 +93,8 @@ fun PassItemPreview() {
                     logoText = "logo",
                     headerConfig = emptyList(),
                 ),
-                created = 1
+                created = 1,
+                sortOrder = 0
             )
         )
     }

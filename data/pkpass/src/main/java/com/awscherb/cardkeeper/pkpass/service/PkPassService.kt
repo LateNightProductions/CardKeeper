@@ -13,6 +13,8 @@ interface PkPassService : SavedItemService<PkPassModel> {
     suspend fun setAutoUpdatePass(passId: String, autoUpdate: Boolean)
 
     suspend fun delete(id: String)
+
+    suspend fun updateSortOrder(id: String, sortOrder: Long)
 }
 
 

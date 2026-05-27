@@ -16,4 +16,12 @@ sealed class SortOptions(
     ) {
         override fun invert() = this.copy(ascending = !ascending)
     }
+
+    data object Default : SortOptions(
+        "Default", true, { a, b ->
+            b.sortOrder.compareTo(a.sortOrder)
+        }
+    ) {
+        override fun invert() = this
+    }
 }

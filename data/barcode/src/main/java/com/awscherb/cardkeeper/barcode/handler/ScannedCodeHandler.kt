@@ -37,7 +37,8 @@ class ScannedCodeHandler @Inject constructor(
                 text = code.text,
                 title = code.title,
                 created = code.created,
-                parsedType = code.parsedType
+                parsedType = code.parsedType,
+                sortOrder = code.created
             )
         )
     }
@@ -56,7 +57,8 @@ class ScannedCodeHandler @Inject constructor(
                         title = item.title,
                         text = item.text,
                         created = item.created,
-                        parsedType = item.parsedType
+                        parsedType = item.parsedType,
+                        sortOrder = item.sortOrder
                     )
                 )
             }
@@ -72,6 +74,10 @@ class ScannedCodeHandler @Inject constructor(
 
     override suspend fun delete(item: ScannedCodeModel) {
         scannedCodeDao.deleteCode(item.id)
+    }
+
+    override suspend fun updateSortOrder(id: Int, sortOrder: Long) {
+        scannedCodeDao.updateSortOrder(id, sortOrder)
     }
 }
 

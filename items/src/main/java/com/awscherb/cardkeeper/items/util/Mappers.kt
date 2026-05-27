@@ -21,7 +21,8 @@ internal object Mappers {
                 message = text,
                 created = created,
                 barcodeFormat = format,
-                parsedType = parsedType
+                parsedType = parsedType,
+                sortOrder = sortOrder
             )
         }
 
@@ -31,6 +32,7 @@ internal object Mappers {
             id = id,
             backgroundColor = Color(backgroundColor.parseHexColor()),
             created = created,
+            sortOrder = sortOrder,
             backgroundPath = backgroundPath,
             isEvent = eventTicket != null,
             header = PassHeaderModel(

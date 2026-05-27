@@ -28,4 +28,7 @@ interface ScannedCodeDao {
 
     @Query("DELETE FROM scannedCode WHERE id = :id")
     suspend fun deleteCode(id: Int): Int
+
+    @Query("UPDATE scannedCode SET sortOrder = :sortOrder WHERE id = :id")
+    suspend fun updateSortOrder(id: Int, sortOrder: Long)
 }
