@@ -1,11 +1,10 @@
 package com.awscherb.cardkeeper.passdetail
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -62,8 +61,8 @@ import com.awscherb.cardkeeper.passdetail.dialog.PassUpdateSettingsDialog
 import com.awscherb.cardkeeper.passdetail.event.Event
 import com.awscherb.cardkeeper.passdetail.generic.Generic
 import com.awscherb.cardkeeper.passdetail.model.PassDetailModel
-import com.awscherb.cardkeeper.passdetail.storecard.StoreCard
 import com.awscherb.cardkeeper.passdetail.model.TransitModel
+import com.awscherb.cardkeeper.passdetail.storecard.StoreCard
 import com.awscherb.cardkeeper.passdetail.util.SampleEvent
 import com.awscherb.cardkeeper.pkpass.model.toBarcodeFormat
 
@@ -146,7 +145,7 @@ fun PassDetailScreenInner(
                     Icon(Icons.Default.Settings, "Settings")
                 }
             }
-        }) {
+        }) { scaffoldPadding ->
 
         if (showDeleteMenu) {
             DeleteDialog(
@@ -179,13 +178,15 @@ fun PassDetailScreenInner(
                 snapshotFlow { pagerState.currentPage }.collect { onCurrentPageChanged(it) }
             }
 
-            Column {
+            Column(
+                modifier = Modifier.padding(scaffoldPadding)
+            ) {
                 HorizontalPager(
                     state = pagerState,
                     modifier = Modifier.weight(1f)
                 ) { page ->
                     passes.getOrNull(page)?.let { pass ->
-                        PassDetail(padding = it, pass = pass)
+                        PassDetail(pass = pass)
                     }
                 }
 
@@ -220,7 +221,6 @@ fun PassDetailScreenInner(
 @Composable
 fun PassDetail(
     modifier: Modifier = Modifier,
-    padding: PaddingValues,
     pass: PassDetailModel,
 ) {
     Box(
@@ -236,19 +236,14 @@ fun PassDetail(
                         radius = 32.dp.toPx(),
                         center = Offset(
                             x = this.center.x,
-                            y = padding.calculateTopPadding().toPx() - 8.dp.toPx()
+                            y = -8.dp.toPx()
                         ),
                         blendMode = BlendMode.DstOut
                     )
                 }
             }
             .padding(
-                PaddingValues(
-                    top = padding.calculateTopPadding() + 8.dp,
-                    start = 8.dp,
-                    end = 8.dp,
-                    bottom = padding.calculateBottomPadding() + 8.dp,
-                )
+                8.dp
             )
             .clip(RoundedCornerShape(if (pass.type == PassDetailModel.Type.EVENT_TICKET) 0.dp else 8.dp))
             .background(color = pass.backgroundColor),
@@ -358,20 +353,60 @@ private fun sampleBoardingPass(id: String, passengerName: String, seat: String) 
     isBarcodeSquare = false,
     footerPath = null,
     headerItems = listOf(
-        com.awscherb.cardkeeper.passUi.FieldConfig("Flight", "SW 412", androidx.compose.ui.graphics.Color(0xFFAABBCC), androidx.compose.ui.graphics.Color.White),
-        com.awscherb.cardkeeper.passUi.FieldConfig("Date", "15 JUN", androidx.compose.ui.graphics.Color(0xFFAABBCC), androidx.compose.ui.graphics.Color.White),
+        com.awscherb.cardkeeper.passUi.FieldConfig(
+            "Flight",
+            "SW 412",
+            androidx.compose.ui.graphics.Color(0xFFAABBCC),
+            androidx.compose.ui.graphics.Color.White
+        ),
+        com.awscherb.cardkeeper.passUi.FieldConfig(
+            "Date",
+            "15 JUN",
+            androidx.compose.ui.graphics.Color(0xFFAABBCC),
+            androidx.compose.ui.graphics.Color.White
+        ),
     ),
     primaryFields = listOf(
-        com.awscherb.cardkeeper.passUi.FieldConfig("FROM", "SFO", androidx.compose.ui.graphics.Color(0xFFAABBCC), androidx.compose.ui.graphics.Color.White),
-        com.awscherb.cardkeeper.passUi.FieldConfig("TO", "JFK", androidx.compose.ui.graphics.Color(0xFFAABBCC), androidx.compose.ui.graphics.Color.White),
+        com.awscherb.cardkeeper.passUi.FieldConfig(
+            "FROM",
+            "SFO",
+            androidx.compose.ui.graphics.Color(0xFFAABBCC),
+            androidx.compose.ui.graphics.Color.White
+        ),
+        com.awscherb.cardkeeper.passUi.FieldConfig(
+            "TO",
+            "JFK",
+            androidx.compose.ui.graphics.Color(0xFFAABBCC),
+            androidx.compose.ui.graphics.Color.White
+        ),
     ),
     secondaryFields = listOf(
-        com.awscherb.cardkeeper.passUi.FieldConfig("PASSENGER", passengerName, androidx.compose.ui.graphics.Color(0xFFAABBCC), androidx.compose.ui.graphics.Color.White),
-        com.awscherb.cardkeeper.passUi.FieldConfig("SEAT", seat, androidx.compose.ui.graphics.Color(0xFFAABBCC), androidx.compose.ui.graphics.Color.White),
+        com.awscherb.cardkeeper.passUi.FieldConfig(
+            "PASSENGER",
+            passengerName,
+            androidx.compose.ui.graphics.Color(0xFFAABBCC),
+            androidx.compose.ui.graphics.Color.White
+        ),
+        com.awscherb.cardkeeper.passUi.FieldConfig(
+            "SEAT",
+            seat,
+            androidx.compose.ui.graphics.Color(0xFFAABBCC),
+            androidx.compose.ui.graphics.Color.White
+        ),
     ),
     auxiliaryFields = listOf(
-        com.awscherb.cardkeeper.passUi.FieldConfig("BOARDING", "08:10", androidx.compose.ui.graphics.Color(0xFFAABBCC), androidx.compose.ui.graphics.Color.White),
-        com.awscherb.cardkeeper.passUi.FieldConfig("CLASS", "Economy", androidx.compose.ui.graphics.Color(0xFFAABBCC), androidx.compose.ui.graphics.Color.White),
+        com.awscherb.cardkeeper.passUi.FieldConfig(
+            "BOARDING",
+            "08:10",
+            androidx.compose.ui.graphics.Color(0xFFAABBCC),
+            androidx.compose.ui.graphics.Color.White
+        ),
+        com.awscherb.cardkeeper.passUi.FieldConfig(
+            "CLASS",
+            "Economy",
+            androidx.compose.ui.graphics.Color(0xFFAABBCC),
+            androidx.compose.ui.graphics.Color.White
+        ),
     ),
     transit = TransitModel(
         originLabel = "SAN FRANCISCO",
