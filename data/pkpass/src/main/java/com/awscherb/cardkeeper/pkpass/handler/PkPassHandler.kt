@@ -55,4 +55,8 @@ class PkPassHandler @Inject constructor(
     override suspend fun updateSortOrder(id: String, sortOrder: Long) {
         dao.updateSortOrder(id, sortOrder)
     }
+
+    override fun getPassesByGroupingIdentifier(groupingIdentifier: String): Flow<List<PkPassModel>> {
+        return dao.getPassesByGroupingIdentifier(groupingIdentifier)
+    }
 }

@@ -38,4 +38,7 @@ interface PkPassDao {
 
     @Query("UPDATE PkPassEntity SET sortOrder = :sortOrder WHERE id = :id")
     suspend fun updateSortOrder(id: String, sortOrder: Long)
+
+    @Query("SELECT * FROM PkPassEntity WHERE groupingIdentifier = :groupingIdentifier")
+    fun getPassesByGroupingIdentifier(groupingIdentifier: String): Flow<List<PkPassEntity>>
 }

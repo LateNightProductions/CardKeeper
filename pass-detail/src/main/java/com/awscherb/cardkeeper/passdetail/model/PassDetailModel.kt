@@ -28,7 +28,8 @@ data class PassDetailModel(
     val backItems: List<Pair<String, String>>,
     val webServiceUrl: String?,
     val identifier: String?,
-    val authenticationToken: String?
+    val authenticationToken: String?,
+    val groupingIdentifier: String?
 ) {
 
     enum class Type {

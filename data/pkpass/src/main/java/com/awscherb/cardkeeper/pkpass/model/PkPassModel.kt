@@ -13,6 +13,7 @@ import okhttp3.internal.toHexString
 interface PkPassModel : SavedItem {
     override val id: String
     val description: String
+    val groupingIdentifier: String?
     val organizationName: String
     val barcode: Barcode?
     val barcodes: List<Barcode>?

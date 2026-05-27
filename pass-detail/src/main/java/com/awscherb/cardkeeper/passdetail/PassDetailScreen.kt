@@ -1,14 +1,21 @@
 package com.awscherb.cardkeeper.passdetail
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -18,11 +25,13 @@ import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.blur
 import androidx.compose.ui.draw.clip
@@ -63,35 +72,43 @@ fun PassDetailScreen(
     onDelete: () -> Unit = { },
     navOnClick: () -> Unit
 ) {
-    val pass by passDetailViewModel.pass.collectAsState(initial = null)
+    val passes by passDetailViewModel.passes.collectAsState()
     val isAutoUpdateOn by passDetailViewModel.shouldUpdate.collectAsState(initial = false)
     val backItems by passDetailViewModel.backItems.collectAsState(initial = emptyList())
+
+    LaunchedEffect(passes) {
+        if (passes.isNotEmpty() && passDetailViewModel.passes.value.isEmpty()) onDelete()
+    }
 
     PassDetailScreenInner(
         backItems = backItems,
         isAutoUpdateOn = isAutoUpdateOn,
-        pass = pass,
+        passes = passes,
         navOnClick = navOnClick,
         setAutoUpdate = passDetailViewModel::setAutoUpdate,
+        onCurrentPageChanged = { passDetailViewModel.currentPassIndex.value = it },
         onDelete = {
             passDetailViewModel.deletePass()
-            onDelete()
+            if (passes.size <= 1) onDelete()
         }
     )
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun PassDetailScreenInner(
     backItems: List<Pair<String, String>>,
     isAutoUpdateOn: Boolean,
-    pass: PassDetailModel?,
+    passes: List<PassDetailModel?>,
     startShowingBackInfo: Boolean = false,
     startShowingAutoUpdate: Boolean = false,
     startWithDeleteOpen: Boolean = false,
     navOnClick: () -> Unit,
     onDelete: () -> Unit = {},
+    onCurrentPageChanged: (Int) -> Unit = {},
     setAutoUpdate: (Boolean) -> Unit
 ) {
+    val pass = passes.firstOrNull()
     var showBackInfo by remember {
         mutableStateOf(startShowingBackInfo)
     }
@@ -154,11 +171,47 @@ fun PassDetailScreenInner(
             )
         }
 
-        pass?.let { pass ->
-            PassDetail(
-                padding = it,
-                pass = pass,
-            )
+        if (passes.isNotEmpty()) {
+            val pagerState = rememberPagerState(pageCount = { passes.size })
+
+            LaunchedEffect(pagerState) {
+                snapshotFlow { pagerState.currentPage }.collect { onCurrentPageChanged(it) }
+            }
+
+            Column {
+                HorizontalPager(
+                    state = pagerState,
+                    modifier = Modifier.weight(1f)
+                ) { page ->
+                    passes.getOrNull(page)?.let { pass ->
+                        PassDetail(padding = it, pass = pass)
+                    }
+                }
+
+                if (passes.size > 1) {
+                    Row(
+                        modifier = Modifier
+                            .wrapContentHeight()
+                            .fillMaxWidth()
+                            .padding(bottom = 8.dp),
+                        horizontalArrangement = Arrangement.Center
+                    ) {
+                        repeat(pagerState.pageCount) { i ->
+                            val color = if (pagerState.currentPage == i)
+                                Color.DarkGray
+                            else
+                                Color.LightGray
+                            Box(
+                                modifier = Modifier
+                                    .padding(2.dp)
+                                    .clip(CircleShape)
+                                    .background(color)
+                                    .size(8.dp)
+                            )
+                        }
+                    }
+                }
+            }
         }
     }
 }
@@ -278,7 +331,7 @@ fun PassDetailScreenPreview(model: PassDetailModel? = null) {
         PassDetailScreenInner(
             backItems = listOf("" to ""),
             isAutoUpdateOn = false,
-            pass = model,
+            passes = listOfNotNull(model),
             navOnClick = { }) {
         }
     }

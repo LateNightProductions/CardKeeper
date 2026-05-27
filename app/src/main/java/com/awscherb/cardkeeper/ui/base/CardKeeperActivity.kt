@@ -30,6 +30,7 @@ import com.awscherb.cardkeeper.codedetail.ScannedCodeScreen
 import com.awscherb.cardkeeper.compose_common.theme.CardKeeperTheme
 import com.awscherb.cardkeeper.create.CreateScreen
 import com.awscherb.cardkeeper.items.composable.ItemsScreen
+import com.awscherb.cardkeeper.items.model.GroupedPassItemModel
 import com.awscherb.cardkeeper.items.model.PassItemModel
 import com.awscherb.cardkeeper.items.model.ScannedCodeItemModel
 import com.awscherb.cardkeeper.pkpass.work.ImportPassWorker
@@ -104,6 +105,9 @@ class CardKeeperActivity : ComponentActivity() {
                                 when (it) {
                                     is PassItemModel ->
                                         navController.navigate("pass/${it.id}")
+
+                                    is GroupedPassItemModel ->
+                                        navController.navigate("pass/${it.passes.first().id}")
 
                                     is ScannedCodeItemModel ->
                                         navController.navigate("code/${it.id}")

@@ -15,6 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.awscherb.cardkeeper.items.model.GroupedPassItemModel
 import com.awscherb.cardkeeper.items.model.ItemModel
 import com.awscherb.cardkeeper.items.model.PassItemModel
 import com.awscherb.cardkeeper.items.model.ScannedCodeItemModel
@@ -64,6 +65,11 @@ fun ItemsList(
 
                         is PassItemModel -> PassItem(
                             pass = item,
+                            modifier = itemModifier
+                        ) { if (!reorderMode) onClick(it) }
+
+                        is GroupedPassItemModel -> GroupedPassItem(
+                            group = item,
                             modifier = itemModifier
                         ) { if (!reorderMode) onClick(it) }
                     }
