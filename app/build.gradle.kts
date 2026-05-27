@@ -11,6 +11,12 @@ plugins {
     alias(libs.plugins.compose.compiler)
 }
 
+import java.util.Properties
+
+val localProperties = Properties().also { props ->
+    rootProject.file("local.properties").takeIf { it.exists() }?.inputStream()?.use { props.load(it) }
+}
+
 android {
     compileSdk = 35
 
@@ -38,7 +44,24 @@ android {
         }
     }
 
+    val keystorePath = localProperties.getProperty("debug.keystore.path")
+    val keystoreFile = keystorePath?.let { file(it) }
+    if (keystoreFile != null && keystoreFile.exists()) {
+        signingConfigs {
+            create("sharedDebug") {
+                storeFile = keystoreFile
+                storePassword = localProperties.getProperty("debug.keystore.password")
+                keyAlias = localProperties.getProperty("debug.keystore.alias")
+                keyPassword = localProperties.getProperty("debug.keystore.key.password")
+            }
+        }
+    }
+
     buildTypes {
+        getByName("debug") {
+            val sharedDebug = signingConfigs.findByName("sharedDebug")
+            if (sharedDebug != null) signingConfig = sharedDebug
+        }
         getByName("release") {
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
