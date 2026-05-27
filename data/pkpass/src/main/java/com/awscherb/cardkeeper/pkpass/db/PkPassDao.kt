@@ -41,4 +41,7 @@ interface PkPassDao {
 
     @Query("SELECT * FROM PkPassEntity WHERE groupingIdentifier = :groupingIdentifier")
     fun getPassesByGroupingIdentifier(groupingIdentifier: String): Flow<List<PkPassEntity>>
+
+    @Query("SELECT * FROM PkPassEntity WHERE groupId = :groupId")
+    fun getPassesByGroupId(groupId: String): Flow<List<PkPassEntity>>
 }

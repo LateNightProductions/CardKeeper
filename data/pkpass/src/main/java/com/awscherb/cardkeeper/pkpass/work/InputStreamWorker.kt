@@ -181,9 +181,13 @@ abstract class InputStreamWorker(
             val pass = gson.fromJson(sb.toString(), PkPassEntity::class.java)
             // Some serial numbers have slashes, can probably sanitize better here
             // Serial is used for both in-app navigation and image paths
-            pass.id = pass.serialNumber.replace("/", "-")
+            pass.id = "${pass.passTypeIdentifier}-${pass.serialNumber}".replace("/", "-")
             pass.created = System.currentTimeMillis()
             pass.sortOrder = pass.created
+            pass.groupId = pass.groupingIdentifier
+                ?: if ((pass.boardingPass != null || pass.eventTicket != null) && pass.relevantDate != null) {
+                    "${pass.passTypeIdentifier}|${pass.relevantDate}"
+                } else null
             pass
         } catch (e: Exception) {
             e.printStackTrace()

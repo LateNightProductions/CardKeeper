@@ -14,6 +14,7 @@ interface PkPassModel : SavedItem {
     override val id: String
     val description: String
     val groupingIdentifier: String?
+    var groupId: String?
     val organizationName: String
     val barcode: Barcode?
     val barcodes: List<Barcode>?

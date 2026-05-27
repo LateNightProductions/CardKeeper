@@ -59,4 +59,8 @@ class PkPassHandler @Inject constructor(
     override fun getPassesByGroupingIdentifier(groupingIdentifier: String): Flow<List<PkPassModel>> {
         return dao.getPassesByGroupingIdentifier(groupingIdentifier)
     }
+
+    override fun getPassesByGroupId(groupId: String): Flow<List<PkPassModel>> {
+        return dao.getPassesByGroupId(groupId)
+    }
 }

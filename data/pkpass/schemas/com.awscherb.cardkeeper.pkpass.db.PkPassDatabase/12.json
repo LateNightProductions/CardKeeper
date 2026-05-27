@@ -1,0 +1,221 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 12,
+    "identityHash": "82d000dd441a3fef49322880fa600ec9",
+    "entities": [
+      {
+        "tableName": "PkPassEntity",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `description` TEXT NOT NULL, `organizationName` TEXT NOT NULL, `barcodes` TEXT, `passTypeIdentifier` TEXT NOT NULL, `serialNumber` TEXT NOT NULL, `logoText` TEXT, `expirationDate` TEXT, `relevantDate` TEXT, `backgroundColor` TEXT, `foregroundColor` TEXT, `labelColor` TEXT, `created` INTEGER NOT NULL, `boardingPass` TEXT, `storeCard` TEXT, `generic` TEXT, `eventTicket` TEXT, `coupon` TEXT, `logoPath` TEXT, `stripPath` TEXT, `footerPath` TEXT, `backgroundPath` TEXT, `thumbnailPath` TEXT, `translation` TEXT, `webServiceURL` TEXT, `authenticationToken` TEXT, `sortOrder` INTEGER NOT NULL, `groupingIdentifier` TEXT, `groupId` TEXT, `barcode_altText` TEXT, `barcode_format` TEXT, `barcode_message` TEXT, `barcode_messageEncoding` TEXT, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "description",
+            "columnName": "description",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "organizationName",
+            "columnName": "organizationName",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "barcodes",
+            "columnName": "barcodes",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "passTypeIdentifier",
+            "columnName": "passTypeIdentifier",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "serialNumber",
+            "columnName": "serialNumber",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "logoText",
+            "columnName": "logoText",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "expirationDate",
+            "columnName": "expirationDate",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "relevantDate",
+            "columnName": "relevantDate",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "backgroundColor",
+            "columnName": "backgroundColor",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "foregroundColor",
+            "columnName": "foregroundColor",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "labelColor",
+            "columnName": "labelColor",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "created",
+            "columnName": "created",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "boardingPass",
+            "columnName": "boardingPass",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "storeCard",
+            "columnName": "storeCard",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "generic",
+            "columnName": "generic",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "eventTicket",
+            "columnName": "eventTicket",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "coupon",
+            "columnName": "coupon",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "logoPath",
+            "columnName": "logoPath",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "stripPath",
+            "columnName": "stripPath",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "footerPath",
+            "columnName": "footerPath",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "backgroundPath",
+            "columnName": "backgroundPath",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "thumbnailPath",
+            "columnName": "thumbnailPath",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "translation",
+            "columnName": "translation",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "webServiceURL",
+            "columnName": "webServiceURL",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "authenticationToken",
+            "columnName": "authenticationToken",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "sortOrder",
+            "columnName": "sortOrder",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "groupingIdentifier",
+            "columnName": "groupingIdentifier",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "groupId",
+            "columnName": "groupId",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "barcode.altText",
+            "columnName": "barcode_altText",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "barcode.format",
+            "columnName": "barcode_format",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "barcode.message",
+            "columnName": "barcode_message",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "barcode.messageEncoding",
+            "columnName": "barcode_messageEncoding",
+            "affinity": "TEXT"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        }
+      },
+      {
+        "tableName": "PassUpdateEntity",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`passId` TEXT NOT NULL, `shouldAutoUpdate` INTEGER NOT NULL, PRIMARY KEY(`passId`))",
+        "fields": [
+          {
+            "fieldPath": "passId",
+            "columnName": "passId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "shouldAutoUpdate",
+            "columnName": "shouldAutoUpdate",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "passId"
+          ]
+        }
+      }
+    ],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '82d000dd441a3fef49322880fa600ec9')"
+    ]
+  }
+}

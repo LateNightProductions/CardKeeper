@@ -31,5 +31,6 @@ val SampleEvent = PassDetailModel(
     webServiceUrl = null,
     identifier = null,
     authenticationToken = null,
-    groupingIdentifier = null
+    groupingIdentifier = null,
+    groupId = null
 )

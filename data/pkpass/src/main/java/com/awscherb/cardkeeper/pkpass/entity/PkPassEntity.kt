@@ -47,7 +47,9 @@ data class PkPassEntity(
 
     override var sortOrder: Long = 0L,
 
-    override val groupingIdentifier: String? = null
+    override val groupingIdentifier: String? = null,
+
+    override var groupId: String? = null
 
 ) : PkPassModel
 

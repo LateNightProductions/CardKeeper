@@ -61,6 +61,7 @@ internal object Mappers {
                 } else null,
             identifier = model.passTypeIdentifier,
             groupingIdentifier = model.groupingIdentifier,
+            groupId = model.groupId,
             barcodes = buildList {
                 model.barcode?.let { first -> add(first) }
                 model.barcodes?.let { codes ->

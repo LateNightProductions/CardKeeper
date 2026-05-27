@@ -31,9 +31,9 @@ class PassViewModel @Inject constructor(
 
     val passes = repository.getPass(passId)
         .flatMapLatest { initial ->
-            val groupId = initial.groupingIdentifier
+            val groupId = initial.groupId
             if (groupId != null) {
-                repository.getPassesByGroupingIdentifier(groupId)
+                repository.getPassesByGroupId(groupId)
             } else {
                 flowOf(listOf(initial))
             }

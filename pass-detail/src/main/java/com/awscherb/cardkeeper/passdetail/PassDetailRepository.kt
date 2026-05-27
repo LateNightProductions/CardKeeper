@@ -29,6 +29,11 @@ class PassDetailRepository @Inject constructor(
             passes.map(Mappers::detailModel)
         }
 
+    fun getPassesByGroupId(groupId: String): Flow<List<PassDetailModel>> =
+        passService.getPassesByGroupId(groupId).map { passes ->
+            passes.map(Mappers::detailModel)
+        }
+
     suspend fun delete(id: String) {
         passService.delete(id)
     }

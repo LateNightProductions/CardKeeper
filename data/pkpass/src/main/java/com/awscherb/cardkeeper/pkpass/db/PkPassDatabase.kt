@@ -12,7 +12,7 @@ import com.awscherb.cardkeeper.pkpass.entity.PkPassEntity
         PkPassEntity::class,
         PassUpdateEntity::class
     ],
-    version = 11,
+    version = 12,
     exportSchema = true,
     autoMigrations = [
         AutoMigration(from = 8, to = 9)

@@ -33,13 +33,13 @@ class ItemsRepository @Inject constructor(
 
     private fun groupPasses(passes: List<PkPassModel>): List<ItemModel> {
         return passes
-            .groupBy { it.groupingIdentifier }
-            .flatMap { (groupId, group) ->
+            .groupBy { it.groupId ?: it.id }
+            .flatMap { (groupKey, group) ->
                 val mapped = group.map(Mappers::passItemModel)
-                if (groupId != null && mapped.size > 1) {
+                if (mapped.size > 1) {
                     listOf(
                         GroupedPassItemModel(
-                            id = groupId,
+                            id = groupKey,
                             passes = mapped,
                             created = group.maxOf { it.created },
                             sortOrder = group.maxOf { it.sortOrder }

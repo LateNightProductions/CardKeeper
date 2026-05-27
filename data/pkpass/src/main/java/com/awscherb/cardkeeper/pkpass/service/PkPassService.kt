@@ -17,6 +17,8 @@ interface PkPassService : SavedItemService<PkPassModel> {
     suspend fun updateSortOrder(id: String, sortOrder: Long)
 
     fun getPassesByGroupingIdentifier(groupingIdentifier: String): Flow<List<PkPassModel>>
+
+    fun getPassesByGroupId(groupId: String): Flow<List<PkPassModel>>
 }
 
 

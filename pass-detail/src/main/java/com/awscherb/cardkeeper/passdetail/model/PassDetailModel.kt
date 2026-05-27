@@ -29,7 +29,8 @@ data class PassDetailModel(
     val webServiceUrl: String?,
     val identifier: String?,
     val authenticationToken: String?,
-    val groupingIdentifier: String?
+    val groupingIdentifier: String?,
+    val groupId: String?
 ) {
 
     enum class Type {
