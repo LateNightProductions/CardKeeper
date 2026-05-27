@@ -91,3 +91,5 @@ output.json
 /app/prod/release/output-metadata.json
 /app/google-services.json
 /app/prod/release/baselineProfiles/
+build_config.sh
+build_and_upload.sh
