@@ -6,6 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import com.awscherb.cardkeeper.compose_common.theme.CardKeeperTheme
 import com.awscherb.cardkeeper.compose_common.theme.Typography
@@ -14,7 +15,8 @@ import com.awscherb.cardkeeper.compose_common.theme.Typography
 fun FieldTextView(
     modifier: Modifier = Modifier,
     fieldConfig: FieldConfig,
-    alignment: Alignment.Horizontal = Alignment.End
+    alignment: Alignment.Horizontal = Alignment.End,
+    maxLines: Int = Int.MAX_VALUE
 ) {
     Column(modifier = modifier) {
         if (fieldConfig.label != null) {
@@ -22,7 +24,9 @@ fun FieldTextView(
                 text = fieldConfig.label.uppercase(),
                 color = fieldConfig.labelColor,
                 style = Typography.labelSmall,
-                modifier = Modifier.align(alignment)
+                modifier = Modifier.align(alignment),
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
             )
         }
 
@@ -30,7 +34,9 @@ fun FieldTextView(
             text = fieldConfig.value,
             modifier = Modifier.align(alignment),
             color = fieldConfig.valueColor,
-            style = if (fieldConfig.label == null) Typography.bodyMedium else Typography.bodyLarge
+            style = if (fieldConfig.label == null) Typography.bodyMedium else Typography.bodyLarge,
+            maxLines = maxLines,
+            overflow = TextOverflow.Ellipsis
         )
     }
 }

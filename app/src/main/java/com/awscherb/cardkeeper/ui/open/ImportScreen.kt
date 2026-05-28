@@ -34,17 +34,22 @@ fun ImportScreen(
     onComplete: () -> Unit,
 ) {
     val launcher =
-        rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()) { result ->
-            result?.let {
-                viewModel.startImport(it)
-
+        rememberLauncherForActivityResult(ActivityResultContracts.OpenMultipleDocuments()) { results ->
+            if (results.isNotEmpty()) {
+                viewModel.startImport(results)
             }
         }
     val result by viewModel.importResult.collectAsState()
     LaunchedEffect(result) {
-        if (result is ImportResult.Success) {
+        if (result is ImportResult.Success || result is ImportResult.PartialSuccess) {
             onComplete()
         }
+    }
+
+    val progressText = (result as? ImportResult.InProgress)?.let { "${it.imported} / ${it.total} passes imported" }
+    val errorText = when (val r = result) {
+        is ImportResult.Error -> r.message
+        else -> null
     }
 
     ImportScreenContent(
@@ -58,7 +63,8 @@ fun ImportScreen(
             )
         },
         navOnClick = navOnClick,
-        errorText = (result as? ImportResult.Error?)?.message
+        progressText = progressText,
+        errorText = errorText
     )
 }
 
@@ -66,6 +72,7 @@ fun ImportScreen(
 fun ImportScreenContent(
     launch: () -> Unit,
     navOnClick: () -> Unit,
+    progressText: String?,
     errorText: String?
 ) {
     ScaffoldScreen(title = "Import pass", navOnClick = navOnClick) {
@@ -90,6 +97,15 @@ fun ImportScreenContent(
                 }) {
                 Text("Open a file...")
             }
+            progressText?.let { progress ->
+                Text(
+                    progress,
+                    style = Typography.bodyLarge,
+                    modifier = Modifier
+                        .align(CenterHorizontally)
+                        .padding(top = 24.dp)
+                )
+            }
             errorText?.let { error ->
                 Text(
                     error,
@@ -112,6 +128,7 @@ fun ImportScreenPreview() {
         ImportScreenContent(
             launch = {},
             navOnClick = {},
+            progressText = "2 / 5 passes imported",
             errorText = "Incorrect file type detected"
         )
     }

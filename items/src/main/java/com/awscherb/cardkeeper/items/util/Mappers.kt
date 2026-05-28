@@ -11,6 +11,7 @@ import com.awscherb.cardkeeper.pkpass.model.findPassInfo
 import com.awscherb.cardkeeper.pkpass.model.getTranslatedLabel
 import com.awscherb.cardkeeper.pkpass.model.getTranslatedValue
 import com.awscherb.cardkeeper.pkpass.model.parseHexColor
+import com.awscherb.cardkeeper.pkpass.model.passInfoType
 
 internal object Mappers {
     fun scannedCodeItemModel(item: ScannedCodeModel) =
@@ -35,6 +36,7 @@ internal object Mappers {
             sortOrder = sortOrder,
             backgroundPath = backgroundPath,
             isEvent = eventTicket != null,
+            passInfoType = passInfoType,
             header = PassHeaderModel(
                 logo = logoPath,
                 description = description,

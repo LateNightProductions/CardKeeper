@@ -9,7 +9,7 @@ import androidx.work.workDataOf
 import com.awscherb.cardkeeper.pkpass.work.ImportPassWorker
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.filterNotNull
+import java.util.UUID
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -17,22 +17,22 @@ import javax.inject.Singleton
 class ImportWorkManager @Inject constructor(
     @ApplicationContext private val context: Context
 ) {
-    fun enqueueContentUri(uri: Uri): Flow<WorkInfo> {
-        val req = OneTimeWorkRequestBuilder<ImportPassWorker>()
-            .setInputData(
-                workDataOf(
-                    ImportPassWorker.INPUT_TYPE to ImportPassWorker.TYPE_URI,
-                    ImportPassWorker.URI to uri.toString()
+    fun enqueueUris(uris: List<Uri>): Pair<String, Flow<List<WorkInfo>>> {
+        val sessionTag = UUID.randomUUID().toString()
+        val requests = uris.map { uri ->
+            OneTimeWorkRequestBuilder<ImportPassWorker>()
+                .addTag(sessionTag)
+                .setInputData(
+                    workDataOf(
+                        ImportPassWorker.INPUT_TYPE to ImportPassWorker.TYPE_URI,
+                        ImportPassWorker.URI to uri.toString()
+                    )
                 )
-            )
-            .build()
-
-        with(WorkManager.getInstance(context)) {
-            enqueue(req)
-
-            return getWorkInfoByIdFlow(req.id).filterNotNull()
-
-
+                .build()
         }
+
+        val workManager = WorkManager.getInstance(context)
+        workManager.enqueue(requests)
+        return sessionTag to workManager.getWorkInfosByTagFlow(sessionTag)
     }
 }

@@ -52,8 +52,10 @@ fun ColumnScope.BoardingPass(pass: PassDetailModel) {
                     pass.auxiliaryFields.size
                 )
             FieldTextView(
+                modifier = Modifier.weight(1f),
                 alignment = align,
-                fieldConfig = field
+                fieldConfig = field,
+                maxLines = 1
             )
         }
     }
@@ -68,8 +70,10 @@ fun ColumnScope.BoardingPass(pass: PassDetailModel) {
             val align =
                 getAlignmentForFieldText(index, pass.secondaryFields.size)
             FieldTextView(
+                modifier = Modifier.weight(1f),
                 alignment = align,
-                fieldConfig = field
+                fieldConfig = field,
+                maxLines = 1
             )
         }
     }

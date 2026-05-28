@@ -3,6 +3,7 @@ package com.awscherb.cardkeeper.items.vm
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.awscherb.cardkeeper.items.model.FilterOptions
+import com.awscherb.cardkeeper.items.model.GroupedPassItemModel
 import com.awscherb.cardkeeper.items.model.ItemModel
 import com.awscherb.cardkeeper.items.model.PassItemModel
 import com.awscherb.cardkeeper.items.model.ScannedCodeItemModel
@@ -32,14 +33,20 @@ class ItemsViewModel @Inject constructor(
         private fun filterForOptions(filterOptions: FilterOptions): (ItemModel) -> Boolean =
             when (filterOptions) {
                 FilterOptions.All -> { _ -> true }
-                FilterOptions.Passes -> { item -> item is PassItemModel }
                 FilterOptions.QrCodes -> { item -> item is ScannedCodeItemModel }
+                is FilterOptions.PassType -> { item ->
+                    when (item) {
+                        is PassItemModel -> item.passInfoType == filterOptions.type
+                        is GroupedPassItemModel -> item.passes.any { it.passInfoType == filterOptions.type }
+                        else -> false
+                    }
+                }
             }
     }
 
     val filter = MutableStateFlow<FilterOptions>(FilterOptions.All)
 
-    val sort = MutableStateFlow<SortOptions>(SortOptions.Date(ascending = false))
+    val sort = MutableStateFlow<SortOptions>(SortOptions.Default)
 
     val showExpiredPasses = MutableStateFlow(false)
 

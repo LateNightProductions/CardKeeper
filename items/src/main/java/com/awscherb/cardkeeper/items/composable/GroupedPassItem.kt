@@ -5,6 +5,8 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -26,6 +28,7 @@ fun GroupedPassItem(
                 pass = group.passes[2],
                 modifier = Modifier
                     .offset(x = 8.dp, y = (-8).dp)
+                    .shadow(elevation = 4.dp, shape = RoundedCornerShape(8.dp))
                     .alpha(0.4f)
             ) {}
         }
@@ -34,6 +37,7 @@ fun GroupedPassItem(
                 pass = group.passes[1],
                 modifier = Modifier
                     .offset(x = 4.dp, y = (-4).dp)
+                    .shadow(elevation = 4.dp, shape = RoundedCornerShape(8.dp))
                     .alpha(0.7f)
             ) {}
         }

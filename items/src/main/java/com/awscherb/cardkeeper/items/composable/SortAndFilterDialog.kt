@@ -31,6 +31,7 @@ import com.awscherb.cardkeeper.compose_common.composable.RadioRow
 import com.awscherb.cardkeeper.compose_common.theme.CardKeeperTheme
 import com.awscherb.cardkeeper.compose_common.theme.Typography
 import com.awscherb.cardkeeper.items.model.FilterOptions
+import com.awscherb.cardkeeper.pkpass.model.PassInfoType
 import com.awscherb.cardkeeper.items.model.SortOptions
 import com.awscherb.cardkeeper.items.vm.ItemsViewModel
 
@@ -204,11 +205,8 @@ fun SortAndFilterDialogContent(
 
 }
 
-val ALL_FILTER = listOf(
-    FilterOptions.All,
-    FilterOptions.QrCodes,
-    FilterOptions.Passes
-)
+val ALL_FILTER = listOf(FilterOptions.All, FilterOptions.QrCodes) +
+        PassInfoType.entries.map { FilterOptions.PassType(it) }
 
 @Composable
 @Preview(showSystemUi = true, apiLevel = 33)

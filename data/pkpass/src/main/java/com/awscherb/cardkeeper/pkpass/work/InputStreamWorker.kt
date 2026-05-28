@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.awscherb.cardkeeper.pkpass.entity.PkPassEntity
+import com.awscherb.cardkeeper.pkpass.util.PassDateUtils
 import com.google.gson.Gson
 import java.io.BufferedReader
 import java.io.File
@@ -12,6 +13,7 @@ import java.io.FileInputStream
 import java.io.FileOutputStream
 import java.io.InputStream
 import java.io.InputStreamReader
+import java.util.UUID
 import java.util.zip.ZipEntry
 import java.util.zip.ZipInputStream
 
@@ -24,8 +26,6 @@ abstract class InputStreamWorker(
 ) {
 
     companion object {
-        private const val WORKING_DIR = "/current"
-
         private const val DEFAULT_TRANSLATION = "en.lproj"
     }
 
@@ -33,15 +33,16 @@ abstract class InputStreamWorker(
      * Creates a PkPassEntity from InputStream
      */
     fun createPassFromZipInput(input: InputStream): PkPassEntity? {
-        unzipToDirectory(input, context.filesDir.absolutePath + WORKING_DIR)
+        val workingDir = context.filesDir.absolutePath + "/" + UUID.randomUUID().toString()
+        unzipToDirectory(input, workingDir)
 
         var pass: PkPassEntity? = null
 
         try {
-            pass = parsePassEntityFromDisk() ?: return null
+            pass = parsePassEntityFromDisk(workingDir) ?: return null
 
             val logo =
-                findLargestImageFile("logo") ?: findLargestImageFile("$DEFAULT_TRANSLATION/logo")
+                findLargestImageFile(workingDir, "logo") ?: findLargestImageFile(workingDir, "$DEFAULT_TRANSLATION/logo")
 
             logo?.let { logoFile ->
                 attemptImageCopy(
@@ -53,7 +54,7 @@ abstract class InputStreamWorker(
                 }
             }
 
-            findLargestImageFile("strip")?.let { stripFile ->
+            findLargestImageFile(workingDir, "strip")?.let { stripFile ->
                 attemptImageCopy(
                     imageFile = stripFile,
                     entity = pass,
@@ -63,7 +64,7 @@ abstract class InputStreamWorker(
                 }
             }
 
-            findLargestImageFile("background")?.let { background ->
+            findLargestImageFile(workingDir, "background")?.let { background ->
                 attemptImageCopy(
                     imageFile = background,
                     entity = pass,
@@ -73,7 +74,7 @@ abstract class InputStreamWorker(
                 }
             }
 
-            findLargestImageFile("footer")?.let { footerFile ->
+            findLargestImageFile(workingDir, "footer")?.let { footerFile ->
                 attemptImageCopy(
                     imageFile = footerFile,
                     entity = pass,
@@ -83,7 +84,7 @@ abstract class InputStreamWorker(
                 }
             }
 
-            findLargestImageFile("thumbnail")?.let { footerFile ->
+            findLargestImageFile(workingDir, "thumbnail")?.let { footerFile ->
                 attemptImageCopy(
                     imageFile = footerFile,
                     entity = pass,
@@ -93,7 +94,7 @@ abstract class InputStreamWorker(
                 }
             }
 
-            val translation = parsePassTranslation(DEFAULT_TRANSLATION)
+            val translation = parsePassTranslation(workingDir, DEFAULT_TRANSLATION)
             if (translation.isNotEmpty()) {
                 pass.translation = translation
             }
@@ -101,11 +102,7 @@ abstract class InputStreamWorker(
         } catch (e: Exception) {
             e.printStackTrace()
         } finally {
-            deleteDirectory(
-                File(
-                    context.filesDir.absolutePath + WORKING_DIR
-                )
-            )
+            deleteDirectory(File(workingDir))
         }
 
         return pass
@@ -159,16 +156,14 @@ abstract class InputStreamWorker(
     /**
      * Parse pass file from working dir
      */
-    private fun parsePassEntityFromDisk(): PkPassEntity? {
+    private fun parsePassEntityFromDisk(workingDir: String): PkPassEntity? {
         var reader: BufferedReader? = null
 
         return try {
             reader = BufferedReader(
                 InputStreamReader(
                     FileInputStream(
-                        File(
-                            context.filesDir.absolutePath + "$WORKING_DIR/pass.json"
-                        )
+                        File("$workingDir/pass.json")
                     )
                 )
             )
@@ -183,7 +178,9 @@ abstract class InputStreamWorker(
             // Serial is used for both in-app navigation and image paths
             pass.id = "${pass.passTypeIdentifier}-${pass.serialNumber}".replace("/", "-")
             pass.created = System.currentTimeMillis()
-            pass.sortOrder = pass.created
+            pass.sortOrder = pass.relevantDate
+                ?.let { PassDateUtils.dateStringToLocalTime(it).time }
+                ?: pass.created
             pass.groupId = pass.groupingIdentifier
                 ?: if ((pass.boardingPass != null || pass.eventTicket != null) && pass.relevantDate != null) {
                     "${pass.passTypeIdentifier}|${pass.relevantDate}"
@@ -198,6 +195,7 @@ abstract class InputStreamWorker(
     }
 
     private fun parsePassTranslation(
+        workingDir: String,
         lang: String,
     ): HashMap<String, String> {
         fun split(str: String): Pair<String, String> {
@@ -215,7 +213,7 @@ abstract class InputStreamWorker(
 
         val out = HashMap<String, String>()
         val languageFile =
-            File(context.filesDir.absolutePath + WORKING_DIR + "/$lang", "pass.strings")
+            File("$workingDir/$lang", "pass.strings")
         if (languageFile.exists()) {
             // TODO assumes UTF-8, I have seen some UTF-16 encoded strings files, figure that out
             BufferedReader(
@@ -242,10 +240,10 @@ abstract class InputStreamWorker(
         return out
     }
 
-    private fun findLargestImageFile(name: String): File? {
-        val x3 = File(context.filesDir.absolutePath + "$WORKING_DIR/$name@3x.png")
-        val x2 = File(context.filesDir.absolutePath + "$WORKING_DIR/$name@2x.png")
-        val x1 = File(context.filesDir.absolutePath + "$WORKING_DIR/$name.png")
+    private fun findLargestImageFile(workingDir: String, name: String): File? {
+        val x3 = File("$workingDir/$name@3x.png")
+        val x2 = File("$workingDir/$name@2x.png")
+        val x1 = File("$workingDir/$name.png")
 
         val out = when {
             x3.exists() -> x3
